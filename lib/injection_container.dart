@@ -1,48 +1,46 @@
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
+import 'package:merkar/app/pages/home/home_page_view_model.dart';
+import 'package:merkar/app/pages/new_category/new_category_page_view_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'app/pages/home/bloc/home_bloc.dart';
-import 'app/pages/new_category/bloc/new_category_bloc.dart';
-import 'data/datasources/local_data_source.dart';
+import 'data/local/local_data_source.dart';
+import 'data/repositories/categories_repository.dart';
 import 'data/repositories/categories_repository_impl.dart';
 import 'data/utils/network/network_info.dart';
-import 'domain/repositories/categories_repository.dart';
-import 'domain/usecases/get_categories.dart';
 
-final sl = GetIt.instance;
+final serviceLocator = GetIt.instance;
 
 Future<void> init() async {
   //! Features - Home
-  // Bloc
-  sl.registerFactory(() => HomeBloc(
-        getCategoriesUseCase: sl(),
+  // ViewModels
+  serviceLocator.registerFactory(() => HomePageViewModel(
+        categoriesRepository: serviceLocator(),
       ));
-  sl.registerFactory(() => NewCategoryBloc());
 
-  // Use cases
-  sl.registerLazySingleton(() => GetCategoriesUseCase(sl()));
+  serviceLocator.registerFactory(() => NewCategoryPageViewModel());
 
   // Repository
-  sl.registerLazySingleton<CategoriesRepository>(
+  serviceLocator.registerLazySingleton<CategoriesRepository>(
     () => CategoriesRepositoryImpl(
-      localDataSource: sl(),
-      networkInfo: sl(),
+      localDataSource: serviceLocator(),
+      networkInfo: serviceLocator(),
     ),
   );
 
   // Data sources
-  sl.registerLazySingleton<LocalDataSource>(
-    () => LocalDataSourceImpl(sharedPreferences: sl()),
+  serviceLocator.registerLazySingleton<LocalDataSource>(
+    () => LocalDataSourceImpl(sharedPreferences: serviceLocator()),
   );
 
   //! Core
-  sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
+  serviceLocator.registerLazySingleton<NetworkInfo>(
+      () => NetworkInfoImpl(serviceLocator()));
 
   //! External
   final sharedPreferences = await SharedPreferences.getInstance();
-  sl.registerLazySingleton(() => sharedPreferences);
-  sl.registerLazySingleton(() => http.Client());
-  sl.registerLazySingleton(() => DataConnectionChecker());
+  serviceLocator.registerLazySingleton(() => sharedPreferences);
+  serviceLocator.registerLazySingleton(() => http.Client());
+  serviceLocator.registerLazySingleton(() => DataConnectionChecker());
 }

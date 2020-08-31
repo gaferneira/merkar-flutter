@@ -1,6 +1,7 @@
-import 'package:merkar/domain/entities/category.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../entities/category.dart';
 
 abstract class LocalDataSource {
   Future<List<Category>> getAllCategories();

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'app/pages/home/HomePage.dart';
+import 'app/pages/home/home_page.dart';
 import 'injection_container.dart' as di;
 
 void main() async {

@@ -1,5 +1,6 @@
-import 'package:merkar/domain/entities/category.dart';
 import 'package:meta/meta.dart';
+
+import '../../entities/category.dart';
 
 class NumberTriviaModel extends Category {
   NumberTriviaModel({
