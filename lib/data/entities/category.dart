@@ -1,10 +1,22 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
+
+Category categoryFromJson(String str) => Category.fromJson(json.decode(str));
+
+String categoryToJson(Category data) => json.encode(data.toJson());
 
 class Category extends Equatable {
   final String name;
 
   Category({
-    @required this.name,
+    this.name,
   }) : super([name]);
+
+  factory Category.fromJson(Map<String, dynamic> json) =>
+      Category(name: json["name"]);
+
+  Map<String, dynamic> toJson() => {
+        "name": name,
+      };
 }

@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:merkar/app/pages/home/home_page_view_model.dart';
 import 'package:merkar/app/pages/new_category/new_category_page_view_model.dart';
+import 'package:merkar/data/remote/firestore_data_source.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'data/local/local_data_source.dart';
@@ -24,15 +25,16 @@ Future<void> init() async {
   // Repository
   serviceLocator.registerLazySingleton<CategoriesRepository>(
     () => CategoriesRepositoryImpl(
-      localDataSource: serviceLocator(),
-      networkInfo: serviceLocator(),
-    ),
+        localDataSource: serviceLocator(),
+        networkInfo: serviceLocator(),
+        firestoreDataSource: serviceLocator()),
   );
 
   // Data sources
   serviceLocator.registerLazySingleton<LocalDataSource>(
     () => LocalDataSourceImpl(sharedPreferences: serviceLocator()),
   );
+  serviceLocator.registerLazySingleton(() => FirestoreDataSource());
 
   //! Core
   serviceLocator.registerLazySingleton<NetworkInfo>(

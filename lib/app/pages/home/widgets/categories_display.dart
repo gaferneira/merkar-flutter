@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:merkar/app/core/constants.dart';
+import 'package:merkar/data/entities/category.dart';
 
-import '../home_page_view_model.dart';
-
-Expanded categoriesList(HomePageViewModel viewModel) {
+Widget categoriesList(List<Category> list) {
+  if (list.length == 0) {
+    return Center(child: Text(Constant.noCategoriesAvailable));
+  }
   return Expanded(
     child: ListView.builder(
-      itemCount: viewModel.categories != null ? viewModel.categories.length : 0,
+      itemCount: list.length,
       itemBuilder: (context, index) {
         return ListTile(
-          title: Text('${viewModel.categories[index].name}'),
+          title: Text('${list[index].name}'),
         );
       },
     ),

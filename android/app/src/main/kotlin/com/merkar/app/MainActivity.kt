@@ -1,4 +1,4 @@
-package com.merkar.merkar
+package com.merkar.app
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

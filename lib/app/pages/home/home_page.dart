@@ -1,10 +1,9 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:merkar/app/pages/home/home_page_view_model.dart';
 import 'package:merkar/app/pages/home/widgets/categories_display.dart';
 import 'package:merkar/app/pages/new_category/new_category_page.dart';
 import 'package:merkar/app/widgets/widgets.dart';
+import 'package:merkar/data/entities/category.dart';
 import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +17,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    viewModel.loadData();
     super.initState();
   }
 
@@ -29,6 +27,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final categories = Provider.of<List<Category>>(context);
     return ChangeNotifierProvider<HomePageViewModel>(
       create: (context) => viewModel,
       child: Consumer<HomePageViewModel>(
@@ -39,18 +38,17 @@ class _HomePageState extends State<HomePage> {
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              if (viewModel.showLoading) LoadingWidget(),
-              if (viewModel.error != null)
-                Text(viewModel.error, style: TextStyle(color: Colors.red)),
-              categoriesList(model),
+              (categories == null)
+                  ? Center(child: LoadingWidget())
+                  : categoriesList(categories),
             ],
-          ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: _goToCreateCategory,
-            tooltip: 'New Category',
-            child: Icon(Icons.add),
-          ),
-        ),
+              ),
+              floatingActionButton: FloatingActionButton(
+                onPressed: _goToCreateCategory,
+                tooltip: 'New Category',
+                child: Icon(Icons.add),
+              ),
+            ),
       ),
     );
   }

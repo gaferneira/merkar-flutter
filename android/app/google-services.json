@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "217116638618",
+    "firebase_url": "https://merkar-app.firebaseio.com",
+    "project_id": "merkar-app",
+    "storage_bucket": "merkar-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:217116638618:android:78aa1b2d40cfdcccbd8e23",
+        "android_client_info": {
+          "package_name": "com.merkar.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "217116638618-28uts0m3sg2uob68sukcu7ljvjst2oha.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGBgKPLBDW90iuv5qvJIazekyhadBL60M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "217116638618-28uts0m3sg2uob68sukcu7ljvjst2oha.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

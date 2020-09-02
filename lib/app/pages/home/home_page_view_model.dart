@@ -13,6 +13,7 @@ class HomePageViewModel extends ChangeNotifier {
   List<Category> categories;
   String error;
 
+  /*
   void loadData() async {
     setShowLoading(true);
     var response = await categoriesRepository.getList();
@@ -23,6 +24,7 @@ class HomePageViewModel extends ChangeNotifier {
     setShowLoading(false);
     notifyListeners();
   }
+  */
 
   void setShowLoading(bool show) {
     showLoading = show;
