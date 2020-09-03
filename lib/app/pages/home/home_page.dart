@@ -3,7 +3,7 @@ import 'package:merkar/app/pages/home/home_view_model.dart';
 import 'package:merkar/app/pages/home/widgets/shopping_lists_display.dart';
 import 'package:merkar/app/pages/new_shopping_list/new_shopping_list_page.dart';
 import 'package:merkar/app/widgets/widgets.dart';
-import 'package:merkar/data/entities/shopping_lists_view.dart';
+import 'package:merkar/data/entities/shopping_list.dart';
 import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
 

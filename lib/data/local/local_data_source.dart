@@ -1,7 +1,7 @@
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../entities/shopping_lists_view.dart';
+import '../entities/shopping_list.dart';
 
 abstract class LocalDataSource {
   Future<List<ShoppingList>> getAllCategories();

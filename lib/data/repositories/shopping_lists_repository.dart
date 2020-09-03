@@ -1,4 +1,4 @@
-import '../entities/shopping_lists_view.dart';
+import '../entities/shopping_list.dart';
 
 abstract class ShoppingListsRepository {
   Stream<List<ShoppingList>> fetchLists();

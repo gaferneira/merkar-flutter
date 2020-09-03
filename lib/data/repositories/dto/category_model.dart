@@ -1,6 +1,6 @@
 import 'package:meta/meta.dart';
 
-import '../../entities/shopping_lists_view.dart';
+import '../../entities/shopping_list.dart';
 
 class NumberTriviaModel extends ShoppingList {
   NumberTriviaModel({

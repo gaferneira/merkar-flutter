@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/constants.dart';
 import 'package:merkar/data/entities/error/failures.dart';
-import 'package:merkar/data/entities/shopping_lists_view.dart';
+import 'package:merkar/data/entities/shopping_list.dart';
 import 'package:merkar/data/repositories/shopping_lists_repository.dart';
 
 class HomePageViewModel extends ChangeNotifier {

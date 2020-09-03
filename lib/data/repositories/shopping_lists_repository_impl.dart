@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
 
 import '../entities/error/failures.dart';
-import '../entities/shopping_lists_view.dart';
+import '../entities/shopping_list.dart';
 import '../local/local_data_source.dart';
 import '../remote/firestore_data_source.dart';
 import '../repositories/shopping_lists_repository.dart';

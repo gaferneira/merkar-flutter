@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/constants.dart';
-import 'package:merkar/data/entities/shopping_lists_view.dart';
+import 'package:merkar/data/entities/shopping_list.dart';
 
 Widget shoppingListsDisplay(List<ShoppingList> list) {
   if (list.length == 0) {
