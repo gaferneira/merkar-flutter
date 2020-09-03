@@ -32,21 +32,19 @@ Future<void> init() async {
         firestoreDataSource: serviceLocator()),
   );
   serviceLocator.registerLazySingleton<ProductsRepository>(
-        () =>
-        ProductsRepositoryImpl(
-            networkInfo: serviceLocator(),
-            firestoreDataSource: serviceLocator()),
+    () => ProductsRepositoryImpl(
+        networkInfo: serviceLocator(), firestoreDataSource: serviceLocator()),
   );
 
   // Data sources
   serviceLocator.registerLazySingleton<LocalDataSource>(
-        () => LocalDataSourceImpl(sharedPreferences: serviceLocator()),
+    () => LocalDataSourceImpl(sharedPreferences: serviceLocator()),
   );
   serviceLocator.registerLazySingleton(() => FirestoreDataSource());
 
   //! Core
   serviceLocator.registerLazySingleton<NetworkInfo>(
-          () => NetworkInfoImpl(serviceLocator()));
+      () => NetworkInfoImpl(serviceLocator()));
 
   //! External
   final sharedPreferences = await SharedPreferences.getInstance();
