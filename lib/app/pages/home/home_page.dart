@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:merkar/app/pages/home/home_page_view_model.dart';
-import 'package:merkar/app/pages/home/widgets/categories_display.dart';
-import 'package:merkar/app/pages/new_category/new_category_page.dart';
+import 'package:merkar/app/pages/home/home_view_model.dart';
+import 'package:merkar/app/pages/home/widgets/shopping_lists_display.dart';
+import 'package:merkar/app/pages/new_shopping_list/new_shopping_list_page.dart';
 import 'package:merkar/app/widgets/widgets.dart';
-import 'package:merkar/data/entities/category.dart';
+import 'package:merkar/data/entities/shopping_lists_view.dart';
 import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
 
@@ -20,14 +20,14 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-  void _goToCreateCategory() async {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => NewCategoryPage()));
+  void _goToCreateList() async {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => NewShoppingListPage()));
   }
 
   @override
   Widget build(BuildContext context) {
-    final categories = Provider.of<List<Category>>(context);
+    final list = Provider.of<List<ShoppingList>>(context);
     return ChangeNotifierProvider<HomePageViewModel>(
       create: (context) => viewModel,
       child: Consumer<HomePageViewModel>(
@@ -38,17 +38,17 @@ class _HomePageState extends State<HomePage> {
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              (categories == null)
+              (list == null)
                   ? Center(child: LoadingWidget())
-                  : categoriesList(categories),
+                  : shoppingListsDisplay(list),
             ],
-              ),
-              floatingActionButton: FloatingActionButton(
-                onPressed: _goToCreateCategory,
-                tooltip: 'New Category',
-                child: Icon(Icons.add),
-              ),
-            ),
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: _goToCreateList,
+            tooltip: 'New Shopping List',
+            child: Icon(Icons.add),
+          ),
+        ),
       ),
     );
   }

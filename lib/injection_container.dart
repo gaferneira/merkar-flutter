@@ -1,14 +1,14 @@
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
-import 'package:merkar/app/pages/home/home_page_view_model.dart';
-import 'package:merkar/app/pages/new_category/new_category_page_view_model.dart';
-import 'package:merkar/data/remote/firestore_data_source.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'app/pages/home/home_view_model.dart';
+import 'app/pages/new_shopping_list/new_shopping_list_view_model.dart';
 import 'data/local/local_data_source.dart';
-import 'data/repositories/categories_repository.dart';
-import 'data/repositories/categories_repository_impl.dart';
+import 'data/remote/firestore_data_source.dart';
+import 'data/repositories/shopping_lists_repository.dart';
+import 'data/repositories/shopping_lists_repository_impl.dart';
 import 'data/utils/network/network_info.dart';
 
 final serviceLocator = GetIt.instance;
@@ -20,11 +20,11 @@ Future<void> init() async {
         categoriesRepository: serviceLocator(),
       ));
 
-  serviceLocator.registerFactory(() => NewCategoryPageViewModel());
+  serviceLocator.registerFactory(() => NewShoppingListViewModel());
 
   // Repository
-  serviceLocator.registerLazySingleton<CategoriesRepository>(
-    () => CategoriesRepositoryImpl(
+  serviceLocator.registerLazySingleton<ShoppingListsRepository>(
+    () => ShoppingListsRepositoryImpl(
         localDataSource: serviceLocator(),
         networkInfo: serviceLocator(),
         firestoreDataSource: serviceLocator()),

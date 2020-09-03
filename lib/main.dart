@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:merkar/data/repositories/categories_repository.dart';
+import 'package:merkar/data/repositories/shopping_lists_repository.dart';
 import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
 
@@ -24,12 +24,11 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    CategoriesRepository _categoriesRepository =
-        serviceLocator<CategoriesRepository>();
+    ShoppingListsRepository _categoriesRepository =
+        serviceLocator<ShoppingListsRepository>();
     return MultiProvider(
       providers: [
-        StreamProvider(
-            create: (_) => _categoriesRepository.fetchAllCategories()),
+        StreamProvider(create: (_) => _categoriesRepository.fetchLists()),
       ],
       child: MaterialApp(
         title: 'Merkar',

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/constants.dart';
-import 'package:merkar/data/entities/category.dart';
+import 'package:merkar/data/entities/shopping_lists_view.dart';
 
-Widget categoriesList(List<Category> list) {
+Widget shoppingListsDisplay(List<ShoppingList> list) {
   if (list.length == 0) {
     return Center(child: Text(Constant.noCategoriesAvailable));
   }

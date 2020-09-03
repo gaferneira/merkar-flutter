@@ -1,38 +1,38 @@
 import 'package:dartz/dartz.dart';
-import 'package:merkar/data/remote/firestore_data_source.dart';
 import 'package:meta/meta.dart';
 
-import '../entities/category.dart';
 import '../entities/error/failures.dart';
+import '../entities/shopping_lists_view.dart';
 import '../local/local_data_source.dart';
+import '../remote/firestore_data_source.dart';
+import '../repositories/shopping_lists_repository.dart';
 import '../utils/network/network_info.dart';
-import 'categories_repository.dart';
 
-class CategoriesRepositoryImpl implements CategoriesRepository {
+class ShoppingListsRepositoryImpl implements ShoppingListsRepository {
   final LocalDataSource localDataSource;
   final NetworkInfo networkInfo;
   final FirestoreDataSource firestoreDataSource;
 
-  CategoriesRepositoryImpl({
+  ShoppingListsRepositoryImpl({
     @required this.localDataSource,
     @required this.networkInfo,
     @required this.firestoreDataSource,
   });
 
   @override
-  Stream<List<Category>> fetchAllCategories() {
+  Stream<List<ShoppingList>> fetchLists() {
     return firestoreDataSource.db
         .collection('data')
         .doc("MPHkxVIHqWdkNRs5d95F")
-        .collection('categories')
+        .collection('shopping_lists')
         .snapshots()
         .map((querySnapshot) => querySnapshot.docs
             .map((documentSnapshot) =>
-                Category.fromJson(documentSnapshot.data()))
+                ShoppingList.fromJson(documentSnapshot.data()))
             .toList());
   }
 
-  Future<Either<Failure, List<Category>>> getList() async {
+  Future<Either<Failure, List<ShoppingList>>> getList() async {
     final categories = await localDataSource.getAllCategories();
     await Future.delayed(Duration(milliseconds: 3000));
     return Right(categories);

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/constants.dart';
-import 'package:merkar/data/entities/category.dart';
 import 'package:merkar/data/entities/error/failures.dart';
-import 'package:merkar/data/repositories/categories_repository.dart';
+import 'package:merkar/data/entities/shopping_lists_view.dart';
+import 'package:merkar/data/repositories/shopping_lists_repository.dart';
 
 class HomePageViewModel extends ChangeNotifier {
-  final CategoriesRepository categoriesRepository;
+  final ShoppingListsRepository categoriesRepository;
 
   HomePageViewModel({@required this.categoriesRepository});
 
   bool showLoading = true;
-  List<Category> categories;
+  List<ShoppingList> categories;
   String error;
 
   /*

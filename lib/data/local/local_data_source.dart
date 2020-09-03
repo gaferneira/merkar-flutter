@@ -1,10 +1,10 @@
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../entities/category.dart';
+import '../entities/shopping_lists_view.dart';
 
 abstract class LocalDataSource {
-  Future<List<Category>> getAllCategories();
+  Future<List<ShoppingList>> getAllCategories();
 }
 
 class LocalDataSourceImpl implements LocalDataSource {
@@ -13,11 +13,11 @@ class LocalDataSourceImpl implements LocalDataSource {
   LocalDataSourceImpl({@required this.sharedPreferences});
 
   @override
-  Future<List<Category>> getAllCategories() {
-    List<Category> myList = List<Category>(3);
-    myList[0] = Category(name: "one");
-    myList[1] = Category(name: "two");
-    myList[2] = Category(name: "three");
+  Future<List<ShoppingList>> getAllCategories() {
+    List<ShoppingList> myList = List<ShoppingList>(3);
+    myList[0] = ShoppingList(name: "one");
+    myList[1] = ShoppingList(name: "two");
+    myList[2] = ShoppingList(name: "three");
 
     return Future.value(myList);
   }
