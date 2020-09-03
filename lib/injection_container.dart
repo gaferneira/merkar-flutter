@@ -26,11 +26,10 @@ Future<void> init() async {
 
   // Repository
   serviceLocator.registerLazySingleton<ShoppingListsRepository>(
-        () =>
-        ShoppingListsRepositoryImpl(
-            localDataSource: serviceLocator(),
-            networkInfo: serviceLocator(),
-            firestoreDataSource: serviceLocator()),
+    () => ShoppingListsRepositoryImpl(
+        localDataSource: serviceLocator(),
+        networkInfo: serviceLocator(),
+        firestoreDataSource: serviceLocator()),
   );
   serviceLocator.registerLazySingleton<ProductsRepository>(
         () =>
