@@ -17,7 +17,7 @@ Future<void> init() async {
   //! Features - Home
   // ViewModels
   serviceLocator.registerFactory(() => HomePageViewModel(
-        categoriesRepository: serviceLocator(),
+        shoppingListsRepository: serviceLocator(),
       ));
 
   serviceLocator.registerFactory(() => NewShoppingListViewModel());

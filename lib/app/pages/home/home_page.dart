@@ -3,7 +3,6 @@ import 'package:merkar/app/pages/home/home_view_model.dart';
 import 'package:merkar/app/pages/home/widgets/shopping_lists_display.dart';
 import 'package:merkar/app/pages/new_shopping_list/new_shopping_list_page.dart';
 import 'package:merkar/app/widgets/widgets.dart';
-import 'package:merkar/data/entities/shopping_list.dart';
 import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +16,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+    viewModel.loadData();
     super.initState();
   }
 
@@ -27,7 +27,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final list = Provider.of<List<ShoppingList>>(context);
     return ChangeNotifierProvider<HomePageViewModel>(
       create: (context) => viewModel,
       child: Consumer<HomePageViewModel>(
@@ -38,9 +37,9 @@ class _HomePageState extends State<HomePage> {
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              (list == null)
+              (viewModel.list == null)
                   ? Center(child: LoadingWidget())
-                  : shoppingListsDisplay(list),
+                  : shoppingListsDisplay(viewModel.list),
             ],
           ),
           floatingActionButton: FloatingActionButton(

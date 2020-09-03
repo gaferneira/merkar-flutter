@@ -5,30 +5,22 @@ import 'package:merkar/data/entities/shopping_list.dart';
 import 'package:merkar/data/repositories/shopping_lists_repository.dart';
 
 class HomePageViewModel extends ChangeNotifier {
-  final ShoppingListsRepository categoriesRepository;
+  final ShoppingListsRepository shoppingListsRepository;
 
-  HomePageViewModel({@required this.categoriesRepository});
+  HomePageViewModel({@required this.shoppingListsRepository});
 
-  bool showLoading = true;
-  List<ShoppingList> categories;
+  List<ShoppingList> list;
   String error;
 
-  /*
   void loadData() async {
-    setShowLoading(true);
-    var response = await categoriesRepository.getList();
-
-    response.fold((failure) => error = _mapFailureToMessage(failure),
-        (list) => categories = list);
-
-    setShowLoading(false);
-    notifyListeners();
-  }
-  */
-
-  void setShowLoading(bool show) {
-    showLoading = show;
-    notifyListeners();
+    shoppingListsRepository.fetchLists().listen((data) {
+      list = data;
+      error = null;
+      notifyListeners();
+    }, onError: (e) {
+      error = e;
+      notifyListeners();
+    });
   }
 
   String _mapFailureToMessage(Failure failure) {
