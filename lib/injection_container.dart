@@ -7,6 +7,8 @@ import 'app/pages/home/home_view_model.dart';
 import 'app/pages/new_shopping_list/new_shopping_list_view_model.dart';
 import 'data/local/local_data_source.dart';
 import 'data/remote/firestore_data_source.dart';
+import 'data/repositories/products_repository.dart';
+import 'data/repositories/products_repository_impl.dart';
 import 'data/repositories/shopping_lists_repository.dart';
 import 'data/repositories/shopping_lists_repository_impl.dart';
 import 'data/utils/network/network_info.dart';
@@ -24,21 +26,28 @@ Future<void> init() async {
 
   // Repository
   serviceLocator.registerLazySingleton<ShoppingListsRepository>(
-    () => ShoppingListsRepositoryImpl(
-        localDataSource: serviceLocator(),
-        networkInfo: serviceLocator(),
-        firestoreDataSource: serviceLocator()),
+        () =>
+        ShoppingListsRepositoryImpl(
+            localDataSource: serviceLocator(),
+            networkInfo: serviceLocator(),
+            firestoreDataSource: serviceLocator()),
+  );
+  serviceLocator.registerLazySingleton<ProductsRepository>(
+        () =>
+        ProductsRepositoryImpl(
+            networkInfo: serviceLocator(),
+            firestoreDataSource: serviceLocator()),
   );
 
   // Data sources
   serviceLocator.registerLazySingleton<LocalDataSource>(
-    () => LocalDataSourceImpl(sharedPreferences: serviceLocator()),
+        () => LocalDataSourceImpl(sharedPreferences: serviceLocator()),
   );
   serviceLocator.registerLazySingleton(() => FirestoreDataSource());
 
   //! Core
   serviceLocator.registerLazySingleton<NetworkInfo>(
-      () => NetworkInfoImpl(serviceLocator()));
+          () => NetworkInfoImpl(serviceLocator()));
 
   //! External
   final sharedPreferences = await SharedPreferences.getInstance();
