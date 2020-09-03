@@ -1,8 +1,8 @@
 import 'package:meta/meta.dart';
 
-import '../../entities/category.dart';
+import '../../entities/shopping_list.dart';
 
-class NumberTriviaModel extends Category {
+class NumberTriviaModel extends ShoppingList {
   NumberTriviaModel({
     @required String name,
   }) : super(name: name);

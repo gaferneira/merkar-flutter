@@ -1,9 +1,7 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:merkar/app/pages/home/home_page_view_model.dart';
-import 'package:merkar/app/pages/home/widgets/categories_display.dart';
-import 'package:merkar/app/pages/new_category/new_category_page.dart';
+import 'package:merkar/app/pages/home/home_view_model.dart';
+import 'package:merkar/app/pages/home/widgets/shopping_lists_display.dart';
+import 'package:merkar/app/pages/new_shopping_list/new_shopping_list_page.dart';
 import 'package:merkar/app/widgets/widgets.dart';
 import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
@@ -22,9 +20,9 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-  void _goToCreateCategory() async {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => NewCategoryPage()));
+  void _goToCreateList() async {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => NewShoppingListPage()));
   }
 
   @override
@@ -39,15 +37,14 @@ class _HomePageState extends State<HomePage> {
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              if (viewModel.showLoading) LoadingWidget(),
-              if (viewModel.error != null)
-                Text(viewModel.error, style: TextStyle(color: Colors.red)),
-              categoriesList(model),
+              (viewModel.list == null)
+                  ? Center(child: LoadingWidget())
+                  : shoppingListsDisplay(viewModel.list),
             ],
           ),
           floatingActionButton: FloatingActionButton(
-            onPressed: _goToCreateCategory,
-            tooltip: 'New Category',
+            onPressed: _goToCreateList,
+            tooltip: 'New Shopping List',
             child: Icon(Icons.add),
           ),
         ),
