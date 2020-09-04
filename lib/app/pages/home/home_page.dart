@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:merkar/app/core/constants.dart';
 import 'package:merkar/app/pages/home/home_view_model.dart';
 import 'package:merkar/app/pages/home/widgets/shopping_lists_display.dart';
 import 'package:merkar/app/pages/new_shopping_list/new_shopping_list_page.dart';
@@ -34,6 +35,7 @@ class _HomePageState extends State<HomePage> {
           appBar: AppBar(
             title: Text('Merkar'),
           ),
+          drawer: _drawerWelcome(),
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -48,6 +50,20 @@ class _HomePageState extends State<HomePage> {
             child: Icon(Icons.add),
           ),
         ),
+      ),
+    );
+  }
+
+  _drawerWelcome() {
+    final List listdrawer = Constant.listdrawer;
+    return Drawer(
+      child: ListView.builder(
+        itemCount: listdrawer.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text('${listdrawer[index]}'),
+          );
+        },
       ),
     );
   }
