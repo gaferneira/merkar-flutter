@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:merkar/app/pages/home/widgets/show_select_list.dart';
 
 import 'app/pages/home/home_page.dart';
-import 'app/pages/home/home_page.dart';
-import 'app/pages/new_shopping_list/new_shopping_list_page.dart';
 import 'app/pages/new_shopping_list/new_shopping_list_page.dart';
 import 'injection_container.dart' as di;
 

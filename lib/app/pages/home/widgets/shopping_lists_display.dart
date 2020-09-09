@@ -8,25 +8,31 @@ Widget shoppingListsDisplay(List<ShoppingList> list) {
     return Center(child: Text(Constant.noCategoriesAvailable));
   }
   return Expanded(
-    child: ListView.builder(
-      //SCROLL IN LIST
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      itemCount: list.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-          title: Text('${list[index].name}'),
-          trailing: Icon(Icons.arrow_right),
-          onTap: () {
-            print(list[index].name);
-            Navigator.pushNamed(
-              context,
-              showSelectList.routeName,
-              arguments: list[index],
-            );
-          },
-        );
-      },
+    child: listProducts(list),
+  );
+}
+
+Widget listProducts(List<ShoppingList> list) {
+  return ListView.separated(
+    scrollDirection: Axis.vertical,
+    shrinkWrap: true,
+    separatorBuilder: (context, index) => Divider(
+      color: Colors.black,
     ),
+    itemCount: list.length,
+    itemBuilder: (context, index) {
+      return ListTile(
+        title: Text('${list[index].name}'),
+        trailing: Icon(Icons.arrow_right),
+        onTap: () {
+          print(list[index].name);
+          Navigator.pushNamed(
+            context,
+            showSelectList.routeName,
+            arguments: list[index],
+          );
+        },
+      );
+    },
   );
 }
