@@ -2,37 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:merkar/app/core/constants.dart';
 import 'package:merkar/data/entities/shopping_list.dart';
 
-Widget showList(List<ShoppingList> list) {
-  if (list.length == 0) {
-    return Center(child: Text(Constant.noCategoriesAvailable));
-  }
-  return Expanded(
-    child: ListView.builder(
-      //SCROLL IN LIST
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      itemCount: list.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-          title: Text('${list[index].name}'),
-          trailing: Icon(Icons.adjust),
-          onTap: () {
-            _showList(list, index);
-          },
-        );
-      },
-    ),
-  );
+import '../../../../data/entities/shopping_list.dart';
+
+class showSelectList extends StatefulWidget {
+  static const routeName = '/showselectlist';
+  @override
+  _showSelectListState createState() => _showSelectListState();
 }
 
-_showList(List list, int index) {
-  //print("Mostrar vista de la lista: ${list[index].name}");
-  return SimpleDialog(
-    title: const Text('Lista'),
-    children: <Widget>[
-      Center(
-        child: Text('Mostrar vista de la lista: ${list[index].name}'),
+class _showSelectListState extends State<showSelectList> {
+  @override
+  Widget build(BuildContext context) {
+    final list = ModalRoute.of(context).settings.arguments as ShoppingList;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('${list.name}'),
       ),
-    ],
-  );
+      body: SingleChildScrollView(),
+    );
+  }
 }

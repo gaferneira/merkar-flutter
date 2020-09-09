@@ -10,4 +10,5 @@ class Constant {
     'Acerca de',
     'Cerrar Sesión'
   ];
+  static const double normalspace = 10.0;
 }

@@ -5,6 +5,7 @@ import '../../../injection_container.dart';
 import 'new_shopping_list_view_model.dart';
 
 class NewShoppingListPage extends StatefulWidget {
+  static const routeName = "/newlist";
   @override
   _NewShoppingListPageState createState() => _NewShoppingListPageState();
 }
