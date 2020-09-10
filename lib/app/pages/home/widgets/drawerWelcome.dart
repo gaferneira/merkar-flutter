@@ -44,24 +44,24 @@ class DrawerWelcome extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: Text('Nueva lista'),
+            title: Text(Constant.route_new_list),
             leading: Icon(Icons.shopping_cart),
             trailing: Icon(Icons.keyboard_arrow_right),
-            onTap: () => _goToRoute('Nueva lista', context),
+            onTap: () => _goToRoute(Constant.route_new_list, context),
           ),
           Divider(),
           ListTile(
-            title: Text('Comentarios'),
+            title: Text(Constant.route_comments),
             leading: Icon(Icons.comment),
             trailing: Icon(Icons.keyboard_arrow_right),
-            onTap: () => _goToRoute('Comentarios', context),
+            onTap: () => _goToRoute(Constant.route_comments, context),
           ),
           Divider(),
           ListTile(
-            title: Text('Acerca de'),
+            title: Text(Constant.route_about_us),
             leading: Icon(Icons.info),
             trailing: Icon(Icons.keyboard_arrow_right),
-            onTap: () => _goToRoute('Acerca de', context),
+            onTap: () => _goToRoute(Constant.route_about_us, context),
           ),
           Divider(),
           ListTile(
@@ -69,8 +69,8 @@ class DrawerWelcome extends StatelessWidget {
               Icons.close,
               textDirection: TextDirection.rtl,
             ),
-            title: Text('Cerrar Sesión'),
-            onTap: () => _goToRoute('Cerrar Sesión', context),
+            title: Text(Constant.route_close_session),
+            onTap: () => _goToRoute(Constant.route_close_session, context),
           ),
           Divider(),
         ],
@@ -80,7 +80,6 @@ class DrawerWelcome extends StatelessWidget {
 }
 
 void _goToRoute(String routeName, BuildContext context) async {
-  print("Redireccionar con navegator");
   switch (routeName) {
     case Constant.route_new_list:
       {
