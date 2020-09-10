@@ -28,7 +28,12 @@ class _NewShoppingListPageState extends State<NewShoppingListPage> {
             appBar: AppBar(
               title: Text('Create new list'),
             ),
-            body: Text('')),
+            body: RaisedButton(
+              child: Text('Save'),
+              onPressed: () {
+                viewModel.saveList("test", context);
+              },
+            )),
       ),
     );
   }
