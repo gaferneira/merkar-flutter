@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:merkar/app/pages/home/widgets/show_select_list.dart';
+import 'package:merkar/app/pages/shopping_list/shopping_list_page.dart';
 
 import 'app/pages/home/home_page.dart';
 import 'app/pages/new_shopping_list/new_shopping_list_page.dart';
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
         // When navigating to the "/" route, build the FirstScreen widget.
         '/': (context) => HomePage(),
         // When navigating to the "/showselectlist" route, build the SecondScreen widget.
-        ShowSelectList.routeName: (context) => ShowSelectList(),
+        ShoppingListPage.routeName: (context) => ShoppingListPage(),
         // When navigating to the "/newshoppinglist" route, build the SecondScreen widget.
         NewShoppingListPage.routeName: (context) => NewShoppingListPage(),
       },

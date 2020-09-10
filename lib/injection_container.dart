@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app/pages/home/home_view_model.dart';
 import 'app/pages/new_shopping_list/new_shopping_list_view_model.dart';
+import 'app/pages/shopping_list/shopping_list_view_model.dart';
 import 'data/local/local_data_source.dart';
 import 'data/remote/firestore_data_source.dart';
 import 'data/repositories/products_repository.dart';
@@ -22,7 +23,10 @@ Future<void> init() async {
         shoppingListsRepository: serviceLocator(),
       ));
 
-  serviceLocator.registerFactory(() => NewShoppingListViewModel());
+  serviceLocator.registerFactory(
+      () => ShoppingListViewModel(repository: serviceLocator()));
+  serviceLocator.registerFactory(
+      () => NewShoppingListViewModel(repository: serviceLocator()));
 
   // Repository
   serviceLocator.registerLazySingleton<ShoppingListsRepository>(
