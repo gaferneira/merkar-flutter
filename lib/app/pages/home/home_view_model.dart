@@ -13,7 +13,7 @@ class HomePageViewModel extends ChangeNotifier {
   String error;
 
   void loadData() async {
-    shoppingListsRepository.fetchLists().listen((data) {
+    shoppingListsRepository.fetchItems().listen((data) {
       list = data;
       error = null;
       notifyListeners();

@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:merkar/data/entities/product.dart';
-import 'package:merkar/data/repositories/products_repository.dart';
+import 'package:merkar/data/entities/list_product.dart';
+import 'package:merkar/data/entities/shopping_list.dart';
+import 'package:merkar/data/repositories/shopping_lists_repository.dart';
 
 class NewShoppingListViewModel extends ChangeNotifier {
-  final ProductsRepository productsRepository;
+  final ShoppingListsRepository repository;
 
-  NewShoppingListViewModel({@required this.productsRepository});
+  NewShoppingListViewModel({@required this.repository});
 
-  List<Product> list;
+  List<ListProduct> list;
   String error;
 
-  void loadData(String listId) async {
-    productsRepository.fetchByList(listId).listen((data) {
+  void loadData(ShoppingList shoppingList) async {
+    repository.fetchProducts(shoppingList).listen((data) {
       list = data;
       error = null;
       notifyListeners();
