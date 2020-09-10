@@ -5,13 +5,13 @@ import 'package:merkar/data/entities/shopping_list.dart';
 
 import '../../../../data/entities/shopping_list.dart';
 
-class showSelectList extends StatefulWidget {
+class ShowSelectList extends StatefulWidget {
   static const routeName = '/showselectlist';
   @override
-  _showSelectListState createState() => _showSelectListState();
+  _ShowSelectListState createState() => _ShowSelectListState();
 }
 
-class _showSelectListState extends State<showSelectList> {
+class _ShowSelectListState extends State<ShowSelectList> {
   @override
   Widget build(BuildContext context) {
     final list = ModalRoute.of(context).settings.arguments as ShoppingList;

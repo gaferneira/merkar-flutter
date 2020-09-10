@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
         // When navigating to the "/" route, build the FirstScreen widget.
         '/': (context) => HomePage(),
         // When navigating to the "/showselectlist" route, build the SecondScreen widget.
-        showSelectList.routeName: (context) => showSelectList(),
+        ShowSelectList.routeName: (context) => ShowSelectList(),
         // When navigating to the "/newshoppinglist" route, build the SecondScreen widget.
         NewShoppingListPage.routeName: (context) => NewShoppingListPage(),
       },

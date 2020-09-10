@@ -25,7 +25,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _goToCreateList() async {
-    //Navigator.push(context, MaterialPageRoute(builder: (context) => NewShoppingListPage()));
     Navigator.of(context).pushNamed(NewShoppingListPage.routeName);
   }
 

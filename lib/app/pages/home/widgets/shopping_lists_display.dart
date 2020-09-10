@@ -28,7 +28,7 @@ Widget listProducts(List<ShoppingList> list) {
           print(list[index].name);
           Navigator.pushNamed(
             context,
-            showSelectList.routeName,
+            ShowSelectList.routeName,
             arguments: list[index],
           );
         },

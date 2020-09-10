@@ -1,4 +1,6 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
+import 'package:merkar/app/core/constants.dart';
 import 'package:merkar/app/pages/new_shopping_list/new_shopping_list_page.dart';
 
 class DrawerWelcome extends StatelessWidget {
@@ -80,23 +82,23 @@ class DrawerWelcome extends StatelessWidget {
 void _goToRoute(String routeName, BuildContext context) async {
   print("Redireccionar con navegator");
   switch (routeName) {
-    case 'Nueva lista':
+    case Constant.route_new_list:
       {
         Navigator.of(context).pushNamed(NewShoppingListPage.routeName);
         break;
       }
-    case 'Comentarios':
+    case Constant.route_comments:
       {
         print("Ir a comentarios");
         break;
       }
 
-    case 'Acerca de':
+    case Constant.route_about_us:
       {
         break;
       }
 
-    case 'Cerrar Sesión':
+    case Constant.route_close_session:
       {
         break;
       }
