@@ -1,6 +1,7 @@
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
+import 'package:merkar/app/pages/select_my_products/select_my_products_view_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app/pages/home/home_view_model.dart';
@@ -27,6 +28,9 @@ Future<void> init() async {
       () => ShoppingListViewModel(repository: serviceLocator()));
   serviceLocator.registerFactory(
       () => NewShoppingListViewModel(repository: serviceLocator()));
+  serviceLocator.registerFactory(() => SelectMyProductsViewModel(
+      shoppingListRepository: serviceLocator(),
+      productsRepository: serviceLocator()));
 
   // Repository
   serviceLocator.registerLazySingleton<ShoppingListsRepository>(

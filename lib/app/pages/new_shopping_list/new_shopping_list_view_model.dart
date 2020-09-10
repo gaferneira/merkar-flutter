@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:merkar/app/core/constants.dart';
+import 'package:merkar/app/core/strings.dart';
 import 'package:merkar/app/pages/shopping_list/shopping_list_page.dart';
 import 'package:merkar/data/entities/error/failures.dart';
 import 'package:merkar/data/entities/shopping_list.dart';
@@ -27,9 +27,9 @@ class NewShoppingListViewModel extends ChangeNotifier {
   String _mapFailureToMessage(Failure failure) {
     switch (failure.runtimeType) {
       case ServerFailure:
-        return Constant.SERVER_FAILURE_MESSAGE;
+        return Strings.SERVER_FAILURE_MESSAGE;
       case CacheFailure:
-        return Constant.CACHE_FAILURE_MESSAGE;
+        return Strings.CACHE_FAILURE_MESSAGE;
       default:
         return 'Unexpected error';
     }

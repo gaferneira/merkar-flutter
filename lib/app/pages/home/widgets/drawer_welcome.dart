@@ -1,7 +1,13 @@
-import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
-import 'package:merkar/app/core/constants.dart';
+import 'package:merkar/app/core/strings.dart';
 import 'package:merkar/app/pages/new_shopping_list/new_shopping_list_page.dart';
+
+enum DrawerOptions {
+  route_new_list,
+  route_comments,
+  route_about_us,
+  route_close_session
+}
 
 class DrawerWelcome extends StatelessWidget {
   @override
@@ -44,24 +50,24 @@ class DrawerWelcome extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: Text(Constant.route_new_list),
+            title: Text(Strings.route_new_list),
             leading: Icon(Icons.shopping_cart),
             trailing: Icon(Icons.keyboard_arrow_right),
-            onTap: () => _goToRoute(Constant.route_new_list, context),
+            onTap: () => _goToRoute(DrawerOptions.route_new_list, context),
           ),
           Divider(),
           ListTile(
-            title: Text(Constant.route_comments),
+            title: Text(Strings.route_comments),
             leading: Icon(Icons.comment),
             trailing: Icon(Icons.keyboard_arrow_right),
-            onTap: () => _goToRoute(Constant.route_comments, context),
+            onTap: () => _goToRoute(DrawerOptions.route_comments, context),
           ),
           Divider(),
           ListTile(
-            title: Text(Constant.route_about_us),
+            title: Text(Strings.route_about_us),
             leading: Icon(Icons.info),
             trailing: Icon(Icons.keyboard_arrow_right),
-            onTap: () => _goToRoute(Constant.route_about_us, context),
+            onTap: () => _goToRoute(DrawerOptions.route_about_us, context),
           ),
           Divider(),
           ListTile(
@@ -69,8 +75,8 @@ class DrawerWelcome extends StatelessWidget {
               Icons.close,
               textDirection: TextDirection.rtl,
             ),
-            title: Text(Constant.route_close_session),
-            onTap: () => _goToRoute(Constant.route_close_session, context),
+            title: Text(Strings.route_close_session),
+            onTap: () => _goToRoute(DrawerOptions.route_close_session, context),
           ),
           Divider(),
         ],
@@ -79,25 +85,25 @@ class DrawerWelcome extends StatelessWidget {
   }
 }
 
-void _goToRoute(String routeName, BuildContext context) async {
-  switch (routeName) {
-    case Constant.route_new_list:
+void _goToRoute(DrawerOptions option, BuildContext context) async {
+  switch (option) {
+    case DrawerOptions.route_new_list:
       {
         Navigator.of(context).pushNamed(NewShoppingListPage.routeName);
         break;
       }
-    case Constant.route_comments:
+    case DrawerOptions.route_comments:
       {
         print("Ir a comentarios");
         break;
       }
 
-    case Constant.route_about_us:
+    case DrawerOptions.route_about_us:
       {
         break;
       }
 
-    case Constant.route_close_session:
+    case DrawerOptions.route_close_session:
       {
         break;
       }

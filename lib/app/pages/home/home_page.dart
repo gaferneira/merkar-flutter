@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:merkar/app/core/constants.dart';
+import 'package:merkar/app/core/strings.dart';
 import 'package:merkar/app/pages/home/home_view_model.dart';
 import 'package:merkar/app/pages/home/widgets/drawer_welcome.dart';
 import 'package:merkar/app/pages/home/widgets/shopping_lists_display.dart';
@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> {
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: _goToCreateList,
-            tooltip: Constant.label_tootip_new_list,
+            tooltip: Strings.label_tootip_new_list,
             child: Icon(Icons.add),
           ),
         ),

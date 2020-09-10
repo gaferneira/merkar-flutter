@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:merkar/app/core/constants.dart';
+import 'package:merkar/app/core/strings.dart';
 import 'package:provider/provider.dart';
 
 import '../../../injection_container.dart';
@@ -31,7 +31,7 @@ class _NewShoppingListPageState extends State<NewShoppingListPage> {
       child: Consumer<NewShoppingListViewModel>(
         builder: (context, model, child) => Scaffold(
           appBar: AppBar(
-            title: Text(Constant.label_create_new_list),
+            title: Text(Strings.label_create_new_list),
           ),
           body: _fromNewList(viewModel, context),
         ),
@@ -60,7 +60,7 @@ class _NewShoppingListPageState extends State<NewShoppingListPage> {
               },
             ),
             RaisedButton(
-              child: Text(Constant.label_save),
+              child: Text(Strings.label_save),
               onPressed: () {
                 _saveNewList(context);
               },
