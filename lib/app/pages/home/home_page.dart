@@ -1,10 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/pages/home/home_view_model.dart';
+import 'package:merkar/app/pages/home/widgets/drawerWelcome.dart';
 import 'package:merkar/app/pages/home/widgets/shopping_lists_display.dart';
 import 'package:merkar/app/pages/new_shopping_list/new_shopping_list_page.dart';
 import 'package:merkar/app/widgets/widgets.dart';
 import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
+
+import '../new_shopping_list/new_shopping_list_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -21,26 +25,49 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _goToCreateList() async {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => NewShoppingListPage()));
+    Navigator.of(context).pushNamed(NewShoppingListPage.routeName);
   }
 
   @override
   Widget build(BuildContext context) {
+    final _scaffKey = GlobalKey<ScaffoldState>();
     return ChangeNotifierProvider<HomePageViewModel>(
       create: (context) => viewModel,
       child: Consumer<HomePageViewModel>(
         builder: (context, model, child) => Scaffold(
+          key: _scaffKey,
           appBar: AppBar(
             title: Text('Merkar'),
           ),
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              (viewModel.list == null)
-                  ? Center(child: LoadingWidget())
-                  : shoppingListsDisplay(viewModel.list),
-            ],
+          drawer: DrawerWelcome(),
+          body: SingleChildScrollView(
+            child: Column(
+
+                //  crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Stack(children: <Widget>[
+                    Container(
+                      width: double.infinity,
+                      height: 150.0,
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                              colors: [Colors.cyan[300], Colors.cyan[800]])),
+                      child: Image.asset(
+                        'assets/images/logo.png',
+                        width: 10.0,
+                        // color: Colors.black,
+                      ),
+                    ),
+                  ]),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      (viewModel.list == null)
+                          ? Center(child: LoadingWidget())
+                          : shoppingListsDisplay(viewModel.list),
+                    ],
+                  ),
+                ]),
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: _goToCreateList,
