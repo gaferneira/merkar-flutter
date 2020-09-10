@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:merkar/app/pages/products/list_suggerid_products.dart';
 import 'package:merkar/app/pages/shopping_list/shopping_list_page.dart';
 
 import 'app/pages/home/home_page.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
         ShoppingListPage.routeName: (context) => ShoppingListPage(),
         // When navigating to the "/newshoppinglist" route, build the SecondScreen widget.
         NewShoppingListPage.routeName: (context) => NewShoppingListPage(),
+        ListSuggeridProducts.routeName: (context) => ListSuggeridProducts(),
       },
     );
   }

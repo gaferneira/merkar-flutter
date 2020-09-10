@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:merkar/app/core/constants.dart';
+import 'package:merkar/app/pages/products/list_suggerid_products.dart';
 import 'package:provider/provider.dart';
 
 import '../../../app/pages/shopping_list/shopping_list_view_model.dart';
@@ -33,7 +35,16 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                         ? Text('Loading...')
                         : _showProductsList(viewModel.list),
                   ),
+                  floatingActionButton: FloatingActionButton(
+                    onPressed: () => {_showListSuggerProducts(context)},
+                    tooltip: Constant.label_tootip_add_products,
+                    child: Icon(Icons.add),
+                  ),
                 )));
+  }
+
+  _showListSuggerProducts(BuildContext context) async {
+    Navigator.of(context).pushNamed(ListSuggeridProducts.routeName);
   }
 
   Widget _showProductsList(List<ListProduct> listProducts) {
