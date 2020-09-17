@@ -11,7 +11,7 @@ abstract class ShoppingListsRepository {
   //Products
   Stream<List<ListProduct>> fetchProducts(ShoppingList list);
   Future<Either<Failure, ListProduct>> saveProduct(
-      ListProduct product, ShoppingList item);
+      ListProduct product, ShoppingList list);
   Future<Either<Failure, bool>> removeProduct(
-      ListProduct product, ShoppingList item);
+      ListProduct product, ShoppingList list);
 }

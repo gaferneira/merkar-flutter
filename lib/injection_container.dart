@@ -1,6 +1,7 @@
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
+import 'package:merkar/app/pages/new_product/create_new_product_view_model.dart';
 import 'package:merkar/app/pages/select_my_products/select_my_products_view_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,19 +19,8 @@ import 'data/utils/network/network_info.dart';
 final serviceLocator = GetIt.instance;
 
 Future<void> init() async {
-  //! Features - Home
   // ViewModels
-  serviceLocator.registerFactory(() => HomePageViewModel(
-        shoppingListsRepository: serviceLocator(),
-      ));
-
-  serviceLocator.registerFactory(
-      () => ShoppingListViewModel(repository: serviceLocator()));
-  serviceLocator.registerFactory(
-      () => NewShoppingListViewModel(repository: serviceLocator()));
-  serviceLocator.registerFactory(() => SelectMyProductsViewModel(
-      shoppingListRepository: serviceLocator(),
-      productsRepository: serviceLocator()));
+  createViewModels();
 
   // Repository
   serviceLocator.registerLazySingleton<ShoppingListsRepository>(
@@ -57,4 +47,23 @@ Future<void> init() async {
   serviceLocator.registerLazySingleton(() => sharedPreferences);
   serviceLocator.registerLazySingleton(() => http.Client());
   serviceLocator.registerLazySingleton(() => DataConnectionChecker());
+}
+
+void createViewModels() {
+  serviceLocator.registerFactory(() => HomePageViewModel(
+        shoppingListsRepository: serviceLocator(),
+      ));
+
+  serviceLocator.registerFactory(
+      () => ShoppingListViewModel(repository: serviceLocator()));
+
+  serviceLocator.registerFactory(
+      () => NewShoppingListViewModel(repository: serviceLocator()));
+
+  serviceLocator.registerFactory(() => SelectMyProductsViewModel(
+      shoppingListRepository: serviceLocator(),
+      productsRepository: serviceLocator()));
+
+  serviceLocator.registerFactory(
+      () => CreateNewProductsViewModel(productsRepository: serviceLocator()));
 }

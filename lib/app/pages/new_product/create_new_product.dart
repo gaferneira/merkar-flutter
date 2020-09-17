@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/constants.dart';
 import 'package:merkar/app/core/strings.dart';
+import 'package:merkar/app/pages/new_product/create_new_product_view_model.dart';
+
+import '../../../injection_container.dart';
 
 class CreateNewProduct extends StatefulWidget {
   static const routeName = "/create_new_product";
@@ -11,6 +14,10 @@ class CreateNewProduct extends StatefulWidget {
 
 class _CreateNewProductState extends State<CreateNewProduct> {
   final keyNewProduct = GlobalKey<FormState>();
+
+  CreateNewProductsViewModel viewModel =
+      serviceLocator<CreateNewProductsViewModel>();
+
   String nameProduct;
   String nameCategory;
   double quantity;
@@ -99,6 +106,8 @@ class _CreateNewProductState extends State<CreateNewProduct> {
   void _saveNewProduct() {
     if (keyNewProduct.currentState.validate()) {
       keyNewProduct.currentState.save();
+      //Implement save
+      //viewModel.saveProduct(product, context)
     }
   }
 }
