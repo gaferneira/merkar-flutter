@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:merkar/app/pages/new_product/create_new_product.dart';
 import 'package:merkar/app/pages/select_my_products/select_my_products_page.dart';
 import 'package:merkar/app/pages/shopping_list/shopping_list_page.dart';
 
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
         ShoppingListPage.routeName: (context) => ShoppingListPage(),
         NewShoppingListPage.routeName: (context) => NewShoppingListPage(),
         SelectMyProductsPage.routeName: (context) => SelectMyProductsPage(),
+        CreateNewProduct.routeName: (context) => CreateNewProduct(),
       },
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/strings.dart';
+import 'package:merkar/app/pages/new_product/create_new_product.dart';
 import 'package:merkar/data/entities/product.dart';
 import 'package:provider/provider.dart';
 
@@ -34,6 +35,13 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
                         ? Text('Loading...')
                         : _showProductsList(viewModel.list),
                   ),
+                  floatingActionButton: FloatingActionButton(
+                    tooltip: Strings.label_tootip_new_product,
+                    child: Icon(Icons.add),
+                    onPressed: () {
+                      _createNewProduct(context);
+                    },
+                  ),
                 )));
   }
 
@@ -52,5 +60,9 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
         );
       },
     );
+  }
+
+  _createNewProduct(BuildContext context) {
+    Navigator.of(context).pushNamed(CreateNewProduct.routeName);
   }
 }
