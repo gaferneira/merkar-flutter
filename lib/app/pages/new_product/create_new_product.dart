@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:merkar/app/core/constants.dart';
 import 'package:merkar/app/core/strings.dart';
 import 'package:merkar/app/pages/new_product/create_new_product_view_model.dart';
+import 'package:merkar/app/pages/select_my_products/select_my_products_page.dart';
+import 'package:merkar/app/pages/shopping_list/shopping_list_page.dart';
+import 'package:merkar/data/entities/product.dart';
 
 import '../../../injection_container.dart';
 
@@ -20,8 +23,7 @@ class _CreateNewProductState extends State<CreateNewProduct> {
 
   String nameProduct;
   String nameCategory;
-  double quantity;
-  double price;
+  String price;
 
   @override
   Widget build(BuildContext context) {
@@ -67,24 +69,13 @@ class _CreateNewProductState extends State<CreateNewProduct> {
             ),
             TextFormField(
               decoration: InputDecoration(labelText: "Precio"),
+              keyboardType: TextInputType.number,
               onSaved: (value) {
-                price = value as double;
+                price = value;
               },
               validator: (value) {
                 if (value.isEmpty) {
                   return "Ingrese el Precio";
-                }
-                return null;
-              },
-            ),
-            TextFormField(
-              decoration: InputDecoration(labelText: "Cantidad"),
-              onSaved: (value) {
-                quantity = value as double;
-              },
-              validator: (value) {
-                if (value.isEmpty) {
-                  return "Ingrese la cantidad";
                 }
                 return null;
               },
@@ -106,8 +97,12 @@ class _CreateNewProductState extends State<CreateNewProduct> {
   void _saveNewProduct() {
     if (keyNewProduct.currentState.validate()) {
       keyNewProduct.currentState.save();
+      Product product = new Product(
+          category: nameCategory, name: nameProduct, price: price.toString());
       //Implement save
-      //viewModel.saveProduct(product, context)
+      viewModel.saveProduct(product, context);
+      Navigator.pop(context);
+      Navigator.of(context).pushNamed(SelectMyProductsPage.routeName);
     }
   }
 }
