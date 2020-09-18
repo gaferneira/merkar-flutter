@@ -42,12 +42,14 @@ class ShoppingListViewModel extends ChangeNotifier {
   Future<void> selectProduct(int index) async {
     var product = unselectedList[index];
     product.selected = true;
+    this.selectedList.add(product);
     repository.saveProduct(product, shoppingList);
   }
 
   Future<void> unselectProduct(int index) async {
     var product = selectedList[index];
     product.selected = false;
+    this.selectedList.remove(product);
     repository.saveProduct(product, shoppingList);
   }
 }

@@ -32,9 +32,18 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                     title: Text('${shoppingList.name}'),
                   ),
                   body: SingleChildScrollView(
-                    child: (viewModel.unselectedList == null)
-                        ? Text('Loading...')
-                        : _showProductsList(viewModel.unselectedList),
+                    child: Column(
+                      children: <Widget>[
+                        Center(child: Text("No seleccionados")),
+                        (viewModel.unselectedList == null)
+                            ? Text('Loading...')
+                            : _showProductsList(viewModel.unselectedList),
+                        Center(child: Text("Seleccionados")),
+                        (viewModel.selectedList == null)
+                            ? Text('Loading...')
+                            : _showSelectProductsList(viewModel.selectedList),
+                      ],
+                    ),
                   ),
                   floatingActionButton: FloatingActionButton(
                     onPressed: () =>
@@ -60,10 +69,50 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       ),
       itemCount: listProducts.length,
       itemBuilder: (context, index) {
-        return ListTile(
+        return CheckboxListTile(
+          title: Text("${listProducts[index].name}"),
+          controlAffinity: ListTileControlAffinity.leading,
+          onChanged: (bool value) {
+            viewModel.selectProduct(index);
+          },
+          value: listProducts[index].selected,
+          activeColor: Colors.cyan,
+          checkColor: Colors.green,
+        );
+        /*return ListTile(
           title: Text("${listProducts[index].name}"),
           onTap: () {},
+        );*/
+      },
+    );
+  }
+
+  Widget _showSelectProductsList(List<ListProduct> listProducts) {
+    return ListView.separated(
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      separatorBuilder: (context, index) => Divider(
+        color: Colors.black,
+      ),
+      itemCount: listProducts.length,
+      itemBuilder: (context, index) {
+        return CheckboxListTile(
+          title: Text("${listProducts[index].name}"),
+          controlAffinity: ListTileControlAffinity.leading,
+          onChanged: (bool value) {
+            if (value)
+              viewModel.selectProduct(index);
+            else
+              viewModel.unselectProduct(index);
+          },
+          value: listProducts[index].selected,
+          activeColor: Colors.cyan,
+          checkColor: Colors.green,
         );
+        /*return ListTile(
+          title: Text("${listProducts[index].name}"),
+          onTap: () {},
+        );*/
       },
     );
   }

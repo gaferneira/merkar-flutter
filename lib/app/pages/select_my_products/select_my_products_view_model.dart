@@ -72,7 +72,8 @@ class SelectMyProductsViewModel extends ChangeNotifier {
           name: product.name,
           price: product.price,
           quantity: 1,
-          total: product.price);
+          total: product.price,
+          selected: false);
       shoppingListRepository.saveProduct(productList, shoppingList);
     } else {
       shoppingListRepository.removeProduct(product.id, shoppingList);

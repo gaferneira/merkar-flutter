@@ -58,9 +58,6 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
             ),
         itemCount: userProducts.length,
         itemBuilder: (context, index) {
-          //bool _checked = !productsSelectList.contains(listProducts[index]);
-          /*    print(userProducts[index].name);
-          print(userProducts[index].selected);*/
           return CheckboxListTile(
             title: Text("${userProducts[index].name}"),
             controlAffinity: ListTileControlAffinity.leading,
