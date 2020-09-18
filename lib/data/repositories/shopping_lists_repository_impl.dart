@@ -75,11 +75,11 @@ class ShoppingListsRepositoryImpl implements ShoppingListsRepository {
 
   @override
   Future<Either<Failure, bool>> removeProduct(
-      ListProduct product, ShoppingList list) async {
+      String productId, ShoppingList list) async {
     await firestoreDataSource.db
         .doc(list.path)
         .collection(COLLECTION_PRODUCTS)
-        .doc(product.id)
+        .doc(productId)
         .delete();
     return Right(true);
   }

@@ -6,6 +6,8 @@ class Product {
   final String price;
   final String category;
 
+  bool selected = false;
+
   Product({this.name, this.price, this.category}) : super();
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(

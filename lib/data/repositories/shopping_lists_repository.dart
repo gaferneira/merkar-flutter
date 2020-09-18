@@ -13,5 +13,5 @@ abstract class ShoppingListsRepository {
   Future<Either<Failure, ListProduct>> saveProduct(
       ListProduct product, ShoppingList list);
   Future<Either<Failure, bool>> removeProduct(
-      ListProduct product, ShoppingList list);
+      String productId, ShoppingList list);
 }
