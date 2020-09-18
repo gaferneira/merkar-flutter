@@ -2,12 +2,20 @@ class ListProduct {
   String id;
   String path;
   final String name;
-  final String price;
   final String category;
-  final int quantity;
-  final String total;
+  String price;
+  int quantity;
+  String total;
+  bool selected;
 
-  ListProduct({this.name, this.price, this.category, this.quantity, this.total})
+  ListProduct(
+      {this.id,
+      this.name,
+      this.price,
+      this.category,
+      this.quantity,
+      this.total,
+      this.selected})
       : super();
 
   factory ListProduct.fromJson(Map<String, dynamic> json) => ListProduct(
@@ -16,6 +24,7 @@ class ListProduct {
         category: json["category"],
         quantity: json["quantity"],
         total: json["total"],
+        selected: json["selected"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -24,5 +33,6 @@ class ListProduct {
         "category": category,
         "quantity": quantity,
         "total": total,
+        "selected": selected,
       };
 }

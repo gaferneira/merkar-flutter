@@ -8,18 +8,46 @@ class ShoppingListViewModel extends ChangeNotifier {
 
   ShoppingListViewModel({@required this.repository});
 
-  List<ListProduct> list;
+  ShoppingList shoppingList;
+  List<ListProduct> unselectedList;
+  List<ListProduct> selectedList;
   String error;
 
   Future<void> loadData(ShoppingList shoppingList) async {
+    this.shoppingList = shoppingList;
     repository.fetchProducts(shoppingList).listen((data) {
-      list = data;
-      print(data.length);
+      updateList(data);
       error = null;
-      notifyListeners();
     }, onError: (e) {
       error = e;
       notifyListeners();
     });
+  }
+
+  void updateList(List<ListProduct> list) {
+    unselectedList = List<ListProduct>();
+    selectedList = List<ListProduct>();
+
+    list.forEach((product) {
+      if (product.selected) {
+        selectedList.add(product);
+      } else {
+        unselectedList.add(product);
+      }
+    });
+
+    notifyListeners();
+  }
+
+  Future<void> selectProduct(int index) async {
+    var product = unselectedList[index];
+    product.selected = true;
+    repository.saveProduct(product, shoppingList);
+  }
+
+  Future<void> unselectProduct(int index) async {
+    var product = selectedList[index];
+    product.selected = false;
+    repository.saveProduct(product, shoppingList);
   }
 }

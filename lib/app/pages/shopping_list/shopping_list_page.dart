@@ -32,9 +32,9 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                     title: Text('${shoppingList.name}'),
                   ),
                   body: SingleChildScrollView(
-                    child: (viewModel.list == null)
+                    child: (viewModel.unselectedList == null)
                         ? Text('Loading...')
-                        : _showProductsList(viewModel.list),
+                        : _showProductsList(viewModel.unselectedList),
                   ),
                   floatingActionButton: FloatingActionButton(
                     onPressed: () =>

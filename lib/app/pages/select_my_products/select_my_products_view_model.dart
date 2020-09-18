@@ -45,22 +45,19 @@ class SelectMyProductsViewModel extends ChangeNotifier {
   }
 
   void updateList() {
-    print("UpdateList Select my products view moel");
+    print("UpdateList Select my products view model");
     if (shoppingProducts != null && userProducts != null) {
-      for (var i = 0; i < shoppingProducts.length; i++) {
-        var product = shoppingProducts[i];
-        for (var j = 0; j < userProducts.length; j++) {
-          var userProduct = userProducts[j];
-          print("id shoppinProduct: " +
-              product.id +
-              "   id UserProduct: " +
-              userProduct.id);
+      userProducts.forEach((product) {
+        product.selected = false;
+      });
+
+      shoppingProducts.forEach((product) {
+        userProducts.forEach((userProduct) {
           if (product.id == userProduct.id) {
             userProduct.selected = true;
-            break;
           }
-        }
-      }
+        });
+      });
     }
 
     notifyListeners();
@@ -70,10 +67,12 @@ class SelectMyProductsViewModel extends ChangeNotifier {
     var product = userProducts[index];
     if (selected) {
       var productList = ListProduct(
+          id: product.id,
           category: product.category,
           name: product.name,
           price: product.price,
-          quantity: 1);
+          quantity: 1,
+          total: product.price);
       shoppingListRepository.saveProduct(productList, shoppingList);
     } else {
       shoppingListRepository.removeProduct(product.id, shoppingList);
