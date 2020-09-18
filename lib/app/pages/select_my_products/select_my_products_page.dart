@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/strings.dart';
 import 'package:merkar/app/pages/new_product/create_new_product.dart';
+import 'package:merkar/data/entities/list_product.dart';
 import 'package:merkar/data/entities/product.dart';
+import 'package:merkar/data/entities/shopping_list.dart';
 import 'package:provider/provider.dart';
 
 import '../../../injection_container.dart';
@@ -18,10 +20,12 @@ class SelectMyProductsPage extends StatefulWidget {
 class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
   SelectMyProductsViewModel viewModel =
       serviceLocator<SelectMyProductsViewModel>();
-
+  //List<ListProduct> shoppingProducts;
+  ShoppingList shoppingList;
   @override
   Widget build(BuildContext context) {
-    viewModel.loadData();
+    shoppingList = ModalRoute.of(context).settings.arguments;
+    viewModel.loadData(shoppingList);
 
     return ChangeNotifierProvider<SelectMyProductsViewModel>(
         create: (context) => viewModel,
@@ -31,9 +35,9 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
                     title: Text(Strings.title_my_products),
                   ),
                   body: SingleChildScrollView(
-                    child: (viewModel.list == null)
+                    child: (viewModel.userProducts == null)
                         ? Text('Loading...')
-                        : _showProductsList(viewModel.list),
+                        : _showProductsList(viewModel.userProducts),
                   ),
                   floatingActionButton: FloatingActionButton(
                     tooltip: Strings.label_tootip_new_product,
@@ -45,21 +49,29 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
                 )));
   }
 
-  Widget _showProductsList(List<Product> listProducts) {
+  Widget _showProductsList(List<Product> userProducts) {
     return ListView.separated(
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      separatorBuilder: (context, index) => Divider(
-        color: Colors.black,
-      ),
-      itemCount: listProducts.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-          title: Text("${listProducts[index].name}"),
-          onTap: () {},
-        );
-      },
-    );
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        separatorBuilder: (context, index) => Divider(
+              color: Colors.black,
+            ),
+        itemCount: userProducts.length,
+        itemBuilder: (context, index) {
+          //bool _checked = !productsSelectList.contains(listProducts[index]);
+          /*    print(userProducts[index].name);
+          print(userProducts[index].selected);*/
+          return CheckboxListTile(
+            title: Text("${userProducts[index].name}"),
+            controlAffinity: ListTileControlAffinity.leading,
+            onChanged: (bool value) {
+              viewModel.selectProduct(index, value);
+            },
+            value: userProducts[index].selected,
+            activeColor: Colors.cyan,
+            checkColor: Colors.green,
+          );
+        });
   }
 
   _createNewProduct(BuildContext context) {

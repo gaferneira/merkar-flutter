@@ -23,6 +23,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
     final shoppingList =
         ModalRoute.of(context).settings.arguments as ShoppingList;
     viewModel.loadData(shoppingList);
+
     return ChangeNotifierProvider<ShoppingListViewModel>(
         create: (context) => viewModel,
         child: Consumer<ShoppingListViewModel>(
@@ -36,15 +37,18 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                         : _showProductsList(viewModel.list),
                   ),
                   floatingActionButton: FloatingActionButton(
-                    onPressed: () => {_showListSuggerProducts(context)},
+                    onPressed: () =>
+                        {_showListSuggerProducts(context, shoppingList)},
                     tooltip: Strings.label_tootip_add_products,
                     child: Icon(Icons.add),
                   ),
                 )));
   }
 
-  _showListSuggerProducts(BuildContext context) async {
-    Navigator.of(context).pushNamed(SelectMyProductsPage.routeName);
+  _showListSuggerProducts(
+      BuildContext context, ShoppingList shoppingList) async {
+    Navigator.of(context)
+        .pushNamed(SelectMyProductsPage.routeName, arguments: shoppingList);
   }
 
   Widget _showProductsList(List<ListProduct> listProducts) {
