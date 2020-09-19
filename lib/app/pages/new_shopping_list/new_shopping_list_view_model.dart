@@ -1,23 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:merkar/data/entities/product.dart';
-import 'package:merkar/data/repositories/products_repository.dart';
+import 'package:merkar/app/core/strings.dart';
+import 'package:merkar/app/pages/shopping_list/shopping_list_page.dart';
+import 'package:merkar/data/entities/error/failures.dart';
+import 'package:merkar/data/entities/shopping_list.dart';
+import 'package:merkar/data/repositories/shopping_lists_repository.dart';
 
 class NewShoppingListViewModel extends ChangeNotifier {
-  final ProductsRepository productsRepository;
+  final ShoppingListsRepository repository;
 
-  NewShoppingListViewModel({@required this.productsRepository});
+  NewShoppingListViewModel({@required this.repository});
 
-  List<Product> list;
-  String error;
+  void saveList(String name, BuildContext context) async {
+    final result = await repository.save(ShoppingList(name: name));
 
-  void loadData(String listId) async {
-    productsRepository.fetchByList(listId).listen((data) {
-      list = data;
-      error = null;
-      notifyListeners();
-    }, onError: (e) {
-      error = e;
-      notifyListeners();
-    });
+    result.fold(
+        (failure) => {_mapFailureToMessage(failure)},
+        (value) => {
+              Navigator.pushNamed(
+                context,
+                ShoppingListPage.routeName,
+                arguments: value,
+              )
+            });
+  }
+
+  String _mapFailureToMessage(Failure failure) {
+    switch (failure.runtimeType) {
+      case ServerFailure:
+        return Strings.SERVER_FAILURE_MESSAGE;
+      case CacheFailure:
+        return Strings.CACHE_FAILURE_MESSAGE;
+      default:
+        return 'Unexpected error';
+    }
   }
 }

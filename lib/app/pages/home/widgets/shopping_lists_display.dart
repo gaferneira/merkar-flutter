@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:merkar/app/core/constants.dart';
-import 'package:merkar/app/pages/home/widgets/show_select_list.dart';
+import 'package:merkar/app/core/strings.dart';
+import 'package:merkar/app/pages/shopping_list/shopping_list_page.dart';
 import 'package:merkar/data/entities/shopping_list.dart';
 
 Widget shoppingListsDisplay(List<ShoppingList> list) {
   if (list.length == 0) {
-    return Center(child: Text(Constant.noCategoriesAvailable));
+    return Center(child: Text(Strings.noCategoriesAvailable));
   }
   return Expanded(
     child: listProducts(list),
@@ -28,7 +28,7 @@ Widget listProducts(List<ShoppingList> list) {
           print(list[index].name);
           Navigator.pushNamed(
             context,
-            ShowSelectList.routeName,
+            ShoppingListPage.routeName,
             arguments: list[index],
           );
         },
