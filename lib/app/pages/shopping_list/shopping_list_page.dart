@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:merkar/app/core/constants.dart';
 import 'package:merkar/app/core/strings.dart';
 import 'package:merkar/app/pages/select_my_products/select_my_products_page.dart';
 import 'package:provider/provider.dart';
@@ -51,6 +52,24 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                     tooltip: Strings.label_tootip_add_products,
                     child: Icon(Icons.add),
                   ),
+                  bottomNavigationBar: Container(
+                      height: Constant.bottomBarHeight,
+                      width: MediaQuery.of(context).size.width,
+                      child: BottomNavigationBar(
+                        currentIndex:
+                            0, // this will be set when a new tab is tapped
+                        items: [
+                          BottomNavigationBarItem(
+                            icon: new Icon(Icons.insert_chart),
+                            title: new Text('Total: ${viewModel.totalList}'),
+                          ),
+                          BottomNavigationBarItem(
+                            icon: new Icon(Icons.shopping_cart),
+                            title: new Text(
+                                'Carrito (${viewModel.contProductsCar})'),
+                          ),
+                        ],
+                      )),
                 )));
   }
 
