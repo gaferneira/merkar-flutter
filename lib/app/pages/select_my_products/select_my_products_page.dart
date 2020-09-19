@@ -27,8 +27,8 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
     shoppingList = ModalRoute.of(context).settings.arguments;
     viewModel.loadData(shoppingList);
 
-    return ChangeNotifierProvider<SelectMyProductsViewModel>(
-        create: (context) => viewModel,
+    return ChangeNotifierProvider<SelectMyProductsViewModel>.value(
+        value: viewModel,
         child: Consumer<SelectMyProductsViewModel>(
             builder: (context, model, child) => Scaffold(
                   appBar: AppBar(

@@ -24,8 +24,8 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
         ModalRoute.of(context).settings.arguments as ShoppingList;
     viewModel.loadData(shoppingList);
 
-    return ChangeNotifierProvider<ShoppingListViewModel>(
-        create: (context) => viewModel,
+    return ChangeNotifierProvider<ShoppingListViewModel>.value(
+        value: viewModel,
         child: Consumer<ShoppingListViewModel>(
             builder: (context, model, child) => Scaffold(
                   appBar: AppBar(

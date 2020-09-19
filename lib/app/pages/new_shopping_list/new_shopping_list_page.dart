@@ -26,8 +26,8 @@ class _NewShoppingListPageState extends State<NewShoppingListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<NewShoppingListViewModel>(
-      create: (context) => viewModel,
+    return ChangeNotifierProvider<NewShoppingListViewModel>.value(
+      value: viewModel,
       child: Consumer<NewShoppingListViewModel>(
         builder: (context, model, child) => Scaffold(
           appBar: AppBar(

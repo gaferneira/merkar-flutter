@@ -45,7 +45,6 @@ class SelectMyProductsViewModel extends ChangeNotifier {
   }
 
   void updateList() {
-    print("UpdateList Select my products view model");
     if (shoppingProducts != null && userProducts != null) {
       userProducts.forEach((product) {
         product.selected = false;
