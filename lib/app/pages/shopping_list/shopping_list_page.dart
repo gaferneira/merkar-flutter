@@ -94,6 +94,13 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
           onChanged: (bool value) {
             viewModel.selectProduct(index);
           },
+          secondary: IconButton(
+            icon: Icon(Icons.edit),
+            tooltip: 'Editar',
+            onPressed: () {
+              setState(() {});
+            },
+          ),
           value: listProducts[index].selected,
           activeColor: Colors.cyan,
           checkColor: Colors.green,
@@ -124,6 +131,13 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
             else
               viewModel.unselectProduct(index);
           },
+          secondary: IconButton(
+            icon: Icon(Icons.edit),
+            tooltip: 'Editar',
+            onPressed: () {
+              _showEditProduct(listProducts[index], context);
+            },
+          ),
           value: listProducts[index].selected,
           activeColor: Colors.cyan,
           checkColor: Colors.green,
@@ -134,5 +148,60 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
         );*/
       },
     );
+  }
+
+  Future<void> _showEditProduct(ListProduct list, BuildContext context) async {
+    return await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(Strings.editProductTittle + ": ${list.name}"),
+        content: Form(
+          child: Column(
+            children: <Widget>[
+              TextFormField(
+                initialValue: "${list.quantity}",
+                decoration: InputDecoration(labelText: Strings.label_quantity),
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return "Ingrese la cantidad";
+                  } else
+                    return null;
+                },
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _askedToLead(ListProduct list) async {
+    switch (await showDialog<dynamic>(
+        context: context,
+        builder: (BuildContext context) {
+          return SimpleDialog(
+            title: const Text('Select assignment'),
+            children: <Widget>[
+              SimpleDialogOption(
+                onPressed: () {
+                  Navigator.pop(context, list.name);
+                },
+                child: const Text('Treasury department'),
+              ),
+              SimpleDialogOption(
+                onPressed: () {
+                  Navigator.pop(context, list.quantity);
+                },
+                child: const Text('State department'),
+              ),
+            ],
+          );
+        })) {
+      case ListProduct:
+        // Let's go.
+        // ...
+        break;
+    }
   }
 }
