@@ -136,7 +136,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
           },
           secondary: IconButton(
             icon: Icon(Icons.edit),
-            tooltip: 'Editar',
+            tooltip: Strings.label_edit,
             onPressed: () {
               _showEditProduct(listProducts[index], context);
             },
@@ -208,6 +208,11 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   }
 
   void _saveEditProduct() {
-    if (keyFormEditProduct.currentState.validate()) {}
+    if (keyFormEditProduct.currentState.validate()) {
+      keyFormEditProduct.currentState.save();
+      print("${this.temp_price},  ${this.temp_quantity}");
+      //Editar desde el modelo
+      // viewModel.updateProduct();
+    }
   }
 }

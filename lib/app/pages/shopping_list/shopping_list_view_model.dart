@@ -65,4 +65,9 @@ class ShoppingListViewModel extends ChangeNotifier {
     this.selectedList.remove(product);
     repository.saveProduct(product, shoppingList);
   }
+
+  Future<void> updateProduct(int index) async {
+    //Llamar al reposirio
+    //repository.saveProduct(product, shoppingList)
+  }
 }
