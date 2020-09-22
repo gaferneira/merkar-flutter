@@ -153,17 +153,18 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
     );
   }
 
-  Future<void> _showEditProduct(ListProduct list, BuildContext context) async {
+  Future<void> _showEditProduct(
+      ListProduct product, BuildContext context) async {
     return await showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(Strings.editProductTittle + ": ${list.name}"),
+        title: Text(Strings.editProductTittle + ": ${product.name}"),
         content: Form(
           key: keyFormEditProduct,
           child: Column(
             children: <Widget>[
               TextFormField(
-                initialValue: "${list.quantity}",
+                initialValue: "${product.quantity}",
                 decoration: InputDecoration(labelText: Strings.label_quantity),
                 keyboardType: TextInputType.number,
                 validator: (value) {
@@ -177,7 +178,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                 },
               ),
               TextFormField(
-                initialValue: "${list.price}",
+                initialValue: "${product.price}",
                 decoration: InputDecoration(labelText: Strings.label_price),
                 keyboardType: TextInputType.number,
                 validator: (value) {
@@ -196,7 +197,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                   child: RaisedButton(
                       child: Text(Strings.label_save),
                       onPressed: () {
-                        _saveEditProduct();
+                        _saveEditProduct(product);
                       }),
                 ),
               ),
@@ -207,12 +208,12 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
     );
   }
 
-  void _saveEditProduct() {
+  void _saveEditProduct(ListProduct product) {
     if (keyFormEditProduct.currentState.validate()) {
       keyFormEditProduct.currentState.save();
-      print("${this.temp_price},  ${this.temp_quantity}");
-      //Editar desde el modelo
-      // viewModel.updateProduct();
+      product.price = this.temp_price.toString();
+      product.quantity = this.temp_quantity;
+      viewModel.updateProduct(product);
     }
   }
 }

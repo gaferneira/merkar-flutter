@@ -66,8 +66,7 @@ class ShoppingListViewModel extends ChangeNotifier {
     repository.saveProduct(product, shoppingList);
   }
 
-  Future<void> updateProduct(int index) async {
-    //Llamar al reposirio
-    //repository.saveProduct(product, shoppingList)
+  Future<void> updateProduct(ListProduct product) async {
+    await repository.saveProduct(product, shoppingList);
   }
 }
