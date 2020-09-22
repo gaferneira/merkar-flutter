@@ -17,7 +17,10 @@ class ShoppingListPage extends StatefulWidget {
 }
 
 class _ShoppingListPageState extends State<ShoppingListPage> {
+  final keyFormEditProduct = GlobalKey<FormState>();
   ShoppingListViewModel viewModel = serviceLocator<ShoppingListViewModel>();
+  int temp_quantity = null;
+  double temp_price = null;
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +101,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
             icon: Icon(Icons.edit),
             tooltip: 'Editar',
             onPressed: () {
-              setState(() {});
+              _showEditProduct(listProducts[index], context);
             },
           ),
           value: listProducts[index].selected,
@@ -156,6 +159,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       builder: (context) => AlertDialog(
         title: Text(Strings.editProductTittle + ": ${list.name}"),
         content: Form(
+          key: keyFormEditProduct,
           child: Column(
             children: <Widget>[
               TextFormField(
@@ -168,7 +172,34 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                   } else
                     return null;
                 },
-              )
+                onSaved: (value) {
+                  this.temp_quantity = int.parse(value);
+                },
+              ),
+              TextFormField(
+                initialValue: "${list.price}",
+                decoration: InputDecoration(labelText: Strings.label_price),
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return "Ingrese un valor";
+                  } else
+                    return null;
+                },
+                onSaved: (value) {
+                  this.temp_price = double.parse(value);
+                },
+              ),
+              Padding(
+                padding: const EdgeInsets.all(Constant.normalspace),
+                child: Center(
+                  child: RaisedButton(
+                      child: Text(Strings.label_save),
+                      onPressed: () {
+                        _saveEditProduct();
+                      }),
+                ),
+              ),
             ],
           ),
         ),
@@ -176,32 +207,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
     );
   }
 
-  Future<void> _askedToLead(ListProduct list) async {
-    switch (await showDialog<dynamic>(
-        context: context,
-        builder: (BuildContext context) {
-          return SimpleDialog(
-            title: const Text('Select assignment'),
-            children: <Widget>[
-              SimpleDialogOption(
-                onPressed: () {
-                  Navigator.pop(context, list.name);
-                },
-                child: const Text('Treasury department'),
-              ),
-              SimpleDialogOption(
-                onPressed: () {
-                  Navigator.pop(context, list.quantity);
-                },
-                child: const Text('State department'),
-              ),
-            ],
-          );
-        })) {
-      case ListProduct:
-        // Let's go.
-        // ...
-        break;
-    }
+  void _saveEditProduct() {
+    if (keyFormEditProduct.currentState.validate()) {}
   }
 }

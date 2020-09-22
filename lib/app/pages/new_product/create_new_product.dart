@@ -3,7 +3,6 @@ import 'package:merkar/app/core/constants.dart';
 import 'package:merkar/app/core/strings.dart';
 import 'package:merkar/app/pages/new_product/create_new_product_view_model.dart';
 import 'package:merkar/app/pages/select_my_products/select_my_products_page.dart';
-import 'package:merkar/app/pages/shopping_list/shopping_list_page.dart';
 import 'package:merkar/data/entities/product.dart';
 
 import '../../../injection_container.dart';
@@ -35,7 +34,7 @@ class _CreateNewProductState extends State<CreateNewProduct> {
     );
   }
 
-  _fromCreateProduct() {
+  Widget _fromCreateProduct() {
     return Form(
       key: keyNewProduct,
       child: Padding(
