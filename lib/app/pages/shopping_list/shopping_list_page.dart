@@ -1,4 +1,3 @@
-import 'package:dartz/dartz_streaming.dart' as dartz;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/constants.dart';
@@ -68,12 +67,12 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                         items: [
                           BottomNavigationBarItem(
                             icon: new Icon(Icons.insert_chart),
-                            title: new Text('Total: ${viewModel.totalList}'),
+                            title: new Text('Total: ${viewModel.totalPrice()}'),
                           ),
                           BottomNavigationBarItem(
                             icon: new Icon(Icons.shopping_cart),
                             title: new Text(
-                                'Carrito (${viewModel.contProductsCar})'),
+                                'Carrito (${viewModel.totalShopping()})'),
                           ),
                         ],
                       )),
