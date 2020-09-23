@@ -1,11 +1,15 @@
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
+import 'package:merkar/app/pages/login/auth_view_model.dart';
 import 'package:merkar/app/pages/new_product/create_new_product_view_model.dart';
 import 'package:merkar/app/pages/select_my_products/select_my_products_view_model.dart';
+import 'package:merkar/data/repositories/login_repository.dart';
+import 'package:merkar/data/repositories/login_repository_impl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app/pages/home/home_view_model.dart';
+import 'app/pages/login/login_view_model.dart';
 import 'app/pages/new_shopping_list/new_shopping_list_view_model.dart';
 import 'app/pages/shopping_list/shopping_list_view_model.dart';
 import 'data/local/local_data_source.dart';
@@ -19,18 +23,9 @@ import 'data/utils/network/network_info.dart';
 final serviceLocator = GetIt.instance;
 
 Future<void> init() async {
-  // ViewModels
   createViewModels();
 
-  // Repository
-  serviceLocator.registerLazySingleton<ShoppingListsRepository>(
-    () => ShoppingListsRepositoryImpl(
-        networkInfo: serviceLocator(), firestoreDataSource: serviceLocator()),
-  );
-  serviceLocator.registerLazySingleton<ProductsRepository>(
-    () => ProductsRepositoryImpl(
-        networkInfo: serviceLocator(), firestoreDataSource: serviceLocator()),
-  );
+  createRepositories();
 
   // Data sources
   serviceLocator.registerLazySingleton<LocalDataSource>(
@@ -50,6 +45,14 @@ Future<void> init() async {
 }
 
 void createViewModels() {
+  serviceLocator.registerFactory(() => AuthViewModel(
+        repository: serviceLocator(),
+      ));
+
+  serviceLocator.registerFactory(() => LoginViewModel(
+        repository: serviceLocator(),
+      ));
+
   serviceLocator.registerFactory(() => HomePageViewModel(
         shoppingListsRepository: serviceLocator(),
       ));
@@ -66,4 +69,20 @@ void createViewModels() {
 
   serviceLocator.registerFactory(
       () => CreateNewProductsViewModel(productsRepository: serviceLocator()));
+}
+
+void createRepositories() {
+  serviceLocator.registerLazySingleton<LoginRepository>(
+    () => LoginRepositoryImpl(),
+  );
+
+  serviceLocator.registerLazySingleton<ShoppingListsRepository>(
+    () => ShoppingListsRepositoryImpl(
+        networkInfo: serviceLocator(), firestoreDataSource: serviceLocator()),
+  );
+
+  serviceLocator.registerLazySingleton<ProductsRepository>(
+    () => ProductsRepositoryImpl(
+        networkInfo: serviceLocator(), firestoreDataSource: serviceLocator()),
+  );
 }
