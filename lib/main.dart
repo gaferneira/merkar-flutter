@@ -1,13 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:merkar/app/pages/login/auth_view_model.dart';
 import 'package:merkar/app/pages/new_product/create_new_product.dart';
 import 'package:merkar/app/pages/select_my_products/select_my_products_page.dart';
 import 'package:merkar/app/pages/shopping_list/shopping_list_page.dart';
+import 'package:provider/provider.dart';
 
 import 'app/pages/home/home_page.dart';
+import 'app/pages/login/login_page.dart';
 import 'app/pages/new_shopping_list/new_shopping_list_page.dart';
 import 'injection_container.dart' as di;
+import 'injection_container.dart';
 
 const bool USE_FIRESTORE_EMULATOR = false;
 
@@ -34,12 +38,47 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.
-        '/': (context) => HomePage(),
+        '/': (context) => AuthenticationPage(),
         ShoppingListPage.routeName: (context) => ShoppingListPage(),
         NewShoppingListPage.routeName: (context) => NewShoppingListPage(),
         SelectMyProductsPage.routeName: (context) => SelectMyProductsPage(),
         CreateNewProduct.routeName: (context) => CreateNewProduct(),
       },
+    );
+  }
+}
+
+class AuthenticationPage extends StatelessWidget {
+  final AuthViewModel viewModel = serviceLocator<AuthViewModel>();
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider<AuthViewModel>.value(
+      value: viewModel,
+      child: Consumer(
+        builder: (context, AuthViewModel viewModel, _) {
+          switch (viewModel.status) {
+            case AuthStatus.Unauthenticated:
+              return LoginPage();
+            case AuthStatus.Authenticated:
+              return HomePage();
+            case AuthStatus.Uninitialized:
+            default:
+              return Splash();
+          }
+        },
+      ),
+    );
+  }
+}
+
+class Splash extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      child: Center(
+        child: Text("Splash Screen"),
+      ),
     );
   }
 }
