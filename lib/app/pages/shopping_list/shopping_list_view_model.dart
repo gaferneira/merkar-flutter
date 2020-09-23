@@ -55,7 +55,7 @@ class ShoppingListViewModel extends ChangeNotifier {
   }
 
   Future<void> unselectProduct(int index) async {
-    contProductsCar += 1;
+    contProductsCar -= 1;
     var product = selectedList[index];
     product.selected = false;
     //calculate total
@@ -66,7 +66,9 @@ class ShoppingListViewModel extends ChangeNotifier {
     repository.saveProduct(product, shoppingList);
   }
 
-  Future<void> updateProduct(ListProduct product) async {
+  Future<void> updateProduct(ListProduct product, String oldTotal) async {
+    totalList =
+        totalList - double.parse(oldTotal) + double.parse(product.total);
     await repository.saveProduct(product, shoppingList);
   }
 }

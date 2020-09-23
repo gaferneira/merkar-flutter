@@ -92,14 +92,26 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       itemCount: listProducts.length,
       itemBuilder: (context, index) {
         return CheckboxListTile(
-          title: Text("${listProducts[index].name}"),
+          title: Column(
+            children: <Widget>[
+              Text(
+                "${listProducts[index].name}",
+              ),
+              Row(
+                children: <Widget>[
+                  Text(
+                      "${listProducts[index].quantity} = ${listProducts[index].price}"),
+                ],
+              )
+            ],
+          ),
           controlAffinity: ListTileControlAffinity.leading,
           onChanged: (bool value) {
             viewModel.selectProduct(index);
           },
           secondary: IconButton(
             icon: Icon(Icons.edit),
-            tooltip: 'Editar',
+            tooltip: Strings.label_edit,
             onPressed: () {
               _showEditProduct(listProducts[index], context);
             },
@@ -155,7 +167,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
 
   Future<void> _showEditProduct(
       ListProduct product, BuildContext context) async {
-    return await showDialog(
+    switch (await showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(Strings.editProductTittle + ": ${product.name}"),
@@ -198,6 +210,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                       child: Text(Strings.label_save),
                       onPressed: () {
                         _saveEditProduct(product);
+                        Navigator.pop(context, "${Strings.label_save}");
                       }),
                 ),
               ),
@@ -205,15 +218,20 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
           ),
         ),
       ),
-    );
+    )) {
+      default:
+        //Whatever
+        break;
+    }
   }
 
   void _saveEditProduct(ListProduct product) {
     if (keyFormEditProduct.currentState.validate()) {
       keyFormEditProduct.currentState.save();
-      product.price = this.temp_price.toString();
+      String oldTotal = product.total;
       product.quantity = this.temp_quantity;
-      viewModel.updateProduct(product);
+      product.total = (this.temp_price * this.temp_quantity).toString();
+      viewModel.updateProduct(product, oldTotal);
     }
   }
 }
