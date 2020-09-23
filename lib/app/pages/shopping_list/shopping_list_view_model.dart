@@ -73,7 +73,7 @@ class ShoppingListViewModel extends ChangeNotifier {
   String totalShopping() => _calculateTotalPrice(selectedList).toString();
 
   double _calculateTotalPrice(List<ListProduct> list) {
-    if (list != null) {
+    if (list != null && !list.isEmpty) {
       final total = list
           .map((item) => item.quantity * double.parse(item.price))
           .reduce((value, element) => value + element);

@@ -18,6 +18,7 @@ class Strings {
   static const String label_tootip_new_product = "Agregar Nuevo Producto";
   static const String label_save = "Guardar";
   static const String label_edit = "Editar";
+  static const String label_description = "Descripción";
   static const String label_finish = "Finalizar";
   static const String title_my_products = "Mis productos";
   static const String editProductTittle = "Editar Producto";

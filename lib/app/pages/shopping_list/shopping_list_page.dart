@@ -18,9 +18,11 @@ class ShoppingListPage extends StatefulWidget {
 
 class _ShoppingListPageState extends State<ShoppingListPage> {
   final keyFormEditProduct = GlobalKey<FormState>();
+  final keyFormFinishShoppingList = GlobalKey<FormState>();
   ShoppingListViewModel viewModel = serviceLocator<ShoppingListViewModel>();
   int temp_quantity = null;
   double temp_price = null;
+  String descriptionShoppingList = "";
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +50,9 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                             : _showSelectProductsList(viewModel.selectedList),
                         RaisedButton(
                             child: Text(Strings.label_finish),
-                            onPressed: () {}),
+                            onPressed: () {
+                              _finishShoppingList(shoppingList, context);
+                            }),
                       ],
                     ),
                   ),
@@ -230,6 +234,53 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                       onPressed: () {
                         _saveEditProduct(product);
                         Navigator.pop(context, "${Strings.label_save}");
+                      }),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    )) {
+      default:
+        //Whatever
+        break;
+    }
+  }
+
+  Future<void> _finishShoppingList(
+      ShoppingList shoppingList, BuildContext context) async {
+    switch (await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(Strings.editProductTittle + ": ${shoppingList.name}"),
+        content: Form(
+          key: keyFormFinishShoppingList,
+          child: Column(
+            children: <Widget>[
+              TextFormField(
+                initialValue: this.descriptionShoppingList,
+                decoration:
+                    InputDecoration(labelText: Strings.label_description),
+                keyboardType: TextInputType.text,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return "Llene la Descripción";
+                  } else
+                    return null;
+                },
+                onSaved: (value) {
+                  this.temp_price = double.parse(value);
+                },
+              ),
+              Padding(
+                padding: const EdgeInsets.all(Constant.normalspace),
+                child: Center(
+                  child: RaisedButton(
+                      child: Text(Strings.label_finish),
+                      onPressed: () {
+                        //Hacer la acción
+                        Navigator.pop(context, "${Strings.label_finish}");
                       }),
                 ),
               ),
