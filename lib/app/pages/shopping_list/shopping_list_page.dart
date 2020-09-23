@@ -23,7 +23,10 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   int temp_quantity = null;
   double temp_price = null;
   String descriptionShoppingList = "";
-
+  bool _character = false;
+  bool _character1 = false;
+  bool _character2 = false;
+  int _selectedRadio = 0;
   @override
   Widget build(BuildContext context) {
     final shoppingList =
@@ -36,6 +39,14 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
             builder: (context, model, child) => Scaffold(
                   appBar: AppBar(
                     title: Text('${shoppingList.name}'),
+                    actions: <Widget>[
+                      IconButton(
+                        icon: Icon(Icons.check_circle),
+                        onPressed: () {
+                          _finishShoppingList(shoppingList, context);
+                        },
+                      ),
+                    ],
                   ),
                   body: SingleChildScrollView(
                     child: Column(
@@ -253,7 +264,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
     switch (await showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(Strings.editProductTittle + ": ${shoppingList.name}"),
+        title: Text("${shoppingList.name}"),
         content: Form(
           key: keyFormFinishShoppingList,
           child: Column(
@@ -273,6 +284,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                   this.temp_price = double.parse(value);
                 },
               ),
+              _showCircleRadioButtoms(context),
               Padding(
                 padding: const EdgeInsets.all(Constant.normalspace),
                 child: Center(
@@ -304,4 +316,54 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       viewModel.updateProduct(product, oldTotal);
     }
   }
+
+  Widget _showCircleRadioButtoms(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        ListTile(
+          title: const Text('Eliminar la lista'),
+          leading: Radio(
+            value: _character,
+            onChanged: (value) {
+              print(value);
+              setState(() {
+                _selectedRadio = 0;
+                _selectRadioBurttom(value, _selectedRadio);
+                _character = value;
+              });
+            },
+          ),
+        ),
+        ListTile(
+          title: const Text('Resetear la lista'),
+          leading: Radio(
+            value: _character1,
+            onChanged: (value) {
+              setState(() {
+                _selectedRadio = 1;
+                _selectRadioBurttom(value, _selectedRadio);
+                _character1 = !value;
+              });
+            },
+          ),
+        ),
+        ListTile(
+          title: const Text('No hacer nada'),
+          leading: Radio(
+            autofocus: true,
+            value: _character2,
+            onChanged: (value) {
+              setState(() {
+                _selectedRadio = 2;
+                _selectRadioBurttom(value, _selectedRadio);
+                _character2 = !value;
+              });
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  void _selectRadioBurttom(bool value, int option) {}
 }
