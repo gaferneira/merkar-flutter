@@ -17,7 +17,12 @@ class ShoppingListPage extends StatefulWidget {
 }
 
 class _ShoppingListPageState extends State<ShoppingListPage> {
+  final keyFormEditProduct = GlobalKey<FormState>();
+  final keyFormFinishShoppingList = GlobalKey<FormState>();
   ShoppingListViewModel viewModel = serviceLocator<ShoppingListViewModel>();
+  int temp_quantity = null;
+  double temp_price = null;
+  String descriptionShoppingList = "";
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +48,11 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                         (viewModel.selectedList == null)
                             ? Text('Loading...')
                             : _showSelectProductsList(viewModel.selectedList),
+                        RaisedButton(
+                            child: Text(Strings.label_finish),
+                            onPressed: () {
+                              _finishShoppingList(shoppingList, context);
+                            }),
                       ],
                     ),
                   ),
@@ -61,12 +71,12 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                         items: [
                           BottomNavigationBarItem(
                             icon: new Icon(Icons.insert_chart),
-                            title: new Text('Total: ${viewModel.totalList}'),
+                            title: new Text('Total: ${viewModel.totalPrice()}'),
                           ),
                           BottomNavigationBarItem(
                             icon: new Icon(Icons.shopping_cart),
                             title: new Text(
-                                'Carrito (${viewModel.contProductsCar})'),
+                                'Carrito (${viewModel.totalShopping()})'),
                           ),
                         ],
                       )),
@@ -89,11 +99,32 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       itemCount: listProducts.length,
       itemBuilder: (context, index) {
         return CheckboxListTile(
-          title: Text("${listProducts[index].name}"),
+          title: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "${listProducts[index].name}",
+              ),
+              Row(
+                children: <Widget>[
+                  Text(
+                      "${listProducts[index].quantity} = ${listProducts[index].price}"),
+                ],
+              )
+            ],
+          ),
           controlAffinity: ListTileControlAffinity.leading,
           onChanged: (bool value) {
             viewModel.selectProduct(index);
           },
+          secondary: IconButton(
+            icon: Icon(Icons.edit),
+            tooltip: Strings.label_edit,
+            onPressed: () {
+              _showEditProduct(listProducts[index], context);
+            },
+          ),
           value: listProducts[index].selected,
           activeColor: Colors.cyan,
           checkColor: Colors.green,
@@ -116,7 +147,21 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       itemCount: listProducts.length,
       itemBuilder: (context, index) {
         return CheckboxListTile(
-          title: Text("${listProducts[index].name}"),
+          title: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "${listProducts[index].name}",
+              ),
+              Row(
+                children: <Widget>[
+                  Text(
+                      "${listProducts[index].quantity} = ${listProducts[index].price}"),
+                ],
+              )
+            ],
+          ),
           controlAffinity: ListTileControlAffinity.leading,
           onChanged: (bool value) {
             if (value)
@@ -124,6 +169,13 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
             else
               viewModel.unselectProduct(index);
           },
+          secondary: IconButton(
+            icon: Icon(Icons.edit),
+            tooltip: Strings.label_edit,
+            onPressed: () {
+              _showEditProduct(listProducts[index], context);
+            },
+          ),
           value: listProducts[index].selected,
           activeColor: Colors.cyan,
           checkColor: Colors.green,
@@ -134,5 +186,122 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
         );*/
       },
     );
+  }
+
+  Future<void> _showEditProduct(
+      ListProduct product, BuildContext context) async {
+    switch (await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(Strings.editProductTittle + ": ${product.name}"),
+        content: Form(
+          key: keyFormEditProduct,
+          child: Column(
+            children: <Widget>[
+              TextFormField(
+                initialValue: "${product.quantity}",
+                decoration: InputDecoration(labelText: Strings.label_quantity),
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return "Ingrese la cantidad";
+                  } else
+                    return null;
+                },
+                onSaved: (value) {
+                  this.temp_quantity = int.parse(value);
+                },
+              ),
+              TextFormField(
+                initialValue: "${product.price}",
+                decoration: InputDecoration(labelText: Strings.label_price),
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return "Ingrese un valor";
+                  } else
+                    return null;
+                },
+                onSaved: (value) {
+                  this.temp_price = double.parse(value);
+                },
+              ),
+              Padding(
+                padding: const EdgeInsets.all(Constant.normalspace),
+                child: Center(
+                  child: RaisedButton(
+                      child: Text(Strings.label_save),
+                      onPressed: () {
+                        _saveEditProduct(product);
+                        Navigator.pop(context, "${Strings.label_save}");
+                      }),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    )) {
+      default:
+        //Whatever
+        break;
+    }
+  }
+
+  Future<void> _finishShoppingList(
+      ShoppingList shoppingList, BuildContext context) async {
+    switch (await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(Strings.editProductTittle + ": ${shoppingList.name}"),
+        content: Form(
+          key: keyFormFinishShoppingList,
+          child: Column(
+            children: <Widget>[
+              TextFormField(
+                initialValue: this.descriptionShoppingList,
+                decoration:
+                    InputDecoration(labelText: Strings.label_description),
+                keyboardType: TextInputType.text,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return "Llene la Descripción";
+                  } else
+                    return null;
+                },
+                onSaved: (value) {
+                  this.temp_price = double.parse(value);
+                },
+              ),
+              Padding(
+                padding: const EdgeInsets.all(Constant.normalspace),
+                child: Center(
+                  child: RaisedButton(
+                      child: Text(Strings.label_finish),
+                      onPressed: () {
+                        //Hacer la acción
+                        Navigator.pop(context, "${Strings.label_finish}");
+                      }),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    )) {
+      default:
+        //Whatever
+        break;
+    }
+  }
+
+  void _saveEditProduct(ListProduct product) {
+    if (keyFormEditProduct.currentState.validate()) {
+      keyFormEditProduct.currentState.save();
+      String oldTotal = product.total;
+      product.quantity = this.temp_quantity;
+      product.total = (this.temp_price * this.temp_quantity).toString();
+      viewModel.updateProduct(product, oldTotal);
+    }
   }
 }

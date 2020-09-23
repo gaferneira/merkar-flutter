@@ -12,8 +12,6 @@ class ShoppingListViewModel extends ChangeNotifier {
   List<ListProduct> unselectedList;
   List<ListProduct> selectedList;
   String error;
-  int contProductsCar = 0;
-  double totalList = 0;
 
   Future<void> loadData(ShoppingList shoppingList) async {
     this.shoppingList = shoppingList;
@@ -42,27 +40,46 @@ class ShoppingListViewModel extends ChangeNotifier {
   }
 
   Future<void> selectProduct(int index) async {
-    contProductsCar += 1;
     var product = unselectedList[index];
     product.selected = true;
     //calculate the total
     print(product.price);
     double price = double.parse(product.price);
-    totalList += ((price) * product.quantity);
 
     this.selectedList.add(product);
     repository.saveProduct(product, shoppingList);
   }
 
   Future<void> unselectProduct(int index) async {
-    contProductsCar += 1;
     var product = selectedList[index];
     product.selected = false;
     //calculate total
     print(product.price);
     double price = double.parse(product.price);
-    totalList -= ((price) * product.quantity);
     this.selectedList.remove(product);
     repository.saveProduct(product, shoppingList);
+  }
+
+  Future<void> updateProduct(ListProduct product, String oldTotal) async {
+    await repository.saveProduct(product, shoppingList);
+  }
+
+  String totalPrice() {
+    final total = _calculateTotalPrice(unselectedList) +
+        _calculateTotalPrice(selectedList);
+    return total.toString();
+  }
+
+  String totalShopping() => _calculateTotalPrice(selectedList).toString();
+
+  double _calculateTotalPrice(List<ListProduct> list) {
+    if (list != null && !list.isEmpty) {
+      final total = list
+          .map((item) => item.quantity * double.parse(item.price))
+          .reduce((value, element) => value + element);
+
+      return total;
+    }
+    return 0;
   }
 }
