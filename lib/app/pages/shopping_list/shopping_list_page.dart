@@ -1,3 +1,4 @@
+import 'package:dartz/dartz_streaming.dart' as dartz;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/constants.dart';
@@ -46,6 +47,9 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                         (viewModel.selectedList == null)
                             ? Text('Loading...')
                             : _showSelectProductsList(viewModel.selectedList),
+                        RaisedButton(
+                            child: Text(Strings.label_finish),
+                            onPressed: () {}),
                       ],
                     ),
                   ),
@@ -93,6 +97,8 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       itemBuilder: (context, index) {
         return CheckboxListTile(
           title: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
                 "${listProducts[index].name}",
@@ -138,7 +144,21 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       itemCount: listProducts.length,
       itemBuilder: (context, index) {
         return CheckboxListTile(
-          title: Text("${listProducts[index].name}"),
+          title: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "${listProducts[index].name}",
+              ),
+              Row(
+                children: <Widget>[
+                  Text(
+                      "${listProducts[index].quantity} = ${listProducts[index].price}"),
+                ],
+              )
+            ],
+          ),
           controlAffinity: ListTileControlAffinity.leading,
           onChanged: (bool value) {
             if (value)
