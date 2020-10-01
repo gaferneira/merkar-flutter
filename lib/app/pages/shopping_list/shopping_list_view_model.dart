@@ -61,6 +61,7 @@ class ShoppingListViewModel extends ChangeNotifier {
   }
 
   Future<void> updateProduct(ListProduct product, String oldTotal) async {
+    print("Update product shopping list: ${product.total}");
     await repository.saveProduct(product, shoppingList);
   }
 

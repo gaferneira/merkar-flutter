@@ -277,6 +277,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       keyFormEditProduct.currentState.save();
       String oldTotal = product.total;
       product.quantity = this.temp_quantity;
+      product.price = this.temp_price.toString();
       product.total = (this.temp_price * this.temp_quantity).toString();
       viewModel.updateProduct(product, oldTotal);
     }

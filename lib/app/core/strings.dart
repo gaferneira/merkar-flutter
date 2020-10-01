@@ -4,6 +4,7 @@ class Strings {
   static const String route_comments = 'Comentarios';
   static const String route_about_us = 'Acerca de';
   static const String route_close_session = 'Cerrar Sesión';
+  static const String route_purchase_history = 'Historial de compras';
 
   //Failure
   static const String SERVER_FAILURE_MESSAGE = 'Server Failure';
