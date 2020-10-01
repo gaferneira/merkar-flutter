@@ -26,7 +26,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   int temp_quantity = null;
   double temp_price = null;
   String descriptionShoppingList = "";
-  List<String> _textRadioButom = [
+  List<String> _textRadioButton = [
     "Eliminar Lista",
     "Restaurar lista",
     "No hacer nada"
@@ -289,7 +289,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
     return Column(
       children: <Widget>[
         ListTile(
-          title: Text(_textRadioButom[0].toString()),
+          title: Text(_textRadioButton[0].toString()),
           leading: Radio(
             value: SingingCharacter.delete,
             groupValue: _character,
@@ -302,7 +302,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
           ),
         ),
         ListTile(
-          title: Text(_textRadioButom[1].toString()),
+          title: Text(_textRadioButton[1].toString()),
           leading: Radio(
             value: SingingCharacter.reset,
             groupValue: _character,
@@ -315,7 +315,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
           ),
         ),
         ListTile(
-          title: Text(_textRadioButom[2].toString()),
+          title: Text(_textRadioButton[2].toString()),
           leading: Radio(
             value: SingingCharacter.nothing,
             groupValue: _character,
@@ -341,10 +341,10 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
           _selected = newValue;
         });
       },
-      items: _textRadioButom.map((itemRadioButtom) {
+      items: _textRadioButton.map((itemRadioButton) {
         return DropdownMenuItem(
-          child: new Text(itemRadioButtom),
-          value: itemRadioButtom,
+          child: new Text(itemRadioButton),
+          value: itemRadioButton,
         );
       }).toList(),
     );
@@ -388,7 +388,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                         },
                       ),
                       ListTile(
-                        title: Text(_textRadioButom[0].toString()),
+                        title: Text(_textRadioButton[0].toString()),
                         leading: Radio(
                           value: SingingCharacter.delete,
                           groupValue: _character,
@@ -401,7 +401,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                         ),
                       ),
                       ListTile(
-                        title: Text(_textRadioButom[1].toString()),
+                        title: Text(_textRadioButton[1].toString()),
                         leading: Radio(
                           value: SingingCharacter.reset,
                           groupValue: _character,
@@ -414,7 +414,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                         ),
                       ),
                       ListTile(
-                        title: Text(_textRadioButom[2].toString()),
+                        title: Text(_textRadioButton[2].toString()),
                         leading: Radio(
                           value: SingingCharacter.nothing,
                           groupValue: _character,
@@ -432,8 +432,6 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                           child: RaisedButton(
                               child: Text(Strings.label_finish),
                               onPressed: () {
-                                //Hacer la acción
-
                                 _actionOnSaveList(shoppingList);
                               }),
                         ),
@@ -450,17 +448,8 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   void _actionOnSaveList(ShoppingList shoppingList) {
     if (keyFormPurchaseList.currentState.validate()) {
       keyFormPurchaseList.currentState.save();
-      //Create de purchaseHistory
-      switch (_character) {
-        case SingingCharacter.delete:
-          break;
-        case SingingCharacter.reset:
-          break;
-        case SingingCharacter.nothing:
-          break;
-      }
-      print("Descripción: ${descriptionShoppingList.toString()}");
-      Navigator.pop(context, "${Strings.label_finish}");
+      viewModel.finishShopping(
+          context, _character, descriptionShoppingList.toString());
     }
   }
 }

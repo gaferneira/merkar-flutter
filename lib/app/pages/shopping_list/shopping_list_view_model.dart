@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:merkar/app/pages/shopping_list/shopping_list_page.dart';
 import 'package:merkar/data/entities/list_product.dart';
 import 'package:merkar/data/entities/shopping_list.dart';
 import 'package:merkar/data/repositories/shopping_lists_repository.dart';
@@ -74,7 +75,7 @@ class ShoppingListViewModel extends ChangeNotifier {
   String totalShopping() => _calculateTotalPrice(selectedList).toString();
 
   double _calculateTotalPrice(List<ListProduct> list) {
-    if (list != null && !list.isEmpty) {
+    if (list != null && list.isNotEmpty) {
       final total = list
           .map((item) => item.quantity * double.parse(item.price))
           .reduce((value, element) => value + element);
@@ -82,5 +83,28 @@ class ShoppingListViewModel extends ChangeNotifier {
       return total;
     }
     return 0;
+  }
+
+  Future<void> finishShopping(
+      BuildContext context, SingingCharacter option, String detail) async {
+    await repository.createPurchaseHistory(detail, selectedList);
+    switch (option) {
+      case SingingCharacter.delete:
+        repository.remove(shoppingList);
+        break;
+      case SingingCharacter.reset:
+        selectedList.forEach((product) {
+          product.selected = false;
+          repository.saveProduct(product, shoppingList);
+        });
+        break;
+      case SingingCharacter.nothing:
+        break;
+    }
+
+    var count = 0;
+    Navigator.popUntil(context, (route) {
+      return count++ == 2;
+    });
   }
 }
