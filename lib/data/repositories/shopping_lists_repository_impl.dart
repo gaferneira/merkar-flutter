@@ -56,8 +56,12 @@ class ShoppingListsRepositoryImpl implements ShoppingListsRepository {
   @override
   Future<Either<Failure, bool>> remove(ShoppingList item) async {
     if (item.id != null) {
-
-      final products = await this.firestoreDataSource.db.doc(item.path).collection(COLLECTION_SHOPPING_LIST).get();
+      final products = await this
+          .firestoreDataSource
+          .db
+          .doc(item.path)
+          .collection(COLLECTION_SHOPPING_LIST)
+          .get();
 
       WriteBatch batch = firestoreDataSource.db.batch();
       products.docs.forEach((product) {
