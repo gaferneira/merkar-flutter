@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:merkar/data/entities/error/failures.dart';
 import 'package:merkar/data/entities/list_product.dart';
+import 'package:merkar/data/entities/purchase.dart';
 import 'package:meta/meta.dart';
 
 import '../entities/shopping_list.dart';
@@ -10,6 +12,7 @@ import '../utils/network/network_info.dart';
 
 class ShoppingListsRepositoryImpl implements ShoppingListsRepository {
   static const COLLECTION_SHOPPING_LIST = "shopping_lists";
+  static const COLLECTION_PURCHASE_HISTORY = "purchase_history";
   static const COLLECTION_PRODUCTS = "products";
 
   final NetworkInfo networkInfo;
@@ -53,7 +56,20 @@ class ShoppingListsRepositoryImpl implements ShoppingListsRepository {
   @override
   Future<Either<Failure, bool>> remove(ShoppingList item) async {
     if (item.id != null) {
-      await this.firestoreDataSource.db.doc(item.path).delete();
+      final products = await this
+          .firestoreDataSource
+          .db
+          .doc(item.path)
+          .collection(COLLECTION_SHOPPING_LIST)
+          .get();
+
+      WriteBatch batch = firestoreDataSource.db.batch();
+      products.docs.forEach((product) {
+        batch.delete(product.reference);
+      });
+      batch.delete(this.firestoreDataSource.db.doc(item.path));
+      batch.commit();
+
       return Right(true);
     }
     return Right(false);
@@ -93,5 +109,41 @@ class ShoppingListsRepositoryImpl implements ShoppingListsRepository {
         .doc(product.id)
         .set(product.toJson());
     return Right(product);
+  }
+
+  @override
+  Future<Either<Failure, Purchase>> createPurchaseHistory(
+      String detail, List<ListProduct> list) async {
+    final today = new DateTime.now();
+    final dateSlug =
+        "${today.year.toString()}-${today.month.toString().padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}";
+    final total = list
+        .map((item) => item.quantity * double.parse(item.price))
+        .reduce((value, element) => value + element);
+    final totalProducts = list.length.toString();
+
+    Purchase purchase = Purchase(
+        name: detail,
+        date: dateSlug,
+        total: total.toString(),
+        totalProducts: totalProducts);
+
+    WriteBatch batch = firestoreDataSource.db.batch();
+    DocumentReference document = firestoreDataSource
+        .getDataDocument()
+        .collection(COLLECTION_PURCHASE_HISTORY)
+        .doc();
+
+    batch.set(document, purchase.toJson());
+
+    list.forEach((product) {
+      DocumentReference productDoc =
+          document.collection(COLLECTION_PRODUCTS).doc();
+      batch.set(productDoc, product.toJson());
+    });
+
+    batch.commit();
+
+    return Right(purchase);
   }
 }

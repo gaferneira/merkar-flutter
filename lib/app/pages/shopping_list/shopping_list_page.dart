@@ -10,6 +10,8 @@ import '../../../data/entities/list_product.dart';
 import '../../../data/entities/shopping_list.dart';
 import '../../../injection_container.dart';
 
+enum SingingCharacter { delete, reset, nothing }
+
 class ShoppingListPage extends StatefulWidget {
   static const routeName = '/showselectlist';
   @override
@@ -19,10 +21,21 @@ class ShoppingListPage extends StatefulWidget {
 class _ShoppingListPageState extends State<ShoppingListPage> {
   final keyFormEditProduct = GlobalKey<FormState>();
   final keyFormFinishShoppingList = GlobalKey<FormState>();
+  final keyFormPurchaseList = GlobalKey<FormState>();
   ShoppingListViewModel viewModel = serviceLocator<ShoppingListViewModel>();
   int temp_quantity = null;
   double temp_price = null;
   String descriptionShoppingList = "";
+  List<String> _textRadioButton = [
+    "Eliminar Lista",
+    "Restaurar lista",
+    "No hacer nada"
+  ];
+
+  SingingCharacter _character = SingingCharacter.nothing;
+
+  var _selectedId;
+  String _selected;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +49,14 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
             builder: (context, model, child) => Scaffold(
                   appBar: AppBar(
                     title: Text('${shoppingList.name}'),
+                    actions: <Widget>[
+                      IconButton(
+                        icon: Icon(Icons.check_circle),
+                        onPressed: () {
+                          _showFinishDialog(shoppingList);
+                        },
+                      ),
+                    ],
                   ),
                   body: SingleChildScrollView(
                     child: Column(
@@ -51,7 +72,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                         RaisedButton(
                             child: Text(Strings.label_finish),
                             onPressed: () {
-                              _finishShoppingList(shoppingList, context);
+                              _showFinishDialog(shoppingList);
                             }),
                       ],
                     ),
@@ -129,10 +150,6 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
           activeColor: Colors.cyan,
           checkColor: Colors.green,
         );
-        /*return ListTile(
-          title: Text("${listProducts[index].name}"),
-          onTap: () {},
-        );*/
       },
     );
   }
@@ -248,60 +265,163 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
     }
   }
 
-  Future<void> _finishShoppingList(
-      ShoppingList shoppingList, BuildContext context) async {
-    switch (await showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(Strings.editProductTittle + ": ${shoppingList.name}"),
-        content: Form(
-          key: keyFormFinishShoppingList,
-          child: Column(
-            children: <Widget>[
-              TextFormField(
-                initialValue: this.descriptionShoppingList,
-                decoration:
-                    InputDecoration(labelText: Strings.label_description),
-                keyboardType: TextInputType.text,
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return "Llene la Descripción";
-                  } else
-                    return null;
-                },
-                onSaved: (value) {
-                  this.temp_price = double.parse(value);
-                },
-              ),
-              Padding(
-                padding: const EdgeInsets.all(Constant.normalspace),
-                child: Center(
-                  child: RaisedButton(
-                      child: Text(Strings.label_finish),
-                      onPressed: () {
-                        //Hacer la acción
-                        Navigator.pop(context, "${Strings.label_finish}");
-                      }),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    )) {
-      default:
-        //Whatever
-        break;
-    }
-  }
-
   void _saveEditProduct(ListProduct product) {
     if (keyFormEditProduct.currentState.validate()) {
       keyFormEditProduct.currentState.save();
       String oldTotal = product.total;
       product.quantity = this.temp_quantity;
+      product.price = this.temp_price.toString();
       product.total = (this.temp_price * this.temp_quantity).toString();
       viewModel.updateProduct(product, oldTotal);
+    }
+  }
+
+  Widget _showCircleRadioButtoms(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        ListTile(
+          title: Text(_textRadioButton[0].toString()),
+          leading: Radio(
+            value: SingingCharacter.delete,
+            groupValue: _character,
+            onChanged: (SingingCharacter value) {
+              setState(() {
+                _character = value;
+                print(_character);
+              });
+            },
+          ),
+        ),
+        ListTile(
+          title: Text(_textRadioButton[1].toString()),
+          leading: Radio(
+            value: SingingCharacter.reset,
+            groupValue: _character,
+            onChanged: (SingingCharacter value) {
+              setState(() {
+                _character = value;
+                print(_character);
+              });
+            },
+          ),
+        ),
+        ListTile(
+          title: Text(_textRadioButton[2].toString()),
+          leading: Radio(
+            value: SingingCharacter.nothing,
+            groupValue: _character,
+            onChanged: (SingingCharacter value) {
+              setState(() {
+                _character = value;
+                print(_character);
+              });
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  void _showFinishDialog(ShoppingList shoppingList) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        int selectedRadio = 0; // Declare your variable outside the builder
+
+        return AlertDialog(
+          content: StatefulBuilder(
+            // You need this, notice the parameters below:
+            builder: (BuildContext context, StateSetter setState) {
+              return Form(
+                key: keyFormPurchaseList,
+                child: Column(
+                    // Then, the content of your dialog.
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      TextFormField(
+                        initialValue: shoppingList.name +
+                            " " +
+                            DateTime.now().year.toString() +
+                            "/" +
+                            DateTime.now().month.toString() +
+                            "/" +
+                            DateTime.now().day.toString(),
+                        decoration: InputDecoration(
+                            labelText: Strings.label_description),
+                        keyboardType: TextInputType.text,
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return "Llene la Descripción";
+                          } else
+                            return null;
+                        },
+                        onSaved: (value) {
+                          this.descriptionShoppingList = value;
+                        },
+                      ),
+                      ListTile(
+                        title: Text(_textRadioButton[0].toString()),
+                        leading: Radio(
+                          value: SingingCharacter.delete,
+                          groupValue: _character,
+                          onChanged: (SingingCharacter value) {
+                            setState(() {
+                              _character = value;
+                              print(_character);
+                            });
+                          },
+                        ),
+                      ),
+                      ListTile(
+                        title: Text(_textRadioButton[1].toString()),
+                        leading: Radio(
+                          value: SingingCharacter.reset,
+                          groupValue: _character,
+                          onChanged: (SingingCharacter value) {
+                            setState(() {
+                              _character = value;
+                              print(_character);
+                            });
+                          },
+                        ),
+                      ),
+                      ListTile(
+                        title: Text(_textRadioButton[2].toString()),
+                        leading: Radio(
+                          value: SingingCharacter.nothing,
+                          groupValue: _character,
+                          onChanged: (SingingCharacter value) {
+                            setState(() {
+                              _character = value;
+                              print(_character);
+                            });
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(Constant.normalspace),
+                        child: Center(
+                          child: RaisedButton(
+                              child: Text(Strings.label_finish),
+                              onPressed: () {
+                                _actionOnSaveList(shoppingList);
+                              }),
+                        ),
+                      ),
+                    ]),
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  void _actionOnSaveList(ShoppingList shoppingList) {
+    if (keyFormPurchaseList.currentState.validate()) {
+      keyFormPurchaseList.currentState.save();
+      viewModel.finishShopping(
+          context, _character, descriptionShoppingList.toString());
     }
   }
 }

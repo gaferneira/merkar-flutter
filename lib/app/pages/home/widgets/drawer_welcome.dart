@@ -4,6 +4,7 @@ import 'package:merkar/app/pages/new_shopping_list/new_shopping_list_page.dart';
 
 enum DrawerOptions {
   route_new_list,
+  route_purchase_history,
   route_comments,
   route_about_us,
   route_close_session
@@ -57,6 +58,14 @@ class DrawerWelcome extends StatelessWidget {
           ),
           Divider(),
           ListTile(
+            title: Text(Strings.route_purchase_history),
+            leading: Icon(Icons.history),
+            trailing: Icon(Icons.keyboard_arrow_right),
+            onTap: () =>
+                _goToRoute(DrawerOptions.route_purchase_history, context),
+          ),
+          Divider(),
+          ListTile(
             title: Text(Strings.route_comments),
             leading: Icon(Icons.comment),
             trailing: Icon(Icons.keyboard_arrow_right),
@@ -92,6 +101,12 @@ void _goToRoute(DrawerOptions option, BuildContext context) async {
         Navigator.of(context).pushNamed(NewShoppingListPage.routeName);
         break;
       }
+    /* case DrawerOptions.route_purchase_history:
+      {
+        //cambiar
+        Navigator.of(context).pushNamed(PurchaseHistoryPage.routeName);
+        break;
+      }*/
     case DrawerOptions.route_comments:
       {
         print("Ir a comentarios");

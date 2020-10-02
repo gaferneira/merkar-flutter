@@ -40,6 +40,7 @@ class MyApp extends StatelessWidget {
         // When navigating to the "/" route, build the FirstScreen widget.
         '/': (context) => AuthenticationPage(),
         ShoppingListPage.routeName: (context) => ShoppingListPage(),
+        //PurchaseHistoryPage.routeName: (context) => PurchaseHistoryPage(),
         NewShoppingListPage.routeName: (context) => NewShoppingListPage(),
         SelectMyProductsPage.routeName: (context) => SelectMyProductsPage(),
         CreateNewProduct.routeName: (context) => CreateNewProduct(),
