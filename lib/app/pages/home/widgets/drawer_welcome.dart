@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/strings.dart';
+import 'package:merkar/app/pages/aboutus/about_us_page.dart';
+import 'package:merkar/app/pages/comments/comment_page.dart';
 import 'package:merkar/app/pages/new_shopping_list/new_shopping_list_page.dart';
 import 'package:merkar/app/pages/purchase_history/purchase_history_page.dart';
 
@@ -110,12 +112,13 @@ void _goToRoute(DrawerOptions option, BuildContext context) async {
       }
     case DrawerOptions.route_comments:
       {
-        print("Ir a comentarios");
+        Navigator.of(context).pushNamed(CommentPage.routeName);
         break;
       }
 
     case DrawerOptions.route_about_us:
       {
+        Navigator.of(context).pushNamed(AboutUsPage.routeName);
         break;
       }
 

@@ -22,8 +22,13 @@ class Strings {
   static const String label_description = "Descripción";
   static const String label_finish = "Finalizar";
   static const String title_my_products = "Mis productos";
+  static const String comments = "Comentarios";
+  static const String about_us = "Acerca de";
   static const String editProductTittle = "Editar Producto";
   static const String title_new_product = "Nuevo Producto";
   static const String label_quantity = "Cantidad";
   static const String label_price = "Precio";
+  static const String label_send = "Enviar";
+  static const String label_message = "Mensaje";
+  static const String label_email = "Email";
 }
