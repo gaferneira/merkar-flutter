@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:merkar/app/pages/login/auth_view_model.dart';
 import 'package:merkar/app/pages/new_product/create_new_product_view_model.dart';
+import 'package:merkar/app/pages/purchase_history/purchase_history_view_model.dart';
 import 'package:merkar/app/pages/select_my_products/select_my_products_view_model.dart';
 import 'package:merkar/data/repositories/login_repository.dart';
 import 'package:merkar/data/repositories/login_repository_impl.dart';
@@ -72,7 +73,8 @@ void createViewModels() {
       () => CreateNewProductsViewModel(productsRepository: serviceLocator()));
 
   //TODO implement
-  //serviceLocator.registerFactory(() => PurchasesViewModel(repository: serviceLocator()));
+/*  serviceLocator.registerFactory(
+      () => PurchaseHistoryViewModel(repository: serviceLocator()));*/
 }
 
 void createRepositories() {
