@@ -54,8 +54,6 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                         icon: Icon(Icons.check_circle),
                         onPressed: () {
                           _showFinishDialog(shoppingList);
-
-                          // _finishShoppingList(shoppingList, context);
                         },
                       ),
                     ],
@@ -75,7 +73,6 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                             child: Text(Strings.label_finish),
                             onPressed: () {
                               _showFinishDialog(shoppingList);
-                              //_finishShoppingList(shoppingList, context);
                             }),
                       ],
                     ),
@@ -153,10 +150,6 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
           activeColor: Colors.cyan,
           checkColor: Colors.green,
         );
-        /*return ListTile(
-          title: Text("${listProducts[index].name}"),
-          onTap: () {},
-        );*/
       },
     );
   }
@@ -284,8 +277,6 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   }
 
   Widget _showCircleRadioButtoms(BuildContext context) {
-    // return DialogFinishShoppingList();
-
     return Column(
       children: <Widget>[
         ListTile(
@@ -328,25 +319,6 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _showDropdownItems(BuildContext context) {
-    return DropdownButton(
-      hint: Text('Please choose a location'), // Not necessary for Option 1
-      value: _selected,
-      onChanged: (newValue) {
-        setState(() {
-          print(newValue);
-          _selected = newValue;
-        });
-      },
-      items: _textRadioButton.map((itemRadioButton) {
-        return DropdownMenuItem(
-          child: new Text(itemRadioButton),
-          value: itemRadioButton,
-        );
-      }).toList(),
     );
   }
 
