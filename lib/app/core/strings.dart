@@ -31,4 +31,9 @@ class Strings {
   static const String label_send = "Enviar";
   static const String label_message = "Mensaje";
   static const String label_email = "Email";
+
+  static const String label_top_comments =
+      "Envíanos tus comentarios. \n nos encantaría escucharlos!";
+  static const String label_body_comments =
+      "¿Tienes problemas o sólo quieres enviarnos un comentario?. Cuéntanos sobre lo bueno y lo malo";
 }
