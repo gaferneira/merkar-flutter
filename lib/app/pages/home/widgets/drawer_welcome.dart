@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/strings.dart';
 import 'package:merkar/app/pages/new_shopping_list/new_shopping_list_page.dart';
+import 'package:merkar/app/pages/purchase_history/purchase_history_page.dart';
 
 enum DrawerOptions {
   route_new_list,
@@ -104,7 +105,7 @@ void _goToRoute(DrawerOptions option, BuildContext context) async {
     case DrawerOptions.route_purchase_history:
       {
         //cambiar
-        Navigator.of(context).pushNamed(NewShoppingListPage.routeName);
+        Navigator.of(context).pushNamed(PurchaseHistoryPage.routeName);
         break;
       }
     case DrawerOptions.route_comments:
