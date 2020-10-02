@@ -6,6 +6,8 @@ import 'package:merkar/app/pages/new_product/create_new_product_view_model.dart'
 import 'package:merkar/app/pages/select_my_products/select_my_products_view_model.dart';
 import 'package:merkar/data/repositories/login_repository.dart';
 import 'package:merkar/data/repositories/login_repository_impl.dart';
+import 'package:merkar/data/repositories/purchases_repository.dart';
+import 'package:merkar/data/repositories/purchases_repository_impl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app/pages/home/home_view_model.dart';
@@ -24,7 +26,6 @@ final serviceLocator = GetIt.instance;
 
 Future<void> init() async {
   createViewModels();
-
   createRepositories();
 
   // Data sources
@@ -57,8 +58,8 @@ void createViewModels() {
         shoppingListsRepository: serviceLocator(),
       ));
 
-  serviceLocator.registerFactory(
-      () => ShoppingListViewModel(repository: serviceLocator()));
+  serviceLocator.registerFactory(() => ShoppingListViewModel(
+      repository: serviceLocator(), purchasesRepository: serviceLocator()));
 
   serviceLocator.registerFactory(
       () => NewShoppingListViewModel(repository: serviceLocator()));
@@ -69,6 +70,9 @@ void createViewModels() {
 
   serviceLocator.registerFactory(
       () => CreateNewProductsViewModel(productsRepository: serviceLocator()));
+
+  //TODO implement
+  //serviceLocator.registerFactory(() => PurchasesViewModel(repository: serviceLocator()));
 }
 
 void createRepositories() {
@@ -83,6 +87,11 @@ void createRepositories() {
 
   serviceLocator.registerLazySingleton<ProductsRepository>(
     () => ProductsRepositoryImpl(
+        networkInfo: serviceLocator(), firestoreDataSource: serviceLocator()),
+  );
+
+  serviceLocator.registerLazySingleton<PurchasesRepository>(
+    () => PurchasesRepositoryImpl(
         networkInfo: serviceLocator(), firestoreDataSource: serviceLocator()),
   );
 }
