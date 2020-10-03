@@ -106,24 +106,27 @@ void _goToRoute(DrawerOptions option, BuildContext context) async {
       }
     case DrawerOptions.route_purchase_history:
       {
-        //cambiar
+        Navigator.of(context).pop();
         Navigator.of(context).pushNamed(PurchaseHistoryPage.routeName);
         break;
       }
     case DrawerOptions.route_comments:
       {
+        Navigator.of(context).pop();
         CommentePage(context);
         break;
       }
 
     case DrawerOptions.route_about_us:
       {
+        Navigator.of(context).pop();
         AboutUsPage(context);
         break;
       }
 
     case DrawerOptions.route_close_session:
       {
+        Navigator.of(context).pop();
         break;
       }
   }

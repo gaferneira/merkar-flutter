@@ -15,6 +15,7 @@ import 'app/pages/home/home_view_model.dart';
 import 'app/pages/login/login_view_model.dart';
 import 'app/pages/new_shopping_list/new_shopping_list_view_model.dart';
 import 'app/pages/shopping_list/shopping_list_view_model.dart';
+import 'app/pages/purchase_history/purchase_history_view_model.dart';
 import 'data/local/local_data_source.dart';
 import 'data/remote/firestore_data_source.dart';
 import 'data/repositories/products_repository.dart';
@@ -73,8 +74,8 @@ void createViewModels() {
       () => CreateNewProductsViewModel(productsRepository: serviceLocator()));
 
   //TODO implement
-/*  serviceLocator.registerFactory(
-      () => PurchaseHistoryViewModel(repository: serviceLocator()));*/
+  serviceLocator.registerFactory(() =>
+      PurchaseHistoryViewModel(PurchaseHistoryRepository: serviceLocator()));
 }
 
 void createRepositories() {
