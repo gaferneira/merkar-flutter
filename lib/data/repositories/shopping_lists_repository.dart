@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:merkar/data/entities/list_product.dart';
-import 'package:merkar/data/entities/purchase.dart';
 
 import '../entities/error/failures.dart';
 import '../entities/shopping_list.dart';
@@ -15,7 +14,4 @@ abstract class ShoppingListsRepository {
       ListProduct product, ShoppingList list);
   Future<Either<Failure, bool>> removeProduct(
       String productId, ShoppingList list);
-  //Purchase
-  Future<Either<Failure, Purchase>> createPurchaseHistory(
-      String detail, List<ListProduct> selectedList);
 }

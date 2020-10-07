@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/strings.dart';
+import 'package:merkar/app/pages/home/widgets/about_us_page.dart';
+import 'package:merkar/app/pages/home/widgets/comment_page.dart';
+import 'package:merkar/app/pages/login/login_view_model.dart';
 import 'package:merkar/app/pages/new_shopping_list/new_shopping_list_page.dart';
+import 'package:merkar/app/pages/purchase_history/purchase_history_page.dart';
+
+import '../../../../injection_container.dart';
 
 enum DrawerOptions {
   route_new_list,
@@ -101,25 +107,30 @@ void _goToRoute(DrawerOptions option, BuildContext context) async {
         Navigator.of(context).pushNamed(NewShoppingListPage.routeName);
         break;
       }
-    /* case DrawerOptions.route_purchase_history:
+    case DrawerOptions.route_purchase_history:
       {
-        //cambiar
+        Navigator.of(context).pop();
         Navigator.of(context).pushNamed(PurchaseHistoryPage.routeName);
         break;
-      }*/
+      }
     case DrawerOptions.route_comments:
       {
-        print("Ir a comentarios");
+        Navigator.of(context).pop();
+        CommentePage(context);
         break;
       }
 
     case DrawerOptions.route_about_us:
       {
+        Navigator.of(context).pop();
+        AboutUsPage(context);
         break;
       }
 
     case DrawerOptions.route_close_session:
       {
+        final viewModel = serviceLocator<LoginViewModel>();
+        viewModel.signOut();
         break;
       }
   }

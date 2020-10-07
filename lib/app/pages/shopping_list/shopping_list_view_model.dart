@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:merkar/app/pages/shopping_list/shopping_list_page.dart';
 import 'package:merkar/data/entities/list_product.dart';
 import 'package:merkar/data/entities/shopping_list.dart';
+import 'package:merkar/data/repositories/purchases_repository.dart';
 import 'package:merkar/data/repositories/shopping_lists_repository.dart';
 
 class ShoppingListViewModel extends ChangeNotifier {
   final ShoppingListsRepository repository;
+  final PurchasesRepository purchasesRepository;
 
-  ShoppingListViewModel({@required this.repository});
+  ShoppingListViewModel(
+      {@required this.repository, @required this.purchasesRepository});
 
   ShoppingList shoppingList;
   List<ListProduct> unselectedList;
@@ -43,10 +46,6 @@ class ShoppingListViewModel extends ChangeNotifier {
   Future<void> selectProduct(int index) async {
     var product = unselectedList[index];
     product.selected = true;
-    //calculate the total
-    print(product.price);
-    double price = double.parse(product.price);
-
     this.selectedList.add(product);
     repository.saveProduct(product, shoppingList);
   }
@@ -54,15 +53,11 @@ class ShoppingListViewModel extends ChangeNotifier {
   Future<void> unselectProduct(int index) async {
     var product = selectedList[index];
     product.selected = false;
-    //calculate total
-    print(product.price);
-    double price = double.parse(product.price);
     this.selectedList.remove(product);
     repository.saveProduct(product, shoppingList);
   }
 
   Future<void> updateProduct(ListProduct product, String oldTotal) async {
-    print("Update product shopping list: ${product.total}");
     await repository.saveProduct(product, shoppingList);
   }
 
@@ -87,7 +82,7 @@ class ShoppingListViewModel extends ChangeNotifier {
 
   Future<void> finishShopping(
       BuildContext context, SingingCharacter option, String detail) async {
-    await repository.createPurchaseHistory(detail, selectedList);
+    await purchasesRepository.create(detail, selectedList);
     switch (option) {
       case SingingCharacter.delete:
         repository.remove(shoppingList);

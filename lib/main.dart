@@ -1,13 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:merkar/app/pages/home/home_page.dart';
 import 'package:merkar/app/pages/login/auth_view_model.dart';
 import 'package:merkar/app/pages/new_product/create_new_product.dart';
+import 'package:merkar/app/pages/purchase_history/purchase_history_page.dart';
+import 'package:merkar/app/pages/purchase_history_show_info/purchase_history_show_info_page.dart';
 import 'package:merkar/app/pages/select_my_products/select_my_products_page.dart';
 import 'package:merkar/app/pages/shopping_list/shopping_list_page.dart';
 import 'package:provider/provider.dart';
 
-import 'app/pages/home/home_page.dart';
+import 'app/pages/purchase_history/purchase_history_page.dart';
 import 'app/pages/login/login_page.dart';
 import 'app/pages/new_shopping_list/new_shopping_list_page.dart';
 import 'injection_container.dart' as di;
@@ -40,7 +43,9 @@ class MyApp extends StatelessWidget {
         // When navigating to the "/" route, build the FirstScreen widget.
         '/': (context) => AuthenticationPage(),
         ShoppingListPage.routeName: (context) => ShoppingListPage(),
-        //PurchaseHistoryPage.routeName: (context) => PurchaseHistoryPage(),
+        PurchaseHistoryPage.routeName: (context) => PurchaseHistoryPage(),
+        PurchaseHistoryShowInfoPage.routeName: (context) =>
+            PurchaseHistoryShowInfoPage(),
         NewShoppingListPage.routeName: (context) => NewShoppingListPage(),
         SelectMyProductsPage.routeName: (context) => SelectMyProductsPage(),
         CreateNewProduct.routeName: (context) => CreateNewProduct(),

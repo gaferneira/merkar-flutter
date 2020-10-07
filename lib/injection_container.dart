@@ -3,15 +3,20 @@ import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:merkar/app/pages/login/auth_view_model.dart';
 import 'package:merkar/app/pages/new_product/create_new_product_view_model.dart';
+import 'package:merkar/app/pages/purchase_history/purchase_history_view_model.dart';
 import 'package:merkar/app/pages/select_my_products/select_my_products_view_model.dart';
 import 'package:merkar/data/repositories/login_repository.dart';
 import 'package:merkar/data/repositories/login_repository_impl.dart';
+import 'package:merkar/data/repositories/purchases_repository.dart';
+import 'package:merkar/data/repositories/purchases_repository_impl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app/pages/home/home_view_model.dart';
 import 'app/pages/login/login_view_model.dart';
 import 'app/pages/new_shopping_list/new_shopping_list_view_model.dart';
 import 'app/pages/shopping_list/shopping_list_view_model.dart';
+import 'app/pages/purchase_history_show_info/purchase_history_show_info_view_model.dart';
+import 'app/pages/purchase_history/purchase_history_view_model.dart';
 import 'data/local/local_data_source.dart';
 import 'data/remote/firestore_data_source.dart';
 import 'data/repositories/products_repository.dart';
@@ -24,7 +29,6 @@ final serviceLocator = GetIt.instance;
 
 Future<void> init() async {
   createViewModels();
-
   createRepositories();
 
   // Data sources
@@ -57,8 +61,8 @@ void createViewModels() {
         shoppingListsRepository: serviceLocator(),
       ));
 
-  serviceLocator.registerFactory(
-      () => ShoppingListViewModel(repository: serviceLocator()));
+  serviceLocator.registerFactory(() => ShoppingListViewModel(
+      repository: serviceLocator(), purchasesRepository: serviceLocator()));
 
   serviceLocator.registerFactory(
       () => NewShoppingListViewModel(repository: serviceLocator()));
@@ -69,6 +73,13 @@ void createViewModels() {
 
   serviceLocator.registerFactory(
       () => CreateNewProductsViewModel(productsRepository: serviceLocator()));
+
+  //TODO implement
+  serviceLocator.registerFactory(() =>
+      PurchaseHistoryViewModel(PurchaseHistoryRepository: serviceLocator()));
+
+  serviceLocator.registerFactory(() => PurchaseHistoryShowInfoViewModel(
+      PurchaseHistoryRepository: serviceLocator()));
 }
 
 void createRepositories() {
@@ -83,6 +94,11 @@ void createRepositories() {
 
   serviceLocator.registerLazySingleton<ProductsRepository>(
     () => ProductsRepositoryImpl(
+        networkInfo: serviceLocator(), firestoreDataSource: serviceLocator()),
+  );
+
+  serviceLocator.registerLazySingleton<PurchasesRepository>(
+    () => PurchasesRepositoryImpl(
         networkInfo: serviceLocator(), firestoreDataSource: serviceLocator()),
   );
 }
