@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:merkar/app/core/strings.dart';
 import 'package:merkar/app/pages/home/widgets/about_us_page.dart';
 import 'package:merkar/app/pages/home/widgets/comment_page.dart';
+import 'package:merkar/app/pages/login/login_view_model.dart';
 import 'package:merkar/app/pages/new_shopping_list/new_shopping_list_page.dart';
 import 'package:merkar/app/pages/purchase_history/purchase_history_page.dart';
+
+import '../../../../injection_container.dart';
 
 enum DrawerOptions {
   route_new_list,
@@ -126,7 +129,8 @@ void _goToRoute(DrawerOptions option, BuildContext context) async {
 
     case DrawerOptions.route_close_session:
       {
-        Navigator.of(context).pop();
+        final viewModel = serviceLocator<LoginViewModel>();
+        viewModel.signOut();
         break;
       }
   }
