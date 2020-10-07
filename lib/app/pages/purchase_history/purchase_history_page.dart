@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/strings.dart';
 import 'package:merkar/app/pages/purchase_history/purchase_history_view_model.dart';
+import 'package:merkar/app/pages/purchase_history_show_info/purchase_history_show_info_page.dart';
 import 'package:merkar/app/widgets/widgets.dart';
 import 'package:merkar/data/entities/purchase.dart';
 import 'package:merkar/injection_container.dart';
@@ -77,9 +78,10 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
           trailing: Icon(Icons.arrow_right),
           onTap: () {
             print(list[index].name);
+            print(list[index].total);
             Navigator.pushNamed(
               context,
-              PurchaseHistoryPage.routeName,
+              PurchaseHistoryShowInfoPage.routeName,
               arguments: list[index],
             );
           },
