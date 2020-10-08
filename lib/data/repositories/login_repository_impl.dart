@@ -18,7 +18,6 @@ class LoginRepositoryImpl implements LoginRepository {
   @override
   Future<Either<String, bool>> signIn(String email, String password) async {
     try {
-      print("singnIn login repo impl");
       final result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       return right(result.user != null);
@@ -36,12 +35,22 @@ class LoginRepositoryImpl implements LoginRepository {
   }
 
   @override
-  Future<Either<String, bool>> signUp(String email, String password) async {
+  Future<Either<String, bool>> signUp(
+      String name, String email, String password) async {
     try {
       final result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-
       return right(result.user != null);
+    } catch (e) {
+      return left(e.toString());
+    }
+  }
+
+  @override
+  Future<Either<String, bool>> recoverPassword(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+      return right(true);
     } catch (e) {
       return left(e.toString());
     }

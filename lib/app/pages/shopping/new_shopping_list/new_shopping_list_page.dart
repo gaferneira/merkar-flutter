@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/strings.dart';
+import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
 
-import '../../../injection_container.dart';
 import 'new_shopping_list_view_model.dart';
 
 class NewShoppingListPage extends StatefulWidget {

@@ -1,15 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/strings.dart';
-import 'package:merkar/app/pages/home/home_view_model.dart';
-import 'package:merkar/app/pages/home/widgets/drawer_welcome.dart';
-import 'package:merkar/app/pages/home/widgets/shopping_lists_display.dart';
-import 'package:merkar/app/pages/new_shopping_list/new_shopping_list_page.dart';
 import 'package:merkar/app/widgets/widgets.dart';
 import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
 
-import '../new_shopping_list/new_shopping_list_page.dart';
+import '../shopping//new_shopping_list/new_shopping_list_page.dart';
+import 'home_view_model.dart';
+import 'widgets/drawer_welcome.dart';
+import 'widgets/shopping_lists_display.dart';
 
 class HomePage extends StatefulWidget {
   @override

@@ -1,13 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/strings.dart';
-import 'package:merkar/app/pages/new_product/create_new_product.dart';
-import 'package:merkar/data/entities/list_product.dart';
+import 'package:merkar/app/pages/products/new_product/create_new_product.dart';
 import 'package:merkar/data/entities/product.dart';
 import 'package:merkar/data/entities/shopping_list.dart';
+import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
 
-import '../../../injection_container.dart';
 import 'select_my_products_view_model.dart';
 
 class SelectMyProductsPage extends StatefulWidget {

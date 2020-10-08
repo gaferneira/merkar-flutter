@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/constants.dart';
 import 'package:merkar/app/core/strings.dart';
+import 'package:merkar/app/pages/login/register/register_view_model.dart';
+import 'package:merkar/injection_container.dart';
+import 'package:provider/provider.dart';
 
 class RegisterPage extends StatefulWidget {
   static const routeName = "/register";
@@ -15,14 +18,19 @@ class _RegisterPageState extends State<RegisterPage> {
   String password = "";
   String confirm_password = "";
 
+  final viewModel = serviceLocator<RegisterViewModel>();
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(Strings.label_register),
-      ),
-      body: _showFormRegister(),
-    );
+    return ChangeNotifierProvider<RegisterViewModel>.value(
+        value: viewModel,
+        child: Consumer<RegisterViewModel>(
+            builder: (context, model, child) => Scaffold(
+                  appBar: AppBar(
+                    title: Text(Strings.label_register),
+                  ),
+                  body: _showFormRegister(),
+                )));
   }
 
   Widget _showFormRegister() {
@@ -110,5 +118,7 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  void _registerNewUser() {}
+  void _registerNewUser() {
+    viewModel.signUp(name, email, password);
+  }
 }

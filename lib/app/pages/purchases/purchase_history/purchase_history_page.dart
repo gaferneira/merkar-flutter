@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/strings.dart';
-import 'package:merkar/app/pages/purchase_history/purchase_history_view_model.dart';
-import 'package:merkar/app/pages/purchase_history_show_info/purchase_history_show_info_page.dart';
 import 'package:merkar/app/widgets/widgets.dart';
 import 'package:merkar/data/entities/purchase.dart';
 import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
+
+import '../purchase_history_show_info/purchase_history_show_info_page.dart';
+import 'purchase_history_view_model.dart';
 
 class PurchaseHistoryPage extends StatefulWidget {
   static const routeName = "/purchasehistory";

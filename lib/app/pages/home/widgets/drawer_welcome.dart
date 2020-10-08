@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:merkar/app/core/strings.dart';
 import 'package:merkar/app/pages/home/widgets/about_us_page.dart';
 import 'package:merkar/app/pages/home/widgets/comment_page.dart';
-import 'package:merkar/app/pages/login/login_view_model.dart';
-import 'package:merkar/app/pages/new_shopping_list/new_shopping_list_page.dart';
-import 'package:merkar/app/pages/purchase_history/purchase_history_page.dart';
+import 'package:merkar/app/pages/login/sign_in/login_view_model.dart';
+import 'package:merkar/injection_container.dart';
 
-import '../../../../injection_container.dart';
+import '../../purchases/purchase_history/purchase_history_page.dart';
+import '../../shopping/new_shopping_list/new_shopping_list_page.dart';
 
 enum DrawerOptions {
   route_new_list,

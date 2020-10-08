@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/strings.dart';
-import 'package:merkar/app/pages/shopping_list/shopping_list_page.dart';
 import 'package:merkar/data/entities/error/failures.dart';
 import 'package:merkar/data/entities/shopping_list.dart';
 import 'package:merkar/data/repositories/shopping_lists_repository.dart';
+
+import '../shopping_list/shopping_list_page.dart';
 
 class NewShoppingListViewModel extends ChangeNotifier {
   final ShoppingListsRepository repository;

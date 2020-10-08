@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/constants.dart';
 import 'package:merkar/app/core/strings.dart';
-import 'package:merkar/app/pages/login/login_view_model.dart';
-import 'package:merkar/app/pages/register/register_page.dart';
+import 'package:merkar/app/pages/login/sign_in/login_view_model.dart';
 import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
+
+import '../register/register_page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
