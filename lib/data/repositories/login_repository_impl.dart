@@ -18,9 +18,9 @@ class LoginRepositoryImpl implements LoginRepository {
   @override
   Future<Either<String, bool>> signIn(String email, String password) async {
     try {
+      print("singnIn login repo impl");
       final result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
-
       return right(result.user != null);
     } on FirebaseException catch (e) {
       return left(e.message);

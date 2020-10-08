@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:merkar/app/core/constants.dart';
+import 'package:merkar/app/core/strings.dart';
 import 'package:merkar/app/pages/login/login_view_model.dart';
+import 'package:merkar/app/pages/register/register_page.dart';
 import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
 
@@ -66,7 +69,8 @@ class _LoginPageState extends State<LoginPage> {
                           border: OutlineInputBorder()),
                     ),
                   ),
-                  _createLoginButton()
+                  _createLoginButton(),
+                  _createRegisterButton(),
                 ],
               ),
             ),
@@ -94,6 +98,7 @@ class _LoginPageState extends State<LoginPage> {
               child: MaterialButton(
                 onPressed: () async {
                   if (_formKey.currentState.validate()) {
+                    _formKey.currentState.save();
                     viewModel.signIn(_email.text, _password.text);
                   }
                 },
@@ -112,5 +117,28 @@ class _LoginPageState extends State<LoginPage> {
     _email.dispose();
     _password.dispose();
     super.dispose();
+  }
+
+  Widget _createRegisterButton() {
+    return Padding(
+      padding: const EdgeInsets.all(Constant.normalspace),
+      child: RaisedButton(
+        child: Text(Strings.label_register),
+        onPressed: () {
+          _goToRegister();
+        },
+        shape: RoundedRectangleBorder(
+            side: BorderSide(
+                color: Colors.blue, width: 1, style: BorderStyle.solid),
+            borderRadius: BorderRadius.circular(50)),
+        color: Colors.green,
+        textColor: Colors.white,
+        splashColor: Colors.grey,
+      ),
+    );
+  }
+
+  void _goToRegister() {
+    Navigator.of(context).pushNamed(RegisterPage.routeName);
   }
 }

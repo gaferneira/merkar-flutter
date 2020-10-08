@@ -19,6 +19,7 @@ class Strings {
   static const String label_tootip_new_product = "Agregar Nuevo Producto";
   static const String label_save = "Guardar";
   static const String label_edit = "Editar";
+  static const String label_register = "Registrar";
   static const String label_description = "Descripción";
   static const String label_finish = "Finalizar";
   static const String title_my_products = "Mis productos";
@@ -31,6 +32,9 @@ class Strings {
   static const String label_send = "Enviar";
   static const String label_message = "Mensaje";
   static const String label_email = "Email";
+  static const String label_password = "Contraseña";
+  static const String label_name = "Nombre";
+  static const String label_confirm_password = "Confirmar Contraseña";
 
   static const String label_top_comments =
       "Envíanos tus comentarios. \n nos encantaría escucharlos!";
