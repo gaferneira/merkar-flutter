@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/constants.dart';
 import 'package:merkar/app/core/strings.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 Future<void> AboutUsPage(BuildContext context) {
   return showDialog(
@@ -94,9 +95,15 @@ Future<void> AboutUsPage(BuildContext context) {
                           Row(
                             children: <Widget>[
                               Icon(Icons.repeat_one),
-                              Text(
-                                Strings.name_repository,
-                                textAlign: TextAlign.center,
+                              InkWell(
+                                onTap: () {
+                                  launch(
+                                      'https://github.com/gaferneira/merkar-flutter');
+                                },
+                                child: Text(
+                                  Strings.name_repository,
+                                  textAlign: TextAlign.center,
+                                ),
                               ),
                             ],
                           ),
