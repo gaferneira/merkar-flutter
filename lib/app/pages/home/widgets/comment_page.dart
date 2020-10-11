@@ -43,7 +43,9 @@ Future<void> CommentePage(BuildContext context) {
                             ),
                             RaisedButton(
                               child: Text(Strings.label_send),
-                              onPressed: () {},
+                              onPressed: () {
+                                _sendEmail(_message);
+                              },
                             ),
                           ],
                         ),
@@ -54,4 +56,13 @@ Future<void> CommentePage(BuildContext context) {
           ),
         );
       });
+}
+
+Future<void> _sendEmail(message) async {
+  try {
+    print("Enviar mensaje Email");
+    print('success');
+  } catch (error) {
+    print('Error: ${error}');
+  }
 }

@@ -1,3 +1,5 @@
+import 'package:merkar/data/entities/list_product.dart';
+
 class Strings {
   //Drawer
   static const String route_new_list = 'Nueva lista';
@@ -40,4 +42,23 @@ class Strings {
       "Envíanos tus comentarios. \n nos encantaría escucharlos!";
   static const String label_body_comments =
       "¿Tienes problemas o sólo quieres enviarnos un comentario?. Cuéntanos sobre lo bueno y lo malo";
+
+  static const String label_about_us = "Acerca de";
+
+  static const String label_close = "Cerrar";
+
+  static const String label_name_app = "Merkar";
+
+  static const List<String> creators_name = [
+    "Gabriel Fernando Neira",
+    "Strip Yannin Suárez"
+  ];
+  static const List<String> creators_email = [
+    "gabrielfneira@gmail.com",
+    "stip.suarez@gmail.com"
+  ];
+
+  static String creators_number = "+57 3152562504";
+
+  static String name_repository = "merkar";
 }

@@ -7,6 +7,7 @@ import 'package:merkar/injection_container.dart';
 
 import '../../purchases/purchase_history/purchase_history_page.dart';
 import '../../shopping/new_shopping_list/new_shopping_list_page.dart';
+import 'package:in_app_review/in_app_review.dart';
 
 enum DrawerOptions {
   route_new_list,
@@ -17,6 +18,8 @@ enum DrawerOptions {
 }
 
 class DrawerWelcome extends StatelessWidget {
+  final InAppReview inAppReview = InAppReview.instance;
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -98,40 +101,44 @@ class DrawerWelcome extends StatelessWidget {
       ),
     );
   }
-}
 
-void _goToRoute(DrawerOptions option, BuildContext context) async {
-  switch (option) {
-    case DrawerOptions.route_new_list:
-      {
-        Navigator.of(context).pushNamed(NewShoppingListPage.routeName);
-        break;
-      }
-    case DrawerOptions.route_purchase_history:
-      {
-        Navigator.of(context).pop();
-        Navigator.of(context).pushNamed(PurchaseHistoryPage.routeName);
-        break;
-      }
-    case DrawerOptions.route_comments:
-      {
-        Navigator.of(context).pop();
-        CommentePage(context);
-        break;
-      }
+  void _goToRoute(DrawerOptions option, BuildContext context) async {
+    switch (option) {
+      case DrawerOptions.route_new_list:
+        {
+          Navigator.of(context).pushNamed(NewShoppingListPage.routeName);
+          break;
+        }
+      case DrawerOptions.route_purchase_history:
+        {
+          Navigator.of(context).pop();
+          Navigator.of(context).pushNamed(PurchaseHistoryPage.routeName);
+          break;
+        }
+      case DrawerOptions.route_comments:
+        {
+          Navigator.of(context).pop();
+/*
+          if (await inAppReview.isAvailable()) {
+            inAppReview.requestReview();
+          }*/
+          CommentePage(context);
+          break;
+        }
 
-    case DrawerOptions.route_about_us:
-      {
-        Navigator.of(context).pop();
-        AboutUsPage(context);
-        break;
-      }
+      case DrawerOptions.route_about_us:
+        {
+          Navigator.of(context).pop();
+          AboutUsPage(context);
+          break;
+        }
 
-    case DrawerOptions.route_close_session:
-      {
-        final viewModel = serviceLocator<LoginViewModel>();
-        viewModel.signOut();
-        break;
-      }
+      case DrawerOptions.route_close_session:
+        {
+          final viewModel = serviceLocator<LoginViewModel>();
+          viewModel.signOut();
+          break;
+        }
+    }
   }
 }

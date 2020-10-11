@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/constants.dart';
 import 'package:merkar/app/core/strings.dart';
@@ -21,12 +22,89 @@ Future<void> AboutUsPage(BuildContext context) {
                       child: Column(
                         children: <Widget>[
                           Text(
-                            Strings.label_top_comments,
+                            Strings.label_about_us +
+                                " " +
+                                Strings.label_name_app,
+                            style: TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          Text(Strings.label_body_comments),
+                          Text(""),
+                          Row(children: <Widget>[
+                            Text(
+                              "Creadores",
+                              style: TextStyle(
+                                fontSize: 18.0,
+                              ),
+                              textAlign: TextAlign.start,
+                            ),
+                          ]),
+                          Text(""),
+                          Row(
+                            children: <Widget>[
+                              Icon(Icons.touch_app),
+                              Text(
+                                Strings.creators_name[0],
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Icon(Icons.touch_app),
+                              Text(Strings.creators_name[1]),
+                            ],
+                          ),
+                          Text(""),
+                          Row(children: <Widget>[
+                            Text(""),
+                            Text(
+                              "Escríbenos",
+                              style: TextStyle(
+                                fontSize: 18.0,
+                              ),
+                              textAlign: TextAlign.start,
+                            ),
+                          ]),
+                          Text(""),
+                          Row(
+                            children: <Widget>[
+                              Icon(Icons.email),
+                              Text(
+                                Strings.creators_email[0],
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Icon(Icons.alternate_email),
+                              Text(Strings.creators_email[1]),
+                            ],
+                          ),
+                          Text(""),
+                          Row(
+                            children: <Widget>[
+                              Icon(Icons.tap_and_play),
+                              Text(
+                                Strings.creators_number,
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                          Text(""),
+                          Row(
+                            children: <Widget>[
+                              Icon(Icons.repeat_one),
+                              Text(
+                                Strings.name_repository,
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
                           RaisedButton(
-                            child: Text(Strings.label_send),
-                            onPressed: () {},
+                            child: Text(Strings.label_close),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
                           ),
                         ],
                       ),
