@@ -32,14 +32,10 @@ class DrawerWelcome extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: CircleAvatar(
+                    backgroundImage:
+                        AssetImage('assets/images/defaultprofile.png'),
+                    backgroundColor: Colors.transparent,
                     radius: 50.0,
-                    //backgroundImage: Image.asset('asset/images/defaultprofile.png'),
-                    child: Image.asset(
-                      'assets/images/defaultprofile.png',
-                      width: 87.0,
-                      scale: 1.0,
-                      alignment: Alignment.center,
-                    ),
                   ),
                 ),
                 Align(

@@ -45,6 +45,7 @@ Future<void> CommentePage(BuildContext context) {
                               child: Text(Strings.label_send),
                               onPressed: () {
                                 _sendEmail(_message);
+                                Navigator.pop(context);
                               },
                             ),
                           ],
