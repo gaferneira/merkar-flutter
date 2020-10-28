@@ -4,13 +4,13 @@ import 'package:merkar/data/entities/shopping_list.dart';
 import 'package:merkar/data/repositories/purchases_repository.dart';
 import 'package:merkar/data/repositories/shopping_lists_repository.dart';
 
-import 'shopping_list_page.dart';
+import 'favorite_list_page.dart';
 
-class ShoppingListViewModel extends ChangeNotifier {
+class FavoriteListViewModel extends ChangeNotifier {
   final ShoppingListsRepository repository;
   final PurchasesRepository purchasesRepository;
 
-  ShoppingListViewModel(
+  FavoriteListViewModel(
       {@required this.repository, @required this.purchasesRepository});
 
   ShoppingList shoppingList;

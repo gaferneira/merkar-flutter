@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/strings.dart';
+import 'package:merkar/app/pages/favorites/favorites_list/favorite_list_page.dart';
 import 'package:merkar/app/pages/home/widgets/about_us_page.dart';
 import 'package:merkar/app/pages/home/widgets/comment_page.dart';
 import 'package:merkar/app/pages/login/sign_in/login_view_model.dart';
@@ -115,7 +116,7 @@ class DrawerWelcome extends StatelessWidget {
         }
       case DrawerOptions.route_favorites:
         {
-          Navigator.of(context).pushNamed(NewShoppingListPage.routeName);
+          Navigator.of(context).pushNamed(FavoriteListPage.routeName);
           break;
         }
       case DrawerOptions.route_purchase_history:

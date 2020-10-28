@@ -5,11 +5,11 @@ import 'package:merkar/data/entities/shopping_list.dart';
 import 'package:merkar/data/repositories/products_repository.dart';
 import 'package:merkar/data/repositories/shopping_lists_repository.dart';
 
-class SelectMyProductsViewModel extends ChangeNotifier {
+class SelectMyFavoritesViewModel extends ChangeNotifier {
   final ShoppingListsRepository shoppingListRepository;
   final ProductsRepository productsRepository;
 
-  SelectMyProductsViewModel(
+  SelectMyFavoritesViewModel(
       {@required this.shoppingListRepository,
       @required this.productsRepository});
 

@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:merkar/app/pages/favorites/favorites_list/favorite_list_page.dart';
+import 'package:merkar/app/pages/favorites/select_my_favorites/select_my_favorites_page.dart';
 import 'package:merkar/app/pages/home/home_page.dart';
 import 'package:merkar/app/pages/login/auth_view_model.dart';
 import 'package:provider/provider.dart';
@@ -51,6 +53,8 @@ class MyApp extends StatelessWidget {
         CreateNewProduct.routeName: (context) => CreateNewProduct(),
         RegisterPage.routeName: (context) => RegisterPage(),
         HomePage.routeName: (context) => HomePage(),
+        FavoriteListPage.routeName: (context) => FavoriteListPage(),
+        SelectMyFavoritesPage.routeName: (context) => SelectMyFavoritesPage(),
       },
     );
   }

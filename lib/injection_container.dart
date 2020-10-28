@@ -14,6 +14,8 @@ import 'app/pages/purchases/purchase_history_show_info/purchase_history_show_inf
 import 'app/pages/shopping/new_shopping_list/new_shopping_list_view_model.dart';
 import 'app/pages/shopping/select_my_products/select_my_products_view_model.dart';
 import 'app/pages/shopping/shopping_list/shopping_list_view_model.dart';
+import 'app/pages/favorites/select_my_favorites/select_my_favorites_view_model.dart';
+import 'app/pages/favorites/favorites_list/favorite_list_view_model.dart';
 import 'data/local/local_data_source.dart';
 import 'data/remote/firestore_data_source.dart';
 import 'data/repositories/login_repository.dart';
@@ -72,6 +74,13 @@ void createViewModels() {
 
   serviceLocator.registerFactory(() => ShoppingListViewModel(
       repository: serviceLocator(), purchasesRepository: serviceLocator()));
+
+  serviceLocator.registerFactory(() => FavoriteListViewModel(
+      repository: serviceLocator(), purchasesRepository: serviceLocator()));
+
+  serviceLocator.registerFactory(() => SelectMyFavoritesViewModel(
+      productsRepository: serviceLocator(),
+      shoppingListRepository: serviceLocator()));
 
   serviceLocator.registerFactory(
       () => NewShoppingListViewModel(repository: serviceLocator()));

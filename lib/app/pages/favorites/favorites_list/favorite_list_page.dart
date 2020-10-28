@@ -2,27 +2,26 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/constants.dart';
 import 'package:merkar/app/core/strings.dart';
+import 'package:merkar/app/pages/favorites/select_my_favorites/select_my_favorites_page.dart';
 import 'package:merkar/data/entities/list_product.dart';
 import 'package:merkar/data/entities/shopping_list.dart';
 import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
-
-import '../select_my_products/select_my_products_page.dart';
-import 'shopping_list_view_model.dart';
+import 'favorite_list_view_model.dart';
 
 enum SingingCharacter { delete, reset, nothing }
 
-class ShoppingListPage extends StatefulWidget {
-  static const routeName = '/showselectlist';
+class FavoriteListPage extends StatefulWidget {
+  static const routeName = '/showfavoritelist';
   @override
-  _ShoppingListPageState createState() => _ShoppingListPageState();
+  _FavoriteListPageState createState() => _FavoriteListPageState();
 }
 
-class _ShoppingListPageState extends State<ShoppingListPage> {
+class _FavoriteListPageState extends State<FavoriteListPage> {
   final keyFormEditProduct = GlobalKey<FormState>();
   final keyFormFinishShoppingList = GlobalKey<FormState>();
   final keyFormPurchaseList = GlobalKey<FormState>();
-  ShoppingListViewModel viewModel = serviceLocator<ShoppingListViewModel>();
+  FavoriteListViewModel viewModel = serviceLocator<FavoriteListViewModel>();
   int temp_quantity = null;
   double temp_price = null;
   String descriptionShoppingList = "";
@@ -43,9 +42,9 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
         ModalRoute.of(context).settings.arguments as ShoppingList;
     viewModel.loadData(shoppingList);
 
-    return ChangeNotifierProvider<ShoppingListViewModel>.value(
+    return ChangeNotifierProvider<FavoriteListViewModel>.value(
         value: viewModel,
-        child: Consumer<ShoppingListViewModel>(
+        child: Consumer<FavoriteListViewModel>(
             builder: (context, model, child) => Scaffold(
                   appBar: AppBar(
                     title: Text('${shoppingList.name}'),
@@ -107,7 +106,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   _showListSuggerProducts(
       BuildContext context, ShoppingList shoppingList) async {
     Navigator.of(context)
-        .pushNamed(SelectMyProductsPage.routeName, arguments: shoppingList);
+        .pushNamed(SelectMyFavoritesPage.routeName, arguments: shoppingList);
   }
 
   Widget _showProductsList(List<ListProduct> listProducts) {
