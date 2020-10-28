@@ -42,9 +42,9 @@ class _HomePageState extends State<HomePage> {
           ),
           drawer: DrawerWelcome(),
           body: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
+            //scrollDirection: Axis.vertical,
             child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                //crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Stack(children: <Widget>[
                     Container(

@@ -20,6 +20,8 @@ Widget listProducts(List<ShoppingList> list) {
     separatorBuilder: (context, index) => Divider(
       color: Colors.black,
     ),
+    //scroll the listView
+    physics: const NeverScrollableScrollPhysics(),
     itemCount: list.length,
     itemBuilder: (context, index) {
       return ListTile(

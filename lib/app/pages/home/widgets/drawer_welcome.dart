@@ -14,7 +14,8 @@ enum DrawerOptions {
   route_purchase_history,
   route_comments,
   route_about_us,
-  route_close_session
+  route_close_session,
+  route_favorites,
 }
 
 class DrawerWelcome extends StatelessWidget {
@@ -71,6 +72,13 @@ class DrawerWelcome extends StatelessWidget {
           ),
           Divider(),
           ListTile(
+            title: Text(Strings.route_favorites),
+            leading: Icon(Icons.favorite),
+            trailing: Icon(Icons.keyboard_arrow_right),
+            onTap: () => _goToRoute(DrawerOptions.route_favorites, context),
+          ),
+          Divider(),
+          ListTile(
             title: Text(Strings.route_comments),
             leading: Icon(Icons.comment),
             trailing: Icon(Icons.keyboard_arrow_right),
@@ -101,6 +109,11 @@ class DrawerWelcome extends StatelessWidget {
   void _goToRoute(DrawerOptions option, BuildContext context) async {
     switch (option) {
       case DrawerOptions.route_new_list:
+        {
+          Navigator.of(context).pushNamed(NewShoppingListPage.routeName);
+          break;
+        }
+      case DrawerOptions.route_favorites:
         {
           Navigator.of(context).pushNamed(NewShoppingListPage.routeName);
           break;

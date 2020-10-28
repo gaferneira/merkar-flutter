@@ -61,4 +61,6 @@ class Strings {
   static String creators_number = "+57 3152562504";
 
   static String name_repository = "merkar-flutter";
+
+  static String route_favorites = "Favoritos";
 }
