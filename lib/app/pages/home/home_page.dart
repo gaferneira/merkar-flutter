@@ -11,6 +11,7 @@ import 'widgets/drawer_welcome.dart';
 import 'widgets/shopping_lists_display.dart';
 
 class HomePage extends StatefulWidget {
+  static const routeName = '/home';
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -41,9 +42,9 @@ class _HomePageState extends State<HomePage> {
           ),
           drawer: DrawerWelcome(),
           body: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
             child: Column(
-
-                //  crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Stack(children: <Widget>[
                     Container(
@@ -51,7 +52,9 @@ class _HomePageState extends State<HomePage> {
                       height: 150.0,
                       decoration: BoxDecoration(
                           gradient: LinearGradient(
-                              colors: [Colors.cyan[300], Colors.cyan[800]])),
+                        colors: [Colors.white70, Colors.white70],
+                        // colors: [Colors.cyan[300], Colors.cyan[800]]
+                      )),
                       child: Image.asset(
                         'assets/images/logo.png',
                         width: 10.0,

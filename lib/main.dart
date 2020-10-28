@@ -50,6 +50,7 @@ class MyApp extends StatelessWidget {
         SelectMyProductsPage.routeName: (context) => SelectMyProductsPage(),
         CreateNewProduct.routeName: (context) => CreateNewProduct(),
         RegisterPage.routeName: (context) => RegisterPage(),
+        HomePage.routeName: (context) => HomePage(),
       },
     );
   }
