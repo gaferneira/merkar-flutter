@@ -22,6 +22,20 @@ Future<void> AboutUsPage(BuildContext context) {
                       padding: const EdgeInsets.all(Constant.normalspace),
                       child: Column(
                         children: <Widget>[
+                          Container(
+                            width: double.infinity,
+                            height: 150.0,
+                            decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                              colors: [Colors.white70, Colors.white70],
+                              // colors: [Colors.cyan[300], Colors.cyan[800]]
+                            )),
+                            child: Image.asset(
+                              'assets/images/logo.png',
+                              width: 10.0,
+                              // color: Colors.black,
+                            ),
+                          ),
                           Text(
                             Strings.label_about_us +
                                 " " +
@@ -31,7 +45,7 @@ Future<void> AboutUsPage(BuildContext context) {
                           Text(""),
                           Row(children: <Widget>[
                             Text(
-                              "Creadores",
+                              "Creadores: ",
                               style: TextStyle(
                                 fontSize: 18.0,
                               ),
@@ -58,7 +72,7 @@ Future<void> AboutUsPage(BuildContext context) {
                           Row(children: <Widget>[
                             Text(""),
                             Text(
-                              "Escríbenos",
+                              "Escríbenos: ",
                               style: TextStyle(
                                 fontSize: 18.0,
                               ),

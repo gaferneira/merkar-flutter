@@ -70,7 +70,7 @@ Future<void> _sendEmail(GlobalKey<FormState> keyForm) async {
       final Email email = Email(
         body: 'Merkar Comment: ${_message}',
         subject: 'Sugerencia',
-        recipients: ['stip.suarez@gmail.com'],
+        recipients: ['stip.suarez@gmail.com', 'gabrielfneira@gmail.com'],
         cc: null,
         bcc: null,
         attachmentPaths: null,
