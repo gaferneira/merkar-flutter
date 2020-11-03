@@ -39,7 +39,6 @@ Future<void> CommentePage(BuildContext context) {
                               },
                               validator: (value) {
                                 if (value.isEmpty) {
-                                  print("No msj");
                                   return "Ingresa un mensaje";
                                 } else
                                   return null;
@@ -51,8 +50,8 @@ Future<void> CommentePage(BuildContext context) {
                                 if (keyFormComments.currentState.validate()) {
                                   keyFormComments.currentState.save();
                                   _sendEmail(keyFormComments);
+                                  Navigator.pop(context);
                                 }
-                                // Navigator.pop(context);
                               },
                             ),
                           ],
