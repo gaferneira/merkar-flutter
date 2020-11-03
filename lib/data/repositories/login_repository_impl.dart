@@ -5,9 +5,16 @@ import 'login_repository.dart';
 
 class LoginRepositoryImpl implements LoginRepository {
   FirebaseAuth _auth;
+  User _curretUser;
 
   LoginRepositoryImpl() {
     _auth = FirebaseAuth.instance;
+  }
+
+  @override
+  User getCurrentUser() {
+    _curretUser = _auth.currentUser;
+    return _curretUser;
   }
 
   @override

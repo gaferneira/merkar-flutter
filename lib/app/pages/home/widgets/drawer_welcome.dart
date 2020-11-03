@@ -4,6 +4,8 @@ import 'package:merkar/app/pages/favorites/favorites_list/favorite_list_page.dar
 import 'package:merkar/app/pages/home/widgets/about_us_page.dart';
 import 'package:merkar/app/pages/home/widgets/comment_page.dart';
 import 'package:merkar/app/pages/login/sign_in/login_view_model.dart';
+import 'package:merkar/data/repositories/login_repository.dart';
+import 'package:merkar/data/repositories/login_repository_impl.dart';
 import 'package:merkar/injection_container.dart';
 
 import '../../purchases/purchase_history/purchase_history_page.dart';
@@ -43,14 +45,14 @@ class DrawerWelcome extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerRight,
                   child: Text(
-                    'Stip Yannin',
+                    'Nombre ${LoginRepositoryImpl().getCurrentUser().displayName}',
                     style: TextStyle(color: Colors.white, fontSize: 20.0),
                   ),
                 ),
                 Align(
                   alignment: Alignment.centerRight + Alignment(0, 0.4),
                   child: Text(
-                    'stip.suarez@gmail.com',
+                    '${LoginRepositoryImpl().getCurrentUser().email}',
                     style: TextStyle(color: Colors.white70, fontSize: 15.0),
                   ),
                 ),

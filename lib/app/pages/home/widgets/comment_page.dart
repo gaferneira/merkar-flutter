@@ -68,7 +68,7 @@ Future<void> _sendEmail(GlobalKey<FormState> keyForm) async {
       keyForm.currentState.save();
       print("Enviar mensaje Email: ${_message}");
       final Email email = Email(
-        body: 'Email body: ${_message}',
+        body: 'Merkar Comment: ${_message}',
         subject: 'Sugerencia',
         recipients: ['stip.suarez@gmail.com'],
         cc: null,
