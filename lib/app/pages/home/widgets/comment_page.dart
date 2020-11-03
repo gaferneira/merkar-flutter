@@ -29,16 +29,17 @@ Future<void> CommentePage(BuildContext context) {
                             Text(
                               Strings.label_top_comments,
                             ),
+                            SizedBox(height: 20),
                             Text(Strings.label_body_comments),
                             TextFormField(
                               decoration: InputDecoration(
                                   labelText: Strings.label_message),
                               onSaved: (value) {
                                 _message = value;
-                                print("the value message change: ${_message}");
                               },
                               validator: (value) {
                                 if (value.isEmpty) {
+                                  print("No msj");
                                   return "Ingresa un mensaje";
                                 } else
                                   return null;
@@ -47,8 +48,11 @@ Future<void> CommentePage(BuildContext context) {
                             RaisedButton(
                               child: Text(Strings.label_send),
                               onPressed: () {
-                                _sendEmail(keyFormComments);
-                                Navigator.pop(context);
+                                if (keyFormComments.currentState.validate()) {
+                                  keyFormComments.currentState.save();
+                                  _sendEmail(keyFormComments);
+                                }
+                                // Navigator.pop(context);
                               },
                             ),
                           ],
@@ -64,23 +68,23 @@ Future<void> CommentePage(BuildContext context) {
 
 Future<void> _sendEmail(GlobalKey<FormState> keyForm) async {
   try {
-    if (keyForm.currentState.validate()) {
-      keyForm.currentState.save();
-      print("Enviar mensaje Email: ${_message}");
-      final Email email = Email(
-        body: 'Merkar Comment: ${_message}',
-        subject: 'Sugerencia',
-        recipients: ['stip.suarez@gmail.com', 'gabrielfneira@gmail.com'],
-        cc: null,
-        bcc: null,
-        attachmentPaths: null,
-        isHTML: false,
-      );
+//    print(keyForm.currentState.validate());
+    print("Enviar mensaje Email: ${_message}");
+    final Email email = Email(
+      body: 'Merkar Comment: ${_message}',
+      subject: 'Sugerencia',
+      recipients: ['stip.suarez@gmail.com', 'gabrielfneira@gmail.com'],
+      cc: null,
+      bcc: null,
+      attachmentPaths: null,
+      isHTML: false,
+    );
 
-      await FlutterEmailSender.send(email);
+    await FlutterEmailSender.send(email);
 
-      print('success');
-    }
+    print('success');
+
+    return "Error";
   } catch (error) {
     print('Error: ${error}');
   }

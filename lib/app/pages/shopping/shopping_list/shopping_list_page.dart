@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/constants.dart';
+import 'package:merkar/app/core/converString.dart';
 import 'package:merkar/app/core/strings.dart';
 import 'package:merkar/data/entities/list_product.dart';
 import 'package:merkar/data/entities/shopping_list.dart';
@@ -48,7 +49,8 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
         child: Consumer<ShoppingListViewModel>(
             builder: (context, model, child) => Scaffold(
                   appBar: AppBar(
-                    title: Text('${shoppingList.name}'),
+                    title: Text(
+                        ConvertString().capitalize('${shoppingList.name}')),
                     actions: <Widget>[
                       IconButton(
                         icon: Icon(Icons.check_circle),

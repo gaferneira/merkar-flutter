@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:merkar/app/core/converString.dart';
 import 'package:merkar/app/core/strings.dart';
 import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
@@ -50,7 +51,7 @@ class _NewShoppingListPageState extends State<NewShoppingListPage> {
             TextFormField(
               decoration: InputDecoration(labelText: "Nombre de la lista"),
               onSaved: (value) {
-                nameList = value;
+                nameList = ConvertString().capitalize(value.toString());
               },
               validator: (value) {
                 if (value.isEmpty) {
@@ -76,5 +77,17 @@ class _NewShoppingListPageState extends State<NewShoppingListPage> {
       formListKey.currentState.save();
       viewModel.saveList(nameList, context);
     }
+  }
+
+  String capitalize(String string) {
+    if (string == null) {
+      throw ArgumentError.notNull('string');
+    }
+
+    if (string.isEmpty) {
+      return string;
+    }
+
+    return string[0].toUpperCase() + string.substring(1);
   }
 }
