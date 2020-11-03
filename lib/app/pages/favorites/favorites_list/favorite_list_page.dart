@@ -21,7 +21,7 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
   final keyFormEditProduct = GlobalKey<FormState>();
   final keyFormFinishShoppingList = GlobalKey<FormState>();
   final keyFormPurchaseList = GlobalKey<FormState>();
-  FavoriteListViewModel viewModel = serviceLocator<FavoriteListViewModel>();
+//  FavoriteListViewModel viewModel = serviceLocator<FavoriteListViewModel>();
   int temp_quantity = null;
   double temp_price = null;
   String descriptionShoppingList = "";
@@ -40,14 +40,14 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
   Widget build(BuildContext context) {
     final shoppingList =
         ModalRoute.of(context).settings.arguments as ShoppingList;
-    viewModel.loadData(shoppingList);
+    //viewModel.loadData(shoppingList);
 
     return ChangeNotifierProvider<FavoriteListViewModel>.value(
-        value: viewModel,
+        //  value: viewModel,
         child: Consumer<FavoriteListViewModel>(
             builder: (context, model, child) => Scaffold(
                   appBar: AppBar(
-                    title: Text('${shoppingList.name}'),
+                    title: Text(Strings.route_favorites),
                     actions: <Widget>[
                       IconButton(
                         icon: Icon(Icons.check_circle),
@@ -61,13 +61,10 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
                     child: Column(
                       children: <Widget>[
                         Center(child: Text("No seleccionados")),
-                        (viewModel.unselectedList == null)
+                        /*(viewModel.unselectedList == null)
                             ? Text('Loading...')
                             : _showProductsList(viewModel.unselectedList),
-                        Center(child: Text("Seleccionados")),
-                        (viewModel.selectedList == null)
-                            ? Text('Loading...')
-                            : _showSelectProductsList(viewModel.selectedList),
+                        */
                         RaisedButton(
                             child: Text(Strings.label_finish),
                             onPressed: () {
@@ -82,24 +79,6 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
                     tooltip: Strings.label_tootip_add_products,
                     child: Icon(Icons.add),
                   ),
-                  bottomNavigationBar: Container(
-                      height: Constant.bottomBarHeight,
-                      width: MediaQuery.of(context).size.width,
-                      child: BottomNavigationBar(
-                        currentIndex:
-                            0, // this will be set when a new tab is tapped
-                        items: [
-                          BottomNavigationBarItem(
-                            icon: new Icon(Icons.insert_chart),
-                            title: new Text('Total: ${viewModel.totalPrice()}'),
-                          ),
-                          BottomNavigationBarItem(
-                            icon: new Icon(Icons.shopping_cart),
-                            title: new Text(
-                                'Carrito (${viewModel.totalShopping()})'),
-                          ),
-                        ],
-                      )),
                 )));
   }
 
@@ -136,7 +115,7 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
           ),
           controlAffinity: ListTileControlAffinity.leading,
           onChanged: (bool value) {
-            viewModel.selectProduct(index);
+            // viewModel.selectProduct(index);
           },
           secondary: IconButton(
             icon: Icon(Icons.edit),
@@ -180,10 +159,10 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
           ),
           controlAffinity: ListTileControlAffinity.leading,
           onChanged: (bool value) {
-            if (value)
+            /*if (value)
               viewModel.selectProduct(index);
             else
-              viewModel.unselectProduct(index);
+              viewModel.unselectProduct(index);*/
           },
           secondary: IconButton(
             icon: Icon(Icons.edit),
@@ -271,7 +250,7 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
       product.quantity = this.temp_quantity;
       product.price = this.temp_price.toString();
       product.total = (this.temp_price * this.temp_quantity).toString();
-      viewModel.updateProduct(product, oldTotal);
+      //viewModel.updateProduct(product, oldTotal);
     }
   }
 
@@ -419,8 +398,8 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
   void _actionOnSaveList(ShoppingList shoppingList) {
     if (keyFormPurchaseList.currentState.validate()) {
       keyFormPurchaseList.currentState.save();
-      viewModel.finishShopping(
-          context, _character, descriptionShoppingList.toString());
+      // viewModel.finishShopping(
+      //    context, _character, descriptionShoppingList.toString());
     }
   }
 }

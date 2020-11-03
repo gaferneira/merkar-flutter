@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:merkar/app/core/constants.dart';
 import 'package:merkar/app/core/strings.dart';
 
+String _message = "";
 Future<void> CommentePage(BuildContext context) {
   final keyFormComments = GlobalKey<FormState>();
-  String _message;
+
   return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -33,6 +35,7 @@ Future<void> CommentePage(BuildContext context) {
                                   labelText: Strings.label_message),
                               onSaved: (value) {
                                 _message = value;
+                                print("the value message change: ${_message}");
                               },
                               validator: (value) {
                                 if (value.isEmpty) {
@@ -44,7 +47,7 @@ Future<void> CommentePage(BuildContext context) {
                             RaisedButton(
                               child: Text(Strings.label_send),
                               onPressed: () {
-                                _sendEmail(_message);
+                                _sendEmail(keyFormComments);
                                 Navigator.pop(context);
                               },
                             ),
@@ -59,10 +62,25 @@ Future<void> CommentePage(BuildContext context) {
       });
 }
 
-Future<void> _sendEmail(message) async {
+Future<void> _sendEmail(GlobalKey<FormState> keyForm) async {
   try {
-    print("Enviar mensaje Email");
-    print('success');
+    if (keyForm.currentState.validate()) {
+      keyForm.currentState.save();
+      print("Enviar mensaje Email: ${_message}");
+      final Email email = Email(
+        body: 'Email body: ${_message}',
+        subject: 'Sugerencia',
+        recipients: ['stip.suarez@gmail.com'],
+        cc: null,
+        bcc: null,
+        attachmentPaths: null,
+        isHTML: false,
+      );
+
+      await FlutterEmailSender.send(email);
+
+      print('success');
+    }
   } catch (error) {
     print('Error: ${error}');
   }
