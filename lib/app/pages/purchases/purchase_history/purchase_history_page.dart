@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:merkar/app/core/converString.dart';
 import 'package:merkar/app/core/strings.dart';
 import 'package:merkar/app/widgets/widgets.dart';
 import 'package:merkar/data/entities/purchase.dart';
@@ -34,7 +35,7 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
         builder: (context, model, child) => Scaffold(
           key: _scaffKey,
           appBar: AppBar(
-            title: Text('Hisorial'),
+            title: Text('Historial'),
           ),
           body: SingleChildScrollView(
             child: Column(
@@ -73,9 +74,10 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
         color: Colors.black,
       ),
       itemCount: list.length,
+      physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         return ListTile(
-          title: Text('${list[index].name}'),
+          title: Text(ConvertString().capitalize('${list[index].name}')),
           trailing: Icon(Icons.arrow_right),
           onTap: () {
             print(list[index].name);
