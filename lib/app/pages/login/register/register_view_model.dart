@@ -10,23 +10,29 @@ class RegisterViewModel with ChangeNotifier {
 
   RegisterViewModel({@required this.repository});
 
-  Future<void> signUp(String name, String email, String password) async {
+  Future<void> signUp(
+      BuildContext context, String name, String email, String password) async {
     try {
       loading = true;
       notifyListeners();
       final response = await repository.signUp(name, email, password);
       loading = false;
-      response.fold(
-          (l) => {error = l},
-          (r) => {
-                if (!r) {error = "No user found"} else {error = null}
-              });
+      response.fold((l) => {error = l}, (r) => {manageResponse(context, r)});
       notifyListeners();
     } catch (e) {
       error = e.toString();
       loading = false;
       notifyListeners();
       return false;
+    }
+  }
+
+  void manageResponse(BuildContext context, bool success) {
+    if (!success) {
+      error = "No user found";
+    } else {
+      error = null;
+      Navigator.pop(context);
     }
   }
 

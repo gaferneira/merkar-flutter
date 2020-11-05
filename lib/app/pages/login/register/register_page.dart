@@ -79,7 +79,7 @@ class _RegisterPageState extends State<RegisterPage> {
               },
               validator: (value) {
                 if (value.isEmpty) {
-                  return "Llene el nombre";
+                  return "La contraseña es requerida";
                 } else
                   return null;
               },
@@ -94,7 +94,7 @@ class _RegisterPageState extends State<RegisterPage> {
               },
               validator: (value) {
                 if (value.isEmpty) {
-                  return "Llene el nombre";
+                  return "Confirme la contraseña";
                 }
                 if (value != this.password) {
                   return "Las constraseñas no coinciden";
@@ -119,6 +119,6 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void _registerNewUser() {
-    viewModel.signUp(name, email, password);
+    viewModel.signUp(context, name, email, password);
   }
 }
