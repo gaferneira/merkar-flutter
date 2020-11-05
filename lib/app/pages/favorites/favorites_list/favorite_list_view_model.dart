@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:merkar/app/pages/shopping_list/shopping_list_page.dart';
 import 'package:merkar/data/entities/list_product.dart';
 import 'package:merkar/data/entities/shopping_list.dart';
 import 'package:merkar/data/repositories/purchases_repository.dart';
 import 'package:merkar/data/repositories/shopping_lists_repository.dart';
 
-class ShoppingListViewModel extends ChangeNotifier {
+import 'favorite_list_page.dart';
+
+class FavoriteListViewModel extends ChangeNotifier {
   final ShoppingListsRepository repository;
   final PurchasesRepository purchasesRepository;
 
-  ShoppingListViewModel(
+  FavoriteListViewModel(
       {@required this.repository, @required this.purchasesRepository});
 
   ShoppingList shoppingList;

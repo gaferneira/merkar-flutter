@@ -1,22 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/strings.dart';
+import 'package:merkar/app/pages/favorites/favorites_list/favorite_list_page.dart';
 import 'package:merkar/app/pages/home/widgets/about_us_page.dart';
 import 'package:merkar/app/pages/home/widgets/comment_page.dart';
-import 'package:merkar/app/pages/login/login_view_model.dart';
-import 'package:merkar/app/pages/new_shopping_list/new_shopping_list_page.dart';
-import 'package:merkar/app/pages/purchase_history/purchase_history_page.dart';
+import 'package:merkar/app/pages/login/sign_in/login_view_model.dart';
+import 'package:merkar/data/repositories/login_repository.dart';
+import 'package:merkar/data/repositories/login_repository_impl.dart';
+import 'package:merkar/injection_container.dart';
 
-import '../../../../injection_container.dart';
+import '../../purchases/purchase_history/purchase_history_page.dart';
+import '../../shopping/new_shopping_list/new_shopping_list_page.dart';
+import 'package:in_app_review/in_app_review.dart';
 
 enum DrawerOptions {
   route_new_list,
   route_purchase_history,
   route_comments,
   route_about_us,
-  route_close_session
+  route_close_session,
+  route_favorites,
 }
 
 class DrawerWelcome extends StatelessWidget {
+  final InAppReview inAppReview = InAppReview.instance;
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -29,27 +36,23 @@ class DrawerWelcome extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: CircleAvatar(
+                    backgroundImage:
+                        AssetImage('assets/images/defaultprofile.png'),
+                    backgroundColor: Colors.transparent,
                     radius: 50.0,
-                    //backgroundImage: Image.asset('asset/images/defaultprofile.png'),
-                    child: Image.asset(
-                      'assets/images/defaultprofile.png',
-                      width: 87.0,
-                      scale: 1.0,
-                      alignment: Alignment.center,
-                    ),
                   ),
                 ),
                 Align(
                   alignment: Alignment.centerRight,
                   child: Text(
-                    'Stip Yannin',
+                    'Nombre ${LoginRepositoryImpl().getCurrentUser().displayName}',
                     style: TextStyle(color: Colors.white, fontSize: 20.0),
                   ),
                 ),
                 Align(
                   alignment: Alignment.centerRight + Alignment(0, 0.4),
                   child: Text(
-                    'stip.suarez@gmail.com',
+                    '${LoginRepositoryImpl().getCurrentUser().email}',
                     style: TextStyle(color: Colors.white70, fontSize: 15.0),
                   ),
                 ),
@@ -69,6 +72,13 @@ class DrawerWelcome extends StatelessWidget {
             trailing: Icon(Icons.keyboard_arrow_right),
             onTap: () =>
                 _goToRoute(DrawerOptions.route_purchase_history, context),
+          ),
+          Divider(),
+          ListTile(
+            title: Text(Strings.route_favorites),
+            leading: Icon(Icons.favorite),
+            trailing: Icon(Icons.keyboard_arrow_right),
+            onTap: () => _goToRoute(DrawerOptions.route_favorites, context),
           ),
           Divider(),
           ListTile(
@@ -98,40 +108,49 @@ class DrawerWelcome extends StatelessWidget {
       ),
     );
   }
-}
 
-void _goToRoute(DrawerOptions option, BuildContext context) async {
-  switch (option) {
-    case DrawerOptions.route_new_list:
-      {
-        Navigator.of(context).pushNamed(NewShoppingListPage.routeName);
-        break;
-      }
-    case DrawerOptions.route_purchase_history:
-      {
-        Navigator.of(context).pop();
-        Navigator.of(context).pushNamed(PurchaseHistoryPage.routeName);
-        break;
-      }
-    case DrawerOptions.route_comments:
-      {
-        Navigator.of(context).pop();
-        CommentePage(context);
-        break;
-      }
+  void _goToRoute(DrawerOptions option, BuildContext context) async {
+    switch (option) {
+      case DrawerOptions.route_new_list:
+        {
+          Navigator.of(context).pushNamed(NewShoppingListPage.routeName);
+          break;
+        }
+      case DrawerOptions.route_favorites:
+        {
+          Navigator.of(context).pushNamed(FavoriteListPage.routeName);
+          break;
+        }
+      case DrawerOptions.route_purchase_history:
+        {
+          Navigator.of(context).pop();
+          Navigator.of(context).pushNamed(PurchaseHistoryPage.routeName);
+          break;
+        }
+      case DrawerOptions.route_comments:
+        {
+          Navigator.of(context).pop();
+/*
+          if (await inAppReview.isAvailable()) {
+            inAppReview.requestReview();
+          }*/
+          CommentePage(context);
+          break;
+        }
 
-    case DrawerOptions.route_about_us:
-      {
-        Navigator.of(context).pop();
-        AboutUsPage(context);
-        break;
-      }
+      case DrawerOptions.route_about_us:
+        {
+          Navigator.of(context).pop();
+          AboutUsPage(context);
+          break;
+        }
 
-    case DrawerOptions.route_close_session:
-      {
-        final viewModel = serviceLocator<LoginViewModel>();
-        viewModel.signOut();
-        break;
-      }
+      case DrawerOptions.route_close_session:
+        {
+          final viewModel = serviceLocator<LoginViewModel>();
+          viewModel.signOut();
+          break;
+        }
+    }
   }
 }

@@ -1,14 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/constants.dart';
+import 'package:merkar/app/core/converString.dart';
 import 'package:merkar/app/core/strings.dart';
-import 'package:merkar/app/pages/select_my_products/select_my_products_page.dart';
+import 'package:merkar/data/entities/list_product.dart';
+import 'package:merkar/data/entities/shopping_list.dart';
+import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
 
-import '../../../app/pages/shopping_list/shopping_list_view_model.dart';
-import '../../../data/entities/list_product.dart';
-import '../../../data/entities/shopping_list.dart';
-import '../../../injection_container.dart';
+import '../select_my_products/select_my_products_page.dart';
+import 'shopping_list_view_model.dart';
 
 enum SingingCharacter { delete, reset, nothing }
 
@@ -48,7 +49,8 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
         child: Consumer<ShoppingListViewModel>(
             builder: (context, model, child) => Scaffold(
                   appBar: AppBar(
-                    title: Text('${shoppingList.name}'),
+                    title: Text(
+                        ConvertString().capitalize('${shoppingList.name}')),
                     actions: <Widget>[
                       IconButton(
                         icon: Icon(Icons.check_circle),

@@ -1,26 +1,29 @@
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
-import 'package:merkar/app/pages/login/auth_view_model.dart';
-import 'package:merkar/app/pages/new_product/create_new_product_view_model.dart';
-import 'package:merkar/app/pages/purchase_history/purchase_history_view_model.dart';
-import 'package:merkar/app/pages/select_my_products/select_my_products_view_model.dart';
-import 'package:merkar/data/repositories/login_repository.dart';
-import 'package:merkar/data/repositories/login_repository_impl.dart';
-import 'package:merkar/data/repositories/purchases_repository.dart';
-import 'package:merkar/data/repositories/purchases_repository_impl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app/pages/home/home_view_model.dart';
-import 'app/pages/login/login_view_model.dart';
-import 'app/pages/new_shopping_list/new_shopping_list_view_model.dart';
-import 'app/pages/shopping_list/shopping_list_view_model.dart';
-import 'app/pages/purchase_history_show_info/purchase_history_show_info_view_model.dart';
-import 'app/pages/purchase_history/purchase_history_view_model.dart';
+import 'app/pages/login/auth_view_model.dart';
+import 'app/pages/login/register/register_view_model.dart';
+import 'app/pages/login/reset_password/reset_password_view_model.dart';
+import 'app/pages/login/sign_in/login_view_model.dart';
+import 'app/pages/products/new_product/create_new_product_view_model.dart';
+import 'app/pages/purchases/purchase_history/purchase_history_view_model.dart';
+import 'app/pages/purchases/purchase_history_show_info/purchase_history_show_info_view_model.dart';
+import 'app/pages/shopping/new_shopping_list/new_shopping_list_view_model.dart';
+import 'app/pages/shopping/select_my_products/select_my_products_view_model.dart';
+import 'app/pages/shopping/shopping_list/shopping_list_view_model.dart';
+import 'app/pages/favorites/select_my_favorites/select_my_favorites_view_model.dart';
+import 'app/pages/favorites/favorites_list/favorite_list_view_model.dart';
 import 'data/local/local_data_source.dart';
 import 'data/remote/firestore_data_source.dart';
+import 'data/repositories/login_repository.dart';
+import 'data/repositories/login_repository_impl.dart';
 import 'data/repositories/products_repository.dart';
 import 'data/repositories/products_repository_impl.dart';
+import 'data/repositories/purchases_repository.dart';
+import 'data/repositories/purchases_repository_impl.dart';
 import 'data/repositories/shopping_lists_repository.dart';
 import 'data/repositories/shopping_lists_repository_impl.dart';
 import 'data/utils/network/network_info.dart';
@@ -57,12 +60,27 @@ void createViewModels() {
         repository: serviceLocator(),
       ));
 
+  serviceLocator.registerFactory(() => RegisterViewModel(
+        repository: serviceLocator(),
+      ));
+
+  serviceLocator.registerFactory(() => ResetPasswordViewModel(
+        repository: serviceLocator(),
+      ));
+
   serviceLocator.registerFactory(() => HomePageViewModel(
         shoppingListsRepository: serviceLocator(),
       ));
 
   serviceLocator.registerFactory(() => ShoppingListViewModel(
       repository: serviceLocator(), purchasesRepository: serviceLocator()));
+
+  serviceLocator.registerFactory(() => FavoriteListViewModel(
+      repository: serviceLocator(), purchasesRepository: serviceLocator()));
+
+  serviceLocator.registerFactory(() => SelectMyFavoritesViewModel(
+      productsRepository: serviceLocator(),
+      shoppingListRepository: serviceLocator()));
 
   serviceLocator.registerFactory(
       () => NewShoppingListViewModel(repository: serviceLocator()));
@@ -74,12 +92,11 @@ void createViewModels() {
   serviceLocator.registerFactory(
       () => CreateNewProductsViewModel(productsRepository: serviceLocator()));
 
-  //TODO implement
   serviceLocator.registerFactory(() =>
       PurchaseHistoryViewModel(PurchaseHistoryRepository: serviceLocator()));
 
   serviceLocator.registerFactory(() => PurchaseHistoryShowInfoViewModel(
-      PurchaseHistoryRepository: serviceLocator()));
+      purchaseHistoryRepository: serviceLocator()));
 }
 
 void createRepositories() {

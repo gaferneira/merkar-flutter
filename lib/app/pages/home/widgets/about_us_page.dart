@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/constants.dart';
 import 'package:merkar/app/core/strings.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 Future<void> AboutUsPage(BuildContext context) {
   return showDialog(
@@ -20,13 +22,110 @@ Future<void> AboutUsPage(BuildContext context) {
                       padding: const EdgeInsets.all(Constant.normalspace),
                       child: Column(
                         children: <Widget>[
-                          Text(
-                            Strings.label_top_comments,
+                          Container(
+                            width: double.infinity,
+                            height: 150.0,
+                            decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                              colors: [Colors.white70, Colors.white70],
+                              // colors: [Colors.cyan[300], Colors.cyan[800]]
+                            )),
+                            child: Image.asset(
+                              'assets/images/logo.png',
+                              width: 10.0,
+                              // color: Colors.black,
+                            ),
                           ),
-                          Text(Strings.label_body_comments),
+                          Text(
+                            Strings.label_about_us +
+                                " " +
+                                Strings.label_name_app,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Text(""),
+                          Row(children: <Widget>[
+                            Text(
+                              "Creadores: ",
+                              style: TextStyle(
+                                fontSize: 18.0,
+                              ),
+                              textAlign: TextAlign.start,
+                            ),
+                          ]),
+                          Text(""),
+                          Row(
+                            children: <Widget>[
+                              Icon(Icons.touch_app),
+                              Text(
+                                Strings.creators_name[0],
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Icon(Icons.touch_app),
+                              Text(Strings.creators_name[1]),
+                            ],
+                          ),
+                          Text(""),
+                          Row(children: <Widget>[
+                            Text(""),
+                            Text(
+                              "Escríbenos: ",
+                              style: TextStyle(
+                                fontSize: 18.0,
+                              ),
+                              textAlign: TextAlign.start,
+                            ),
+                          ]),
+                          Text(""),
+                          Row(
+                            children: <Widget>[
+                              Icon(Icons.email),
+                              Text(
+                                Strings.creators_email[0],
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Icon(Icons.alternate_email),
+                              Text(Strings.creators_email[1]),
+                            ],
+                          ),
+                          Text(""),
+                          Row(
+                            children: <Widget>[
+                              Icon(Icons.tap_and_play),
+                              Text(
+                                Strings.creators_number,
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                          Text(""),
+                          Row(
+                            children: <Widget>[
+                              Icon(Icons.repeat_one),
+                              InkWell(
+                                onTap: () {
+                                  launch(
+                                      'https://github.com/gaferneira/merkar-flutter');
+                                },
+                                child: Text(
+                                  Strings.name_repository,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ],
+                          ),
                           RaisedButton(
-                            child: Text(Strings.label_send),
-                            onPressed: () {},
+                            child: Text(Strings.label_close),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
                           ),
                         ],
                       ),

@@ -5,9 +5,16 @@ import 'login_repository.dart';
 
 class LoginRepositoryImpl implements LoginRepository {
   FirebaseAuth _auth;
+  User _curretUser;
 
   LoginRepositoryImpl() {
     _auth = FirebaseAuth.instance;
+  }
+
+  @override
+  User getCurrentUser() {
+    _curretUser = _auth.currentUser;
+    return _curretUser;
   }
 
   @override
@@ -20,7 +27,6 @@ class LoginRepositoryImpl implements LoginRepository {
     try {
       final result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
-
       return right(result.user != null);
     } on FirebaseException catch (e) {
       return left(e.message);
@@ -36,12 +42,22 @@ class LoginRepositoryImpl implements LoginRepository {
   }
 
   @override
-  Future<Either<String, bool>> signUp(String email, String password) async {
+  Future<Either<String, bool>> signUp(
+      String name, String email, String password) async {
     try {
       final result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-
       return right(result.user != null);
+    } catch (e) {
+      return left(e.toString());
+    }
+  }
+
+  @override
+  Future<Either<String, bool>> recoverPassword(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+      return right(true);
     } catch (e) {
       return left(e.toString());
     }
