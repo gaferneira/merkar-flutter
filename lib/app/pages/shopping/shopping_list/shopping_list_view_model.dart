@@ -14,6 +14,8 @@ class ShoppingListViewModel extends ChangeNotifier {
       {@required this.repository, @required this.purchasesRepository});
 
   ShoppingList shoppingList;
+  List<ListProduct> filterunselectedList;
+  List<ListProduct> filterselectedList;
   List<ListProduct> unselectedList;
   List<ListProduct> selectedList;
   String error;
@@ -22,6 +24,8 @@ class ShoppingListViewModel extends ChangeNotifier {
     this.shoppingList = shoppingList;
     repository.fetchProducts(shoppingList).listen((data) {
       updateList(data);
+      filterselectedList = selectedList;
+      filterunselectedList = unselectedList;
       error = null;
     }, onError: (e) {
       error = e;

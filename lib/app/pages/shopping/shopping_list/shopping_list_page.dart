@@ -24,6 +24,11 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   final keyFormFinishShoppingList = GlobalKey<FormState>();
   final keyFormPurchaseList = GlobalKey<FormState>();
   ShoppingListViewModel viewModel = serviceLocator<ShoppingListViewModel>();
+  TextEditingController _text_searchController = TextEditingController();
+  TextEditingController _text_searchController2 = TextEditingController();
+  final _keySearchFormUnsel = GlobalKey<FormState>();
+  final _keySearchFormSel = GlobalKey<FormState>();
+
   int temp_quantity = null;
   double temp_price = null;
   String descriptionShoppingList = "";
@@ -37,6 +42,22 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
 
   var _selectedId;
   String _selected;
+
+  onItemChangedSelect(String value) {
+    viewModel.selectedList = viewModel.filterselectedList
+        .where((shopping_list) =>
+            shopping_list.name.toLowerCase().contains(value.toLowerCase()))
+        .toList();
+    viewModel.notifyListeners();
+  }
+
+  onItemChangedUnselect(String value) {
+    viewModel.unselectedList = viewModel.filterunselectedList
+        .where((shopping_list) =>
+            shopping_list.name.toLowerCase().contains(value.toLowerCase()))
+        .toList();
+    viewModel.notifyListeners();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,10 +84,36 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                   body: SingleChildScrollView(
                     child: Column(
                       children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(Constant.normalspace),
+                          child: Form(
+                            key: _keySearchFormUnsel,
+                            child: TextFormField(
+                              controller: _text_searchController,
+                              decoration: InputDecoration(
+                                labelText: "Buscar ...",
+                              ),
+                              onChanged: onItemChangedUnselect,
+                            ),
+                          ),
+                        ),
                         Center(child: Text("No seleccionados")),
                         (viewModel.unselectedList == null)
                             ? Text('Loading...')
                             : _showProductsList(viewModel.unselectedList),
+                        Padding(
+                          padding: const EdgeInsets.all(Constant.normalspace),
+                          child: Form(
+                            key: _keySearchFormSel,
+                            child: TextFormField(
+                              controller: _text_searchController2,
+                              decoration: InputDecoration(
+                                labelText: "Buscar ...",
+                              ),
+                              onChanged: onItemChangedSelect,
+                            ),
+                          ),
+                        ),
                         Center(child: Text("Seleccionados")),
                         (viewModel.selectedList == null)
                             ? Text('Loading...')

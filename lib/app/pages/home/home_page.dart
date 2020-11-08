@@ -23,6 +23,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   HomePageViewModel viewModel = serviceLocator<HomePageViewModel>();
   bool _light = true;
+  final _key_search = GlobalKey<FormState>();
   TextEditingController _search_textController =
       TextEditingController(); //controller search_text
   @override
@@ -36,10 +37,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   onItemChanged(String value) {
-    int cursorPos = _search_textController.selection.base.offset;
-/*    _search_textController.selection = TextSelection(
-        baseOffset: cursorPos + value.length,
-        extentOffset: cursorPos + value.length);*/
     setState(() {
       viewModel.list = viewModel.filter_list
           .where((shopping_list) =>
@@ -105,6 +102,24 @@ class _HomePageState extends State<HomePage> {
                   Padding(
                     padding: const EdgeInsets.all(Constant.normalspace),
                     child: Form(
+                      key: _key_search,
+                      child: SizedBox(
+                        height: 30,
+                        child: TextField(
+                          controller: _search_textController,
+                          decoration: InputDecoration(
+                            labelText: 'Buscar Actual...',
+                            //hintText: ,
+                          ),
+                          textDirection: TextDirection.ltr,
+                          onChanged: onItemChanged,
+                        ),
+                      ),
+                    ),
+                  ),
+                  /*Padding(
+                    padding: const EdgeInsets.all(Constant.normalspace),
+                    child: Form(
                       child: SizedBox(
                         height: 30,
                         child: TextField(
@@ -113,11 +128,12 @@ class _HomePageState extends State<HomePage> {
                             labelText: 'Buscar ...',
                             //hintText: ,
                           ),
+                          textDirection: TextDirection.ltr,
                           onChanged: onItemChanged,
                         ),
                       ),
                     ),
-                  ),
+                  ),*/
                   Row(
                     //  mainAxisAlignment: MainAxisAlignment.center,
                     // crossAxisAlignment: CrossAxisAlignment.center,

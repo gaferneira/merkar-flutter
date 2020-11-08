@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:merkar/app/core/constants.dart';
 import 'package:merkar/app/core/converString.dart';
 import 'package:merkar/app/core/strings.dart';
 import 'package:merkar/app/widgets/widgets.dart';
@@ -19,6 +20,15 @@ class PurchaseHistoryPage extends StatefulWidget {
 class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
   PurchaseHistoryViewModel viewModel =
       serviceLocator<PurchaseHistoryViewModel>();
+  final keyFormPurchaseList = GlobalKey<FormState>();
+  TextEditingController _text_searchController = TextEditingController();
+  onItemChangedSelect(String value) {
+    viewModel.list = viewModel.filterList
+        .where((shopping_list) =>
+            shopping_list.name.toLowerCase().contains(value.toLowerCase()))
+        .toList();
+    viewModel.notifyListeners();
+  }
 
   @override
   void initState() {
@@ -42,6 +52,19 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
 
                 //  crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(Constant.normalspace),
+                    child: Form(
+                      key: keyFormPurchaseList,
+                      child: TextFormField(
+                        controller: _text_searchController,
+                        decoration: InputDecoration(
+                          labelText: "Buscar ...",
+                        ),
+                        onChanged: onItemChangedSelect,
+                      ),
+                    ),
+                  ),
                   Row(
                     // crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:merkar/app/core/constants.dart';
 import 'package:merkar/app/core/strings.dart';
 import 'package:merkar/app/pages/products/new_product/create_new_product.dart';
 import 'package:merkar/data/entities/product.dart';
@@ -19,8 +20,19 @@ class SelectMyProductsPage extends StatefulWidget {
 class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
   SelectMyProductsViewModel viewModel =
       serviceLocator<SelectMyProductsViewModel>();
+  TextEditingController _search_textController = TextEditingController();
   //List<ListProduct> shoppingProducts;
+  final _keySearchP = GlobalKey<FormState>();
   ShoppingList shoppingList;
+
+  onItemChanged(String value) {
+    viewModel.userProducts = viewModel.filteruserProducts
+        .where((product) =>
+            product.name.toLowerCase().contains(value.toLowerCase()))
+        .toList();
+    viewModel.notifyListeners();
+  }
+
   @override
   Widget build(BuildContext context) {
     shoppingList = ModalRoute.of(context).settings.arguments;
@@ -34,9 +46,31 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
                     title: Text(Strings.title_my_products),
                   ),
                   body: SingleChildScrollView(
-                    child: (viewModel.userProducts == null)
-                        ? Text('Loading...')
-                        : _showProductsList(viewModel.userProducts),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(Constant.normalspace),
+                          child: Form(
+                            key: _keySearchP,
+                            child: SizedBox(
+                              height: 30,
+                              child: TextField(
+                                controller: _search_textController,
+                                decoration: InputDecoration(
+                                  labelText: 'Buscar Actual...',
+                                  //hintText: ,
+                                ),
+                                textDirection: TextDirection.ltr,
+                                onChanged: onItemChanged,
+                              ),
+                            ),
+                          ),
+                        ),
+                        (viewModel.userProducts == null)
+                            ? Text('Loading...')
+                            : _showProductsList(viewModel.userProducts),
+                      ],
+                    ),
                   ),
                   floatingActionButton: FloatingActionButton(
                     tooltip: Strings.label_tootip_new_product,
