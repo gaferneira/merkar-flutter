@@ -5,6 +5,8 @@ import 'package:merkar/app/pages/favorites/favorites_list/favorite_list_page.dar
 import 'package:merkar/app/pages/favorites/select_my_favorites/select_my_favorites_page.dart';
 import 'package:merkar/app/pages/home/home_page.dart';
 import 'package:merkar/app/pages/login/auth_view_model.dart';
+import 'package:merkar/app/theme/app_state_notifier.dart';
+import 'package:merkar/app/theme/app_theme.dart';
 import 'package:provider/provider.dart';
 
 import 'app/pages/login/register/register_page.dart';
@@ -17,8 +19,20 @@ import 'app/pages/shopping/select_my_products/select_my_products_page.dart';
 import 'app/pages/shopping/shopping_list/shopping_list_page.dart';
 import 'injection_container.dart' as di;
 import 'injection_container.dart';
+import 'app/core/provider_theme.dart';
 
 const bool USE_FIRESTORE_EMULATOR = false;
+bool _light = true;
+ThemeData _darkTheme = ThemeData(
+  accentColor: Colors.black,
+  brightness: Brightness.dark,
+  primaryColor: Colors.amber,
+);
+
+ThemeData _lightTheme = ThemeData(
+    accentColor: Colors.lightBlueAccent,
+    brightness: Brightness.light,
+    primaryColor: Colors.blue);
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,16 +43,31 @@ void main() async {
   }
   await di.init();
   runApp(MyApp());
+  /*runApp(
+    ChangeNotifierProvider<ProviderTheme>(
+      create: (BuildContext context) => ProviderTheme(),
+      child: MyApp(),
+    ),
+  );*/
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // var providerTheme = Provider.of<ProviderTheme>(context);
+
+    //Consumer<AppStateNotifier>(builder: (context, appState, child) {
+    //return
     return MaterialApp(
       title: 'Merkar',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      //theme: ProviderTheme().light ? _lightTheme : _darkTheme,
+      debugShowCheckedModeBanner: false,
+      theme: _lightTheme,
+      // ThemeData(primarySwatch: Colors.blue),
+      darkTheme: _darkTheme,
+      // ThemeData(primarySwatch: Colors.blue),
+      //home: HomePage(),
+      // themeMode: appState.isDarkMode ? ThemeMode.dark : ThemeMode.light,
       // home: HomePage(),
       initialRoute: '/',
       routes: {
@@ -58,6 +87,8 @@ class MyApp extends StatelessWidget {
       },
     );
   }
+  //);
+  // }
 }
 
 class AuthenticationPage extends StatelessWidget {

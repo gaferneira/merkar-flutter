@@ -115,6 +115,8 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   Widget _showProductsList(List<ListProduct> listProducts) {
     return ListView.separated(
       scrollDirection: Axis.vertical,
+      //scroll the listView
+      physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       separatorBuilder: (context, index) => Divider(
         color: Colors.black,
@@ -164,6 +166,8 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
         color: Colors.black,
       ),
       itemCount: listProducts.length,
+      //scroll the listView
+      physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         return CheckboxListTile(
           title: Column(

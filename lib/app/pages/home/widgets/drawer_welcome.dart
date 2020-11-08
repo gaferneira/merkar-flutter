@@ -21,7 +21,12 @@ enum DrawerOptions {
   route_favorites,
 }
 
-class DrawerWelcome extends StatelessWidget {
+class DrawerWelcome extends StatefulWidget {
+  @override
+  _DrawerWelcomeState createState() => _DrawerWelcomeState();
+}
+
+class _DrawerWelcomeState extends State<DrawerWelcome> {
   final InAppReview inAppReview = InAppReview.instance;
 
   @override

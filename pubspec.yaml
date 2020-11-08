@@ -27,7 +27,7 @@ dependencies:
   url_launcher:
   # Service locator
   get_it: ^2.0.1
-  provider: ^4.0.1
+  provider:
   # Value equality
   equatable: ^0.4.0
   # Functional programming thingies

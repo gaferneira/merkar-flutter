@@ -26,21 +26,26 @@ class _PurchaseHistoryShowInfoPageState
     viewModel.getProducts(purchase);
 
     return ChangeNotifierProvider<PurchaseHistoryShowInfoViewModel>.value(
-        value: viewModel,
-        child: Consumer<PurchaseHistoryShowInfoViewModel>(
-            builder: (context, model, child) => Scaffold(
-                  appBar: AppBar(title: Text(purchase.name)),
-                  body: Column(children: <Widget>[
-                    Text("Fecha: ${purchase.date}"),
-                    Text("Total: ${purchase.total}"),
-                    Divider(),
-                    Text("Productos"),
-                    SingleChildScrollView(
-                        child: (viewModel.listProducts == null)
-                            ? Text('Loading...')
-                            : _showProductsList(viewModel.listProducts)),
-                  ]),
-                )));
+      value: viewModel,
+      child: Consumer<PurchaseHistoryShowInfoViewModel>(
+        builder: (context, model, child) => Scaffold(
+          appBar: AppBar(title: Text(purchase.name)),
+          body: SingleChildScrollView(
+            // scrollDirection: Axis.vertical,
+            //physics: NeverScrollableScrollPhysics(),
+            child: Column(children: <Widget>[
+              Text("Fecha: ${purchase.date}"),
+              Text("Total: ${purchase.total}"),
+              Divider(),
+              Text("Productos"),
+              (viewModel.listProducts == null)
+                  ? Text('Loading...')
+                  : _showProductsList(viewModel.listProducts),
+            ]),
+          ),
+        ),
+      ),
+    );
   }
 }
 /*
@@ -61,8 +66,9 @@ class _PurchaseHistoryShowInfoPageState
 
 Widget _showProductsList(List<ListProduct> listProduct) {
   return ListView.separated(
-      scrollDirection: Axis.vertical,
       shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      scrollDirection: Axis.vertical,
       separatorBuilder: (context, index) => Divider(
             color: Colors.black,
           ),

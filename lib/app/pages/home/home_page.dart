@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:merkar/app/core/constants.dart';
+import 'package:merkar/app/core/provider_theme.dart';
 import 'package:merkar/app/core/strings.dart';
+import 'package:merkar/app/theme/app_state_notifier.dart';
 import 'package:merkar/app/widgets/widgets.dart';
 import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
@@ -12,13 +15,16 @@ import 'widgets/shopping_lists_display.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = '/home';
+
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
   HomePageViewModel viewModel = serviceLocator<HomePageViewModel>();
-
+  bool _light = true;
+  TextEditingController _search_textController =
+      TextEditingController(); //controller search_text
   @override
   void initState() {
     viewModel.loadData();
@@ -29,8 +35,22 @@ class _HomePageState extends State<HomePage> {
     Navigator.of(context).pushNamed(NewShoppingListPage.routeName);
   }
 
+  onItemChanged(String value) {
+    int cursorPos = _search_textController.selection.base.offset;
+/*    _search_textController.selection = TextSelection(
+        baseOffset: cursorPos + value.length,
+        extentOffset: cursorPos + value.length);*/
+    setState(() {
+      viewModel.list = viewModel.filter_list
+          .where((shopping_list) =>
+              shopping_list.name.toLowerCase().contains(value.toLowerCase()))
+          .toList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    //var providerTheme = Provider.of<ProviderTheme>(context);
     final _scaffKey = GlobalKey<ScaffoldState>();
     return ChangeNotifierProvider<HomePageViewModel>(
       create: (context) => viewModel,
@@ -38,13 +58,33 @@ class _HomePageState extends State<HomePage> {
         builder: (context, model, child) => Scaffold(
           key: _scaffKey,
           appBar: AppBar(
-            title: Text('Merkar'),
+            title: Text('Merkar ${ProviderTheme().light}'),
+            actions: <Widget>[
+              /* Switch(
+                  value: providerTheme.light,
+                  onChanged: (toggle) {
+                    providerTheme.updateTheme(toggle);
+                    setState(() {
+                      // providerTheme.light = toggle;
+                      print(
+                          "sent a value: ${providerTheme.light} to main.dart");
+                      changeTheme();
+                      print("Providertheme.ligh = ${providerTheme.light}");
+                    });
+                  }),*/
+              /*  Switch(
+                value: Provider.of<AppStateNotifier>(context).isDarkMode,
+                onChanged: (boolVal) {
+                  Provider.of<AppStateNotifier>(context).updateTheme(boolVal);
+                },
+              )*/
+            ],
           ),
           drawer: DrawerWelcome(),
           body: SingleChildScrollView(
-            //scrollDirection: Axis.vertical,
+            scrollDirection: Axis.vertical,
             child: Column(
-                //crossAxisAlignment: CrossAxisAlignment.start,
+                // crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Stack(children: <Widget>[
                     Container(
@@ -62,8 +102,25 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ]),
+                  Padding(
+                    padding: const EdgeInsets.all(Constant.normalspace),
+                    child: Form(
+                      child: SizedBox(
+                        height: 30,
+                        child: TextField(
+                          controller: _search_textController,
+                          decoration: InputDecoration(
+                            labelText: 'Buscar ...',
+                            //hintText: ,
+                          ),
+                          onChanged: onItemChanged,
+                        ),
+                      ),
+                    ),
+                  ),
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    //  mainAxisAlignment: MainAxisAlignment.center,
+                    // crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       (viewModel.list == null)
                           ? Center(child: LoadingWidget())
@@ -80,5 +137,9 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  void changeTheme() {
+    viewModel.changeTheme();
   }
 }

@@ -43,7 +43,7 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
                 //  crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    // crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       (viewModel.list == null)
                           ? Center(child: LoadingWidget())

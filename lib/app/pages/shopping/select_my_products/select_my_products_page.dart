@@ -56,6 +56,8 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
               color: Colors.black,
             ),
         itemCount: userProducts.length,
+        //scroll the listView
+        physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
           return CheckboxListTile(
             title: Text("${userProducts[index].name}"),
