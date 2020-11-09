@@ -44,28 +44,34 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
             builder: (context, model, child) => Scaffold(
                   appBar: AppBar(
                     title: Text(Strings.title_my_products),
+                    actions: [
+                      Padding(
+                        padding: const EdgeInsets.all(Constant.normalspace),
+                        child: Form(
+                          key: _keySearchP,
+                          child: SizedBox(
+                            height: 30,
+                            width: 270,
+                            child: TextField(
+                              controller: _search_textController,
+                              decoration: InputDecoration(
+                                labelText: 'Buscar Actual...',
+                                fillColor: Colors.white,
+                                filled: true,
+                                //hintText: ,
+                              ),
+                              textDirection: TextDirection.ltr,
+                              onChanged: onItemChanged,
+                            ),
+                          ),
+                        ),
+                      ),
+                      IconButton(icon: Icon(Icons.search), onPressed: () {}),
+                    ],
                   ),
                   body: SingleChildScrollView(
                     child: Column(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(Constant.normalspace),
-                          child: Form(
-                            key: _keySearchP,
-                            child: SizedBox(
-                              height: 30,
-                              child: TextField(
-                                controller: _search_textController,
-                                decoration: InputDecoration(
-                                  labelText: 'Buscar Actual...',
-                                  //hintText: ,
-                                ),
-                                textDirection: TextDirection.ltr,
-                                onChanged: onItemChanged,
-                              ),
-                            ),
-                          ),
-                        ),
                         (viewModel.userProducts == null)
                             ? Text('Loading...')
                             : _showProductsList(viewModel.userProducts),

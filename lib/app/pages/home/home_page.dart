@@ -55,8 +55,30 @@ class _HomePageState extends State<HomePage> {
         builder: (context, model, child) => Scaffold(
           key: _scaffKey,
           appBar: AppBar(
-            title: Text('Merkar ${ProviderTheme().light}'),
+            title: Text('Merkar'),
             actions: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(Constant.normalspace),
+                child: Form(
+                  key: _key_search,
+                  child: SizedBox(
+                    height: 30,
+                    width: 270,
+                    child: TextField(
+                      controller: _search_textController,
+                      decoration: InputDecoration(
+                          labelText: 'Buscar ...',
+                          fillColor: Colors.white,
+                          filled: true
+                          //hintText: ,
+                          ),
+                      textDirection: TextDirection.ltr,
+                      onChanged: onItemChanged,
+                    ),
+                  ),
+                ),
+              ),
+              IconButton(icon: Icon(Icons.search), onPressed: () {}),
               /* Switch(
                   value: providerTheme.light,
                   onChanged: (toggle) {
@@ -90,6 +112,7 @@ class _HomePageState extends State<HomePage> {
                       decoration: BoxDecoration(
                           gradient: LinearGradient(
                         colors: [Colors.white70, Colors.white70],
+
                         // colors: [Colors.cyan[300], Colors.cyan[800]]
                       )),
                       child: Image.asset(
@@ -99,7 +122,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ]),
-                  Padding(
+                  /* Padding(
                     padding: const EdgeInsets.all(Constant.normalspace),
                     child: Form(
                       key: _key_search,
@@ -116,24 +139,8 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ),
-                  ),
-                  /*Padding(
-                    padding: const EdgeInsets.all(Constant.normalspace),
-                    child: Form(
-                      child: SizedBox(
-                        height: 30,
-                        child: TextField(
-                          controller: _search_textController,
-                          decoration: InputDecoration(
-                            labelText: 'Buscar ...',
-                            //hintText: ,
-                          ),
-                          textDirection: TextDirection.ltr,
-                          onChanged: onItemChanged,
-                        ),
-                      ),
-                    ),
                   ),*/
+
                   Row(
                     //  mainAxisAlignment: MainAxisAlignment.center,
                     // crossAxisAlignment: CrossAxisAlignment.center,

@@ -36,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
         builder: (context, model, child) => Scaffold(
           key: _key,
           appBar: AppBar(
-            title: Text("Sign in"),
+            title: Text(Strings.tittle_sing_in),
           ),
           body: Form(
             key: _formKey,
@@ -104,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                   }
                 },
                 child: Text(
-                  "Sign In",
+                  Strings.label_sign_in,
                   style: style.copyWith(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
@@ -124,7 +124,11 @@ class _LoginPageState extends State<LoginPage> {
     return Padding(
       padding: const EdgeInsets.all(Constant.normalspace),
       child: RaisedButton(
-        child: Text(Strings.label_register),
+        child: Text(
+          Strings.label_register,
+          style:
+              style.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
         onPressed: () {
           _goToRegister();
         },

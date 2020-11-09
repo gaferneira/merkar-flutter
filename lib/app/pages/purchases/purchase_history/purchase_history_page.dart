@@ -46,25 +46,34 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
           key: _scaffKey,
           appBar: AppBar(
             title: Text('Historial'),
+            actions: [
+              Padding(
+                padding: const EdgeInsets.all(Constant.normalspace),
+                child: Form(
+                  key: keyFormPurchaseList,
+                  child: SizedBox(
+                    height: 30,
+                    width: 270,
+                    child: TextFormField(
+                      controller: _text_searchController,
+                      decoration: InputDecoration(
+                        labelText: "Buscar ...",
+                        filled: true,
+                        fillColor: Colors.white,
+                      ),
+                      onChanged: onItemChangedSelect,
+                    ),
+                  ),
+                ),
+              ),
+              IconButton(icon: Icon(Icons.search), onPressed: () {}),
+            ],
           ),
           body: SingleChildScrollView(
             child: Column(
 
                 //  crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(Constant.normalspace),
-                    child: Form(
-                      key: keyFormPurchaseList,
-                      child: TextFormField(
-                        controller: _text_searchController,
-                        decoration: InputDecoration(
-                          labelText: "Buscar ...",
-                        ),
-                        onChanged: onItemChangedSelect,
-                      ),
-                    ),
-                  ),
                   Row(
                     // crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
