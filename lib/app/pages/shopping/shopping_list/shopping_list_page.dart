@@ -48,10 +48,6 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
         .where((shopping_list) =>
             shopping_list.name.toLowerCase().contains(value.toLowerCase()))
         .toList();
-    viewModel.notifyListeners();
-  }
-
-  onItemChangedUnselect(String value) {
     viewModel.unselectedList = viewModel.filterunselectedList
         .where((shopping_list) =>
             shopping_list.name.toLowerCase().contains(value.toLowerCase()))
@@ -73,6 +69,30 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                     title: Text(
                         ConvertString().capitalize('${shoppingList.name}')),
                     actions: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(Constant.normalspace),
+                        child: Form(
+                          key: _keySearchFormUnsel,
+                          child: SizedBox(
+                            height: 30,
+                            width: 270,
+                            child: TextFormField(
+                              controller: _text_searchController,
+                              decoration: InputDecoration(
+                                labelText: "Buscar ...",
+                                filled: true,
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderRadius: const BorderRadius.all(
+                                    const Radius.circular(5.0),
+                                  ),
+                                ),
+                              ),
+                              onChanged: onItemChangedSelect,
+                            ),
+                          ),
+                        ),
+                      ),
                       IconButton(
                         icon: Icon(Icons.check_circle),
                         onPressed: () {
@@ -84,36 +104,10 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                   body: SingleChildScrollView(
                     child: Column(
                       children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(Constant.normalspace),
-                          child: Form(
-                            key: _keySearchFormUnsel,
-                            child: TextFormField(
-                              controller: _text_searchController,
-                              decoration: InputDecoration(
-                                labelText: "Buscar ...",
-                              ),
-                              onChanged: onItemChangedUnselect,
-                            ),
-                          ),
-                        ),
                         Center(child: Text("No seleccionados")),
                         (viewModel.unselectedList == null)
                             ? Text('Loading...')
                             : _showProductsList(viewModel.unselectedList),
-                        Padding(
-                          padding: const EdgeInsets.all(Constant.normalspace),
-                          child: Form(
-                            key: _keySearchFormSel,
-                            child: TextFormField(
-                              controller: _text_searchController2,
-                              decoration: InputDecoration(
-                                labelText: "Buscar ...",
-                              ),
-                              onChanged: onItemChangedSelect,
-                            ),
-                          ),
-                        ),
                         Center(child: Text("Seleccionados")),
                         (viewModel.selectedList == null)
                             ? Text('Loading...')
