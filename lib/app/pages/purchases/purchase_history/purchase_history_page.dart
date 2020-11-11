@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/constants.dart';
@@ -42,52 +43,55 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
     return ChangeNotifierProvider<PurchaseHistoryViewModel>(
       create: (context) => viewModel,
       child: Consumer<PurchaseHistoryViewModel>(
-        builder: (context, model, child) => Scaffold(
-          key: _scaffKey,
-          appBar: AppBar(
-            title: Text('Historial'),
-            actions: [
-              Padding(
-                padding: const EdgeInsets.all(Constant.normalspace),
-                child: Form(
-                  key: keyFormPurchaseList,
-                  child: SizedBox(
-                    height: 30,
-                    width: 270,
-                    child: TextFormField(
-                      controller: _text_searchController,
-                      decoration: InputDecoration(
-                        labelText: "Buscar ...",
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderRadius: const BorderRadius.all(
-                            const Radius.circular(5.0),
+        builder: (context, model, child) => JelloIn(
+          duration: Duration(seconds: 1),
+          child: Scaffold(
+            key: _scaffKey,
+            appBar: AppBar(
+              title: Text('Historial'),
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.all(Constant.normalspace),
+                  child: Form(
+                    key: keyFormPurchaseList,
+                    child: SizedBox(
+                      height: 30,
+                      width: 270,
+                      child: TextFormField(
+                        controller: _text_searchController,
+                        decoration: InputDecoration(
+                          labelText: "Buscar ...",
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderRadius: const BorderRadius.all(
+                              const Radius.circular(5.0),
+                            ),
                           ),
                         ),
+                        onChanged: onItemChangedSelect,
                       ),
-                      onChanged: onItemChangedSelect,
                     ),
                   ),
                 ),
-              ),
-              IconButton(icon: Icon(Icons.search), onPressed: () {}),
-            ],
-          ),
-          body: SingleChildScrollView(
-            child: Column(
+                IconButton(icon: Icon(Icons.search), onPressed: () {}),
+              ],
+            ),
+            body: SingleChildScrollView(
+              child: Column(
 
-                //  crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Row(
-                    // crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      (viewModel.list == null)
-                          ? Center(child: LoadingWidget())
-                          : purchaseHistoryDisplay(viewModel.list),
-                    ],
-                  ),
-                ]),
+                  //  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      // crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        (viewModel.list == null)
+                            ? Center(child: LoadingWidget())
+                            : purchaseHistoryDisplay(viewModel.list),
+                      ],
+                    ),
+                  ]),
+            ),
           ),
         ),
       ),

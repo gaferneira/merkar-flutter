@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/constants.dart';
 import 'package:merkar/app/core/strings.dart';
@@ -25,11 +26,13 @@ class _CreateNewProductState extends State<CreateNewProduct> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(Strings.title_new_product),
+    return SlideInDown(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(Strings.title_new_product),
+        ),
+        body: _fromCreateProduct(),
       ),
-      body: _fromCreateProduct(),
     );
   }
 

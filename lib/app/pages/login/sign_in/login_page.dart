@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/constants.dart';
 import 'package:merkar/app/core/strings.dart';
@@ -33,46 +34,51 @@ class _LoginPageState extends State<LoginPage> {
     return ChangeNotifierProvider<LoginViewModel>.value(
       value: viewModel,
       child: Consumer<LoginViewModel>(
-        builder: (context, model, child) => Scaffold(
-          key: _key,
-          appBar: AppBar(
-            title: Text(Strings.tittle_sing_in),
+        builder: (context, model, child) => BounceInDown(
+          duration: Duration(
+            seconds: 1,
           ),
-          body: Form(
-            key: _formKey,
-            child: Center(
-              child: ListView(
-                shrinkWrap: true,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: TextFormField(
-                      controller: _email,
-                      validator: (value) =>
-                          (value.isEmpty) ? "Please Enter Email" : null,
-                      style: style,
-                      decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.email),
-                          labelText: "Email",
-                          border: OutlineInputBorder()),
+          child: Scaffold(
+            key: _key,
+            appBar: AppBar(
+              title: Text(Strings.tittle_sing_in),
+            ),
+            body: Form(
+              key: _formKey,
+              child: Center(
+                child: ListView(
+                  shrinkWrap: true,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: TextFormField(
+                        controller: _email,
+                        validator: (value) =>
+                            (value.isEmpty) ? "Please Enter Email" : null,
+                        style: style,
+                        decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.email),
+                            labelText: "Email",
+                            border: OutlineInputBorder()),
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: TextFormField(
-                      controller: _password,
-                      validator: (value) =>
-                          (value.isEmpty) ? "Please Enter Password" : null,
-                      style: style,
-                      decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.lock),
-                          labelText: "Password",
-                          border: OutlineInputBorder()),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: TextFormField(
+                        controller: _password,
+                        validator: (value) =>
+                            (value.isEmpty) ? "Please Enter Password" : null,
+                        style: style,
+                        decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.lock),
+                            labelText: "Password",
+                            border: OutlineInputBorder()),
+                      ),
                     ),
-                  ),
-                  _createLoginButton(),
-                  _createRegisterButton(),
-                ],
+                    _createLoginButton(),
+                    _createRegisterButton(),
+                  ],
+                ),
               ),
             ),
           ),

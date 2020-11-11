@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/converString.dart';
 import 'package:merkar/app/core/strings.dart';
@@ -30,11 +31,13 @@ class _NewShoppingListPageState extends State<NewShoppingListPage> {
     return ChangeNotifierProvider<NewShoppingListViewModel>.value(
       value: viewModel,
       child: Consumer<NewShoppingListViewModel>(
-        builder: (context, model, child) => Scaffold(
-          appBar: AppBar(
-            title: Text(Strings.label_create_new_list),
+        builder: (context, model, child) => FadeInUp(
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text(Strings.label_create_new_list),
+            ),
+            body: _fromNewList(viewModel, context),
           ),
-          body: _fromNewList(viewModel, context),
         ),
       ),
     );

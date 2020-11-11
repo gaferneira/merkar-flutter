@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/constants.dart';
@@ -64,86 +65,94 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
     return ChangeNotifierProvider<ShoppingListViewModel>.value(
         value: viewModel,
         child: Consumer<ShoppingListViewModel>(
-            builder: (context, model, child) => Scaffold(
-                  appBar: AppBar(
-                    title: Text(
-                        ConvertString().capitalize('${shoppingList.name}')),
-                    actions: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(Constant.normalspace),
-                        child: Form(
-                          key: _keySearchFormUnsel,
-                          child: SizedBox(
-                            height: 30,
-                            width: 270,
-                            child: TextFormField(
-                              controller: _text_searchController,
-                              decoration: InputDecoration(
-                                labelText: "Buscar ...",
-                                filled: true,
-                                fillColor: Colors.white,
-                                border: OutlineInputBorder(
-                                  borderRadius: const BorderRadius.all(
-                                    const Radius.circular(5.0),
+            builder: (context, model, child) => ElasticIn(
+                  child: Scaffold(
+                    appBar: AppBar(
+                      title: Text(
+                          ConvertString().capitalize('${shoppingList.name}')),
+                      actions: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(Constant.normalspace),
+                          child: Form(
+                            key: _keySearchFormUnsel,
+                            child: SizedBox(
+                              height: 30,
+                              width: 270,
+                              child: TextFormField(
+                                controller: _text_searchController,
+                                decoration: InputDecoration(
+                                  labelText: "Buscar ...",
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  border: OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      const Radius.circular(5.0),
+                                    ),
                                   ),
                                 ),
+                                onChanged: onItemChangedSelect,
                               ),
-                              onChanged: onItemChangedSelect,
                             ),
                           ),
                         ),
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.check_circle),
-                        onPressed: () {
-                          _showFinishDialog(shoppingList);
-                        },
-                      ),
-                    ],
-                  ),
-                  body: SingleChildScrollView(
-                    child: Column(
-                      children: <Widget>[
-                        Center(child: Text("No seleccionados")),
-                        (viewModel.unselectedList == null)
-                            ? Text('Loading...')
-                            : _showProductsList(viewModel.unselectedList),
-                        Center(child: Text("Seleccionados")),
-                        (viewModel.selectedList == null)
-                            ? Text('Loading...')
-                            : _showSelectProductsList(viewModel.selectedList),
-                        RaisedButton(
-                            child: Text(Strings.label_finish),
+                        Bounce(
+                          child: IconButton(
+                            icon: Icon(Icons.check_circle),
                             onPressed: () {
                               _showFinishDialog(shoppingList);
-                            }),
+                            },
+                          ),
+                        ),
                       ],
                     ),
-                  ),
-                  floatingActionButton: FloatingActionButton(
-                    onPressed: () =>
-                        {_showListSuggerProducts(context, shoppingList)},
-                    tooltip: Strings.label_tootip_add_products,
-                    child: Icon(Icons.add),
-                  ),
-                  bottomNavigationBar: Container(
-                      height: Constant.bottomBarHeight,
-                      width: MediaQuery.of(context).size.width,
-                      child: BottomNavigationBar(
-                        currentIndex:
-                            0, // this will be set when a new tab is tapped
-                        items: [
-                          BottomNavigationBarItem(
-                            icon: new Icon(Icons.insert_chart),
-                            title: new Text('Total: ${viewModel.totalPrice()}'),
-                          ),
-                          BottomNavigationBarItem(
-                            icon: new Icon(Icons.shopping_cart),
-                            title: new Text(
-                                'Carrito (${viewModel.totalShopping()})'),
-                          ),
+                    body: SingleChildScrollView(
+                      child: Column(
+                        children: <Widget>[
+                          Center(child: Text("No seleccionados")),
+                          (viewModel.unselectedList == null)
+                              ? Text('Loading...')
+                              : _showProductsList(viewModel.unselectedList),
+                          Center(child: Text("Seleccionados")),
+                          (viewModel.selectedList == null)
+                              ? Text('Loading...')
+                              : _showSelectProductsList(viewModel.selectedList),
+                          RaisedButton(
+                              child: Text(Strings.label_finish),
+                              onPressed: () {
+                                _showFinishDialog(shoppingList);
+                              }),
                         ],
-                      )),
+                      ),
+                    ),
+                    floatingActionButton: Pulse(
+                      infinite: true,
+                      child: FloatingActionButton(
+                        onPressed: () =>
+                            {_showListSuggerProducts(context, shoppingList)},
+                        tooltip: Strings.label_tootip_add_products,
+                        child: Icon(Icons.add),
+                      ),
+                    ),
+                    bottomNavigationBar: Container(
+                        height: Constant.bottomBarHeight,
+                        width: MediaQuery.of(context).size.width,
+                        child: BottomNavigationBar(
+                          currentIndex:
+                              0, // this will be set when a new tab is tapped
+                          items: [
+                            BottomNavigationBarItem(
+                              icon: new Icon(Icons.insert_chart),
+                              title:
+                                  new Text('Total: ${viewModel.totalPrice()}'),
+                            ),
+                            BottomNavigationBarItem(
+                              icon: new Icon(Icons.shopping_cart),
+                              title: new Text(
+                                  'Carrito (${viewModel.totalShopping()})'),
+                            ),
+                          ],
+                        )),
+                  ),
                 )));
   }
 
