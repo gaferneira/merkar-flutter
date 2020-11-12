@@ -1,20 +1,21 @@
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
+import 'package:merkar/data/entities/user_data.dart';
+import 'package:merkar/data/remote/firestore_data_source.dart';
+import 'package:merkar/data/utils/network/network_info.dart';
 
 import 'login_repository.dart';
 
 class LoginRepositoryImpl implements LoginRepository {
   FirebaseAuth _auth;
-  User _curretUser;
 
-  LoginRepositoryImpl() {
+  final NetworkInfo networkInfo;
+  final FirestoreDataSource firestoreDataSource;
+
+  LoginRepositoryImpl(
+      {@required this.networkInfo, @required this.firestoreDataSource}) {
     _auth = FirebaseAuth.instance;
-  }
-
-  @override
-  User getCurrentUser() {
-    _curretUser = _auth.currentUser;
-    return _curretUser;
   }
 
   @override
@@ -47,7 +48,18 @@ class LoginRepositoryImpl implements LoginRepository {
     try {
       final result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      return right(result.user != null);
+
+      if (result.user == null) return right(false);
+
+      var userData =
+          UserData(userId: result.user.uid, name: name, email: email);
+
+      await firestoreDataSource.db
+          .collection(FirestoreDataSource.COLLECTION_DATA)
+          .doc(result.user.uid)
+          .set(userData.toJson());
+
+      return right(true);
     } catch (e) {
       return left(e.toString());
     }
@@ -61,5 +73,11 @@ class LoginRepositoryImpl implements LoginRepository {
     } catch (e) {
       return left(e.toString());
     }
+  }
+
+  @override
+  Future<UserData> getUserData() async {
+    final ref = await firestoreDataSource.getDataDocument().get();
+    return UserData.fromJson(ref.data());
   }
 }
