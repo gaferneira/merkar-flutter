@@ -108,11 +108,28 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                     body: SingleChildScrollView(
                       child: Column(
                         children: <Widget>[
-                          Center(child: Text("No seleccionados")),
+                          Padding(
+                            padding: const EdgeInsets.all(Constant.normalspace),
+                            child: Center(
+                                child: Text(
+                              "No seleccionados",
+                              style: Constant.resaltText,
+                            )),
+                          ),
                           (viewModel.unselectedList == null)
-                              ? Text('Loading...')
+                              ? Text(
+                                  'Loading...',
+                                  style: Constant.resaltText,
+                                )
                               : _showProductsList(viewModel.unselectedList),
-                          Center(child: Text("Seleccionados")),
+                          Padding(
+                            padding: const EdgeInsets.all(Constant.normalspace),
+                            child: Center(
+                                child: Text(
+                              "Seleccionados",
+                              style: Constant.resaltText,
+                            )),
+                          ),
                           (viewModel.selectedList == null)
                               ? Text('Loading...')
                               : _showSelectProductsList(viewModel.selectedList),

@@ -123,7 +123,6 @@ class _HomePageState extends State<HomePage> {
                         child: Image.asset(
                           'assets/images/logo.png',
                           width: 10.0,
-                          // color: Colors.black,
                         ),
                       ),
                     ]),
@@ -146,14 +145,23 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),*/
 
-                    Row(
-                      //  mainAxisAlignment: MainAxisAlignment.center,
-                      // crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        (viewModel.list == null)
-                            ? Center(child: LoadingWidget())
-                            : shoppingListsDisplay(viewModel.list),
-                      ],
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(Constant.raduiusBorder),
+                          topLeft: Radius.circular(Constant.raduiusBorder),
+                        ),
+                        color: Colors.white54,
+                      ),
+                      child: Row(
+                        //  mainAxisAlignment: MainAxisAlignment.center,
+                        // crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          (viewModel.list == null)
+                              ? Center(child: LoadingWidget())
+                              : shoppingListsDisplay(viewModel.list),
+                        ],
+                      ),
                     ),
                   ]),
             ),

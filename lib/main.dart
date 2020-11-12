@@ -27,12 +27,15 @@ ThemeData _darkTheme = ThemeData(
   accentColor: Colors.black,
   brightness: Brightness.dark,
   primaryColor: Colors.amber,
+  fontFamily: 'Vanitas',
 );
 
 ThemeData _lightTheme = ThemeData(
-    accentColor: Colors.lightBlueAccent,
-    brightness: Brightness.light,
-    primaryColor: Colors.blue);
+  accentColor: Colors.lightBlueAccent,
+  brightness: Brightness.light,
+  primaryColor: Colors.blue,
+  fontFamily: 'Vanitas',
+);
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
