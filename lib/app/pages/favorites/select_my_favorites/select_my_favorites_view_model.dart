@@ -1,3 +1,4 @@
+import 'package:dartz/dartz_unsafe.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/data/entities/list_product.dart';
 import 'package:merkar/data/entities/product.dart';
@@ -24,7 +25,8 @@ class SelectMyFavoritesViewModel extends ChangeNotifier {
     this.shoppingList = shoppingList;
 
     // Get user products
-    productsRepository.fetchItems().listen((data) {
+    print("1");
+    productsRepository.fetchDefaultProducts().listen((data) {
       userProducts = data;
       error = null;
       updateList();
@@ -33,15 +35,18 @@ class SelectMyFavoritesViewModel extends ChangeNotifier {
       notifyListeners();
     });
 
+    for (int i = 0; i < userProducts.length; i++) {
+      print("${userProducts[i]}");
+    }
     // Get shopping list products
-    shoppingListRepository.fetchProducts(shoppingList).listen((data) {
+    /*shoppingListRepository.fetchProducts(shoppingList).listen((data) {
       shoppingProducts = data;
       error = null;
       updateList();
     }, onError: (e) {
       error = e;
       notifyListeners();
-    });
+    });*/
   }
 
   void updateList() {

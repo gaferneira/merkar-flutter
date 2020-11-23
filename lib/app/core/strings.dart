@@ -66,4 +66,6 @@ class Strings {
   static const String route_favorites = "Favoritos";
 
   static const String tittle_sing_in = "Ingresar";
+
+  static const String title_sugger_products = "Sugeridos";
 }

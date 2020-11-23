@@ -31,7 +31,7 @@ class _SelectMyFavoritesPageState extends State<SelectMyFavoritesPage> {
         child: Consumer<SelectMyFavoritesViewModel>(
             builder: (context, model, child) => Scaffold(
                   appBar: AppBar(
-                    title: Text(Strings.title_my_products),
+                    title: Text(Strings.title_sugger_products),
                   ),
                   body: SingleChildScrollView(
                     child: (viewModel.userProducts == null)
