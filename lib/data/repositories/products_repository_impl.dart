@@ -9,7 +9,7 @@ import '../repositories/products_repository.dart';
 import '../utils/network/network_info.dart';
 
 class ProductsRepositoryImpl implements ProductsRepository {
-  static const COLLECTION_DEFAULT_PRODUCTS = "products";
+  static const COLLECTION_DEFAULT_PRODUCTS = "default_products";
 
   static const COLLECTION_PRODUCTS = "products";
 
