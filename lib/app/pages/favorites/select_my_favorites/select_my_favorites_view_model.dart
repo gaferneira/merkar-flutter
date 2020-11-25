@@ -1,32 +1,27 @@
-import 'package:dartz/dartz_unsafe.dart';
 import 'package:flutter/material.dart';
-import 'package:merkar/data/entities/list_product.dart';
 import 'package:merkar/data/entities/product.dart';
-import 'package:merkar/data/entities/shopping_list.dart';
 import 'package:merkar/data/repositories/products_repository.dart';
-import 'package:merkar/data/repositories/shopping_lists_repository.dart';
 
 class SelectMyFavoritesViewModel extends ChangeNotifier {
-  final ShoppingListsRepository shoppingListRepository;
   final ProductsRepository productsRepository;
 
-  SelectMyFavoritesViewModel(
-      {@required this.shoppingListRepository,
-      @required this.productsRepository});
+  SelectMyFavoritesViewModel({@required this.productsRepository});
 
-  ShoppingList shoppingList;
-
+  List<Product> defaultProducts;
   List<Product> userProducts;
-  List<ListProduct> shoppingProducts;
 
   String error;
 
-  Future<void> loadData(ShoppingList shoppingList) async {
-    this.shoppingList = shoppingList;
-
-    // Get user products
-    print("1");
+  Future<void> loadData() async {
     productsRepository.fetchDefaultProducts().listen((data) {
+      defaultProducts = data;
+      error = null;
+      updateList();
+    }, onError: (e) {
+      error = e;
+      notifyListeners();
+    });
+    productsRepository.fetchItems().listen((data) {
       userProducts = data;
       error = null;
       updateList();
@@ -34,30 +29,19 @@ class SelectMyFavoritesViewModel extends ChangeNotifier {
       error = e;
       notifyListeners();
     });
-
-    for (int i = 0; i < userProducts.length; i++) {
-      print("${userProducts[i]}");
-    }
-    // Get shopping list products
-    /*shoppingListRepository.fetchProducts(shoppingList).listen((data) {
-      shoppingProducts = data;
-      error = null;
-      updateList();
-    }, onError: (e) {
-      error = e;
-      notifyListeners();
-    });*/
+    updateList();
+    // notifyListeners();
   }
 
   void updateList() {
-    if (shoppingProducts != null && userProducts != null) {
-      userProducts.forEach((product) {
+    if (userProducts != null && defaultProducts != null) {
+      defaultProducts.forEach((product) {
         product.selected = false;
       });
 
-      shoppingProducts.forEach((product) {
-        userProducts.forEach((userProduct) {
-          if (product.id == userProduct.id) {
+      userProducts.forEach((product) {
+        defaultProducts.forEach((userProduct) {
+          if (product.name == userProduct.name) {
             userProduct.selected = true;
           }
         });
@@ -68,19 +52,22 @@ class SelectMyFavoritesViewModel extends ChangeNotifier {
   }
 
   Future<void> selectProduct(int index, bool selected) async {
-    var product = userProducts[index];
+    var product = defaultProducts[index];
     if (selected) {
-      var productList = ListProduct(
-          id: product.id,
-          category: product.category,
-          name: product.name,
-          price: product.price,
-          quantity: 1,
-          total: product.price,
-          selected: false);
-      shoppingListRepository.saveProduct(productList, shoppingList);
+      var productList = Product(
+//          id: product.id,
+        category: product.category,
+        name: product.name,
+        price: product.price,
+
+        //        quantity: 1,
+        //      total: product.price,
+        //    selected: false
+      );
+      productsRepository.save(productList);
     } else {
-      shoppingListRepository.removeProduct(product.id, shoppingList);
+      //eliminar de productos del user
+      // productsRepository.remove(product);
     }
   }
 }

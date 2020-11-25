@@ -19,12 +19,9 @@ class SelectMyFavoritesPage extends StatefulWidget {
 class _SelectMyFavoritesPageState extends State<SelectMyFavoritesPage> {
   SelectMyFavoritesViewModel viewModel =
       serviceLocator<SelectMyFavoritesViewModel>();
-  //List<ListProduct> shoppingProducts;
-  ShoppingList shoppingList;
   @override
   Widget build(BuildContext context) {
-    shoppingList = ModalRoute.of(context).settings.arguments;
-    viewModel.loadData(shoppingList);
+    viewModel.loadData();
 
     return ChangeNotifierProvider<SelectMyFavoritesViewModel>.value(
         value: viewModel,
@@ -34,9 +31,9 @@ class _SelectMyFavoritesPageState extends State<SelectMyFavoritesPage> {
                     title: Text(Strings.title_sugger_products),
                   ),
                   body: SingleChildScrollView(
-                    child: (viewModel.userProducts == null)
+                    child: (viewModel.defaultProducts == null)
                         ? Text('Loading...')
-                        : _showProductsList(viewModel.userProducts),
+                        : _showProductsList(viewModel.defaultProducts),
                   ),
                   floatingActionButton: FloatingActionButton(
                     tooltip: Strings.label_tootip_new_product,
@@ -48,22 +45,22 @@ class _SelectMyFavoritesPageState extends State<SelectMyFavoritesPage> {
                 )));
   }
 
-  Widget _showProductsList(List<Product> userProducts) {
+  Widget _showProductsList(List<Product> defaultProducts) {
     return ListView.separated(
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         separatorBuilder: (context, index) => Divider(
               color: Colors.black,
             ),
-        itemCount: userProducts.length,
+        itemCount: defaultProducts.length,
         itemBuilder: (context, index) {
           return CheckboxListTile(
-            title: Text("${userProducts[index].name}"),
+            title: Text("${defaultProducts[index].name}"),
             controlAffinity: ListTileControlAffinity.leading,
             onChanged: (bool value) {
               viewModel.selectProduct(index, value);
             },
-            value: userProducts[index].selected,
+            value: defaultProducts[index].selected,
             activeColor: Colors.cyan,
             checkColor: Colors.green,
           );

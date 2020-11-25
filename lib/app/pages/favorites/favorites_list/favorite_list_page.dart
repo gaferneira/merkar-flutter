@@ -4,6 +4,7 @@ import 'package:merkar/app/core/constants.dart';
 import 'package:merkar/app/core/strings.dart';
 import 'package:merkar/app/pages/favorites/select_my_favorites/select_my_favorites_page.dart';
 import 'package:merkar/data/entities/list_product.dart';
+import 'package:merkar/data/entities/product.dart';
 import 'package:merkar/data/entities/shopping_list.dart';
 import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +22,7 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
   final keyFormEditProduct = GlobalKey<FormState>();
   final keyFormFinishShoppingList = GlobalKey<FormState>();
   final keyFormPurchaseList = GlobalKey<FormState>();
-//  FavoriteListViewModel viewModel = serviceLocator<FavoriteListViewModel>();
+  FavoriteListViewModel viewModel = serviceLocator<FavoriteListViewModel>();
   int temp_quantity = null;
   double temp_price = null;
   String descriptionShoppingList = "";
@@ -38,12 +39,10 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
 
   @override
   Widget build(BuildContext context) {
-    final shoppingList =
-        ModalRoute.of(context).settings.arguments as ShoppingList;
-    //viewModel.loadData(shoppingList);
+    viewModel.loadData();
 
     return ChangeNotifierProvider<FavoriteListViewModel>.value(
-        //  value: viewModel,
+        value: viewModel,
         child: Consumer<FavoriteListViewModel>(
             builder: (context, model, child) => Scaffold(
                   appBar: AppBar(
@@ -52,7 +51,7 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
                       IconButton(
                         icon: Icon(Icons.check_circle),
                         onPressed: () {
-                          _showFinishDialog(shoppingList);
+                          //_showFinishDialog(shoppingList);
                         },
                       ),
                     ],
@@ -61,34 +60,25 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
                     child: Column(
                       children: <Widget>[
                         Center(child: Text("No seleccionados")),
-                        /*(viewModel.unselectedList == null)
+                        (viewModel.userProducts == null)
                             ? Text('Loading...')
-                            : _showProductsList(viewModel.unselectedList),
-                        */
-                        RaisedButton(
-                            child: Text(Strings.label_finish),
-                            onPressed: () {
-                              _showFinishDialog(shoppingList);
-                            }),
+                            : _showProductsList(viewModel.userProducts),
                       ],
                     ),
                   ),
                   floatingActionButton: FloatingActionButton(
-                    onPressed: () =>
-                        {_showListSuggerProducts(context, shoppingList)},
+                    onPressed: () => {_showListSuggerProducts(context)},
                     tooltip: Strings.label_tootip_add_products,
                     child: Icon(Icons.add),
                   ),
                 )));
   }
 
-  _showListSuggerProducts(
-      BuildContext context, ShoppingList shoppingList) async {
-    Navigator.of(context)
-        .pushNamed(SelectMyFavoritesPage.routeName, arguments: shoppingList);
+  _showListSuggerProducts(BuildContext context) async {
+    Navigator.of(context).pushNamed(SelectMyFavoritesPage.routeName);
   }
 
-  Widget _showProductsList(List<ListProduct> listProducts) {
+  Widget _showProductsList(List<Product> listProducts) {
     return ListView.separated(
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
@@ -105,25 +95,12 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
               Text(
                 "${listProducts[index].name}",
               ),
-              Row(
-                children: <Widget>[
-                  Text(
-                      "${listProducts[index].quantity} = ${listProducts[index].price}"),
-                ],
-              )
             ],
           ),
           controlAffinity: ListTileControlAffinity.leading,
           onChanged: (bool value) {
             // viewModel.selectProduct(index);
           },
-          secondary: IconButton(
-            icon: Icon(Icons.edit),
-            tooltip: Strings.label_edit,
-            onPressed: () {
-              _showEditProduct(listProducts[index], context);
-            },
-          ),
           value: listProducts[index].selected,
           activeColor: Colors.cyan,
           checkColor: Colors.green,
