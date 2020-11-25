@@ -118,11 +118,13 @@ class _DrawerWelcomeState extends State<DrawerWelcome> {
     switch (option) {
       case DrawerOptions.route_new_list:
         {
+          Navigator.of(context).pop();
           Navigator.of(context).pushNamed(NewShoppingListPage.routeName);
           break;
         }
       case DrawerOptions.route_favorites:
         {
+          Navigator.of(context).pop();
           Navigator.of(context).pushNamed(FavoriteListPage.routeName);
           break;
         }
@@ -135,10 +137,6 @@ class _DrawerWelcomeState extends State<DrawerWelcome> {
       case DrawerOptions.route_comments:
         {
           Navigator.of(context).pop();
-/*
-          if (await inAppReview.isAvailable()) {
-            inAppReview.requestReview();
-          }*/
           CommentePage(context);
           break;
         }

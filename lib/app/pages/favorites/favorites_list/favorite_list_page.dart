@@ -59,7 +59,6 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
                   body: SingleChildScrollView(
                     child: Column(
                       children: <Widget>[
-                        Center(child: Text("No seleccionados")),
                         (viewModel.userProducts == null)
                             ? Text('Loading...')
                             : _showProductsList(viewModel.userProducts),
@@ -87,7 +86,7 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
       ),
       itemCount: listProducts.length,
       itemBuilder: (context, index) {
-        return CheckboxListTile(
+        return ListTile(
           title: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,13 +96,6 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
               ),
             ],
           ),
-          controlAffinity: ListTileControlAffinity.leading,
-          onChanged: (bool value) {
-            // viewModel.selectProduct(index);
-          },
-          value: listProducts[index].selected,
-          activeColor: Colors.cyan,
-          checkColor: Colors.green,
         );
       },
     );
