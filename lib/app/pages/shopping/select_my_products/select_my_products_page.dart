@@ -22,7 +22,6 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
   SelectMyProductsViewModel viewModel =
       serviceLocator<SelectMyProductsViewModel>();
   TextEditingController _search_textController = TextEditingController();
-  //List<ListProduct> shoppingProducts;
   final _keySearchP = GlobalKey<FormState>();
   ShoppingList shoppingList;
 

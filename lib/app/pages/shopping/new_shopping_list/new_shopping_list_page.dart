@@ -53,6 +53,9 @@ class _NewShoppingListPageState extends State<NewShoppingListPage> {
           children: <Widget>[
             TextFormField(
               decoration: InputDecoration(labelText: "Nombre de la lista"),
+              onChanged: (value) {
+                _showDefaultSugger(value);
+              },
               onSaved: (value) {
                 nameList = ConvertString().capitalize(value.toString());
               },
@@ -93,4 +96,6 @@ class _NewShoppingListPageState extends State<NewShoppingListPage> {
 
     return string[0].toUpperCase() + string.substring(1);
   }
+
+  void _showDefaultSugger(String value) {}
 }

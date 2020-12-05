@@ -22,6 +22,9 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
   final keyFormEditProduct = GlobalKey<FormState>();
   final keyFormFinishShoppingList = GlobalKey<FormState>();
   final keyFormPurchaseList = GlobalKey<FormState>();
+  TextEditingController _search_textController = TextEditingController();
+  final _keySearchP = GlobalKey<FormState>();
+
   FavoriteListViewModel viewModel = serviceLocator<FavoriteListViewModel>();
   int temp_quantity = null;
   double temp_price = null;
@@ -48,6 +51,27 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
                   appBar: AppBar(
                     title: Text(Strings.route_favorites),
                     actions: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(Constant.normalspace),
+                        child: Form(
+                          key: _keySearchP,
+                          child: SizedBox(
+                            height: 30,
+                            width: 270,
+                            child: TextField(
+                              controller: _search_textController,
+                              decoration: InputDecoration(
+                                labelText: 'Buscar Actual...',
+                                fillColor: Colors.white,
+                                filled: true,
+                                //hintText: ,
+                              ),
+                              textDirection: TextDirection.ltr,
+                              onChanged: onItemChanged,
+                            ),
+                          ),
+                        ),
+                      ),
                       IconButton(
                         icon: Icon(Icons.check_circle),
                         onPressed: () {
@@ -73,6 +97,14 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
                 )));
   }
 
+  onItemChanged(String value) {
+    viewModel.userProducts = viewModel.filterUserProducts
+        .where((product) =>
+            product.name.toLowerCase().contains(value.toLowerCase()))
+        .toList();
+    viewModel.notifyListeners();
+  }
+
   _showListSuggerProducts(BuildContext context) async {
     Navigator.of(context).pushNamed(SelectMyFavoritesPage.routeName);
   }
@@ -85,6 +117,7 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
         color: Colors.black,
       ),
       itemCount: listProducts.length,
+      physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         return ListTile(
           title: Column(
@@ -94,6 +127,7 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
               Text(
                 "${listProducts[index].name}",
               ),
+              Text("\$ ${listProducts[index].price}"),
             ],
           ),
         );

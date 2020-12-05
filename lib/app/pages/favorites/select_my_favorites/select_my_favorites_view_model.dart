@@ -9,6 +9,7 @@ class SelectMyFavoritesViewModel extends ChangeNotifier {
 
   List<Product> defaultProducts;
   List<Product> userProducts;
+  List<Product> filterDefaultProducts;
 
   String error;
 
@@ -17,6 +18,7 @@ class SelectMyFavoritesViewModel extends ChangeNotifier {
       defaultProducts = data;
       error = null;
       updateList();
+      filterDefaultProducts = defaultProducts;
     }, onError: (e) {
       error = e;
       notifyListeners();

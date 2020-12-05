@@ -201,7 +201,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
               Row(
                 children: <Widget>[
                   Text(
-                      "${listProducts[index].quantity} = ${listProducts[index].price}"),
+                      "${listProducts[index].quantity} = \$ ${listProducts[index].price}"),
                 ],
               )
             ],
@@ -247,7 +247,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
               Row(
                 children: <Widget>[
                   Text(
-                      "${listProducts[index].quantity} = ${listProducts[index].price}"),
+                      "${listProducts[index].quantity} = \$ ${listProducts[index].price}"),
                 ],
               )
             ],

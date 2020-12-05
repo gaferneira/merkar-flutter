@@ -10,11 +10,13 @@ class FavoriteListViewModel extends ChangeNotifier {
   });
 
   List<Product> userProducts;
+  List<Product> filterUserProducts;
   String error;
 
   Future<void> loadData() async {
     repository.fetchItems().listen((data) {
       userProducts = data;
+      filterUserProducts = userProducts;
       error = null;
       notifyListeners();
     }, onError: (e) {
