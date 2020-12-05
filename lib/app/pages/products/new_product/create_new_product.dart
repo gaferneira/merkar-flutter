@@ -45,6 +45,7 @@ class _CreateNewProductState extends State<CreateNewProduct> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             TextFormField(
+              autofocus: true,
               decoration: InputDecoration(labelText: "Nombre"),
               onSaved: (value) {
                 nameProduct = value;
@@ -55,6 +56,7 @@ class _CreateNewProductState extends State<CreateNewProduct> {
                 }
                 return null;
               },
+              textInputAction: TextInputAction.next,
             ),
             TextFormField(
               decoration: InputDecoration(labelText: "Categoría"),
@@ -67,6 +69,7 @@ class _CreateNewProductState extends State<CreateNewProduct> {
                 }
                 return null;
               },
+              textInputAction: TextInputAction.next,
             ),
             TextFormField(
               decoration: InputDecoration(labelText: "Precio"),
@@ -80,6 +83,7 @@ class _CreateNewProductState extends State<CreateNewProduct> {
                 }
                 return null;
               },
+              textInputAction: TextInputAction.done,
             ),
             Center(
               child: RaisedButton(

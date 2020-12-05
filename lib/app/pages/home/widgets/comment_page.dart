@@ -34,6 +34,7 @@ Future<void> CommentePage(BuildContext context) {
                               SizedBox(height: 20),
                               Text(Strings.label_body_comments),
                               TextFormField(
+                                autofocus: true,
                                 decoration: InputDecoration(
                                     labelText: Strings.label_message),
                                 onSaved: (value) {

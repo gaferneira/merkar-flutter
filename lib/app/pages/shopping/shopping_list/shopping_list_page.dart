@@ -154,18 +154,22 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                         height: Constant.bottomBarHeight,
                         width: MediaQuery.of(context).size.width,
                         child: BottomNavigationBar(
+                          fixedColor: Colors.white70,
+                          unselectedItemColor: Colors.white70,
+                          backgroundColor: Colors.black45,
                           currentIndex:
-                              0, // this will be set when a new tab is tapped
+                              1, // this will be set when a new tab is tapped
                           items: [
                             BottomNavigationBarItem(
                               icon: new Icon(Icons.insert_chart),
                               title:
-                                  new Text('Total: ${viewModel.totalPrice()}'),
+                                  Text('Total: \$ ${viewModel.totalPrice()}'),
+                              backgroundColor: Colors.white,
                             ),
                             BottomNavigationBarItem(
                               icon: new Icon(Icons.shopping_cart),
                               title: new Text(
-                                  'Carrito (${viewModel.totalShopping()})'),
+                                  'Carrito (\$ ${viewModel.totalShopping()})'),
                             ),
                           ],
                         )),
@@ -201,7 +205,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
               Row(
                 children: <Widget>[
                   Text(
-                      "${listProducts[index].quantity} = \$ ${listProducts[index].price}"),
+                      "${listProducts[index].quantity} a \$ ${listProducts[index].price}"),
                 ],
               )
             ],
@@ -247,7 +251,8 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
               Row(
                 children: <Widget>[
                   Text(
-                      "${listProducts[index].quantity} = \$ ${listProducts[index].price}"),
+                      "${listProducts[index].quantity} X ${listProducts[index].price} =  "
+                      "\$ ${listProducts[index].quantity * double.parse(listProducts[index].price)}"),
                 ],
               )
             ],
@@ -289,6 +294,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
           child: Column(
             children: <Widget>[
               TextFormField(
+                autofocus: true,
                 initialValue: "${product.quantity}",
                 decoration: InputDecoration(labelText: Strings.label_quantity),
                 keyboardType: TextInputType.number,
@@ -301,6 +307,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                 onSaved: (value) {
                   this.temp_quantity = int.parse(value);
                 },
+                textInputAction: TextInputAction.next,
               ),
               TextFormField(
                 initialValue: "${product.price}",
@@ -315,6 +322,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                 onSaved: (value) {
                   this.temp_price = double.parse(value);
                 },
+                textInputAction: TextInputAction.done,
               ),
               Padding(
                 padding: const EdgeInsets.all(Constant.normalspace),

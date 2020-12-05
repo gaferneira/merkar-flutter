@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:merkar/app/core/constants.dart';
 import 'package:merkar/app/pages/favorites/favorites_list/favorite_list_page.dart';
 import 'package:merkar/app/pages/favorites/select_my_favorites/select_my_favorites_page.dart';
 import 'package:merkar/app/pages/home/home_page.dart';
@@ -24,16 +25,16 @@ import 'app/core/provider_theme.dart';
 const bool USE_FIRESTORE_EMULATOR = false;
 bool _light = true;
 ThemeData _darkTheme = ThemeData(
-  accentColor: Colors.black,
+  accentColor: Constant.darkColorAcent,
   brightness: Brightness.dark,
-  primaryColor: Colors.amber,
+  primaryColor: Constant.darkColor,
   fontFamily: 'Vanitas',
 );
 
 ThemeData _lightTheme = ThemeData(
-  accentColor: Colors.lightBlueAccent,
+  accentColor: Constant.lightColorAcent,
   brightness: Brightness.light,
-  primaryColor: Colors.blue,
+  primaryColor: Constant.lightColor,
   fontFamily: 'Vanitas',
 );
 

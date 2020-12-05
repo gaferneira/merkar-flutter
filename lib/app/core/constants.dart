@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class Constant {
   static const double normalspace = 10.0;
@@ -10,4 +11,8 @@ class Constant {
     fontWeight: FontWeight.bold,
     fontSize: 20.0,
   );
+  static const Color lightColor = Colors.indigo;
+  static const Color lightColorAcent = Colors.indigoAccent;
+  static const Color darkColor = Colors.amber;
+  static const Color darkColorAcent = Colors.amberAccent;
 }

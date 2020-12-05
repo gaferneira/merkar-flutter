@@ -52,6 +52,7 @@ class _NewShoppingListPageState extends State<NewShoppingListPage> {
         child: Column(
           children: <Widget>[
             TextFormField(
+              autofocus: true,
               decoration: InputDecoration(labelText: "Nombre de la lista"),
               onChanged: (value) {
                 _showDefaultSugger(value);
