@@ -49,6 +49,9 @@ Future<void> CommentePage(BuildContext context) {
                               ),
                               RaisedButton(
                                 child: Text(Strings.label_send),
+                                color: Constant.lightColor,
+                                textColor: Constant.textColorButtomLight,
+                                shape: Constant.borderRadius,
                                 onPressed: () {
                                   if (keyFormComments.currentState.validate()) {
                                     keyFormComments.currentState.save();

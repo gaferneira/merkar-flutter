@@ -125,6 +125,9 @@ Future<void> AboutUsPage(BuildContext context) {
                             ),
                             RaisedButton(
                               child: Text(Strings.label_close),
+                              color: Constant.lightColor,
+                              textColor: Constant.textColorButtomLight,
+                              shape: Constant.borderRadius,
                               onPressed: () {
                                 Navigator.pop(context);
                               },
