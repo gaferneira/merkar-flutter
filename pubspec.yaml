@@ -25,6 +25,7 @@ dependencies:
   in_app_review: ^0.2.1
   flutter_email_sender: ^3.0.1
   url_launcher:
+  flutter_local_notifications:
   flutter_launcher_icons: ^0.8.1
   flutter_native_splash:
   # Service locator

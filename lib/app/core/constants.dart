@@ -11,6 +11,9 @@ class Constant {
     fontWeight: FontWeight.bold,
     fontSize: 20.0,
   );
+  static const TextStyle boldText = TextStyle(
+    fontWeight: FontWeight.bold,
+  );
   static const Color lightColor = Colors.indigo;
   static const Color lightColorAcent = Colors.indigoAccent;
   static const Color darkColor = Colors.amber;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:merkar/app/core/constants.dart';
 import 'package:merkar/app/core/strings.dart';
 import 'package:merkar/app/pages/favorites/favorites_list/favorite_list_page.dart';
 import 'package:merkar/app/pages/home/widgets/about_us_page.dart';
@@ -35,7 +36,7 @@ class _DrawerWelcomeState extends State<DrawerWelcome> {
       child: ListView(
         children: <Widget>[
           DrawerHeader(
-            decoration: BoxDecoration(color: Colors.blue),
+            decoration: BoxDecoration(color: Constant.lightColor),
             child: Stack(
               children: <Widget>[
                 Align(

@@ -6,8 +6,6 @@ import 'package:merkar/app/pages/favorites/favorites_list/favorite_list_page.dar
 import 'package:merkar/app/pages/favorites/select_my_favorites/select_my_favorites_page.dart';
 import 'package:merkar/app/pages/home/home_page.dart';
 import 'package:merkar/app/pages/login/auth_view_model.dart';
-import 'package:merkar/app/theme/app_state_notifier.dart';
-import 'package:merkar/app/theme/app_theme.dart';
 import 'package:provider/provider.dart';
 
 import 'app/pages/login/register/register_page.dart';
@@ -20,7 +18,8 @@ import 'app/pages/shopping/select_my_products/select_my_products_page.dart';
 import 'app/pages/shopping/shopping_list/shopping_list_page.dart';
 import 'injection_container.dart' as di;
 import 'injection_container.dart';
-import 'app/core/provider_theme.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter/cupertino.dart';
 
 const bool USE_FIRESTORE_EMULATOR = false;
 bool _light = true;

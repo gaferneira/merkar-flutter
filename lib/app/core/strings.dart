@@ -63,7 +63,7 @@ class Strings {
 
   static const String name_repository = "merkar-flutter";
 
-  static const String route_favorites = "Favoritos";
+  static const String route_favorites = "Mis Productos";
 
   static const String tittle_sing_in = "Ingresar";
 

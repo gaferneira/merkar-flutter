@@ -247,6 +247,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
             children: <Widget>[
               Text(
                 "${listProducts[index].name}",
+                style: Constant.boldText,
               ),
               Row(
                 children: <Widget>[
