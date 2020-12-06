@@ -16,6 +16,16 @@ class Constant {
   );
   static const Color lightColor = Colors.indigo;
   static const Color lightColorAcent = Colors.indigoAccent;
+  static const Color textColorButtomLight = Colors.white;
+  static const Color errorColor = Colors.red;
+
   static const Color darkColor = Colors.amber;
   static const Color darkColorAcent = Colors.amberAccent;
+  static const Color textColorButtomDark = Colors.black;
+
+  static RoundedRectangleBorder borderRadius = RoundedRectangleBorder(
+      side: BorderSide(
+        color: Constant.textColorButtomDark,
+      ),
+      borderRadius: BorderRadius.circular(18.0));
 }

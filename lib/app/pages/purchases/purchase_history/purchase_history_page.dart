@@ -65,7 +65,7 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
                             borderRadius: const BorderRadius.all(
-                              const Radius.circular(5.0),
+                              const Radius.circular(10.0),
                             ),
                           ),
                         ),

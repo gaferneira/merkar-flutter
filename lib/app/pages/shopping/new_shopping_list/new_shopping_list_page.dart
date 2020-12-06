@@ -1,5 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:merkar/app/core/constants.dart';
 import 'package:merkar/app/core/converString.dart';
 import 'package:merkar/app/core/strings.dart';
 import 'package:merkar/injection_container.dart';
@@ -69,6 +70,9 @@ class _NewShoppingListPageState extends State<NewShoppingListPage> {
             ),
             RaisedButton(
               child: Text(Strings.label_save),
+              color: Constant.lightColor,
+              textColor: Constant.textColorButtomLight,
+              shape: Constant.borderRadius,
               onPressed: () {
                 _saveNewList(context);
               },

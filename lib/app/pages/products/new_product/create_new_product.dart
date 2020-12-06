@@ -88,6 +88,9 @@ class _CreateNewProductState extends State<CreateNewProduct> {
             Center(
               child: RaisedButton(
                 child: Text(Strings.label_save),
+                color: Constant.lightColor,
+                textColor: Constant.textColorButtomLight,
+                shape: Constant.borderRadius,
                 onPressed: () {
                   _saveNewProduct();
                 },

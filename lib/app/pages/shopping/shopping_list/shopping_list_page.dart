@@ -26,9 +26,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   final keyFormPurchaseList = GlobalKey<FormState>();
   ShoppingListViewModel viewModel = serviceLocator<ShoppingListViewModel>();
   TextEditingController _text_searchController = TextEditingController();
-  TextEditingController _text_searchController2 = TextEditingController();
   final _keySearchFormUnsel = GlobalKey<FormState>();
-  final _keySearchFormSel = GlobalKey<FormState>();
 
   int temp_quantity = null;
   double temp_price = null;
@@ -86,7 +84,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                                   fillColor: Colors.white,
                                   border: OutlineInputBorder(
                                     borderRadius: const BorderRadius.all(
-                                      const Radius.circular(5.0),
+                                      const Radius.circular(10.0),
                                     ),
                                   ),
                                 ),
@@ -135,6 +133,9 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                               : _showSelectProductsList(viewModel.selectedList),
                           RaisedButton(
                               child: Text(Strings.label_finish),
+                              color: Constant.lightColor,
+                              textColor: Constant.textColorButtomLight,
+                              shape: Constant.borderRadius,
                               onPressed: () {
                                 _showFinishDialog(shoppingList);
                               }),

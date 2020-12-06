@@ -54,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: TextFormField(
                         controller: _email,
                         validator: (value) =>
-                            (value.isEmpty) ? "Please Enter Email" : null,
+                            (value.isEmpty) ? "Ingresa tu email" : null,
                         style: style,
                         decoration: InputDecoration(
                             prefixIcon: Icon(Icons.email),
@@ -67,11 +67,11 @@ class _LoginPageState extends State<LoginPage> {
                       child: TextFormField(
                         controller: _password,
                         validator: (value) =>
-                            (value.isEmpty) ? "Please Enter Password" : null,
+                            (value.isEmpty) ? "Ingresa tu Contraseña" : null,
                         style: style,
                         decoration: InputDecoration(
                             prefixIcon: Icon(Icons.lock),
-                            labelText: "Password",
+                            labelText: "Contraseña",
                             border: OutlineInputBorder()),
                       ),
                     ),

@@ -59,9 +59,13 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
                                   labelText: 'Buscar Actual...',
                                   fillColor: Colors.white,
                                   filled: true,
+                                  border: OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      const Radius.circular(10.0),
+                                    ),
+                                  ),
                                   //hintText: ,
                                 ),
-                                textDirection: TextDirection.ltr,
                                 onChanged: onItemChanged,
                               ),
                             ),

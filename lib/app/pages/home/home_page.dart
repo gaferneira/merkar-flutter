@@ -72,12 +72,15 @@ class _HomePageState extends State<HomePage> {
                       child: TextField(
                         controller: _search_textController,
                         decoration: InputDecoration(
-                            labelText: 'Buscar ...',
-                            fillColor: Colors.white,
-                            filled: true
-                            //hintText: ,
+                          labelText: 'Buscar ...',
+                          fillColor: Colors.white,
+                          filled: true,
+                          border: OutlineInputBorder(
+                            borderRadius: const BorderRadius.all(
+                              const Radius.circular(10.0),
                             ),
-                        textDirection: TextDirection.ltr,
+                          ),
+                        ),
                         onChanged: onItemChanged,
                       ),
                     ),

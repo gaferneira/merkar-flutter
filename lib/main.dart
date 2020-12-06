@@ -50,6 +50,11 @@ ThemeData _lightTheme = ThemeData(
   brightness: Brightness.light,
   primaryColor: Constant.lightColor,
   fontFamily: 'Vanitas',
+  //buttonColor: Constant.lightColor,
+  /*buttonTheme: ButtonThemeData(
+    buttonColor: Constant.lightColor,
+    textTheme: ButtonTextTheme.normal,
+  ),*/
   textTheme: TextTheme(
     bodyText1: TextStyle(),
     bodyText2: TextStyle(),

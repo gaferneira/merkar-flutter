@@ -64,7 +64,11 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
                                 labelText: 'Buscar Actual...',
                                 fillColor: Colors.white,
                                 filled: true,
-                                //hintText: ,
+                                border: OutlineInputBorder(
+                                  borderRadius: const BorderRadius.all(
+                                    const Radius.circular(10.0),
+                                  ),
+                                ),
                               ),
                               textDirection: TextDirection.ltr,
                               onChanged: onItemChanged,

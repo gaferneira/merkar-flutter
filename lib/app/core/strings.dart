@@ -13,7 +13,7 @@ class Strings {
   static const String CACHE_FAILURE_MESSAGE = 'Cache Failure';
 
   //Shopping list
-  static const String noCategoriesAvailable = "No categories available";
+  static const String noCategoriesAvailable = "No hay registros";
 
   static const String label_create_new_list = "Crear Nueva Lista";
   static const String label_tootip_new_list = "Nueva Lista";
