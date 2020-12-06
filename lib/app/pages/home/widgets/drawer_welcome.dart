@@ -67,37 +67,67 @@ class _DrawerWelcomeState extends State<DrawerWelcome> {
           ),
           ListTile(
             title: Text(Strings.route_new_list),
-            leading: Icon(Icons.shopping_cart),
-            trailing: Icon(Icons.keyboard_arrow_right),
+            leading: Icon(
+              Icons.shopping_cart,
+              color: Constant.lightColor,
+            ),
+            trailing: Icon(
+              Icons.keyboard_arrow_right,
+              color: Constant.lightColor,
+            ),
             onTap: () => _goToRoute(DrawerOptions.route_new_list, context),
           ),
           Divider(),
           ListTile(
             title: Text(Strings.route_purchase_history),
-            leading: Icon(Icons.history),
-            trailing: Icon(Icons.keyboard_arrow_right),
+            leading: Icon(
+              Icons.history,
+              color: Constant.lightColor,
+            ),
+            trailing: Icon(
+              Icons.keyboard_arrow_right,
+              color: Constant.lightColor,
+            ),
             onTap: () =>
                 _goToRoute(DrawerOptions.route_purchase_history, context),
           ),
           Divider(),
           ListTile(
             title: Text(Strings.route_favorites),
-            leading: Icon(Icons.favorite),
-            trailing: Icon(Icons.keyboard_arrow_right),
+            leading: Icon(
+              Icons.favorite,
+              color: Constant.lightColor,
+            ),
+            trailing: Icon(
+              Icons.keyboard_arrow_right,
+              color: Constant.lightColor,
+            ),
             onTap: () => _goToRoute(DrawerOptions.route_favorites, context),
           ),
           Divider(),
           ListTile(
             title: Text(Strings.route_comments),
-            leading: Icon(Icons.comment),
-            trailing: Icon(Icons.keyboard_arrow_right),
+            leading: Icon(
+              Icons.comment,
+              color: Constant.lightColor,
+            ),
+            trailing: Icon(
+              Icons.keyboard_arrow_right,
+              color: Constant.lightColor,
+            ),
             onTap: () => _goToRoute(DrawerOptions.route_comments, context),
           ),
           Divider(),
           ListTile(
             title: Text(Strings.route_about_us),
-            leading: Icon(Icons.info),
-            trailing: Icon(Icons.keyboard_arrow_right),
+            leading: Icon(
+              Icons.info,
+              color: Constant.lightColor,
+            ),
+            trailing: Icon(
+              Icons.keyboard_arrow_right,
+              color: Constant.lightColor,
+            ),
             onTap: () => _goToRoute(DrawerOptions.route_about_us, context),
           ),
           Divider(),
@@ -105,6 +135,7 @@ class _DrawerWelcomeState extends State<DrawerWelcome> {
             leading: Icon(
               Icons.close,
               textDirection: TextDirection.rtl,
+              color: Constant.lightColor,
             ),
             title: Text(Strings.route_close_session),
             onTap: () => _goToRoute(DrawerOptions.route_close_session, context),
