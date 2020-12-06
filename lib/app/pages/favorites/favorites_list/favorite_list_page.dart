@@ -73,7 +73,7 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
                         ),
                       ),
                       IconButton(
-                        icon: Icon(Icons.check_circle),
+                        icon: Icon(Icons.search),
                         onPressed: () {
                           //_showFinishDialog(shoppingList);
                         },

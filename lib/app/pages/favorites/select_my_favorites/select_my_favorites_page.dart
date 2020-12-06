@@ -63,13 +63,6 @@ class _SelectMyFavoritesPageState extends State<SelectMyFavoritesPage> {
                         ? Text('Loading...')
                         : _showProductsList(viewModel.defaultProducts),
                   ),
-                  floatingActionButton: FloatingActionButton(
-                    tooltip: Strings.label_tootip_new_product,
-                    child: Icon(Icons.add),
-                    onPressed: () {
-                      _createNewProduct(context);
-                    },
-                  ),
                 )));
   }
 
@@ -102,9 +95,5 @@ class _SelectMyFavoritesPageState extends State<SelectMyFavoritesPage> {
             checkColor: Colors.green,
           );
         });
-  }
-
-  _createNewProduct(BuildContext context) {
-    Navigator.of(context).pushNamed(CreateNewProduct.routeName);
   }
 }

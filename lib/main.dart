@@ -28,6 +28,21 @@ ThemeData _darkTheme = ThemeData(
   brightness: Brightness.dark,
   primaryColor: Constant.darkColor,
   fontFamily: 'Vanitas',
+  textTheme: TextTheme(
+    headline1: TextStyle(
+        fontSize: 72.0,
+        fontWeight: FontWeight.bold,
+        color: Constant.lightColor),
+    headline6: TextStyle(
+        fontSize: 36.0,
+        fontStyle: FontStyle.italic,
+        color: Constant.lightColor),
+    bodyText2: TextStyle(
+      fontSize: 14.0,
+      fontFamily: 'Vanitas',
+      color: Constant.lightColor,
+    ),
+  ),
 );
 
 ThemeData _lightTheme = ThemeData(
@@ -35,6 +50,13 @@ ThemeData _lightTheme = ThemeData(
   brightness: Brightness.light,
   primaryColor: Constant.lightColor,
   fontFamily: 'Vanitas',
+  textTheme: TextTheme(
+    bodyText1: TextStyle(),
+    bodyText2: TextStyle(),
+  ).apply(
+    bodyColor: Constant.lightColor,
+    displayColor: Constant.lightColorAcent,
+  ),
 );
 
 void main() async {
