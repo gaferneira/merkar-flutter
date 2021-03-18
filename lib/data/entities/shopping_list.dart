@@ -1,7 +1,7 @@
 class ShoppingList {
-  String id;
-  String path;
-  final String name;
+  String? id;
+  late String path;
+  final String? name;
 
   ShoppingList({this.name, this.id}) : super();
 

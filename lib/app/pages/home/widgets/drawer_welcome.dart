@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:in_app_review/in_app_review.dart';
-import 'package:merkar/app/core/strings.dart';
-import 'package:merkar/app/pages/favorites/favorites_list/favorite_list_page.dart';
-import 'package:merkar/app/pages/home/widgets/about_us_page.dart';
-import 'package:merkar/app/pages/home/widgets/comment_page.dart';
-import 'package:merkar/app/pages/login/sign_in/login_view_model.dart';
-import 'package:merkar/injection_container.dart';
 
+import '../../../../app/core/strings.dart';
+import '../../../../app/pages/favorites/favorites_list/favorite_list_page.dart';
+import '../../../../app/pages/home/widgets/about_us_page.dart';
+import '../../../../app/pages/home/widgets/comment_page.dart';
+import '../../../../app/pages/login/sign_in/login_view_model.dart';
+import '../../../../injection_container.dart';
 import '../../purchases/purchase_history/purchase_history_page.dart';
 import '../../shopping/new_shopping_list/new_shopping_list_page.dart';
 
@@ -20,8 +20,8 @@ enum DrawerOptions {
 }
 
 class DrawerWelcome extends StatelessWidget {
-  final String displayName;
-  final String displayEmail;
+  final String? displayName;
+  final String? displayEmail;
 
   DrawerWelcome({this.displayName, this.displayEmail});
 
@@ -48,14 +48,14 @@ class DrawerWelcome extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerRight,
                   child: Text(
-                    displayName,
+                    displayName ?? "",
                     style: TextStyle(color: Colors.white, fontSize: 20.0),
                   ),
                 ),
                 Align(
                   alignment: Alignment.centerRight + Alignment(0, 0.4),
                   child: Text(
-                    displayEmail,
+                    displayEmail ?? "",
                     style: TextStyle(color: Colors.white70, fontSize: 15.0),
                   ),
                 ),

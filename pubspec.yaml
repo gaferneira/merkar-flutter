@@ -14,38 +14,40 @@ description: A new Flutter application.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.3.0 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
-  firebase_core: ^0.5.0
-  firebase_auth: ^0.18.0+1
-  cloud_firestore: ^0.14.0+2
-  in_app_review: ^0.2.1
-  flutter_email_sender: ^3.0.1
-  url_launcher:
+  firebase_core: ^1.0.1
+  firebase_auth: ^1.0.1
+  cloud_firestore: ^1.0.1
+  in_app_review: ^2.0.1
+  flutter_email_sender: ^5.0.0
+  url_launcher: ^6.0.2
   # Service locator
-  get_it: ^2.0.1
-  provider: ^4.0.1
+  get_it: ^6.0.0
+  provider: ^5.0.0
   # Value equality
-  equatable: ^0.4.0
+  equatable: ^2.0.0
   # Functional programming thingies
-  dartz: ^0.8.6
+  dartz: ^0.10.0-nullsafety.1
   # Remote API
-  data_connection_checker: ^0.3.4
-  http: ^0.12.0+2
+  data_connection_checker:
+    git:
+      url: git://github.com/uSlashVlad/data_connection_checker.git
+  http: ^0.13.0
   # Local cache
-  shared_preferences: ^0.5.3+4
+  shared_preferences: ^2.0.4
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.2
+  cupertino_icons: ^1.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  mockito: ^4.1.0
+  mockito: ^5.0.1
 
 
 # For information on the generic Dart part of this file, see the

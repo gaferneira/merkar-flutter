@@ -1,11 +1,11 @@
 class UserData {
-  String id;
-  String path;
+  String? id;
+  String? path;
   final String userId;
   final String name;
   final String email;
 
-  UserData({this.userId, this.name, this.email}) : super();
+  UserData({required this.userId, required this.name, required this.email}) : super();
 
   factory UserData.fromJson(Map<String, dynamic> json) => UserData(
       userId: json["userId"], name: json["name"], email: json["email"]);

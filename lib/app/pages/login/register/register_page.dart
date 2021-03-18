@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:merkar/app/core/constants.dart';
-import 'package:merkar/app/core/strings.dart';
-import 'package:merkar/app/pages/login/register/register_view_model.dart';
-import 'package:merkar/injection_container.dart';
+import '../../../../app/core/constants.dart';
+import '../../../../app/core/strings.dart';
+import '../../../../app/pages/login/register/register_view_model.dart';
+import '../../../../injection_container.dart';
 import 'package:provider/provider.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -16,13 +16,13 @@ class _RegisterPageState extends State<RegisterPage> {
   String name = "";
   String email = "";
   String password = "";
-  String confirm_password = "";
+  String confirmPassword = "";
 
-  final viewModel = serviceLocator<RegisterViewModel>();
+  final RegisterViewModel viewModel = serviceLocator<RegisterViewModel>();
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<RegisterViewModel>.value(
+    return ChangeNotifierProvider<RegisterViewModel?>.value(
         value: viewModel,
         child: Consumer<RegisterViewModel>(
             builder: (context, model, child) => Scaffold(
@@ -44,13 +44,13 @@ class _RegisterPageState extends State<RegisterPage> {
               initialValue: "",
               decoration: InputDecoration(labelText: Strings.label_name),
               onSaved: (value) {
-                this.name = value;
+                this.name = value ?? "";
               },
               validator: (value) {
-                if (value.isEmpty) {
-                  return "Llene el nombre";
-                } else
+                if (value?.isNotEmpty == true) {
                   return null;
+                } else
+                  return "Llene el nombre";
               },
               keyboardType: TextInputType.text,
             ),
@@ -58,13 +58,13 @@ class _RegisterPageState extends State<RegisterPage> {
               initialValue: "",
               decoration: InputDecoration(labelText: Strings.label_email),
               onSaved: (value) {
-                this.email = value;
+                this.email = value ?? "";
               },
               validator: (value) {
-                if (value.isEmpty) {
-                  return "Llene el email";
-                } else
+                if (value?.isNotEmpty == true) {
                   return null;
+                } else
+                  return "Llene el email";
               },
               keyboardType: TextInputType.emailAddress,
             ),
@@ -72,16 +72,16 @@ class _RegisterPageState extends State<RegisterPage> {
               initialValue: "",
               decoration: InputDecoration(labelText: Strings.label_password),
               onSaved: (value) {
-                this.password = value;
+                this.password = value ?? "";
               },
               onChanged: (value) {
                 this.password = value;
               },
               validator: (value) {
-                if (value.isEmpty) {
-                  return "La contraseña es requerida";
-                } else
+                if (value?.isNotEmpty == true) {
                   return null;
+                } else
+                  return "La contraseña es requerida";
               },
               keyboardType: TextInputType.text,
             ),
@@ -90,10 +90,10 @@ class _RegisterPageState extends State<RegisterPage> {
               decoration:
                   InputDecoration(labelText: Strings.label_confirm_password),
               onSaved: (value) {
-                this.confirm_password = value;
+                this.confirmPassword = value ?? "";
               },
               validator: (value) {
-                if (value.isEmpty) {
+                if (value == null || value.isEmpty) {
                   return "Confirme la contraseña";
                 }
                 if (value != this.password) {
@@ -103,11 +103,11 @@ class _RegisterPageState extends State<RegisterPage> {
               },
               keyboardType: TextInputType.text,
             ),
-            RaisedButton(
+            ElevatedButton(
               child: Text(Strings.label_register),
               onPressed: () {
-                if (key_form_register.currentState.validate()) {
-                  key_form_register.currentState.save();
+                if (key_form_register.currentState?.validate() == true) {
+                  key_form_register.currentState!.save();
                   _registerNewUser();
                 }
               },

@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
-import 'package:merkar/app/core/constants.dart';
-import 'package:merkar/app/core/strings.dart';
 
-String _message = "";
+import '../../../../app/core/constants.dart';
+import '../../../../app/core/strings.dart';
+
+String? _message = "";
 Future<void> CommentePage(BuildContext context) {
   final keyFormComments = GlobalKey<FormState>();
 
   return showDialog(
       context: context,
       builder: (BuildContext context) {
-        int selectedRadio = 0; // Declare your variable outside the builder
-
         return AlertDialog(
           content: StatefulBuilder(
             // You need this, notice the parameters below:
@@ -38,17 +37,17 @@ Future<void> CommentePage(BuildContext context) {
                                 _message = value;
                               },
                               validator: (value) {
-                                if (value.isEmpty) {
+                                if (value!.isEmpty) {
                                   return "Ingresa un mensaje";
                                 } else
                                   return null;
                               },
                             ),
-                            RaisedButton(
+                            ElevatedButton(
                               child: Text(Strings.label_send),
                               onPressed: () {
-                                if (keyFormComments.currentState.validate()) {
-                                  keyFormComments.currentState.save();
+                                if (keyFormComments.currentState!.validate()) {
+                                  keyFormComments.currentState!.save();
                                   _sendEmail(keyFormComments);
                                   Navigator.pop(context);
                                 }
@@ -68,22 +67,16 @@ Future<void> CommentePage(BuildContext context) {
 Future<void> _sendEmail(GlobalKey<FormState> keyForm) async {
   try {
 //    print(keyForm.currentState.validate());
-    print("Enviar mensaje Email: ${_message}");
     final Email email = Email(
-      body: 'Merkar Comment: ${_message}',
+      body: 'Merkar Comment: $_message',
       subject: 'Sugerencia',
       recipients: ['stip.suarez@gmail.com', 'gabrielfneira@gmail.com'],
-      cc: null,
-      bcc: null,
       attachmentPaths: null,
       isHTML: false,
     );
 
     await FlutterEmailSender.send(email);
 
-    print('success');
-
-    return "Error";
   } catch (error) {
     print('Error: ${error}');
   }

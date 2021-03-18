@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:merkar/app/core/strings.dart';
-import 'package:merkar/app/pages/products/new_product/create_new_product.dart';
-import 'package:merkar/data/entities/product.dart';
-import 'package:merkar/data/entities/shopping_list.dart';
-import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../app/core/strings.dart';
+import '../../../../app/pages/products/new_product/create_new_product.dart';
+import '../../../../data/entities/product.dart';
+import '../../../../data/entities/shopping_list.dart';
+import '../../../../injection_container.dart';
 import 'select_my_favorites_view_model.dart';
 
 class SelectMyFavoritesPage extends StatefulWidget {
@@ -20,10 +20,10 @@ class _SelectMyFavoritesPageState extends State<SelectMyFavoritesPage> {
   SelectMyFavoritesViewModel viewModel =
       serviceLocator<SelectMyFavoritesViewModel>();
   //List<ListProduct> shoppingProducts;
-  ShoppingList shoppingList;
+  late ShoppingList shoppingList;
   @override
   Widget build(BuildContext context) {
-    shoppingList = ModalRoute.of(context).settings.arguments;
+    shoppingList = ModalRoute.of(context)!.settings.arguments as ShoppingList;
     viewModel.loadData(shoppingList);
 
     return ChangeNotifierProvider<SelectMyFavoritesViewModel>.value(
@@ -36,7 +36,7 @@ class _SelectMyFavoritesPageState extends State<SelectMyFavoritesPage> {
                   body: SingleChildScrollView(
                     child: (viewModel.userProducts == null)
                         ? Text('Loading...')
-                        : _showProductsList(viewModel.userProducts),
+                        : _showProductsList(viewModel.userProducts!),
                   ),
                   floatingActionButton: FloatingActionButton(
                     tooltip: Strings.label_tootip_new_product,
@@ -60,8 +60,8 @@ class _SelectMyFavoritesPageState extends State<SelectMyFavoritesPage> {
           return CheckboxListTile(
             title: Text("${userProducts[index].name}"),
             controlAffinity: ListTileControlAffinity.leading,
-            onChanged: (bool value) {
-              viewModel.selectProduct(index, value);
+            onChanged: (bool? value) {
+              viewModel.selectProduct(index, value == true);
             },
             value: userProducts[index].selected,
             activeColor: Colors.cyan,

@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:merkar/app/core/constants.dart';
-import 'package:merkar/app/core/strings.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../../../app/core/constants.dart';
+import '../../../../app/core/strings.dart';
 
 Future<void> AboutUsPage(BuildContext context) {
   return showDialog(
       context: context,
       builder: (BuildContext context) {
-        int selectedRadio = 0; // Declare your variable outside the builder
 
         return AlertDialog(
           content: StatefulBuilder(

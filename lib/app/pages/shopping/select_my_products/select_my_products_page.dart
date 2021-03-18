@@ -20,13 +20,13 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
   SelectMyProductsViewModel viewModel =
       serviceLocator<SelectMyProductsViewModel>();
   //List<ListProduct> shoppingProducts;
-  ShoppingList shoppingList;
+  late ShoppingList shoppingList;
   @override
   Widget build(BuildContext context) {
-    shoppingList = ModalRoute.of(context).settings.arguments;
+    shoppingList = ModalRoute.of(context)!.settings.arguments as ShoppingList;
     viewModel.loadData(shoppingList);
 
-    return ChangeNotifierProvider<SelectMyProductsViewModel>.value(
+    return ChangeNotifierProvider<SelectMyProductsViewModel?>.value(
         value: viewModel,
         child: Consumer<SelectMyProductsViewModel>(
             builder: (context, model, child) => Scaffold(
@@ -48,20 +48,20 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
                 )));
   }
 
-  Widget _showProductsList(List<Product> userProducts) {
+  Widget _showProductsList(List<Product>? userProducts) {
     return ListView.separated(
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         separatorBuilder: (context, index) => Divider(
               color: Colors.black,
             ),
-        itemCount: userProducts.length,
+        itemCount: userProducts?.length ?? 0,
         itemBuilder: (context, index) {
           return CheckboxListTile(
-            title: Text("${userProducts[index].name}"),
+            title: Text("${userProducts![index].name}"),
             controlAffinity: ListTileControlAffinity.leading,
-            onChanged: (bool value) {
-              viewModel.selectProduct(index, value);
+            onChanged: (bool? value) {
+              viewModel.selectProduct(index, value!);
             },
             value: userProducts[index].selected,
             activeColor: Colors.cyan,

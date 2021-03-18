@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:merkar/app/core/strings.dart';
-import 'package:merkar/app/widgets/widgets.dart';
-import 'package:merkar/injection_container.dart';
+import '../../../app/core/strings.dart';
+import '../../../app/widgets/widgets.dart';
+import '../../../injection_container.dart';
 import 'package:provider/provider.dart';
 
 import '../shopping//new_shopping_list/new_shopping_list_page.dart';
@@ -69,7 +69,7 @@ class _HomePageState extends State<HomePage> {
                     children: <Widget>[
                       (viewModel.list == null)
                           ? Center(child: LoadingWidget())
-                          : shoppingListsDisplay(viewModel.list),
+                          : shoppingListsDisplay(viewModel.list!),
                     ],
                   ),
                 ]),

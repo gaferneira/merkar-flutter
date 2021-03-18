@@ -1,4 +1,4 @@
-import 'package:merkar/data/entities/list_product.dart';
+import '../../data/entities/list_product.dart';
 
 class Strings {
   //Drawer

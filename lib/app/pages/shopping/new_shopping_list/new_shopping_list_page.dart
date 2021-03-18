@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:merkar/app/core/converString.dart';
+import 'package:merkar/app/core/extensions/extended_string.dart';
 import 'package:merkar/app/core/strings.dart';
 import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +14,7 @@ class NewShoppingListPage extends StatefulWidget {
 }
 
 class _NewShoppingListPageState extends State<NewShoppingListPage> {
-  String nameList;
+  String? nameList;
   final formListKey = GlobalKey<FormState>();
 
   NewShoppingListViewModel viewModel =
@@ -51,16 +51,16 @@ class _NewShoppingListPageState extends State<NewShoppingListPage> {
             TextFormField(
               decoration: InputDecoration(labelText: "Nombre de la lista"),
               onSaved: (value) {
-                nameList = ConvertString().capitalize(value.toString());
+                nameList = value.toString().capitalize();
               },
               validator: (value) {
-                if (value.isEmpty) {
+                if (value!.isEmpty) {
                   return "Llene este campo";
                 }
                 return null;
               },
             ),
-            RaisedButton(
+            ElevatedButton(
               child: Text(Strings.label_save),
               onPressed: () {
                 _saveNewList(context);
@@ -73,21 +73,10 @@ class _NewShoppingListPageState extends State<NewShoppingListPage> {
   }
 
   void _saveNewList(BuildContext context) {
-    if (formListKey.currentState.validate()) {
-      formListKey.currentState.save();
+    if (formListKey.currentState!.validate()) {
+      formListKey.currentState!.save();
       viewModel.saveList(nameList, context);
     }
   }
 
-  String capitalize(String string) {
-    if (string == null) {
-      throw ArgumentError.notNull('string');
-    }
-
-    if (string.isEmpty) {
-      return string;
-    }
-
-    return string[0].toUpperCase() + string.substring(1);
-  }
 }

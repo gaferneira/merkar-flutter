@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
-import 'package:meta/meta.dart';
 
 import '../../data/entities/error/failures.dart';
 import '../entities/product.dart';
@@ -17,8 +16,8 @@ class ProductsRepositoryImpl implements ProductsRepository {
   final FirestoreDataSource firestoreDataSource;
 
   ProductsRepositoryImpl({
-    @required this.networkInfo,
-    @required this.firestoreDataSource,
+    required this.networkInfo,
+    required this.firestoreDataSource,
   });
 
   @override
@@ -26,7 +25,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
     return getDefaultCollection()
         .snapshots()
         .map((querySnapshot) => querySnapshot.docs
-            .map((documentSnapshot) => Product.fromJson(documentSnapshot.data())
+            .map((documentSnapshot) => Product.fromJson(documentSnapshot.data()!)
               ..id = documentSnapshot.id
               ..path = documentSnapshot.reference.path)
             .toList());
@@ -39,7 +38,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
         .collection(COLLECTION_PRODUCTS)
         .snapshots()
         .map((querySnapshot) => querySnapshot.docs
-            .map((documentSnapshot) => Product.fromJson(documentSnapshot.data())
+            .map((documentSnapshot) => Product.fromJson(documentSnapshot.data()!)
               ..path = documentSnapshot.reference.path
               ..id = documentSnapshot.id)
             .toList());
@@ -48,7 +47,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
   @override
   Future<Either<Failure, Product>> save(Product item) async {
     if (item.id != null) {
-      await this.firestoreDataSource.db.doc(item.id).set(item.toJson());
+      await this.firestoreDataSource.db.doc(item.id!).set(item.toJson());
     } else {
       final ref = await firestoreDataSource
           .getDataDocument()

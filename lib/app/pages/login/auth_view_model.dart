@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:merkar/data/repositories/login_repository.dart';
+import '../../../data/repositories/login_repository.dart';
 
 enum AuthStatus { Uninitialized, Authenticated, Unauthenticated }
 
@@ -10,7 +10,7 @@ class AuthViewModel extends ChangeNotifier {
 
   AuthStatus get status => _status;
 
-  AuthViewModel({@required this.repository}) {
+  AuthViewModel({required this.repository}) {
     repository.onLoginStatusChanged().listen((isLogged) {
       if (isLogged) {
         _status = AuthStatus.Authenticated;

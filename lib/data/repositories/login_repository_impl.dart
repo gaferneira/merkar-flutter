@@ -8,14 +8,21 @@ import 'package:merkar/data/utils/network/network_info.dart';
 import 'login_repository.dart';
 
 class LoginRepositoryImpl implements LoginRepository {
-  FirebaseAuth _auth;
+  late FirebaseAuth _auth;
+  User? _curretUser;
 
   final NetworkInfo networkInfo;
   final FirestoreDataSource firestoreDataSource;
 
   LoginRepositoryImpl(
-      {@required this.networkInfo, @required this.firestoreDataSource}) {
+      {required this.networkInfo, required this.firestoreDataSource}) {
     _auth = FirebaseAuth.instance;
+  }
+
+  @override
+  User? getCurrentUser() {
+    _curretUser = _auth.currentUser;
+    return _curretUser;
   }
 
   @override
@@ -30,7 +37,7 @@ class LoginRepositoryImpl implements LoginRepository {
           email: email, password: password);
       return right(result.user != null);
     } on FirebaseException catch (e) {
-      return left(e.message);
+      return left(e.message ?? "Firebase exception");
     } catch (e) {
       return left(e.toString());
     }
@@ -52,11 +59,11 @@ class LoginRepositoryImpl implements LoginRepository {
       if (result.user == null) return right(false);
 
       var userData =
-          UserData(userId: result.user.uid, name: name, email: email);
+          UserData(userId: result.user!.uid, name: name, email: email);
 
       await firestoreDataSource.db
           .collection(FirestoreDataSource.COLLECTION_DATA)
-          .doc(result.user.uid)
+          .doc(result.user!.uid)
           .set(userData.toJson());
 
       return right(true);
@@ -78,6 +85,6 @@ class LoginRepositoryImpl implements LoginRepository {
   @override
   Future<UserData> getUserData() async {
     final ref = await firestoreDataSource.getDataDocument().get();
-    return UserData.fromJson(ref.data());
+    return UserData.fromJson(ref.data()!);
   }
 }

@@ -9,6 +9,6 @@ class FirestoreDataSource {
   FirebaseAuth _auth = FirebaseAuth.instance;
 
   DocumentReference getDataDocument() {
-    return db.collection(COLLECTION_DATA).doc(_auth.currentUser.uid);
+    return db.collection(COLLECTION_DATA).doc(_auth.currentUser?.uid);
   }
 }

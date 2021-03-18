@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:merkar/app/pages/favorites/favorites_list/favorite_list_page.dart';
-import 'package:merkar/app/pages/favorites/select_my_favorites/select_my_favorites_page.dart';
-import 'package:merkar/app/pages/home/home_page.dart';
-import 'package:merkar/app/pages/login/auth_view_model.dart';
 import 'package:provider/provider.dart';
 
+import 'app/pages/favorites/favorites_list/favorite_list_page.dart';
+import 'app/pages/favorites/select_my_favorites/select_my_favorites_page.dart';
+import 'app/pages/home/home_page.dart';
+import 'app/pages/login/auth_view_model.dart';
 import 'app/pages/login/register/register_page.dart';
 import 'app/pages/login/sign_in/login_page.dart';
 import 'app/pages/products/new_product/create_new_product.dart';
