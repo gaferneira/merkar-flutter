@@ -40,7 +40,9 @@ class _HomePageState extends State<HomePage> {
           appBar: AppBar(
             title: Text('Merkar'),
           ),
-          drawer: DrawerWelcome(),
+          drawer: DrawerWelcome(
+              displayName: viewModel.displayName,
+              displayEmail: viewModel.displayEmail),
           body: SingleChildScrollView(
             //scrollDirection: Axis.vertical,
             child: Column(
