@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
-import 'package:merkar/data/entities/error/failures.dart';
-import 'package:merkar/data/entities/list_product.dart';
-import 'package:meta/meta.dart';
 
+import '../entities/error/failures.dart';
+import '../entities/list_product.dart';
 import '../entities/shopping_list.dart';
 import '../remote/firestore_data_source.dart';
 import '../repositories/shopping_lists_repository.dart';
@@ -18,14 +17,14 @@ class ShoppingListsRepositoryImpl implements ShoppingListsRepository {
   final FirestoreDataSource firestoreDataSource;
 
   ShoppingListsRepositoryImpl({
-    @required this.networkInfo,
-    @required this.firestoreDataSource,
+    required this.networkInfo,
+    required this.firestoreDataSource,
   });
 
   @override
   Future<Either<Failure, ShoppingList>> save(ShoppingList item) async {
     if (item.id != null) {
-      await this.firestoreDataSource.db.doc(item.id).set(item.toJson());
+      await this.firestoreDataSource.db.doc(item.id!).set(item.toJson());
     } else {
       final ref = await firestoreDataSource
           .getDataDocument()
@@ -46,15 +45,15 @@ class ShoppingListsRepositoryImpl implements ShoppingListsRepository {
         .snapshots()
         .map((querySnapshot) => querySnapshot.docs
             .map((documentSnapshot) =>
-                ShoppingList.fromJson(documentSnapshot.data())
+                ShoppingList.fromJson(documentSnapshot.data()!)
                   ..id = documentSnapshot.id
                   ..path = documentSnapshot.reference.path)
             .toList());
   }
 
   @override
-  Future<Either<Failure, bool>> remove(ShoppingList item) async {
-    if (item.id != null) {
+  Future<Either<Failure, bool>> remove(ShoppingList? item) async {
+    if (item!.id != null) {
       final products = await this
           .firestoreDataSource
           .db
@@ -75,14 +74,14 @@ class ShoppingListsRepositoryImpl implements ShoppingListsRepository {
   }
 
   @override
-  Stream<List<ListProduct>> fetchProducts(ShoppingList list) {
+  Stream<List<ListProduct>> fetchProducts(ShoppingList? list) {
     return firestoreDataSource.db
-        .doc(list.path)
+        .doc(list!.path)
         .collection(COLLECTION_PRODUCTS)
         .snapshots()
         .map((querySnapshot) => querySnapshot.docs
             .map((documentSnapshot) =>
-                ListProduct.fromJson(documentSnapshot.data())
+                ListProduct.fromJson(documentSnapshot.data()!)
                   ..id = documentSnapshot.id
                   ..path = documentSnapshot.reference.path)
             .toList());
@@ -90,9 +89,9 @@ class ShoppingListsRepositoryImpl implements ShoppingListsRepository {
 
   @override
   Future<Either<Failure, bool>> removeProduct(
-      String productId, ShoppingList list) async {
+      String? productId, ShoppingList? list) async {
     await firestoreDataSource.db
-        .doc(list.path)
+        .doc(list!.path)
         .collection(COLLECTION_PRODUCTS)
         .doc(productId)
         .delete();
@@ -101,9 +100,9 @@ class ShoppingListsRepositoryImpl implements ShoppingListsRepository {
 
   @override
   Future<Either<Failure, ListProduct>> saveProduct(
-      ListProduct product, ShoppingList list) async {
+      ListProduct product, ShoppingList? list) async {
     await firestoreDataSource.db
-        .doc(list.path)
+        .doc(list!.path)
         .collection(COLLECTION_PRODUCTS)
         .doc(product.id)
         .set(product.toJson());

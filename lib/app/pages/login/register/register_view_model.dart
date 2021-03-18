@@ -1,14 +1,14 @@
 import 'package:flutter/widgets.dart';
-import 'package:merkar/data/repositories/login_repository.dart';
+import '../../../../data/repositories/login_repository.dart';
 
 class RegisterViewModel with ChangeNotifier {
   final LoginRepository repository;
 
   var loading = false;
 
-  String error;
+  String? error;
 
-  RegisterViewModel({@required this.repository});
+  RegisterViewModel({required this.repository});
 
   Future<void> signUp(
       BuildContext context, String name, String email, String password) async {
@@ -23,7 +23,6 @@ class RegisterViewModel with ChangeNotifier {
       error = e.toString();
       loading = false;
       notifyListeners();
-      return false;
     }
   }
 

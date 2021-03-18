@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:merkar/data/entities/list_product.dart';
-import 'package:merkar/data/entities/product.dart';
-import 'package:merkar/data/entities/shopping_list.dart';
-import 'package:merkar/data/repositories/products_repository.dart';
-import 'package:merkar/data/repositories/shopping_lists_repository.dart';
+import '../../../../data/entities/list_product.dart';
+import '../../../../data/entities/product.dart';
+import '../../../../data/entities/shopping_list.dart';
+import '../../../../data/repositories/products_repository.dart';
+import '../../../../data/repositories/shopping_lists_repository.dart';
 
 class SelectMyFavoritesViewModel extends ChangeNotifier {
   final ShoppingListsRepository shoppingListRepository;
   final ProductsRepository productsRepository;
 
   SelectMyFavoritesViewModel(
-      {@required this.shoppingListRepository,
-      @required this.productsRepository});
+      {required this.shoppingListRepository,
+      required this.productsRepository});
 
-  ShoppingList shoppingList;
+  late ShoppingList shoppingList;
 
-  List<Product> userProducts;
-  List<ListProduct> shoppingProducts;
+  List<Product>? userProducts;
+  List<ListProduct>? shoppingProducts;
 
-  String error;
+  String? error;
 
   Future<void> loadData(ShoppingList shoppingList) async {
     this.shoppingList = shoppingList;
@@ -46,12 +46,12 @@ class SelectMyFavoritesViewModel extends ChangeNotifier {
 
   void updateList() {
     if (shoppingProducts != null && userProducts != null) {
-      userProducts.forEach((product) {
+      userProducts!.forEach((product) {
         product.selected = false;
       });
 
-      shoppingProducts.forEach((product) {
-        userProducts.forEach((userProduct) {
+      shoppingProducts!.forEach((product) {
+        userProducts!.forEach((userProduct) {
           if (product.id == userProduct.id) {
             userProduct.selected = true;
           }
@@ -63,7 +63,7 @@ class SelectMyFavoritesViewModel extends ChangeNotifier {
   }
 
   Future<void> selectProduct(int index, bool selected) async {
-    var product = userProducts[index];
+    var product = userProducts![index];
     if (selected) {
       var productList = ListProduct(
           id: product.id,
@@ -75,7 +75,7 @@ class SelectMyFavoritesViewModel extends ChangeNotifier {
           selected: false);
       shoppingListRepository.saveProduct(productList, shoppingList);
     } else {
-      shoppingListRepository.removeProduct(product.id, shoppingList);
+      shoppingListRepository.removeProduct(product.id!, shoppingList);
     }
   }
 }

@@ -93,7 +93,7 @@ void createViewModels() {
       () => CreateNewProductsViewModel(productsRepository: serviceLocator()));
 
   serviceLocator.registerFactory(() =>
-      PurchaseHistoryViewModel(PurchaseHistoryRepository: serviceLocator()));
+      PurchaseHistoryViewModel(purchaseHistoryRepository: serviceLocator()));
 
   serviceLocator.registerFactory(() => PurchaseHistoryShowInfoViewModel(
       purchaseHistoryRepository: serviceLocator()));

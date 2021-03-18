@@ -10,15 +10,15 @@ class SelectMyProductsViewModel extends ChangeNotifier {
   final ProductsRepository productsRepository;
 
   SelectMyProductsViewModel(
-      {@required this.shoppingListRepository,
-      @required this.productsRepository});
+      {required this.shoppingListRepository,
+      required this.productsRepository});
 
-  ShoppingList shoppingList;
+  late ShoppingList shoppingList;
 
-  List<Product> userProducts;
-  List<ListProduct> shoppingProducts;
+  List<Product>? userProducts;
+  List<ListProduct>? shoppingProducts;
 
-  String error;
+  String? error;
 
   Future<void> loadData(ShoppingList shoppingList) async {
     this.shoppingList = shoppingList;
@@ -46,12 +46,12 @@ class SelectMyProductsViewModel extends ChangeNotifier {
 
   void updateList() {
     if (shoppingProducts != null && userProducts != null) {
-      userProducts.forEach((product) {
+      userProducts!.forEach((product) {
         product.selected = false;
       });
 
-      shoppingProducts.forEach((product) {
-        userProducts.forEach((userProduct) {
+      shoppingProducts?.forEach((product) {
+        userProducts?.forEach((userProduct) {
           if (product.id == userProduct.id) {
             userProduct.selected = true;
           }
@@ -63,7 +63,7 @@ class SelectMyProductsViewModel extends ChangeNotifier {
   }
 
   Future<void> selectProduct(int index, bool selected) async {
-    var product = userProducts[index];
+    var product = userProducts![index];
     if (selected) {
       var productList = ListProduct(
           id: product.id,
@@ -75,7 +75,7 @@ class SelectMyProductsViewModel extends ChangeNotifier {
           selected: false);
       shoppingListRepository.saveProduct(productList, shoppingList);
     } else {
-      shoppingListRepository.removeProduct(product.id, shoppingList);
+      shoppingListRepository.removeProduct(product.id!, shoppingList);
     }
   }
 }

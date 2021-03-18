@@ -4,15 +4,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'login_repository.dart';
 
 class LoginRepositoryImpl implements LoginRepository {
-  FirebaseAuth _auth;
-  User _curretUser;
+  late FirebaseAuth _auth;
+  User? _curretUser;
 
   LoginRepositoryImpl() {
     _auth = FirebaseAuth.instance;
   }
 
   @override
-  User getCurrentUser() {
+  User? getCurrentUser() {
     _curretUser = _auth.currentUser;
     return _curretUser;
   }
@@ -29,7 +29,7 @@ class LoginRepositoryImpl implements LoginRepository {
           email: email, password: password);
       return right(result.user != null);
     } on FirebaseException catch (e) {
-      return left(e.message);
+      return left(e.message ?? "Firebase exception");
     } catch (e) {
       return left(e.toString());
     }
@@ -43,10 +43,10 @@ class LoginRepositoryImpl implements LoginRepository {
 
   @override
   Future<Either<String, bool>> signUp(
-      String name, String email, String password) async {
+      String? name, String? email, String? password) async {
     try {
       final result = await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
+          email: email!, password: password!);
       return right(result.user != null);
     } catch (e) {
       return left(e.toString());

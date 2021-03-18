@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:merkar/data/entities/list_product.dart';
-import 'package:merkar/data/entities/shopping_list.dart';
-import 'package:merkar/data/repositories/purchases_repository.dart';
-import 'package:merkar/data/repositories/shopping_lists_repository.dart';
 
+import '../../../../data/entities/list_product.dart';
+import '../../../../data/entities/shopping_list.dart';
+import '../../../../data/repositories/purchases_repository.dart';
+import '../../../../data/repositories/shopping_lists_repository.dart';
 import 'favorite_list_page.dart';
 
 class FavoriteListViewModel extends ChangeNotifier {
@@ -11,12 +11,12 @@ class FavoriteListViewModel extends ChangeNotifier {
   final PurchasesRepository purchasesRepository;
 
   FavoriteListViewModel(
-      {@required this.repository, @required this.purchasesRepository});
+      {required this.repository, required this.purchasesRepository});
 
-  ShoppingList shoppingList;
-  List<ListProduct> unselectedList;
-  List<ListProduct> selectedList;
-  String error;
+  late ShoppingList shoppingList;
+  late List<ListProduct> unselectedList;
+  late List<ListProduct> selectedList;
+  String? error;
 
   Future<void> loadData(ShoppingList shoppingList) async {
     this.shoppingList = shoppingList;
@@ -30,11 +30,11 @@ class FavoriteListViewModel extends ChangeNotifier {
   }
 
   void updateList(List<ListProduct> list) {
-    unselectedList = List<ListProduct>();
-    selectedList = List<ListProduct>();
+    unselectedList = <ListProduct>[];
+    selectedList = <ListProduct>[];
 
     list.forEach((product) {
-      if (product.selected) {
+      if (product.selected!) {
         selectedList.add(product);
       } else {
         unselectedList.add(product);
@@ -70,7 +70,7 @@ class FavoriteListViewModel extends ChangeNotifier {
 
   String totalShopping() => _calculateTotalPrice(selectedList).toString();
 
-  double _calculateTotalPrice(List<ListProduct> list) {
+  double _calculateTotalPrice(List<ListProduct>? list) {
     if (list != null && list.isNotEmpty) {
       final total = list
           .map((item) => item.quantity * double.parse(item.price))
