@@ -13,7 +13,7 @@ class Strings {
   static const String CACHE_FAILURE_MESSAGE = 'Cache Failure';
 
   //Shopping list
-  static const String noCategoriesAvailable = "No categories available";
+  static const String noCategoriesAvailable = "No hay registros";
 
   static const String label_create_new_list = "Crear Nueva Lista";
   static const String label_tootip_new_list = "Nueva Lista";
@@ -24,7 +24,7 @@ class Strings {
   static const String label_register = "Registrar";
   static const String label_description = "Descripción";
   static const String label_finish = "Finalizar";
-  static const String title_my_products = "Mis productos";
+  static const String title_my_products = "Productos";
   static const String comments = "Comentarios";
   static const String about_us = "Acerca de";
   static const String editProductTittle = "Editar Producto";
@@ -37,6 +37,7 @@ class Strings {
   static const String label_password = "Contraseña";
   static const String label_name = "Nombre";
   static const String label_confirm_password = "Confirmar Contraseña";
+  static const String label_sign_in = "Entrar";
 
   static const String label_top_comments =
       "Envíanos tus comentarios. \n nos encantaría escucharlos!";
@@ -58,9 +59,13 @@ class Strings {
     "stip.suarez@gmail.com"
   ];
 
-  static String creators_number = "+57 3152562504";
+  static const String creators_number = "+57 3152562504";
 
-  static String name_repository = "merkar-flutter";
+  static const String name_repository = "merkar-flutter";
 
-  static String route_favorites = "Favoritos";
+  static const String route_favorites = "Mis Productos";
+
+  static const String tittle_sing_in = "Ingresar";
+
+  static const String title_sugger_products = "Sugeridos";
 }

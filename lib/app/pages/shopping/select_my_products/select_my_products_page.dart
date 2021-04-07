@@ -19,8 +19,18 @@ class SelectMyProductsPage extends StatefulWidget {
 class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
   SelectMyProductsViewModel viewModel =
       serviceLocator<SelectMyProductsViewModel>();
-  //List<ListProduct> shoppingProducts;
+  TextEditingController _search_textController = TextEditingController();
+  final _keySearchP = GlobalKey<FormState>();
   late ShoppingList shoppingList;
+
+  onItemChanged(String value) {
+    viewModel.userProducts = viewModel.filteruserProducts
+        .where((product) =>
+            product.name.toLowerCase().contains(value.toLowerCase()))
+        .toList();
+    viewModel.notifyListeners();
+  }
+
   @override
   Widget build(BuildContext context) {
     shoppingList = ModalRoute.of(context)!.settings.arguments as ShoppingList;
@@ -29,21 +39,55 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
     return ChangeNotifierProvider<SelectMyProductsViewModel?>.value(
         value: viewModel,
         child: Consumer<SelectMyProductsViewModel>(
-            builder: (context, model, child) => Scaffold(
-                  appBar: AppBar(
-                    title: Text(Strings.title_my_products),
-                  ),
-                  body: SingleChildScrollView(
-                    child: (viewModel.userProducts == null)
-                        ? Text('Loading...')
-                        : _showProductsList(viewModel.userProducts),
-                  ),
-                  floatingActionButton: FloatingActionButton(
-                    tooltip: Strings.label_tootip_new_product,
-                    child: Icon(Icons.add),
-                    onPressed: () {
-                      _createNewProduct(context);
-                    },
+            builder: (context, model, child) => ElasticInDown(
+                  child: Scaffold(
+                    appBar: AppBar(
+                      title: Text(Strings.title_my_products),
+                      actions: [
+                        Padding(
+                          padding: const EdgeInsets.all(Constant.normalspace),
+                          child: Form(
+                            key: _keySearchP,
+                            child: SizedBox(
+                              height: 30,
+                              width: 270,
+                              child: TextField(
+                                controller: _search_textController,
+                                decoration: InputDecoration(
+                                  labelText: 'Buscar Actual...',
+                                  fillColor: Colors.white,
+                                  filled: true,
+                                  border: OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      const Radius.circular(10.0),
+                                    ),
+                                  ),
+                                  //hintText: ,
+                                ),
+                                onChanged: onItemChanged,
+                              ),
+                            ),
+                          ),
+                        ),
+                        IconButton(icon: Icon(Icons.search), onPressed: () {}),
+                      ],
+                    ),
+                    body: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          (viewModel.userProducts == null)
+                              ? Text('Loading...')
+                              : _showProductsList(viewModel.userProducts),
+                        ],
+                      ),
+                    ),
+                    floatingActionButton: FloatingActionButton(
+                      tooltip: Strings.label_tootip_new_product,
+                      child: Icon(Icons.add),
+                      onPressed: () {
+                        _createNewProduct(context);
+                      },
+                    ),
                   ),
                 )));
   }

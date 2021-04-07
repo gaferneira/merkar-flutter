@@ -76,12 +76,12 @@ void createViewModels() {
   serviceLocator.registerFactory(() => ShoppingListViewModel(
       repository: serviceLocator(), purchasesRepository: serviceLocator()));
 
-  serviceLocator.registerFactory(() => FavoriteListViewModel(
-      repository: serviceLocator(), purchasesRepository: serviceLocator()));
+  serviceLocator.registerFactory(
+      () => FavoriteListViewModel(repository: serviceLocator()));
 
   serviceLocator.registerFactory(() => SelectMyFavoritesViewModel(
-      productsRepository: serviceLocator(),
-      shoppingListRepository: serviceLocator()));
+        productsRepository: serviceLocator(),
+      ));
 
   serviceLocator.registerFactory(
       () => NewShoppingListViewModel(repository: serviceLocator()));

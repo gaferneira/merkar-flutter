@@ -6,24 +6,32 @@ import '../../../../data/repositories/products_repository.dart';
 import '../../../../data/repositories/shopping_lists_repository.dart';
 
 class SelectMyFavoritesViewModel extends ChangeNotifier {
-  final ShoppingListsRepository shoppingListRepository;
+
   final ProductsRepository productsRepository;
 
   SelectMyFavoritesViewModel(
-      {required this.shoppingListRepository,
-      required this.productsRepository});
+      {required this.productsRepository});
 
   late ShoppingList shoppingList;
 
+  List<Product>? defaultProducts;
   List<Product>? userProducts;
-  List<ListProduct>? shoppingProducts;
+  List<Product>? filterDefaultProducts;
 
   String? error;
 
   Future<void> loadData(ShoppingList shoppingList) async {
-    this.shoppingList = shoppingList;
+    productsRepository.fetchItems().listen((data) {
+      userProducts = data;
+      error = null;
+      updateList();
+      filterDefaultProducts = defaultProducts;
+    }, onError: (e) {
+      error = e;
+      notifyListeners();
+    });
 
-    // Get user products
+    // Get shopping list products
     productsRepository.fetchItems().listen((data) {
       userProducts = data;
       error = null;
@@ -32,50 +40,42 @@ class SelectMyFavoritesViewModel extends ChangeNotifier {
       error = e;
       notifyListeners();
     });
-
-    // Get shopping list products
-    shoppingListRepository.fetchProducts(shoppingList).listen((data) {
-      shoppingProducts = data;
-      error = null;
-      updateList();
-    }, onError: (e) {
-      error = e;
-      notifyListeners();
-    });
+    updateList();
   }
 
   void updateList() {
-    if (shoppingProducts != null && userProducts != null) {
-      userProducts!.forEach((product) {
+    if (userProducts != null && defaultProducts != null) {
+      defaultProducts?.forEach((product) {
         product.selected = false;
       });
 
-      shoppingProducts!.forEach((product) {
-        userProducts!.forEach((userProduct) {
-          if (product.id == userProduct.id) {
+      userProducts?.forEach((product) {
+        defaultProducts?.forEach((userProduct) {
+          if (product.name == userProduct.name) {
             userProduct.selected = true;
           }
         });
       });
     }
-
-    notifyListeners();
   }
 
   Future<void> selectProduct(int index, bool selected) async {
-    var product = userProducts![index];
+    var product = defaultProducts![index];
     if (selected) {
-      var productList = ListProduct(
-          id: product.id,
-          category: product.category,
-          name: product.name,
-          price: product.price,
-          quantity: 1,
-          total: product.price,
-          selected: false);
-      shoppingListRepository.saveProduct(productList, shoppingList);
+      var productList = Product(
+//          id: product.id,
+        category: product.category,
+        name: product.name,
+        price: product.price,
+
+        //        quantity: 1,
+        //      total: product.price,
+        //    selected: false
+      );
+      productsRepository.save(productList);
     } else {
-      shoppingListRepository.removeProduct(product.id!, shoppingList);
+      //eliminar de productos del user
+      // productsRepository.remove(product);
     }
   }
 }

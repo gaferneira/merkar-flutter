@@ -16,6 +16,7 @@ class SelectMyProductsViewModel extends ChangeNotifier {
   late ShoppingList shoppingList;
 
   List<Product>? userProducts;
+  List<Product>? filteruserProducts;
   List<ListProduct>? shoppingProducts;
 
   String? error;
@@ -28,6 +29,7 @@ class SelectMyProductsViewModel extends ChangeNotifier {
       userProducts = data;
       error = null;
       updateList();
+      filteruserProducts = userProducts;
     }, onError: (e) {
       error = e;
       notifyListeners();

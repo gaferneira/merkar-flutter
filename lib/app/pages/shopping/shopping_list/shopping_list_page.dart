@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/constants.dart';
@@ -24,6 +25,8 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   final keyFormFinishShoppingList = GlobalKey<FormState>();
   final keyFormPurchaseList = GlobalKey<FormState>();
   ShoppingListViewModel viewModel = serviceLocator<ShoppingListViewModel>();
+  TextEditingController _text_searchController = TextEditingController();
+  final _keySearchFormUnsel = GlobalKey<FormState>();
   int temp_quantity = 1;
   double? temp_price = null;
   String? descriptionShoppingList = "";
@@ -38,6 +41,18 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   var _selectedId;
   String? _selected;
 
+  onItemChangedSelect(String value) {
+    viewModel.selectedList = viewModel.filterselectedList
+        .where((shopping_list) =>
+            shopping_list.name.toLowerCase().contains(value.toLowerCase()))
+        .toList();
+    viewModel.unselectedList = viewModel.filterunselectedList
+        .where((shopping_list) =>
+            shopping_list.name.toLowerCase().contains(value.toLowerCase()))
+        .toList();
+    viewModel.notifyListeners();
+  }
+
   @override
   Widget build(BuildContext context) {
     final shoppingList =
@@ -47,62 +62,118 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
     return ChangeNotifierProvider<ShoppingListViewModel?>.value(
         value: viewModel,
         child: Consumer<ShoppingListViewModel>(
-            builder: (context, model, child) => Scaffold(
-                  appBar: AppBar(
-                    title: Text(
-                        shoppingList.name?.capitalize() ?? ""),
-                    actions: <Widget>[
-                      IconButton(
-                        icon: Icon(Icons.check_circle),
-                        onPressed: () {
-                          _showFinishDialog(shoppingList);
-                        },
-                      ),
-                    ],
-                  ),
-                  body: SingleChildScrollView(
-                    child: Column(
-                      children: <Widget>[
-                        Center(child: Text("No seleccionados")),
-                        (viewModel.unselectedList == null)
-                            ? Text('Loading...')
-                            : _showProductsList(viewModel.unselectedList),
-                        Center(child: Text("Seleccionados")),
-                        (viewModel.selectedList == null)
-                            ? Text('Loading...')
-                            : _showSelectProductsList(viewModel.selectedList),
-                        RaisedButton(
-                            child: Text(Strings.label_finish),
+            builder: (context, model, child) => ElasticIn(
+                  child: Scaffold(
+                    appBar: AppBar(
+                      title: Text(
+                          ConvertString().capitalize('${shoppingList.name}')),
+                      actions: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(Constant.normalspace),
+                          child: Form(
+                            key: _keySearchFormUnsel,
+                            child: SizedBox(
+                              height: 30,
+                              width: 270,
+                              child: TextFormField(
+                                controller: _text_searchController,
+                                decoration: InputDecoration(
+                                  labelText: "Buscar ...",
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  border: OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      const Radius.circular(10.0),
+                                    ),
+                                  ),
+                                ),
+                                onChanged: onItemChangedSelect,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Bounce(
+                          child: IconButton(
+                            icon: Icon(Icons.check_circle),
                             onPressed: () {
                               _showFinishDialog(shoppingList);
-                            }),
+                            },
+                          ),
+                        ),
                       ],
                     ),
-                  ),
-                  floatingActionButton: FloatingActionButton(
-                    onPressed: () =>
-                        {_showListSuggerProducts(context, shoppingList)},
-                    tooltip: Strings.label_tootip_add_products,
-                    child: Icon(Icons.add),
-                  ),
-                  bottomNavigationBar: Container(
-                      height: Constant.bottomBarHeight,
-                      width: MediaQuery.of(context).size.width,
-                      child: BottomNavigationBar(
-                        currentIndex:
-                            0, // this will be set when a new tab is tapped
-                        items: [
-                          BottomNavigationBarItem(
-                            icon: new Icon(Icons.insert_chart),
-                            title: new Text('Total: ${viewModel.totalPrice()}'),
+                    body: SingleChildScrollView(
+                      child: Column(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.all(Constant.normalspace),
+                            child: Center(
+                                child: Text(
+                              "No seleccionados",
+                              style: Constant.resaltText,
+                            )),
                           ),
-                          BottomNavigationBarItem(
-                            icon: new Icon(Icons.shopping_cart),
-                            title: new Text(
-                                'Carrito (${viewModel.totalShopping()})'),
+                          (viewModel.unselectedList == null)
+                              ? Text(
+                                  'Loading...',
+                                  style: Constant.resaltText,
+                                )
+                              : _showProductsList(viewModel.unselectedList),
+                          Padding(
+                            padding: const EdgeInsets.all(Constant.normalspace),
+                            child: Center(
+                                child: Text(
+                              "Seleccionados",
+                              style: Constant.resaltText,
+                            )),
                           ),
+                          (viewModel.selectedList == null)
+                              ? Text('Loading...')
+                              : _showSelectProductsList(viewModel.selectedList),
+                          RaisedButton(
+                              child: Text(Strings.label_finish),
+                              color: Constant.lightColor,
+                              textColor: Constant.textColorButtomLight,
+                              shape: Constant.borderRadius,
+                              onPressed: () {
+                                _showFinishDialog(shoppingList);
+                              }),
                         ],
-                      )),
+                      ),
+                    ),
+                    floatingActionButton: Pulse(
+                      infinite: true,
+                      child: FloatingActionButton(
+                        onPressed: () =>
+                            {_showListSuggerProducts(context, shoppingList)},
+                        tooltip: Strings.label_tootip_add_products,
+                        child: Icon(Icons.add),
+                      ),
+                    ),
+                    bottomNavigationBar: Container(
+                        height: Constant.bottomBarHeight,
+                        width: MediaQuery.of(context).size.width,
+                        child: BottomNavigationBar(
+                          fixedColor: Colors.white70,
+                          unselectedItemColor: Colors.white70,
+                          backgroundColor: Colors.black45,
+                          currentIndex:
+                              1, // this will be set when a new tab is tapped
+                          items: [
+                            BottomNavigationBarItem(
+                              icon: new Icon(Icons.insert_chart),
+                              title:
+                                  Text('Total: \$ ${viewModel.totalPrice()}'),
+                              backgroundColor: Colors.white,
+                            ),
+                            BottomNavigationBarItem(
+                              icon: new Icon(Icons.shopping_cart),
+                              title: new Text(
+                                  'Carrito (\$ ${viewModel.totalShopping()})'),
+                            ),
+                          ],
+                        )),
+                  ),
                 )));
   }
 
@@ -115,6 +186,8 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   Widget _showProductsList(List<ListProduct> listProducts) {
     return ListView.separated(
       scrollDirection: Axis.vertical,
+      //scroll the listView
+      physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       separatorBuilder: (context, index) => Divider(
         color: Colors.black,
@@ -132,7 +205,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
               Row(
                 children: <Widget>[
                   Text(
-                      "${listProducts[index].quantity} = ${listProducts[index].price}"),
+                      "${listProducts[index].quantity} a \$ ${listProducts[index].price}"),
                 ],
               )
             ],
@@ -244,6 +317,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                 onSaved: (value) {
                   this.temp_price = double.parse(value!);
                 },
+                textInputAction: TextInputAction.done,
               ),
               Padding(
                 padding: const EdgeInsets.all(Constant.normalspace),

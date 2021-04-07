@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import '../../../../app/core/constants.dart';
 import '../../../../app/core/strings.dart';
@@ -25,11 +26,13 @@ class _CreateNewProductState extends State<CreateNewProduct> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(Strings.title_new_product),
+    return SlideInDown(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(Strings.title_new_product),
+        ),
+        body: _fromCreateProduct(),
       ),
-      body: _fromCreateProduct(),
     );
   }
 
@@ -42,6 +45,7 @@ class _CreateNewProductState extends State<CreateNewProduct> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             TextFormField(
+              autofocus: true,
               decoration: InputDecoration(labelText: "Nombre"),
               onSaved: (value) {
                 nameProduct = value;
@@ -52,6 +56,7 @@ class _CreateNewProductState extends State<CreateNewProduct> {
                 }
                 return null;
               },
+              textInputAction: TextInputAction.next,
             ),
             TextFormField(
               decoration: InputDecoration(labelText: "Categoría"),
@@ -64,6 +69,7 @@ class _CreateNewProductState extends State<CreateNewProduct> {
                 }
                 return "Escriba una categoría";
               },
+              textInputAction: TextInputAction.next,
             ),
             TextFormField(
               decoration: InputDecoration(labelText: "Precio"),
@@ -77,10 +83,14 @@ class _CreateNewProductState extends State<CreateNewProduct> {
                 }
                 return "Ingrese el Precio";
               },
+              textInputAction: TextInputAction.done,
             ),
             Center(
               child: RaisedButton(
                 child: Text(Strings.label_save),
+                color: Constant.lightColor,
+                textColor: Constant.textColorButtomLight,
+                shape: Constant.borderRadius,
                 onPressed: () {
                   _saveNewProduct();
                 },

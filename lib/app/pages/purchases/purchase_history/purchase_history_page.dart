@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +20,15 @@ class PurchaseHistoryPage extends StatefulWidget {
 class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
   PurchaseHistoryViewModel viewModel =
       serviceLocator<PurchaseHistoryViewModel>();
+  final keyFormPurchaseList = GlobalKey<FormState>();
+  TextEditingController _text_searchController = TextEditingController();
+  onItemChangedSelect(String value) {
+    viewModel.list = viewModel.filterList
+        .where((shopping_list) =>
+            shopping_list.name.toLowerCase().contains(value.toLowerCase()))
+        .toList();
+    viewModel.notifyListeners();
+  }
 
   @override
   void initState() {
@@ -32,25 +42,55 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
     return ChangeNotifierProvider<PurchaseHistoryViewModel>(
       create: (context) => viewModel,
       child: Consumer<PurchaseHistoryViewModel>(
-        builder: (context, model, child) => Scaffold(
-          key: _scaffKey,
-          appBar: AppBar(
-            title: Text('Historial'),
-          ),
-          body: SingleChildScrollView(
-            child: Column(
-
-                //  crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      (viewModel.list == null)
-                          ? Center(child: LoadingWidget())
-                          : purchaseHistoryDisplay(viewModel.list!),
-                    ],
+        builder: (context, model, child) => JelloIn(
+          duration: Duration(seconds: 1),
+          child: Scaffold(
+            key: _scaffKey,
+            appBar: AppBar(
+              title: Text('Historial'),
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.all(Constant.normalspace),
+                  child: Form(
+                    key: keyFormPurchaseList,
+                    child: SizedBox(
+                      height: 30,
+                      width: 270,
+                      child: TextFormField(
+                        controller: _text_searchController,
+                        decoration: InputDecoration(
+                          labelText: "Buscar ...",
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderRadius: const BorderRadius.all(
+                              const Radius.circular(10.0),
+                            ),
+                          ),
+                        ),
+                        onChanged: onItemChangedSelect,
+                      ),
+                    ),
                   ),
-                ]),
+                ),
+                IconButton(icon: Icon(Icons.search), onPressed: () {}),
+              ],
+            ),
+            body: SingleChildScrollView(
+              child: Column(
+
+                  //  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      // crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        (viewModel.list == null)
+                            ? Center(child: LoadingWidget())
+                            : purchaseHistoryDisplay(viewModel.list),
+                      ],
+                    ),
+                  ]),
+            ),
           ),
         ),
       ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:in_app_review/in_app_review.dart';
-
+import 'package:merkar/app/core/constants.dart';
 import '../../../../app/core/strings.dart';
 import '../../../../app/pages/favorites/favorites_list/favorite_list_page.dart';
 import '../../../../app/pages/home/widgets/about_us_page.dart';
@@ -19,13 +19,23 @@ enum DrawerOptions {
   route_favorites,
 }
 
-class DrawerWelcome extends StatelessWidget {
+class DrawerWelcome extends StatefulWidget {
   final String? displayName;
   final String? displayEmail;
 
   DrawerWelcome({this.displayName, this.displayEmail});
 
+  @override
+  _DrawerWelcomeState createState() => _DrawerWelcomeState();
+}
+
+class _DrawerWelcomeState extends State<DrawerWelcome> {
+
   final InAppReview inAppReview = InAppReview.instance;
+  final String? displayName;
+  final String? displayEmail;
+
+  _DrawerWelcomeState({this.displayName, this.displayEmail});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +43,7 @@ class DrawerWelcome extends StatelessWidget {
       child: ListView(
         children: <Widget>[
           DrawerHeader(
-            decoration: BoxDecoration(color: Colors.blue),
+            decoration: BoxDecoration(color: Constant.lightColor),
             child: Stack(
               children: <Widget>[
                 Align(
@@ -64,37 +74,67 @@ class DrawerWelcome extends StatelessWidget {
           ),
           ListTile(
             title: Text(Strings.route_new_list),
-            leading: Icon(Icons.shopping_cart),
-            trailing: Icon(Icons.keyboard_arrow_right),
+            leading: Icon(
+              Icons.shopping_cart,
+              color: Constant.lightColor,
+            ),
+            trailing: Icon(
+              Icons.keyboard_arrow_right,
+              color: Constant.lightColor,
+            ),
             onTap: () => _goToRoute(DrawerOptions.route_new_list, context),
           ),
           Divider(),
           ListTile(
             title: Text(Strings.route_purchase_history),
-            leading: Icon(Icons.history),
-            trailing: Icon(Icons.keyboard_arrow_right),
+            leading: Icon(
+              Icons.history,
+              color: Constant.lightColor,
+            ),
+            trailing: Icon(
+              Icons.keyboard_arrow_right,
+              color: Constant.lightColor,
+            ),
             onTap: () =>
                 _goToRoute(DrawerOptions.route_purchase_history, context),
           ),
           Divider(),
           ListTile(
             title: Text(Strings.route_favorites),
-            leading: Icon(Icons.favorite),
-            trailing: Icon(Icons.keyboard_arrow_right),
+            leading: Icon(
+              Icons.favorite,
+              color: Constant.lightColor,
+            ),
+            trailing: Icon(
+              Icons.keyboard_arrow_right,
+              color: Constant.lightColor,
+            ),
             onTap: () => _goToRoute(DrawerOptions.route_favorites, context),
           ),
           Divider(),
           ListTile(
             title: Text(Strings.route_comments),
-            leading: Icon(Icons.comment),
-            trailing: Icon(Icons.keyboard_arrow_right),
+            leading: Icon(
+              Icons.comment,
+              color: Constant.lightColor,
+            ),
+            trailing: Icon(
+              Icons.keyboard_arrow_right,
+              color: Constant.lightColor,
+            ),
             onTap: () => _goToRoute(DrawerOptions.route_comments, context),
           ),
           Divider(),
           ListTile(
             title: Text(Strings.route_about_us),
-            leading: Icon(Icons.info),
-            trailing: Icon(Icons.keyboard_arrow_right),
+            leading: Icon(
+              Icons.info,
+              color: Constant.lightColor,
+            ),
+            trailing: Icon(
+              Icons.keyboard_arrow_right,
+              color: Constant.lightColor,
+            ),
             onTap: () => _goToRoute(DrawerOptions.route_about_us, context),
           ),
           Divider(),
@@ -102,6 +142,7 @@ class DrawerWelcome extends StatelessWidget {
             leading: Icon(
               Icons.close,
               textDirection: TextDirection.rtl,
+              color: Constant.lightColor,
             ),
             title: Text(Strings.route_close_session),
             onTap: () => _goToRoute(DrawerOptions.route_close_session, context),
@@ -116,11 +157,13 @@ class DrawerWelcome extends StatelessWidget {
     switch (option) {
       case DrawerOptions.route_new_list:
         {
+          Navigator.of(context).pop();
           Navigator.of(context).pushNamed(NewShoppingListPage.routeName);
           break;
         }
       case DrawerOptions.route_favorites:
         {
+          Navigator.of(context).pop();
           Navigator.of(context).pushNamed(FavoriteListPage.routeName);
           break;
         }
@@ -133,10 +176,6 @@ class DrawerWelcome extends StatelessWidget {
       case DrawerOptions.route_comments:
         {
           Navigator.of(context).pop();
-/*
-          if (await inAppReview.isAvailable()) {
-            inAppReview.requestReview();
-          }*/
           CommentePage(context);
           break;
         }

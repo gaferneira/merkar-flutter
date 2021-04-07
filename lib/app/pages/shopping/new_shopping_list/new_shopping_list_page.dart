@@ -30,11 +30,13 @@ class _NewShoppingListPageState extends State<NewShoppingListPage> {
     return ChangeNotifierProvider<NewShoppingListViewModel>.value(
       value: viewModel,
       child: Consumer<NewShoppingListViewModel>(
-        builder: (context, model, child) => Scaffold(
-          appBar: AppBar(
-            title: Text(Strings.label_create_new_list),
+        builder: (context, model, child) => FadeInUp(
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text(Strings.label_create_new_list),
+            ),
+            body: _fromNewList(viewModel, context),
           ),
-          body: _fromNewList(viewModel, context),
         ),
       ),
     );
@@ -49,7 +51,11 @@ class _NewShoppingListPageState extends State<NewShoppingListPage> {
         child: Column(
           children: <Widget>[
             TextFormField(
+              autofocus: true,
               decoration: InputDecoration(labelText: "Nombre de la lista"),
+              onChanged: (value) {
+                _showDefaultSugger(value);
+              },
               onSaved: (value) {
                 nameList = value.toString().capitalize();
               },

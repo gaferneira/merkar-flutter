@@ -1,13 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:merkar/app/core/constants.dart';
+import 'package:merkar/app/core/strings.dart';
+import 'package:merkar/app/pages/favorites/select_my_favorites/select_my_favorites_page.dart';
+import 'package:merkar/data/entities/list_product.dart';
+import 'package:merkar/data/entities/product.dart';
+import 'package:merkar/data/entities/shopping_list.dart';
+import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../app/core/constants.dart';
-import '../../../../app/core/strings.dart';
-import '../../../../app/pages/favorites/select_my_favorites/select_my_favorites_page.dart';
-import '../../../../data/entities/list_product.dart';
-import '../../../../data/entities/shopping_list.dart';
-import '../../../../injection_container.dart';
 import 'favorite_list_view_model.dart';
 
 enum SingingCharacter { delete, reset, nothing }
@@ -22,9 +23,12 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
   final keyFormEditProduct = GlobalKey<FormState>();
   final keyFormFinishShoppingList = GlobalKey<FormState>();
   final keyFormPurchaseList = GlobalKey<FormState>();
+  TextEditingController _search_textController = TextEditingController();
+  final _keySearchP = GlobalKey<FormState>();
+
   FavoriteListViewModel viewModel = serviceLocator<FavoriteListViewModel>();
   int temp_quantity = 1;
-  double? temp_price = null;
+  double? temp_price;
   String? descriptionShoppingList = "";
   List<String> _textRadioButton = [
     "Eliminar Lista",
@@ -50,10 +54,35 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
                   appBar: AppBar(
                     title: Text(Strings.route_favorites),
                     actions: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(Constant.normalspace),
+                        child: Form(
+                          key: _keySearchP,
+                          child: SizedBox(
+                            height: 30,
+                            width: 270,
+                            child: TextField(
+                              controller: _search_textController,
+                              decoration: InputDecoration(
+                                labelText: 'Buscar Actual...',
+                                fillColor: Colors.white,
+                                filled: true,
+                                border: OutlineInputBorder(
+                                  borderRadius: const BorderRadius.all(
+                                    const Radius.circular(10.0),
+                                  ),
+                                ),
+                              ),
+                              textDirection: TextDirection.ltr,
+                              onChanged: onItemChanged,
+                            ),
+                          ),
+                        ),
+                      ),
                       IconButton(
-                        icon: Icon(Icons.check_circle),
+                        icon: Icon(Icons.search),
                         onPressed: () {
-                          _showFinishDialog(shoppingList);
+                          //_showFinishDialog(shoppingList);
                         },
                       ),
                     ],
@@ -61,35 +90,41 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
                   body: SingleChildScrollView(
                     child: Column(
                       children: <Widget>[
-                        Center(child: Text("No seleccionados")),
-                        /*(viewModel.unselectedList == null)
+                        (viewModel.userProducts == null)
                             ? Text('Loading...')
-                            : _showProductsList(viewModel.unselectedList),
-                        */
-                        RaisedButton(
-                            child: Text(Strings.label_finish),
-                            onPressed: () {
-                              _showFinishDialog(shoppingList);
-                            }),
+                            : _showProductsList(viewModel.userProducts),
                       ],
                     ),
                   ),
                   floatingActionButton: FloatingActionButton(
-                    onPressed: () =>
-                        {_showListSuggerProducts(context, shoppingList)},
+                    onPressed: () => {_showListSuggerProducts(context)},
                     tooltip: Strings.label_tootip_add_products,
                     child: Icon(Icons.add),
                   ),
                 )));
   }
 
-  _showListSuggerProducts(
-      BuildContext context, ShoppingList? shoppingList) async {
-    Navigator.of(context)
-        .pushNamed(SelectMyFavoritesPage.routeName, arguments: shoppingList);
+  onItemChanged(String value) {
+    viewModel.userProducts = viewModel.filterUserProducts
+        .where((product) =>
+            product.name.toLowerCase().contains(value.toLowerCase()))
+        .toList();
+    viewModel.notifyListeners();
   }
 
-  Widget _showProductsList(List<ListProduct> listProducts) {
+  onItemChanged(String value) {
+    viewModel.userProducts = viewModel.filterUserProducts
+        .where((product) =>
+        product.name.toLowerCase().contains(value.toLowerCase()))
+        .toList();
+    viewModel.notifyListeners();
+  }
+
+  _showListSuggerProducts(BuildContext context) async {
+    Navigator.of(context).pushNamed(SelectMyFavoritesPage.routeName);
+  }
+
+  Widget _showProductsList(List<Product> listProducts) {
     return ListView.separated(
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
@@ -97,8 +132,9 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
         color: Colors.black,
       ),
       itemCount: listProducts.length,
+      physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
-        return CheckboxListTile(
+        return ListTile(
           title: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,28 +142,9 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
               Text(
                 "${listProducts[index].name}",
               ),
-              Row(
-                children: <Widget>[
-                  Text(
-                      "${listProducts[index].quantity} = ${listProducts[index].price}"),
-                ],
-              )
+              Text("\$ ${listProducts[index].price}"),
             ],
           ),
-          controlAffinity: ListTileControlAffinity.leading,
-          onChanged: (bool? value) {
-            // viewModel.selectProduct(index);
-          },
-          secondary: IconButton(
-            icon: Icon(Icons.edit),
-            tooltip: Strings.label_edit,
-            onPressed: () {
-              _showEditProduct(listProducts[index], context);
-            },
-          ),
-          value: listProducts[index].selected,
-          activeColor: Colors.cyan,
-          checkColor: Colors.green,
         );
       },
     );

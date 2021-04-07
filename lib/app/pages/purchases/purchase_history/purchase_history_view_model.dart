@@ -4,7 +4,7 @@ import '../../../../data/repositories/purchases_repository.dart';
 
 class PurchaseHistoryViewModel extends ChangeNotifier {
   final PurchasesRepository purchaseHistoryRepository;
-
+  List<Purchase>? filterList;
   PurchaseHistoryViewModel({required this.purchaseHistoryRepository});
 
   List<Purchase>? list;
@@ -14,6 +14,7 @@ class PurchaseHistoryViewModel extends ChangeNotifier {
     purchaseHistoryRepository.fetchItems().listen((data) {
       list = data;
       error = null;
+      filterList = list;
       notifyListeners();
     }, onError: (e) {
       error = e;

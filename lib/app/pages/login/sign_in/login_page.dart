@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +20,7 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _key = GlobalKey<ScaffoldState>();
 
-  final LoginViewModel viewModel = serviceLocator<LoginViewModel>();
+  final viewModel = serviceLocator<LoginViewModel>();
 
   @override
   void initState() {
@@ -33,46 +34,51 @@ class _LoginPageState extends State<LoginPage> {
     return ChangeNotifierProvider<LoginViewModel>.value(
       value: viewModel,
       child: Consumer<LoginViewModel>(
-        builder: (context, model, child) => Scaffold(
-          key: _key,
-          appBar: AppBar(
-            title: Text("Sign in"),
+        builder: (context, model, child) => BounceInDown(
+          duration: Duration(
+            seconds: 1,
           ),
-          body: Form(
-            key: _formKey,
-            child: Center(
-              child: ListView(
-                shrinkWrap: true,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: TextFormField(
-                      controller: _email,
-                      validator: (value) =>
-                          (value!.isEmpty) ? "Please Enter Email" : null,
-                      style: style,
-                      decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.email),
-                          labelText: "Email",
-                          border: OutlineInputBorder()),
+          child: Scaffold(
+            key: _key,
+            appBar: AppBar(
+              title: Text(Strings.tittle_sing_in),
+            ),
+            body: Form(
+              key: _formKey,
+              child: Center(
+                child: ListView(
+                  shrinkWrap: true,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: TextFormField(
+                        controller: _email,
+                        validator: (value) =>
+                            (value.isEmpty) ? "Ingresa tu email" : null,
+                        style: style,
+                        decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.email),
+                            labelText: "Email",
+                            border: OutlineInputBorder()),
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: TextFormField(
-                      controller: _password,
-                      validator: (value) =>
-                          (value!.isEmpty) ? "Please Enter Password" : null,
-                      style: style,
-                      decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.lock),
-                          labelText: "Password",
-                          border: OutlineInputBorder()),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: TextFormField(
+                        controller: _password,
+                        validator: (value) =>
+                            (value.isEmpty) ? "Ingresa tu Contraseña" : null,
+                        style: style,
+                        decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.lock),
+                            labelText: "Contraseña",
+                            border: OutlineInputBorder()),
+                      ),
                     ),
-                  ),
-                  _createLoginButton(),
-                  _createRegisterButton(),
-                ],
+                    _createLoginButton(),
+                    _createRegisterButton(),
+                  ],
+                ),
               ),
             ),
           ),
@@ -104,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                   }
                 },
                 child: Text(
-                  "Sign In",
+                  Strings.label_sign_in,
                   style: style.copyWith(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
@@ -124,7 +130,11 @@ class _LoginPageState extends State<LoginPage> {
     return Padding(
       padding: const EdgeInsets.all(Constant.normalspace),
       child: RaisedButton(
-        child: Text(Strings.label_register),
+        child: Text(
+          Strings.label_register,
+          style:
+              style.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
         onPressed: () {
           _goToRegister();
         },
