@@ -1,10 +1,11 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
-import 'package:merkar/app/core/constants.dart';
-import 'package:merkar/app/core/strings.dart';
 
-String _message = "";
+import '../../../../app/core/constants.dart';
+import '../../../../app/core/strings.dart';
+
+String? _message = "";
 Future<void> CommentePage(BuildContext context) {
   final keyFormComments = GlobalKey<FormState>();
 
@@ -75,22 +76,16 @@ Future<void> CommentePage(BuildContext context) {
 Future<void> _sendEmail(GlobalKey<FormState> keyForm) async {
   try {
 //    print(keyForm.currentState.validate());
-    print("Enviar mensaje Email: ${_message}");
     final Email email = Email(
-      body: 'Merkar Comment: ${_message}',
+      body: 'Merkar Comment: $_message',
       subject: 'Sugerencia',
       recipients: ['stip.suarez@gmail.com', 'gabrielfneira@gmail.com'],
-      cc: null,
-      bcc: null,
       attachmentPaths: null,
       isHTML: false,
     );
 
     await FlutterEmailSender.send(email);
 
-    print('success');
-
-    return "Error";
   } catch (error) {
     print('Error: ${error}');
   }

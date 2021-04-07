@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
+
 import 'package:merkar/data/entities/product.dart';
-import 'package:merkar/data/repositories/products_repository.dart';
+import '../../../../data/repositories/shopping_lists_repository.dart';
 
 class FavoriteListViewModel extends ChangeNotifier {
-  final ProductsRepository repository;
+  final ShoppingListsRepository repository;
 
-  FavoriteListViewModel({
-    @required this.repository,
-  });
+  FavoriteListViewModel({required this.repository,});
 
-  List<Product> userProducts;
-  List<Product> filterUserProducts;
-  String error;
+  late List<Product> userProducts;
+  late List<Product> filterUserProducts;
+  String? error;
 
   Future<void> loadData() async {
     repository.fetchItems().listen((data) {

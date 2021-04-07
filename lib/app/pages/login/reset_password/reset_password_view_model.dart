@@ -1,14 +1,14 @@
 import 'package:flutter/widgets.dart';
-import 'package:merkar/data/repositories/login_repository.dart';
+import '../../../../data/repositories/login_repository.dart';
 
 class ResetPasswordViewModel with ChangeNotifier {
   final LoginRepository repository;
 
   var loading = false;
 
-  String error;
+  String? error;
 
-  ResetPasswordViewModel({@required this.repository});
+  ResetPasswordViewModel({required this.repository});
 
   Future<void> recoverPassword(String email, BuildContext context) async {
     try {
@@ -22,7 +22,6 @@ class ResetPasswordViewModel with ChangeNotifier {
       error = e.toString();
       loading = false;
       notifyListeners();
-      return false;
     }
   }
 }

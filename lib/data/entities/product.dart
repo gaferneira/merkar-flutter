@@ -1,14 +1,14 @@
 class Product {
-  String defaultId;
-  String id;
-  String path;
-  final String name;
+  String? defaultId;
+  String? id;
+  late String path;
+  final String? name;
   final String price;
-  final String category;
+  final String? category;
 
   bool selected = false;
 
-  Product({this.name, this.price, this.category}) : super();
+  Product({this.name, required this.price, this.category}) : super();
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
         name: json["name"],

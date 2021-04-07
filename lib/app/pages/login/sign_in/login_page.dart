@@ -1,11 +1,11 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:merkar/app/core/constants.dart';
-import 'package:merkar/app/core/strings.dart';
-import 'package:merkar/app/pages/login/sign_in/login_view_model.dart';
-import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../app/core/constants.dart';
+import '../../../../app/core/strings.dart';
+import '../../../../app/pages/login/sign_in/login_view_model.dart';
+import '../../../../injection_container.dart';
 import '../register/register_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -15,8 +15,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
-  TextEditingController _email;
-  TextEditingController _password;
+  TextEditingController? _email;
+  TextEditingController? _password;
   final _formKey = GlobalKey<FormState>();
   final _key = GlobalKey<ScaffoldState>();
 
@@ -89,8 +89,8 @@ class _LoginPageState extends State<LoginPage> {
 
   _createLoginButton() {
     if (viewModel.error != null) {
-      _key.currentState.showSnackBar(SnackBar(
-        content: Text(viewModel.error),
+      _key.currentState!.showSnackBar(SnackBar(
+        content: Text(viewModel.error ?? ""),
       ));
       viewModel.error = null;
     }
@@ -104,9 +104,9 @@ class _LoginPageState extends State<LoginPage> {
               color: Colors.red,
               child: MaterialButton(
                 onPressed: () async {
-                  if (_formKey.currentState.validate()) {
-                    _formKey.currentState.save();
-                    viewModel.signIn(_email.text, _password.text);
+                  if (_formKey.currentState!.validate()) {
+                    _formKey.currentState!.save();
+                    viewModel.signIn(_email!.text, _password!.text);
                   }
                 },
                 child: Text(
@@ -121,8 +121,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void dispose() {
-    _email.dispose();
-    _password.dispose();
+    _email!.dispose();
+    _password!.dispose();
     super.dispose();
   }
 

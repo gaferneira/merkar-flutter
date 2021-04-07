@@ -11,14 +11,14 @@ class ShoppingListViewModel extends ChangeNotifier {
   final PurchasesRepository purchasesRepository;
 
   ShoppingListViewModel(
-      {@required this.repository, @required this.purchasesRepository});
+      {required this.repository, required this.purchasesRepository});
 
-  ShoppingList shoppingList;
-  List<ListProduct> filterunselectedList;
-  List<ListProduct> filterselectedList;
-  List<ListProduct> unselectedList;
-  List<ListProduct> selectedList;
-  String error;
+  late ShoppingList shoppingList;
+  List<ListProduct>? filterunselectedList;
+  List<ListProduct>? filterselectedList;
+  late List<ListProduct> unselectedList;
+  late List<ListProduct> selectedList;
+  String? error;
 
   Future<void> loadData(ShoppingList shoppingList) async {
     this.shoppingList = shoppingList;
@@ -34,11 +34,11 @@ class ShoppingListViewModel extends ChangeNotifier {
   }
 
   void updateList(List<ListProduct> list) {
-    unselectedList = List<ListProduct>();
-    selectedList = List<ListProduct>();
+    unselectedList = <ListProduct>[];
+    selectedList = <ListProduct>[];
 
     list.forEach((product) {
-      if (product.selected) {
+      if (product.selected!) {
         selectedList.add(product);
       } else {
         unselectedList.add(product);
@@ -62,7 +62,7 @@ class ShoppingListViewModel extends ChangeNotifier {
     repository.saveProduct(product, shoppingList);
   }
 
-  Future<void> updateProduct(ListProduct product, String oldTotal) async {
+  Future<void> updateProduct(ListProduct product, String? oldTotal) async {
     await repository.saveProduct(product, shoppingList);
   }
 
@@ -74,7 +74,7 @@ class ShoppingListViewModel extends ChangeNotifier {
 
   String totalShopping() => _calculateTotalPrice(selectedList).toString();
 
-  double _calculateTotalPrice(List<ListProduct> list) {
+  double _calculateTotalPrice(List<ListProduct>? list) {
     if (list != null && list.isNotEmpty) {
       final total = list
           .map((item) => item.quantity * double.parse(item.price))

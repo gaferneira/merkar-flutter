@@ -1,9 +1,9 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:merkar/app/core/constants.dart';
-import 'package:merkar/app/core/strings.dart';
-import 'package:merkar/data/entities/product.dart';
-import 'package:merkar/injection_container.dart';
+import '../../../../app/core/constants.dart';
+import '../../../../app/core/strings.dart';
+import '../../../../data/entities/product.dart';
+import '../../../../injection_container.dart';
 
 import 'create_new_product_view_model.dart';
 
@@ -20,9 +20,9 @@ class _CreateNewProductState extends State<CreateNewProduct> {
   CreateNewProductsViewModel viewModel =
       serviceLocator<CreateNewProductsViewModel>();
 
-  String nameProduct;
-  String nameCategory;
-  String price;
+  String? nameProduct;
+  String? nameCategory;
+  String? price;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class _CreateNewProductState extends State<CreateNewProduct> {
                 nameProduct = value;
               },
               validator: (value) {
-                if (value.isEmpty) {
+                if (value!.isEmpty) {
                   return "Llene este campo";
                 }
                 return null;
@@ -64,10 +64,10 @@ class _CreateNewProductState extends State<CreateNewProduct> {
                 nameCategory = value;
               },
               validator: (value) {
-                if (value.isEmpty) {
-                  return "Escriba una categoría";
+                if (value?.isNotEmpty == false) {
+                  return null;
                 }
-                return null;
+                return "Escriba una categoría";
               },
               textInputAction: TextInputAction.next,
             ),
@@ -78,10 +78,10 @@ class _CreateNewProductState extends State<CreateNewProduct> {
                 price = value;
               },
               validator: (value) {
-                if (value.isEmpty) {
-                  return "Ingrese el Precio";
+                if (value?.isNotEmpty == false) {
+                  return null;
                 }
-                return null;
+                return "Ingrese el Precio";
               },
               textInputAction: TextInputAction.done,
             ),
@@ -103,8 +103,8 @@ class _CreateNewProductState extends State<CreateNewProduct> {
   }
 
   void _saveNewProduct() {
-    if (keyNewProduct.currentState.validate()) {
-      keyNewProduct.currentState.save();
+    if (keyNewProduct.currentState?.validate() == true) {
+      keyNewProduct.currentState!.save();
       Product product = new Product(
           category: nameCategory, name: nameProduct, price: price.toString());
       //Implement save

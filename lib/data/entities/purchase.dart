@@ -1,10 +1,10 @@
 class Purchase {
-  String id;
-  String path;
-  final String name;
-  final String date;
-  final String total;
-  final String totalProducts;
+  String? id;
+  late String path;
+  final String? name;
+  final String? date;
+  final String? total;
+  final String? totalProducts;
 
   Purchase({this.name, this.date, this.total, this.totalProducts, this.id})
       : super();

@@ -1,11 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
-import 'package:merkar/data/entities/error/failures.dart';
-import 'package:merkar/data/entities/list_product.dart';
-import 'package:merkar/data/entities/purchase.dart';
-import 'package:merkar/data/repositories/purchases_repository.dart';
-import 'package:meta/meta.dart';
 
+import '../../data/entities/error/failures.dart';
+import '../../data/entities/list_product.dart';
+import '../../data/entities/purchase.dart';
+import '../../data/repositories/purchases_repository.dart';
 import '../remote/firestore_data_source.dart';
 import '../utils/network/network_info.dart';
 
@@ -17,8 +16,8 @@ class PurchasesRepositoryImpl implements PurchasesRepository {
   final FirestoreDataSource firestoreDataSource;
 
   PurchasesRepositoryImpl({
-    @required this.networkInfo,
-    @required this.firestoreDataSource,
+    required this.networkInfo,
+    required this.firestoreDataSource,
   });
 
   @override
@@ -65,7 +64,7 @@ class PurchasesRepositoryImpl implements PurchasesRepository {
         .snapshots()
         .map((querySnapshot) => querySnapshot.docs
             .map(
-                (documentSnapshot) => Purchase.fromJson(documentSnapshot.data())
+                (documentSnapshot) => Purchase.fromJson(documentSnapshot.data()!)
                   ..id = documentSnapshot.id
                   ..path = documentSnapshot.reference.path)
             .toList());
@@ -94,14 +93,14 @@ class PurchasesRepositoryImpl implements PurchasesRepository {
   }
 
   @override
-  Stream<List<ListProduct>> fetchProducts(Purchase list) {
+  Stream<List<ListProduct>> fetchProducts(Purchase item) {
     return firestoreDataSource.db
-        .doc(list.path)
+        .doc(item.path)
         .collection(COLLECTION_PRODUCTS)
         .snapshots()
         .map((querySnapshot) => querySnapshot.docs
             .map((documentSnapshot) =>
-                ListProduct.fromJson(documentSnapshot.data())
+                ListProduct.fromJson(documentSnapshot.data()!)
                   ..id = documentSnapshot.id
                   ..path = documentSnapshot.reference.path)
             .toList());

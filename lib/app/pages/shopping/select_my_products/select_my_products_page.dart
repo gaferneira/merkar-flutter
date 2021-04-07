@@ -1,7 +1,5 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:merkar/app/core/constants.dart';
 import 'package:merkar/app/core/strings.dart';
 import 'package:merkar/app/pages/products/new_product/create_new_product.dart';
 import 'package:merkar/data/entities/product.dart';
@@ -23,7 +21,7 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
       serviceLocator<SelectMyProductsViewModel>();
   TextEditingController _search_textController = TextEditingController();
   final _keySearchP = GlobalKey<FormState>();
-  ShoppingList shoppingList;
+  late ShoppingList shoppingList;
 
   onItemChanged(String value) {
     viewModel.userProducts = viewModel.filteruserProducts
@@ -35,10 +33,10 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
 
   @override
   Widget build(BuildContext context) {
-    shoppingList = ModalRoute.of(context).settings.arguments;
+    shoppingList = ModalRoute.of(context)!.settings.arguments as ShoppingList;
     viewModel.loadData(shoppingList);
 
-    return ChangeNotifierProvider<SelectMyProductsViewModel>.value(
+    return ChangeNotifierProvider<SelectMyProductsViewModel?>.value(
         value: viewModel,
         child: Consumer<SelectMyProductsViewModel>(
             builder: (context, model, child) => ElasticInDown(
@@ -94,22 +92,20 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
                 )));
   }
 
-  Widget _showProductsList(List<Product> userProducts) {
+  Widget _showProductsList(List<Product>? userProducts) {
     return ListView.separated(
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         separatorBuilder: (context, index) => Divider(
               color: Colors.black,
             ),
-        itemCount: userProducts.length,
-        //scroll the listView
-        physics: const NeverScrollableScrollPhysics(),
+        itemCount: userProducts?.length ?? 0,
         itemBuilder: (context, index) {
           return CheckboxListTile(
-            title: Text("${userProducts[index].name}"),
+            title: Text("${userProducts![index].name}"),
             controlAffinity: ListTileControlAffinity.leading,
-            onChanged: (bool value) {
-              viewModel.selectProduct(index, value);
+            onChanged: (bool? value) {
+              viewModel.selectProduct(index, value!);
             },
             value: userProducts[index].selected,
             activeColor: Colors.cyan,

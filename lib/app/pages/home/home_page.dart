@@ -2,11 +2,9 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/constants.dart';
-import 'package:merkar/app/core/provider_theme.dart';
-import 'package:merkar/app/core/strings.dart';
-import 'package:merkar/app/theme/app_state_notifier.dart';
-import 'package:merkar/app/widgets/widgets.dart';
-import 'package:merkar/injection_container.dart';
+import '../../../app/core/strings.dart';
+import '../../../app/widgets/widgets.dart';
+import '../../../injection_container.dart';
 import 'package:provider/provider.dart';
 
 import '../shopping//new_shopping_list/new_shopping_list_page.dart';
@@ -16,7 +14,6 @@ import 'widgets/shopping_lists_display.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = '/home';
-
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -25,8 +22,7 @@ class _HomePageState extends State<HomePage> {
   HomePageViewModel viewModel = serviceLocator<HomePageViewModel>();
   bool _light = true;
   final _key_search = GlobalKey<FormState>();
-  TextEditingController _search_textController =
-      TextEditingController(); //controller search_text
+  TextEditingController _search_textController = TextEditingController(); //controller search_text
   @override
   void initState() {
     viewModel.loadData();
@@ -39,13 +35,11 @@ class _HomePageState extends State<HomePage> {
 
   onItemChanged(String value) {
     setState(() {
-      viewModel.list = viewModel.filter_list
-          .where((shopping_list) =>
+      viewModel.list = viewModel.filter_list.where((shopping_list) =>
               shopping_list.name.toLowerCase().contains(value.toLowerCase()))
           .toList();
     });
   }
-
   @override
   Widget build(BuildContext context) {
     //var providerTheme = Provider.of<ProviderTheme>(context);

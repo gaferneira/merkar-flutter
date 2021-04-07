@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:merkar/app/core/converString.dart';
-import 'package:merkar/app/core/strings.dart';
-import 'package:merkar/data/entities/shopping_list.dart';
 
+import '../../../../app/core/strings.dart';
+import '../../../../data/entities/shopping_list.dart';
+import '../../../core/extensions/extended_string.dart';
 import '../../shopping/shopping_list/shopping_list_page.dart';
 
 Widget shoppingListsDisplay(List<ShoppingList> list) {
@@ -26,7 +26,7 @@ Widget listProducts(List<ShoppingList> list) {
     itemCount: list.length,
     itemBuilder: (context, index) {
       return ListTile(
-        title: Text(ConvertString().capitalize('${list[index].name}')),
+        title: Text(list[index].name!.capitalize()),
         trailing: Icon(Icons.arrow_right),
         onTap: () {
           print(list[index].name);

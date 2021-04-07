@@ -1,14 +1,14 @@
 import 'package:flutter/widgets.dart';
-import 'package:merkar/data/repositories/login_repository.dart';
+import '../../../../data/repositories/login_repository.dart';
 
 class LoginViewModel with ChangeNotifier {
   final LoginRepository repository;
 
   var loading = false;
 
-  String error;
+  String? error;
 
-  LoginViewModel({@required this.repository});
+  LoginViewModel({required this.repository});
 
   Future<void> signIn(String email, String password) async {
     try {
@@ -26,7 +26,6 @@ class LoginViewModel with ChangeNotifier {
       error = e.toString();
       loading = false;
       notifyListeners();
-      return false;
     }
   }
 

@@ -2,7 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/constants.dart';
-import 'package:merkar/app/core/converString.dart';
+import 'package:merkar/app/core/extensions/extended_string.dart';
 import 'package:merkar/app/core/strings.dart';
 import 'package:merkar/data/entities/list_product.dart';
 import 'package:merkar/data/entities/shopping_list.dart';
@@ -27,10 +27,9 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   ShoppingListViewModel viewModel = serviceLocator<ShoppingListViewModel>();
   TextEditingController _text_searchController = TextEditingController();
   final _keySearchFormUnsel = GlobalKey<FormState>();
-
-  int temp_quantity = null;
-  double temp_price = null;
-  String descriptionShoppingList = "";
+  int temp_quantity = 1;
+  double? temp_price = null;
+  String? descriptionShoppingList = "";
   List<String> _textRadioButton = [
     "Eliminar Lista",
     "Restaurar lista",
@@ -40,7 +39,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   SingingCharacter _character = SingingCharacter.nothing;
 
   var _selectedId;
-  String _selected;
+  String? _selected;
 
   onItemChangedSelect(String value) {
     viewModel.selectedList = viewModel.filterselectedList
@@ -57,10 +56,10 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   @override
   Widget build(BuildContext context) {
     final shoppingList =
-        ModalRoute.of(context).settings.arguments as ShoppingList;
+        ModalRoute.of(context)!.settings.arguments as ShoppingList;
     viewModel.loadData(shoppingList);
 
-    return ChangeNotifierProvider<ShoppingListViewModel>.value(
+    return ChangeNotifierProvider<ShoppingListViewModel?>.value(
         value: viewModel,
         child: Consumer<ShoppingListViewModel>(
             builder: (context, model, child) => ElasticIn(
@@ -179,7 +178,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   }
 
   _showListSuggerProducts(
-      BuildContext context, ShoppingList shoppingList) async {
+      BuildContext context, ShoppingList? shoppingList) async {
     Navigator.of(context)
         .pushNamed(SelectMyProductsPage.routeName, arguments: shoppingList);
   }
@@ -212,7 +211,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
             ],
           ),
           controlAffinity: ListTileControlAffinity.leading,
-          onChanged: (bool value) {
+          onChanged: (bool? value) {
             viewModel.selectProduct(index);
           },
           secondary: IconButton(
@@ -238,8 +237,6 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
         color: Colors.black,
       ),
       itemCount: listProducts.length,
-      //scroll the listView
-      physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         return CheckboxListTile(
           title: Column(
@@ -248,20 +245,18 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
             children: <Widget>[
               Text(
                 "${listProducts[index].name}",
-                style: Constant.boldText,
               ),
               Row(
                 children: <Widget>[
                   Text(
-                      "${listProducts[index].quantity} X ${listProducts[index].price} =  "
-                      "\$ ${listProducts[index].quantity * double.parse(listProducts[index].price)}"),
+                      "${listProducts[index].quantity} = ${listProducts[index].price}"),
                 ],
               )
             ],
           ),
           controlAffinity: ListTileControlAffinity.leading,
-          onChanged: (bool value) {
-            if (value)
+          onChanged: (bool? value) {
+            if (value == true)
               viewModel.selectProduct(index);
             else
               viewModel.unselectProduct(index);
@@ -296,33 +291,31 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
           child: Column(
             children: <Widget>[
               TextFormField(
-                autofocus: true,
                 initialValue: "${product.quantity}",
                 decoration: InputDecoration(labelText: Strings.label_quantity),
                 keyboardType: TextInputType.number,
                 validator: (value) {
-                  if (value.isEmpty) {
-                    return "Ingrese la cantidad";
-                  } else
+                  if (value?.isNotEmpty == true) {
                     return null;
+                  } else
+                    return "Ingrese la cantidad";
                 },
                 onSaved: (value) {
-                  this.temp_quantity = int.parse(value);
+                  this.temp_quantity = int.parse(value!);
                 },
-                textInputAction: TextInputAction.next,
               ),
               TextFormField(
                 initialValue: "${product.price}",
                 decoration: InputDecoration(labelText: Strings.label_price),
                 keyboardType: TextInputType.number,
                 validator: (value) {
-                  if (value.isEmpty) {
-                    return "Ingrese un valor";
-                  } else
+                  if (value?.isNotEmpty == true) {
                     return null;
+                  } else
+                    return "Ingrese un valor";
                 },
                 onSaved: (value) {
-                  this.temp_price = double.parse(value);
+                  this.temp_price = double.parse(value!);
                 },
                 textInputAction: TextInputAction.done,
               ),
@@ -349,12 +342,12 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   }
 
   void _saveEditProduct(ListProduct product) {
-    if (keyFormEditProduct.currentState.validate()) {
-      keyFormEditProduct.currentState.save();
-      String oldTotal = product.total;
+    if (keyFormEditProduct.currentState?.validate() == true) {
+      keyFormEditProduct.currentState!.save();
+      String? oldTotal = product.total;
       product.quantity = this.temp_quantity;
       product.price = this.temp_price.toString();
-      product.total = (this.temp_price * this.temp_quantity).toString();
+      product.total = (this.temp_price! * this.temp_quantity).toString();
       viewModel.updateProduct(product, oldTotal);
     }
   }
@@ -367,11 +360,12 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
           leading: Radio(
             value: SingingCharacter.delete,
             groupValue: _character,
-            onChanged: (SingingCharacter value) {
-              setState(() {
-                _character = value;
-                print(_character);
-              });
+            onChanged: (SingingCharacter? value) {
+              if (value != null) {
+                setState(() {
+                  _character = value;
+                });
+              }
             },
           ),
         ),
@@ -380,11 +374,13 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
           leading: Radio(
             value: SingingCharacter.reset,
             groupValue: _character,
-            onChanged: (SingingCharacter value) {
-              setState(() {
-                _character = value;
-                print(_character);
-              });
+            onChanged: (SingingCharacter? value) {
+              if (value != null) {
+                setState(() {
+                  _character = value;
+                  print(_character);
+                });
+              }
             },
           ),
         ),
@@ -393,11 +389,13 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
           leading: Radio(
             value: SingingCharacter.nothing,
             groupValue: _character,
-            onChanged: (SingingCharacter value) {
-              setState(() {
-                _character = value;
-                print(_character);
-              });
+            onChanged: (SingingCharacter? value) {
+              if (value != null) {
+                setState(() {
+                  _character = value;
+                  print(_character);
+                });
+              }
             },
           ),
         ),
@@ -405,7 +403,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
     );
   }
 
-  void _showFinishDialog(ShoppingList shoppingList) {
+  void _showFinishDialog(ShoppingList? shoppingList) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -422,7 +420,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       TextFormField(
-                        initialValue: shoppingList.name +
+                        initialValue: shoppingList!.name! +
                             " " +
                             DateTime.now().year.toString() +
                             "/" +
@@ -433,10 +431,10 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                             labelText: Strings.label_description),
                         keyboardType: TextInputType.text,
                         validator: (value) {
-                          if (value.isEmpty) {
-                            return "Llene la Descripción";
-                          } else
+                          if (value?.isNotEmpty == true) {
                             return null;
+                          } else
+                            return "Llene la Descripción";
                         },
                         onSaved: (value) {
                           this.descriptionShoppingList = value;
@@ -447,11 +445,13 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                         leading: Radio(
                           value: SingingCharacter.delete,
                           groupValue: _character,
-                          onChanged: (SingingCharacter value) {
-                            setState(() {
-                              _character = value;
-                              print(_character);
-                            });
+                          onChanged: (SingingCharacter? value) {
+                            if (value != null) {
+                              setState(() {
+                                _character = value;
+                                print(_character);
+                              });
+                            }
                           },
                         ),
                       ),
@@ -460,11 +460,13 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                         leading: Radio(
                           value: SingingCharacter.reset,
                           groupValue: _character,
-                          onChanged: (SingingCharacter value) {
-                            setState(() {
-                              _character = value;
-                              print(_character);
-                            });
+                          onChanged: (SingingCharacter? value) {
+                            if (value != null) {
+                              setState(() {
+                                _character = value;
+                                print(_character);
+                              });
+                            }
                           },
                         ),
                       ),
@@ -473,11 +475,13 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                         leading: Radio(
                           value: SingingCharacter.nothing,
                           groupValue: _character,
-                          onChanged: (SingingCharacter value) {
-                            setState(() {
-                              _character = value;
-                              print(_character);
-                            });
+                          onChanged: (SingingCharacter? value) {
+                            if (value != null) {
+                              setState(() {
+                                _character = value;
+                                print(_character);
+                              });
+                            }
                           },
                         ),
                       ),
@@ -500,9 +504,9 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
     );
   }
 
-  void _actionOnSaveList(ShoppingList shoppingList) {
-    if (keyFormPurchaseList.currentState.validate()) {
-      keyFormPurchaseList.currentState.save();
+  void _actionOnSaveList(ShoppingList? shoppingList) {
+    if (keyFormPurchaseList.currentState?.validate() == true) {
+      keyFormPurchaseList.currentState!.save();
       viewModel.finishShopping(
           context, _character, descriptionShoppingList.toString());
     }

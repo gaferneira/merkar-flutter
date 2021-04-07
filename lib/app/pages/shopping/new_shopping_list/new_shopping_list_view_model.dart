@@ -9,9 +9,9 @@ import '../shopping_list/shopping_list_page.dart';
 class NewShoppingListViewModel extends ChangeNotifier {
   final ShoppingListsRepository repository;
 
-  NewShoppingListViewModel({@required this.repository});
+  NewShoppingListViewModel({required this.repository});
 
-  void saveList(String name, BuildContext context) async {
+  void saveList(String? name, BuildContext context) async {
     final result = await repository.save(ShoppingList(name: name));
 
     result.fold(

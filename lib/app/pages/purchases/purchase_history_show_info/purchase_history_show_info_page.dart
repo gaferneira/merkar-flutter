@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:merkar/data/entities/list_product.dart';
-import 'package:merkar/data/entities/purchase.dart';
-import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../data/entities/list_product.dart';
+import '../../../../data/entities/purchase.dart';
+import '../../../../injection_container.dart';
 import 'purchase_history_show_info_view_model.dart';
 
 class PurchaseHistoryShowInfoPage extends StatefulWidget {
@@ -15,21 +15,21 @@ class PurchaseHistoryShowInfoPage extends StatefulWidget {
 
 class _PurchaseHistoryShowInfoPageState
     extends State<PurchaseHistoryShowInfoPage> {
-  List<ListProduct> products_pruchase;
+  List<ListProduct>? productsPurchase;
   PurchaseHistoryShowInfoViewModel viewModel =
       serviceLocator<PurchaseHistoryShowInfoViewModel>();
-  Purchase purchase;
+  late Purchase purchase;
 
   @override
   Widget build(BuildContext context) {
-    purchase = ModalRoute.of(context).settings.arguments;
+    purchase = ModalRoute.of(context)!.settings.arguments as Purchase;
     viewModel.getProducts(purchase);
 
     return ChangeNotifierProvider<PurchaseHistoryShowInfoViewModel>.value(
       value: viewModel,
       child: Consumer<PurchaseHistoryShowInfoViewModel>(
         builder: (context, model, child) => Scaffold(
-          appBar: AppBar(title: Text(purchase.name)),
+          appBar: AppBar(title: Text(purchase.name!)),
           body: SingleChildScrollView(
             // scrollDirection: Axis.vertical,
             //physics: NeverScrollableScrollPhysics(),

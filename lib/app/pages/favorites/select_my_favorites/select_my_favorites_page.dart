@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:merkar/app/core/constants.dart';
-import 'package:merkar/app/core/strings.dart';
-import 'package:merkar/app/pages/products/new_product/create_new_product.dart';
-import 'package:merkar/data/entities/product.dart';
-import 'package:merkar/data/entities/shopping_list.dart';
-import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
 
+import 'package:merkar/app/core/constants.dart';
+import '../../../../app/core/strings.dart';
+import '../../../../app/pages/products/new_product/create_new_product.dart';
+import '../../../../data/entities/product.dart';
+import '../../../../data/entities/shopping_list.dart';
+import '../../../../injection_container.dart';
 import 'select_my_favorites_view_model.dart';
 
 class SelectMyFavoritesPage extends StatefulWidget {
@@ -22,7 +22,6 @@ class _SelectMyFavoritesPageState extends State<SelectMyFavoritesPage> {
       serviceLocator<SelectMyFavoritesViewModel>();
   TextEditingController _search_textController = TextEditingController();
   final _keySearchP = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     viewModel.loadData();
@@ -73,7 +72,7 @@ class _SelectMyFavoritesPageState extends State<SelectMyFavoritesPage> {
   onItemChanged(String value) {
     viewModel.defaultProducts = viewModel.filterDefaultProducts
         .where((product) =>
-            product.name.toLowerCase().contains(value.toLowerCase()))
+        product.name.toLowerCase().contains(value.toLowerCase()))
         .toList();
     viewModel.notifyListeners();
   }
@@ -91,8 +90,8 @@ class _SelectMyFavoritesPageState extends State<SelectMyFavoritesPage> {
           return CheckboxListTile(
             title: Text("${defaultProducts[index].name}"),
             controlAffinity: ListTileControlAffinity.leading,
-            onChanged: (bool value) {
-              viewModel.selectProduct(index, value);
+            onChanged: (bool? value) {
+              viewModel.selectProduct(index, value == true);
             },
             value: defaultProducts[index].selected,
             activeColor: Colors.cyan,

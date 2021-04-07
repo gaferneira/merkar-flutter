@@ -1,20 +1,20 @@
 class ListProduct {
-  String id;
-  String path;
-  final String name;
-  final String category;
-  String price;
-  int quantity;
-  String total;
-  bool selected;
+  String? id;
+  String? path;
+  final String? name;
+  final String? category;
+  String price = '0';
+  int quantity = 1;
+  String total = '0';
+  bool? selected;
 
   ListProduct(
       {this.id,
       this.name,
-      this.price,
+      required this.price,
       this.category,
-      this.quantity,
-      this.total,
+      required this.quantity,
+      required this.total,
       this.selected})
       : super();
 

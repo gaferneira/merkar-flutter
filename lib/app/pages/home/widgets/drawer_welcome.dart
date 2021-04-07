@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:merkar/app/core/constants.dart';
-import 'package:merkar/app/core/strings.dart';
-import 'package:merkar/app/pages/favorites/favorites_list/favorite_list_page.dart';
-import 'package:merkar/app/pages/home/widgets/about_us_page.dart';
-import 'package:merkar/app/pages/home/widgets/comment_page.dart';
-import 'package:merkar/app/pages/login/sign_in/login_view_model.dart';
-import 'package:merkar/data/repositories/login_repository.dart';
-import 'package:merkar/data/repositories/login_repository_impl.dart';
-import 'package:merkar/injection_container.dart';
-
+import '../../../../app/core/strings.dart';
+import '../../../../app/pages/favorites/favorites_list/favorite_list_page.dart';
+import '../../../../app/pages/home/widgets/about_us_page.dart';
+import '../../../../app/pages/home/widgets/comment_page.dart';
+import '../../../../app/pages/login/sign_in/login_view_model.dart';
+import '../../../../injection_container.dart';
 import '../../purchases/purchase_history/purchase_history_page.dart';
 import '../../shopping/new_shopping_list/new_shopping_list_page.dart';
-import 'package:in_app_review/in_app_review.dart';
 
 enum DrawerOptions {
   route_new_list,
@@ -23,12 +20,22 @@ enum DrawerOptions {
 }
 
 class DrawerWelcome extends StatefulWidget {
+  final String? displayName;
+  final String? displayEmail;
+
+  DrawerWelcome({this.displayName, this.displayEmail});
+
   @override
   _DrawerWelcomeState createState() => _DrawerWelcomeState();
 }
 
 class _DrawerWelcomeState extends State<DrawerWelcome> {
+
   final InAppReview inAppReview = InAppReview.instance;
+  final String? displayName;
+  final String? displayEmail;
+
+  _DrawerWelcomeState({this.displayName, this.displayEmail});
 
   @override
   Widget build(BuildContext context) {
@@ -51,14 +58,14 @@ class _DrawerWelcomeState extends State<DrawerWelcome> {
                 Align(
                   alignment: Alignment.centerRight,
                   child: Text(
-                    'Nombre ${LoginRepositoryImpl().getCurrentUser().displayName}',
+                    displayName ?? "",
                     style: TextStyle(color: Colors.white, fontSize: 20.0),
                   ),
                 ),
                 Align(
                   alignment: Alignment.centerRight + Alignment(0, 0.4),
                   child: Text(
-                    '${LoginRepositoryImpl().getCurrentUser().email}',
+                    displayEmail ?? "",
                     style: TextStyle(color: Colors.white70, fontSize: 15.0),
                   ),
                 ),

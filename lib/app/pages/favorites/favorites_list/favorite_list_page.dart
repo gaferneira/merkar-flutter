@@ -8,6 +8,7 @@ import 'package:merkar/data/entities/product.dart';
 import 'package:merkar/data/entities/shopping_list.dart';
 import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
+
 import 'favorite_list_view_model.dart';
 
 enum SingingCharacter { delete, reset, nothing }
@@ -26,23 +27,25 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
   final _keySearchP = GlobalKey<FormState>();
 
   FavoriteListViewModel viewModel = serviceLocator<FavoriteListViewModel>();
-  int temp_quantity = null;
-  double temp_price = null;
-  String descriptionShoppingList = "";
+  int temp_quantity = 1;
+  double? temp_price;
+  String? descriptionShoppingList = "";
   List<String> _textRadioButton = [
     "Eliminar Lista",
     "Restaurar lista",
     "No hacer nada"
   ];
 
-  SingingCharacter _character = SingingCharacter.nothing;
+  SingingCharacter? _character = SingingCharacter.nothing;
 
   var _selectedId;
-  String _selected;
+  String? _selected;
 
   @override
   Widget build(BuildContext context) {
-    viewModel.loadData();
+    final shoppingList =
+        ModalRoute.of(context)!.settings.arguments as ShoppingList;
+    viewModel.loadData(shoppingList);
 
     return ChangeNotifierProvider<FavoriteListViewModel>.value(
         value: viewModel,
@@ -109,6 +112,14 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
     viewModel.notifyListeners();
   }
 
+  onItemChanged(String value) {
+    viewModel.userProducts = viewModel.filterUserProducts
+        .where((product) =>
+        product.name.toLowerCase().contains(value.toLowerCase()))
+        .toList();
+    viewModel.notifyListeners();
+  }
+
   _showListSuggerProducts(BuildContext context) async {
     Navigator.of(context).pushNamed(SelectMyFavoritesPage.routeName);
   }
@@ -165,7 +176,7 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
             ],
           ),
           controlAffinity: ListTileControlAffinity.leading,
-          onChanged: (bool value) {
+          onChanged: (bool? value) {
             /*if (value)
               viewModel.selectProduct(index);
             else
@@ -205,13 +216,13 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
                 decoration: InputDecoration(labelText: Strings.label_quantity),
                 keyboardType: TextInputType.number,
                 validator: (value) {
-                  if (value.isEmpty) {
+                  if (value!.isEmpty) {
                     return "Ingrese la cantidad";
                   } else
                     return null;
                 },
                 onSaved: (value) {
-                  this.temp_quantity = int.parse(value);
+                  this.temp_quantity = int.parse(value!);
                 },
               ),
               TextFormField(
@@ -219,13 +230,13 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
                 decoration: InputDecoration(labelText: Strings.label_price),
                 keyboardType: TextInputType.number,
                 validator: (value) {
-                  if (value.isEmpty) {
+                  if (value!.isEmpty) {
                     return "Ingrese un valor";
                   } else
                     return null;
                 },
                 onSaved: (value) {
-                  this.temp_price = double.parse(value);
+                  this.temp_price = double.parse(value!);
                 },
               ),
               Padding(
@@ -251,12 +262,12 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
   }
 
   void _saveEditProduct(ListProduct product) {
-    if (keyFormEditProduct.currentState.validate()) {
-      keyFormEditProduct.currentState.save();
-      String oldTotal = product.total;
+    if (keyFormEditProduct.currentState!.validate()) {
+      keyFormEditProduct.currentState!.save();
+      String? oldTotal = product.total;
       product.quantity = this.temp_quantity;
       product.price = this.temp_price.toString();
-      product.total = (this.temp_price * this.temp_quantity).toString();
+      product.total = (this.temp_price! * this.temp_quantity).toString();
       //viewModel.updateProduct(product, oldTotal);
     }
   }
@@ -269,7 +280,7 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
           leading: Radio(
             value: SingingCharacter.delete,
             groupValue: _character,
-            onChanged: (SingingCharacter value) {
+            onChanged: (SingingCharacter? value) {
               setState(() {
                 _character = value;
                 print(_character);
@@ -282,7 +293,7 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
           leading: Radio(
             value: SingingCharacter.reset,
             groupValue: _character,
-            onChanged: (SingingCharacter value) {
+            onChanged: (SingingCharacter? value) {
               setState(() {
                 _character = value;
                 print(_character);
@@ -295,7 +306,7 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
           leading: Radio(
             value: SingingCharacter.nothing,
             groupValue: _character,
-            onChanged: (SingingCharacter value) {
+            onChanged: (SingingCharacter? value) {
               setState(() {
                 _character = value;
                 print(_character);
@@ -307,7 +318,7 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
     );
   }
 
-  void _showFinishDialog(ShoppingList shoppingList) {
+  void _showFinishDialog(ShoppingList? shoppingList) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -324,7 +335,7 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       TextFormField(
-                        initialValue: shoppingList.name +
+                        initialValue: shoppingList!.name! +
                             " " +
                             DateTime.now().year.toString() +
                             "/" +
@@ -335,7 +346,7 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
                             labelText: Strings.label_description),
                         keyboardType: TextInputType.text,
                         validator: (value) {
-                          if (value.isEmpty) {
+                          if (value!.isEmpty) {
                             return "Llene la Descripción";
                           } else
                             return null;
@@ -349,7 +360,7 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
                         leading: Radio(
                           value: SingingCharacter.delete,
                           groupValue: _character,
-                          onChanged: (SingingCharacter value) {
+                          onChanged: (SingingCharacter? value) {
                             setState(() {
                               _character = value;
                               print(_character);
@@ -362,7 +373,7 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
                         leading: Radio(
                           value: SingingCharacter.reset,
                           groupValue: _character,
-                          onChanged: (SingingCharacter value) {
+                          onChanged: (SingingCharacter? value) {
                             setState(() {
                               _character = value;
                               print(_character);
@@ -375,7 +386,7 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
                         leading: Radio(
                           value: SingingCharacter.nothing,
                           groupValue: _character,
-                          onChanged: (SingingCharacter value) {
+                          onChanged: (SingingCharacter? value) {
                             setState(() {
                               _character = value;
                               print(_character);
@@ -402,9 +413,9 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
     );
   }
 
-  void _actionOnSaveList(ShoppingList shoppingList) {
-    if (keyFormPurchaseList.currentState.validate()) {
-      keyFormPurchaseList.currentState.save();
+  void _actionOnSaveList(ShoppingList? shoppingList) {
+    if (keyFormPurchaseList.currentState!.validate()) {
+      keyFormPurchaseList.currentState!.save();
       // viewModel.finishShopping(
       //    context, _character, descriptionShoppingList.toString());
     }

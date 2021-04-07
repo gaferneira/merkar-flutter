@@ -1,14 +1,13 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:merkar/app/core/constants.dart';
-import 'package:merkar/app/core/converString.dart';
-import 'package:merkar/app/core/strings.dart';
-import 'package:merkar/app/widgets/widgets.dart';
-import 'package:merkar/data/entities/purchase.dart';
-import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../app/core/strings.dart';
+import '../../../../app/core/extensions/extended_string.dart';
+import '../../../../app/widgets/widgets.dart';
+import '../../../../data/entities/purchase.dart';
+import '../../../../injection_container.dart';
 import '../purchase_history_show_info/purchase_history_show_info_page.dart';
 import 'purchase_history_view_model.dart';
 
@@ -118,7 +117,7 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         return ListTile(
-          title: Text(ConvertString().capitalize('${list[index].name}')),
+          title: Text(list[index].name?.capitalize() ?? ""),
           trailing: Icon(Icons.arrow_right),
           onTap: () {
             print(list[index].name);
