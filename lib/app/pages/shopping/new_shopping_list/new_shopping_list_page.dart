@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/extensions/extended_string.dart';
 import 'package:merkar/app/core/strings.dart';
@@ -85,4 +86,7 @@ class _NewShoppingListPageState extends State<NewShoppingListPage> {
     }
   }
 
+  void _showDefaultSugger(String value) {
+    //Search a suggered name to a old list of shoppinglist
+  }
 }

@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:merkar/app/core/constants.dart';
-import '../../../../app/core/strings.dart';
-import '../../../../app/pages/products/new_product/create_new_product.dart';
-import '../../../../data/entities/product.dart';
-import '../../../../data/entities/shopping_list.dart';
-import '../../../../injection_container.dart';
+import 'package:merkar/app/core/strings.dart';
+import 'package:merkar/app/pages/products/new_product/create_new_product.dart';
+import 'package:merkar/data/entities/product.dart';
+import 'package:merkar/data/entities/shopping_list.dart';
+import 'package:merkar/injection_container.dart';
 import 'select_my_favorites_view_model.dart';
 
 class SelectMyFavoritesPage extends StatefulWidget {
@@ -64,15 +64,15 @@ class _SelectMyFavoritesPageState extends State<SelectMyFavoritesPage> {
                   body: SingleChildScrollView(
                     child: (viewModel.defaultProducts == null)
                         ? Text('Loading...')
-                        : _showProductsList(viewModel.defaultProducts),
+                        : _showProductsList(viewModel.defaultProducts!),
                   ),
                 )));
   }
 
   onItemChanged(String value) {
-    viewModel.defaultProducts = viewModel.filterDefaultProducts
+    viewModel.defaultProducts = viewModel.filterDefaultProducts!
         .where((product) =>
-        product.name.toLowerCase().contains(value.toLowerCase()))
+            product.name!.toLowerCase().contains(value.toLowerCase()))
         .toList();
     viewModel.notifyListeners();
   }

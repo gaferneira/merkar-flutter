@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import '../../../../data/repositories/login_repository.dart';
+import 'package:merkar/data/repositories/login_repository.dart';
 
 class RegisterViewModel with ChangeNotifier {
   final LoginRepository repository;

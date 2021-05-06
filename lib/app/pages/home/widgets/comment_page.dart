@@ -2,8 +2,8 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 
-import '../../../../app/core/constants.dart';
-import '../../../../app/core/strings.dart';
+import 'package:merkar/app/core/constants.dart';
+import 'package:merkar/app/core/strings.dart';
 
 String? _message = "";
 Future<void> CommentePage(BuildContext context) {
@@ -42,7 +42,7 @@ Future<void> CommentePage(BuildContext context) {
                                   _message = value;
                                 },
                                 validator: (value) {
-                                  if (value.isEmpty) {
+                                  if (value!.isEmpty) {
                                     return "Ingresa un mensaje";
                                   } else
                                     return null;
@@ -54,8 +54,9 @@ Future<void> CommentePage(BuildContext context) {
                                 textColor: Constant.textColorButtomLight,
                                 shape: Constant.borderRadius,
                                 onPressed: () {
-                                  if (keyFormComments.currentState.validate()) {
-                                    keyFormComments.currentState.save();
+                                  if (keyFormComments.currentState!
+                                      .validate()) {
+                                    keyFormComments.currentState!.save();
                                     _sendEmail(keyFormComments);
                                     Navigator.pop(context);
                                   }
@@ -85,7 +86,6 @@ Future<void> _sendEmail(GlobalKey<FormState> keyForm) async {
     );
 
     await FlutterEmailSender.send(email);
-
   } catch (error) {
     print('Error: ${error}');
   }

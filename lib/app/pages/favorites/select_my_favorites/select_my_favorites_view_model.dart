@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
-import '../../../../data/entities/list_product.dart';
-import '../../../../data/entities/product.dart';
-import '../../../../data/entities/shopping_list.dart';
-import '../../../../data/repositories/products_repository.dart';
-import '../../../../data/repositories/shopping_lists_repository.dart';
+import 'package:merkar/data/entities/list_product.dart';
+import 'package:merkar/data/entities/product.dart';
+import 'package:merkar/data/entities/shopping_list.dart';
+import 'package:merkar/data/repositories/products_repository.dart';
+import 'package:merkar/data/repositories/shopping_lists_repository.dart';
 
 class SelectMyFavoritesViewModel extends ChangeNotifier {
-
   final ProductsRepository productsRepository;
 
-  SelectMyFavoritesViewModel(
-      {required this.productsRepository});
+  SelectMyFavoritesViewModel({required this.productsRepository});
 
   late ShoppingList shoppingList;
 
@@ -20,7 +18,7 @@ class SelectMyFavoritesViewModel extends ChangeNotifier {
 
   String? error;
 
-  Future<void> loadData(ShoppingList shoppingList) async {
+  Future<void> loadData() async {
     productsRepository.fetchItems().listen((data) {
       userProducts = data;
       error = null;

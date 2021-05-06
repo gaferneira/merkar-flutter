@@ -107,15 +107,7 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
   onItemChanged(String value) {
     viewModel.userProducts = viewModel.filterUserProducts
         .where((product) =>
-            product.name.toLowerCase().contains(value.toLowerCase()))
-        .toList();
-    viewModel.notifyListeners();
-  }
-
-  onItemChanged(String value) {
-    viewModel.userProducts = viewModel.filterUserProducts
-        .where((product) =>
-        product.name.toLowerCase().contains(value.toLowerCase()))
+            product.name!.toLowerCase().contains(value.toLowerCase()))
         .toList();
     viewModel.notifyListeners();
   }
@@ -346,7 +338,7 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
                             labelText: Strings.label_description),
                         keyboardType: TextInputType.text,
                         validator: (value) {
-                          if (value!.isEmpty) {
+                          if (value == null) {
                             return "Llene la Descripción";
                           } else
                             return null;

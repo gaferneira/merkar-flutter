@@ -1,11 +1,13 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:merkar/app/core/constants.dart';
 import 'package:merkar/app/core/strings.dart';
 import 'package:merkar/app/pages/products/new_product/create_new_product.dart';
 import 'package:merkar/data/entities/product.dart';
 import 'package:merkar/data/entities/shopping_list.dart';
 import 'package:merkar/injection_container.dart';
-import 'package:provider/provider.dart';
 
 import 'select_my_products_view_model.dart';
 
@@ -24,9 +26,9 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
   late ShoppingList shoppingList;
 
   onItemChanged(String value) {
-    viewModel.userProducts = viewModel.filteruserProducts
+    viewModel.userProducts = viewModel.filteruserProducts!
         .where((product) =>
-            product.name.toLowerCase().contains(value.toLowerCase()))
+            product.name!.toLowerCase().contains(value.toLowerCase()))
         .toList();
     viewModel.notifyListeners();
   }
@@ -36,7 +38,7 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
     shoppingList = ModalRoute.of(context)!.settings.arguments as ShoppingList;
     viewModel.loadData(shoppingList);
 
-    return ChangeNotifierProvider<SelectMyProductsViewModel?>.value(
+    return ChangeNotifierProvider<SelectMyProductsViewModel>.value(
         value: viewModel,
         child: Consumer<SelectMyProductsViewModel>(
             builder: (context, model, child) => ElasticInDown(

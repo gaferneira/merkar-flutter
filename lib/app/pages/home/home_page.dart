@@ -22,7 +22,8 @@ class _HomePageState extends State<HomePage> {
   HomePageViewModel viewModel = serviceLocator<HomePageViewModel>();
   bool _light = true;
   final _key_search = GlobalKey<FormState>();
-  TextEditingController _search_textController = TextEditingController(); //controller search_text
+  TextEditingController _search_textController =
+      TextEditingController(); //controller search_text
   @override
   void initState() {
     viewModel.loadData();
@@ -35,11 +36,13 @@ class _HomePageState extends State<HomePage> {
 
   onItemChanged(String value) {
     setState(() {
-      viewModel.list = viewModel.filter_list.where((shopping_list) =>
-              shopping_list.name.toLowerCase().contains(value.toLowerCase()))
+      viewModel.list = viewModel.filter_list!
+          .where((shopping_list) =>
+              shopping_list.name!.toLowerCase().contains(value.toLowerCase()))
           .toList();
     });
   }
+
   @override
   Widget build(BuildContext context) {
     //var providerTheme = Provider.of<ProviderTheme>(context);
@@ -156,7 +159,7 @@ class _HomePageState extends State<HomePage> {
                         children: <Widget>[
                           (viewModel.list == null)
                               ? Center(child: LoadingWidget())
-                              : shoppingListsDisplay(viewModel.list),
+                              : shoppingListsDisplay(viewModel.list!),
                         ],
                       ),
                     ),

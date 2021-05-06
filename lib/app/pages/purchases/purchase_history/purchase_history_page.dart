@@ -3,11 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../app/core/strings.dart';
-import '../../../../app/core/extensions/extended_string.dart';
-import '../../../../app/widgets/widgets.dart';
-import '../../../../data/entities/purchase.dart';
-import '../../../../injection_container.dart';
+import 'package:merkar/app/core/constants.dart';
+import 'package:merkar/app/core/strings.dart';
+import 'package:merkar/app/core/extensions/extended_string.dart';
+import 'package:merkar/app/widgets/widgets.dart';
+import 'package:merkar/data/entities/purchase.dart';
+import 'package:merkar/injection_container.dart';
 import '../purchase_history_show_info/purchase_history_show_info_page.dart';
 import 'purchase_history_view_model.dart';
 
@@ -23,9 +24,9 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
   final keyFormPurchaseList = GlobalKey<FormState>();
   TextEditingController _text_searchController = TextEditingController();
   onItemChangedSelect(String value) {
-    viewModel.list = viewModel.filterList
+    viewModel.list = viewModel.filterList!
         .where((shopping_list) =>
-            shopping_list.name.toLowerCase().contains(value.toLowerCase()))
+            shopping_list.name!.toLowerCase().contains(value.toLowerCase()))
         .toList();
     viewModel.notifyListeners();
   }
@@ -86,7 +87,7 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
                       children: <Widget>[
                         (viewModel.list == null)
                             ? Center(child: LoadingWidget())
-                            : purchaseHistoryDisplay(viewModel.list),
+                            : purchaseHistoryDisplay(viewModel.list!),
                       ],
                     ),
                   ]),

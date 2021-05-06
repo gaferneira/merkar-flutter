@@ -64,7 +64,7 @@ class PurchasesRepositoryImpl implements PurchasesRepository {
         .snapshots()
         .map((querySnapshot) => querySnapshot.docs
             .map(
-                (documentSnapshot) => Purchase.fromJson(documentSnapshot.data()!)
+                (documentSnapshot) => Purchase.fromJson(documentSnapshot.data())
                   ..id = documentSnapshot.id
                   ..path = documentSnapshot.reference.path)
             .toList());
@@ -100,7 +100,7 @@ class PurchasesRepositoryImpl implements PurchasesRepository {
         .snapshots()
         .map((querySnapshot) => querySnapshot.docs
             .map((documentSnapshot) =>
-                ListProduct.fromJson(documentSnapshot.data()!)
+                ListProduct.fromJson(documentSnapshot.data())
                   ..id = documentSnapshot.id
                   ..path = documentSnapshot.reference.path)
             .toList());

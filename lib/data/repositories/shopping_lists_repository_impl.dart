@@ -45,7 +45,7 @@ class ShoppingListsRepositoryImpl implements ShoppingListsRepository {
         .snapshots()
         .map((querySnapshot) => querySnapshot.docs
             .map((documentSnapshot) =>
-                ShoppingList.fromJson(documentSnapshot.data()!)
+                ShoppingList.fromJson(documentSnapshot.data())
                   ..id = documentSnapshot.id
                   ..path = documentSnapshot.reference.path)
             .toList());
@@ -81,7 +81,7 @@ class ShoppingListsRepositoryImpl implements ShoppingListsRepository {
         .snapshots()
         .map((querySnapshot) => querySnapshot.docs
             .map((documentSnapshot) =>
-                ListProduct.fromJson(documentSnapshot.data()!)
+                ListProduct.fromJson(documentSnapshot.data())
                   ..id = documentSnapshot.id
                   ..path = documentSnapshot.reference.path)
             .toList());

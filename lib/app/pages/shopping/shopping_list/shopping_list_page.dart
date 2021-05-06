@@ -42,13 +42,13 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   String? _selected;
 
   onItemChangedSelect(String value) {
-    viewModel.selectedList = viewModel.filterselectedList
+    viewModel.selectedList = viewModel.filterselectedList!
         .where((shopping_list) =>
-            shopping_list.name.toLowerCase().contains(value.toLowerCase()))
+            shopping_list.name!.toLowerCase().contains(value.toLowerCase()))
         .toList();
-    viewModel.unselectedList = viewModel.filterunselectedList
+    viewModel.unselectedList = viewModel.filterunselectedList!
         .where((shopping_list) =>
-            shopping_list.name.toLowerCase().contains(value.toLowerCase()))
+            shopping_list.name!.toLowerCase().contains(value.toLowerCase()))
         .toList();
     viewModel.notifyListeners();
   }
@@ -59,14 +59,13 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
         ModalRoute.of(context)!.settings.arguments as ShoppingList;
     viewModel.loadData(shoppingList);
 
-    return ChangeNotifierProvider<ShoppingListViewModel?>.value(
+    return ChangeNotifierProvider<ShoppingListViewModel>.value(
         value: viewModel,
         child: Consumer<ShoppingListViewModel>(
             builder: (context, model, child) => ElasticIn(
                   child: Scaffold(
                     appBar: AppBar(
-                      title: Text(
-                          ConvertString().capitalize('${shoppingList.name}')),
+                      title: Text('${shoppingList.name}'.capitalize()),
                       actions: <Widget>[
                         Padding(
                           padding: const EdgeInsets.all(Constant.normalspace),

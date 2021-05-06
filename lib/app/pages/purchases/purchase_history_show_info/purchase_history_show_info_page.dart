@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../data/entities/list_product.dart';
-import '../../../../data/entities/purchase.dart';
-import '../../../../injection_container.dart';
+import 'package:merkar/data/entities/list_product.dart';
+import 'package:merkar/data/entities/purchase.dart';
+import 'package:merkar/injection_container.dart';
 import 'purchase_history_show_info_view_model.dart';
 
 class PurchaseHistoryShowInfoPage extends StatefulWidget {
@@ -40,7 +40,7 @@ class _PurchaseHistoryShowInfoPageState
               Text("Productos"),
               (viewModel.listProducts == null)
                   ? Text('Loading...')
-                  : _showProductsList(viewModel.listProducts),
+                  : _showProductsList(viewModel.listProducts!),
             ]),
           ),
         ),

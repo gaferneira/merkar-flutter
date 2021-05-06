@@ -10,8 +10,7 @@ class SelectMyProductsViewModel extends ChangeNotifier {
   final ProductsRepository productsRepository;
 
   SelectMyProductsViewModel(
-      {required this.shoppingListRepository,
-      required this.productsRepository});
+      {required this.shoppingListRepository, required this.productsRepository});
 
   late ShoppingList shoppingList;
 
