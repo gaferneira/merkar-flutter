@@ -1,9 +1,9 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import '../../../../app/core/constants.dart';
-import '../../../../app/core/strings.dart';
-import '../../../../data/entities/product.dart';
-import '../../../../injection_container.dart';
+import 'package:merkar/app/core/constants.dart';
+import 'package:merkar/app/core/strings.dart';
+import 'package:merkar/data/entities/product.dart';
+import 'package:merkar/injection_container.dart';
 
 import 'create_new_product_view_model.dart';
 

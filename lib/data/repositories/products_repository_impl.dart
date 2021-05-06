@@ -25,7 +25,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
     return getDefaultCollection()
         .snapshots()
         .map((querySnapshot) => querySnapshot.docs
-            .map((documentSnapshot) => Product.fromJson(documentSnapshot.data()!)
+            .map((documentSnapshot) => Product.fromJson(documentSnapshot.data())
               ..id = documentSnapshot.id
               ..path = documentSnapshot.reference.path)
             .toList());
@@ -38,7 +38,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
         .collection(COLLECTION_PRODUCTS)
         .snapshots()
         .map((querySnapshot) => querySnapshot.docs
-            .map((documentSnapshot) => Product.fromJson(documentSnapshot.data()!)
+            .map((documentSnapshot) => Product.fromJson(documentSnapshot.data())
               ..path = documentSnapshot.reference.path
               ..id = documentSnapshot.id)
             .toList());

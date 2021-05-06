@@ -2,10 +2,10 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../app/core/constants.dart';
-import '../../../../app/core/strings.dart';
-import '../../../../app/pages/login/sign_in/login_view_model.dart';
-import '../../../../injection_container.dart';
+import 'package:merkar/app/core/constants.dart';
+import 'package:merkar/app/core/strings.dart';
+import 'package:merkar/app/pages/login/sign_in/login_view_model.dart';
+import 'package:merkar/injection_container.dart';
 import '../register/register_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -54,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: TextFormField(
                         controller: _email,
                         validator: (value) =>
-                            (value.isEmpty) ? "Ingresa tu email" : null,
+                            (value!.isEmpty) ? "Ingresa tu email" : null,
                         style: style,
                         decoration: InputDecoration(
                             prefixIcon: Icon(Icons.email),
@@ -67,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: TextFormField(
                         controller: _password,
                         validator: (value) =>
-                            (value.isEmpty) ? "Ingresa tu Contraseña" : null,
+                            (value!.isEmpty) ? "Ingresa tu Contraseña" : null,
                         style: style,
                         decoration: InputDecoration(
                             prefixIcon: Icon(Icons.lock),

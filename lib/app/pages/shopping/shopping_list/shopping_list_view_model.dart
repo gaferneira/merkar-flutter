@@ -16,8 +16,8 @@ class ShoppingListViewModel extends ChangeNotifier {
   late ShoppingList shoppingList;
   List<ListProduct>? filterunselectedList;
   List<ListProduct>? filterselectedList;
-  late List<ListProduct> unselectedList;
-  late List<ListProduct> selectedList;
+  late List<ListProduct> unselectedList = [];
+  late List<ListProduct> selectedList = [];
   String? error;
 
   Future<void> loadData(ShoppingList shoppingList) async {
