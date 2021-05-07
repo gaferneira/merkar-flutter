@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:merkar/data/entities/list_product.dart';
 import 'package:merkar/data/entities/product.dart';
 import 'package:merkar/data/entities/shopping_list.dart';
 import 'package:merkar/data/repositories/products_repository.dart';
-import 'package:merkar/data/repositories/shopping_lists_repository.dart';
 
 class SelectMyFavoritesViewModel extends ChangeNotifier {
   final ProductsRepository productsRepository;
@@ -19,11 +17,12 @@ class SelectMyFavoritesViewModel extends ChangeNotifier {
   String? error;
 
   Future<void> loadData() async {
-    productsRepository.fetchItems().listen((data) {
-      userProducts = data;
+    productsRepository.fetchDefaultProducts().listen((data) {
+      defaultProducts = data;
       error = null;
       updateList();
       filterDefaultProducts = defaultProducts;
+      notifyListeners();
     }, onError: (e) {
       error = e;
       notifyListeners();
@@ -47,9 +46,10 @@ class SelectMyFavoritesViewModel extends ChangeNotifier {
         product.selected = false;
       });
 
-      userProducts?.forEach((product) {
-        defaultProducts?.forEach((userProduct) {
+      userProducts?.forEach((userProduct) {
+        defaultProducts?.forEach((product) {
           if (product.name == userProduct.name) {
+            product.selected = true;
             userProduct.selected = true;
           }
         });
@@ -60,20 +60,19 @@ class SelectMyFavoritesViewModel extends ChangeNotifier {
   Future<void> selectProduct(int index, bool selected) async {
     var product = defaultProducts![index];
     if (selected) {
-      var productList = Product(
-//          id: product.id,
-        category: product.category,
-        name: product.name,
-        price: product.price,
-
-        //        quantity: 1,
-        //      total: product.price,
-        //    selected: false
-      );
-      productsRepository.save(productList);
+      var newProduct = Product(
+          category: product.category, name: product.name, price: product.price);
+      productsRepository.save(newProduct);
+      product.selected = true;
     } else {
-      //eliminar de productos del user
-      // productsRepository.remove(product);
+      //Delete user product
+      userProducts?.forEach((userProduct) {
+        if (product.name == userProduct.name) {
+          productsRepository.remove(userProduct);
+          product.selected = false;
+        }
+      });
     }
+    notifyListeners();
   }
 }

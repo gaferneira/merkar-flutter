@@ -43,9 +43,7 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
 
   @override
   Widget build(BuildContext context) {
-    final shoppingList =
-        ModalRoute.of(context)!.settings.arguments as ShoppingList;
-    viewModel.loadData(shoppingList);
+    viewModel.loadData();
 
     return ChangeNotifierProvider<FavoriteListViewModel>.value(
         value: viewModel,
@@ -92,7 +90,7 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
                       children: <Widget>[
                         (viewModel.userProducts == null)
                             ? Text('Loading...')
-                            : _showProductsList(viewModel.userProducts),
+                            : _showProductsList(viewModel.userProducts!),
                       ],
                     ),
                   ),
