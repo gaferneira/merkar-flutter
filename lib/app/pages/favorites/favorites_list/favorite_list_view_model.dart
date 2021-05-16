@@ -24,4 +24,9 @@ class FavoriteListViewModel extends ChangeNotifier {
       notifyListeners();
     });
   }
+
+  Future<void> removeProduct(String productId, List<Product> userProducts) async {
+    repository.removeUserProduct(productId, userProducts);
+    notifyListeners();
+  }
 }
