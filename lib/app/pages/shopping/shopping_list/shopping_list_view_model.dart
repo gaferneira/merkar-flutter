@@ -101,10 +101,10 @@ class ShoppingListViewModel extends ChangeNotifier {
       case SingingCharacter.nothing:
         break;
     }
-
-    var count = 0;
-    Navigator.popUntil(context, (route) {
-      return count++ == 2;
-    });
+    Navigator.popUntil(context, ModalRoute.withName('/home'));
+  }
+  Future<void> removeProduct(String productId, ShoppingList list)async {
+    repository.removeProduct(productId, list);
+    notifyListeners();
   }
 }
