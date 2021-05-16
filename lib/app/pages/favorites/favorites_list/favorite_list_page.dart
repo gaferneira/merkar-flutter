@@ -123,7 +123,7 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
           background: Container(color: Colors.red,child: Icon(Icons.cancel),),
           key: Key(listProducts[index].id!),
           onDismissed: (direction){
-            viewModel.removeProduct(viewModel.userProducts![index].id!, viewModel.userProducts!);
+            viewModel.removeProduct(viewModel.userProducts![index]);
             viewModel.userProducts!.removeAt(index);
             Scaffold
                 .of(context)

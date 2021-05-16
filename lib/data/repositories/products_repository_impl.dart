@@ -72,12 +72,16 @@ class ProductsRepositoryImpl implements ProductsRepository {
     return firestoreDataSource.db.collection(COLLECTION_DEFAULT_PRODUCTS);
   }
 
+  /*
   @override
   Future<Either<Failure, bool>> removeUserProduct(String productId, List<Product> list) async {
     await firestoreDataSource.db
+        .doc(list.path)
         .collection(COLLECTION_DEFAULT_PRODUCTS)
         .doc(productId)
         .delete();
     return Right(true);
   }
+  */
+
 }
