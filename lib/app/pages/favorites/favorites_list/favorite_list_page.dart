@@ -124,6 +124,7 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
           key: Key(listProducts[index].id!),
           onDismissed: (direction){
             viewModel.removeProduct(viewModel.userProducts![index].id!, viewModel.userProducts!);
+            viewModel.userProducts!.removeAt(index);
             Scaffold
                 .of(context)
                 .showSnackBar(SnackBar(content: Text("$index Eliminado")));
