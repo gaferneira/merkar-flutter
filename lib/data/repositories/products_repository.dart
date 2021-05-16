@@ -8,4 +8,6 @@ abstract class ProductsRepository {
   Stream<List<Product>> fetchItems();
   Future<Either<Failure, Product>> save(Product item);
   Future<Either<Failure, bool>> remove(Product item);
+  Future<Either<Failure, bool>> removeUserProduct(String productId, List<Product> list);
+
 }
