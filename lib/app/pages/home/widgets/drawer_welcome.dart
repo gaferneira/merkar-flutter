@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:in_app_review/in_app_review.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:merkar/app/core/constants.dart';
 import 'package:merkar/app/core/strings.dart';
 import 'package:merkar/app/pages/favorites/favorites_list/favorite_list_page.dart';
@@ -8,6 +7,7 @@ import 'package:merkar/app/pages/home/widgets/about_us_page.dart';
 import 'package:merkar/app/pages/home/widgets/comment_page.dart';
 import 'package:merkar/app/pages/login/sign_in/login_view_model.dart';
 import 'package:merkar/injection_container.dart';
+
 import '../../purchases/purchase_history/purchase_history_page.dart';
 import '../../shopping/new_shopping_list/new_shopping_list_page.dart';
 
@@ -27,21 +27,18 @@ class DrawerWelcome extends StatefulWidget {
   DrawerWelcome({this.displayName, this.displayEmail});
 
   @override
-  _DrawerWelcomeState createState() => _DrawerWelcomeState();
+  _DrawerWelcomeState createState() =>
+      _DrawerWelcomeState(this.displayName, this.displayEmail);
 }
 
 class _DrawerWelcomeState extends State<DrawerWelcome> {
   final InAppReview inAppReview = InAppReview.instance;
   String? displayName;
   String? displayEmail;
-  final FirebaseAuth auth = FirebaseAuth.instance;
-  _DrawerWelcomeState({this.displayName, this.displayEmail});
+  _DrawerWelcomeState(this.displayName, this.displayEmail);
 
   @override
   Widget build(BuildContext context) {
-    final User? user = auth.currentUser;
-    displayName = user!.displayName;
-    displayEmail= user!.email;
     return Drawer(
       child: ListView(
         children: <Widget>[
@@ -61,14 +58,14 @@ class _DrawerWelcomeState extends State<DrawerWelcome> {
                 Align(
                   alignment: Alignment.centerRight,
                   child: Text(
-                    displayName ?? "Null",
+                    displayName ?? "",
                     style: TextStyle(color: Colors.white, fontSize: 20.0),
                   ),
                 ),
                 Align(
                   alignment: Alignment.centerRight + Alignment(0, 0.4),
                   child: Text(
-                    displayEmail ?? "Null",
+                    displayEmail ?? "",
                     style: TextStyle(color: Colors.white70, fontSize: 15.0),
                   ),
                 ),
