@@ -33,4 +33,6 @@ class LoginViewModel with ChangeNotifier {
     await repository.signOut();
     notifyListeners();
   }
+
+  void signInWithGoogle() {}
 }
