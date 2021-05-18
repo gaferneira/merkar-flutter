@@ -473,7 +473,6 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                             if (value != null) {
                               setState(() {
                                 _character = value;
-                                print(_character);
                               });
                             }
                           },
@@ -488,7 +487,6 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                             if (value != null) {
                               setState(() {
                                 _character = value;
-                                print(_character);
                               });
                             }
                           },
@@ -503,7 +501,6 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                             if (value != null) {
                               setState(() {
                                 _character = value;
-                                print(_character);
                               });
                             }
                           },
