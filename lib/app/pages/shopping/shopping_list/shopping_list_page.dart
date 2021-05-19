@@ -37,7 +37,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   ];
 
   SingingCharacter _character = SingingCharacter.nothing;
-  late final ShoppingList shoppingList;
+  ShoppingList shoppingList= new ShoppingList();
   var _selectedId;
   String? _selected;
 
