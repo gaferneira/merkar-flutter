@@ -101,7 +101,7 @@ class ShoppingListViewModel extends ChangeNotifier {
       case SingingCharacter.nothing:
         break;
     }
-    Navigator.popUntil(context, ModalRoute.withName('/home'));
+    Navigator.of(context).popUntil((route) => route.isFirst);
   }
   Future<void> removeProduct(String productId, ShoppingList list)async {
     repository.removeProduct(productId, list);
