@@ -33,7 +33,6 @@ Widget listProducts(List<ShoppingList> list) {
         title: Text(list[index].name!.capitalize()),
         trailing: Icon(Icons.arrow_right),
         onTap: () {
-          print(list[index].name);
           Navigator.pushNamed(
             context,
             ShoppingListPage.routeName,

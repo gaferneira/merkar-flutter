@@ -84,6 +84,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   return "La contraseña es requerida";
               },
               keyboardType: TextInputType.text,
+              obscureText: true,
             ),
             TextFormField(
               initialValue: "",
@@ -102,6 +103,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   return null;
               },
               keyboardType: TextInputType.text,
+              obscureText: true,
             ),
             ElevatedButton(
               child: Text(Strings.label_register),

@@ -73,6 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                             prefixIcon: Icon(Icons.lock),
                             labelText: "Contraseña",
                             border: OutlineInputBorder()),
+                        obscureText: true,
                       ),
                     ),
                     _createLoginButton(),
