@@ -47,8 +47,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     //var providerTheme = Provider.of<ProviderTheme>(context);
     final _scaffKey = GlobalKey<ScaffoldState>();
-    return ChangeNotifierProvider<HomePageViewModel>(
-      create: (context) => viewModel,
+    return ChangeNotifierProvider<HomePageViewModel>.value(
+      //create: (context) => viewModel,
+      value: viewModel,
       child: Consumer<HomePageViewModel>(
         builder: (context, model, child) => ZoomIn(
           duration: Duration(
