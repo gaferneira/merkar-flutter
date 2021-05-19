@@ -40,6 +40,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   ShoppingList shoppingList= new ShoppingList();
   var _selectedId;
   String? _selected;
+  bool _ennable=false;
 
   onItemChangedSelect(String value) {
     viewModel.selectedList = viewModel.filterselectedList!
@@ -55,6 +56,13 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
 
   @override
   Widget build(BuildContext context) {
+    var onPressed;
+    if(_ennable){
+      onPressed=(){
+        _showFinishDialog(shoppingList);
+        print("Mostrar dialogo");
+      };
+    }
     shoppingList =
         ModalRoute.of(context)!.settings.arguments as ShoppingList;
     viewModel.loadData(shoppingList);
@@ -94,9 +102,10 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                         Bounce(
                           child: IconButton(
                             icon: Icon(Icons.check_circle),
-                            onPressed: () {
-                              _showFinishDialog(shoppingList);
-                            },
+                            onPressed:onPressed
+                                //() {
+                              //_showFinishDialog(shoppingList);
+                           // },
                           ),
                         ),
                       ],
@@ -134,9 +143,11 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                               color: Constant.lightColor,
                               textColor: Constant.textColorButtomLight,
                               shape: Constant.borderRadius,
-                              onPressed: () {
-                                _showFinishDialog(shoppingList);
-                              }),
+                              onPressed:onPressed
+                                  //() {
+                                //_showFinishDialog(shoppingList);
+                              //}
+                            ),
                         ],
                       ),
                     ),
@@ -213,6 +224,9 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
             controlAffinity: ListTileControlAffinity.leading,
             onChanged: (bool? value) {
               viewModel.selectProduct(index);
+              setState(() {
+                _ennable=true;
+              });
             },
             secondary: IconButton(
               icon: Icon(Icons.edit),
@@ -272,8 +286,14 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
             onChanged: (bool? value) {
               if (value == true)
                 viewModel.selectProduct(index);
-              else
+              else {
                 viewModel.unselectProduct(index);
+                if(viewModel.selectedList.isEmpty){
+                  setState(() {
+                    _ennable=false;
+                  });
+                }
+              }
             },
             secondary: IconButton(
               icon: Icon(Icons.edit),
