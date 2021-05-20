@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:in_app_review/in_app_review.dart';
-import 'package:merkar/app/core/app_colors.dart';
+import 'package:merkar/app/core/resources/app_colors.dart';
 import 'package:merkar/app/core/strings.dart';
 import 'package:merkar/app/pages/favorites/favorites_list/favorite_list_page.dart';
 import 'package:merkar/app/pages/home/widgets/about_us_page.dart';

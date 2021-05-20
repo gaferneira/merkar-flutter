@@ -107,14 +107,16 @@ class LoginRepositoryImpl implements LoginRepository {
     if (user != null) {
       assert(!user.isAnonymous);
 
-      final User? currentUser = _auth.currentUser;
-      assert(user.uid == currentUser?.uid);
+      var userData = UserData(userId: user.uid, name: user.displayName ?? "", email: user.email ?? "");
 
-      print('signInWithGoogle succeeded: $user');
+      await firestoreDataSource.db
+          .collection(FirestoreDataSource.COLLECTION_DATA)
+          .doc(user.uid)
+          .set(userData.toJson());
 
-      return '$user';
+      return null;
     }
 
-    return null;
+    return "Error";
   }
 }

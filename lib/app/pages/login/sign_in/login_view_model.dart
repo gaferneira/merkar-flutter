@@ -34,5 +34,12 @@ class LoginViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  void signInWithGoogle() {}
+  void signInWithGoogle() async {
+     repository.signInWithGoogle().then((result) {
+      if (result != null) {
+        error = result;
+        notifyListeners();
+      }
+    });
+  }
 }

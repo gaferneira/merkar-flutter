@@ -1,10 +1,10 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:merkar/app/core/app_colors.dart';
-import 'package:merkar/app/core/app_styles.dart';
 import 'package:merkar/app/core/constants.dart';
 import 'package:merkar/app/core/extensions/extended_string.dart';
+import 'package:merkar/app/core/resources/app_colors.dart';
+import 'package:merkar/app/core/resources/app_styles.dart';
 import 'package:merkar/app/core/strings.dart';
 import 'package:merkar/data/entities/list_product.dart';
 import 'package:merkar/data/entities/shopping_list.dart';
@@ -111,13 +111,13 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                             child: Center(
                                 child: Text(
                               "No seleccionados",
-                              style: AppStyles.h6TextStyle,
+                              style: Theme.of(context).textTheme.headline6,
                             )),
                           ),
                           (viewModel.unselectedList == null)
                               ? Text(
                                   'Loading...',
-                                  style: AppStyles.h6TextStyle,
+                                  style: Theme.of(context).textTheme.headline6,
                                 )
                               : _showProductsList(viewModel.unselectedList),
                           Padding(
@@ -125,7 +125,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                             child: Center(
                                 child: Text(
                               "Seleccionados",
-                              style: AppStyles.h6TextStyle,
+                              style: Theme.of(context).textTheme.headline6,
                             )),
                           ),
                           (viewModel.selectedList == null)

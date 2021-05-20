@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:merkar/app/core/app_images.dart';
-import 'package:merkar/app/core/app_styles.dart';
+import 'package:merkar/app/core/resources/app_images.dart';
+import 'package:merkar/app/core/resources/app_styles.dart';
+import 'package:merkar/app/core/resources/app_theme.dart';
 import 'package:merkar/app/core/strings.dart';
 import 'package:merkar/app/pages/login/sign_in/login_view_model.dart';
 import 'package:merkar/app/pages/login/widgets/background_login.dart';
-import 'package:merkar/app/theme/app_theme.dart';
+import 'package:merkar/app/pages/login/widgets/login_button.dart';
 import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
 
@@ -46,45 +47,43 @@ class _LoginPageState extends State<LoginPage> {
                 child: Scaffold(
                   body: Form(
                     key: _formKey,
-                    child: AnnotatedRegion<SystemUiOverlayStyle>(
-                      value: SystemUiOverlayStyle.light,
-                      child: GestureDetector(
-                        onTap: () => FocusScope.of(context).unfocus(),
-                        child: Stack(
-                          children: <Widget>[
-                            BackgroundLogin(),
-                            Container(
-                              height: double.infinity,
-                              child: SingleChildScrollView(
-                                physics: AlwaysScrollableScrollPhysics(),
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 40.0,
-                                  vertical: 60.0,
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text(
-                                      Strings.login_label_title,
-                                      style: AppStyles.h4TextStyle,
-                                    ),
-                                    SizedBox(height: 30.0),
-                                    _buildEmailTextField(context),
-                                    SizedBox(
-                                      height: 30.0,
-                                    ),
-                                    _buildPasswordTextField(context),
-                                    _buildForgotPasswordButton(context),
-                                    _buildLoginButton(context),
-                                    _buildSignInWithText(context),
-                                    _buildGmailButton(context),
-                                    _buildSignupButton(context),
-                                  ],
-                                ),
+                    child: GestureDetector(
+                      onTap: () => FocusScope.of(context).unfocus(),
+                      child: Stack(
+                        children: <Widget>[
+                          BackgroundLogin(),
+                          Container(
+                            height: double.infinity,
+                            child: SingleChildScrollView(
+                              physics: AlwaysScrollableScrollPhysics(),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 40.0,
+                                vertical: 60.0,
                               ),
-                            )
-                          ],
-                        ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text(
+                                    Strings.login_label_title,
+                                    style:
+                                        Theme.of(context).textTheme.headline4,
+                                  ),
+                                  SizedBox(height: 30.0),
+                                  _buildEmailTextField(context),
+                                  SizedBox(
+                                    height: 30.0,
+                                  ),
+                                  _buildPasswordTextField(context),
+                                  _buildForgotPasswordButton(context),
+                                  _buildLoginButton(context),
+                                  _buildSignInWithText(context),
+                                  _buildGmailButton(context),
+                                  _buildSignupButton(context),
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
                       ),
                     ),
                   ),
@@ -101,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
       children: <Widget>[
         Text(
           Strings.login_label_email,
-          style: AppStyles.subtitle2TextStyle,
+          style: Theme.of(context).textTheme.subtitle2,
         ),
         SizedBox(height: 10.0),
         Container(
@@ -121,7 +120,8 @@ class _LoginPageState extends State<LoginPage> {
               hintText: Strings.login_hint_enter_email,
               hintStyle: AppStyles.kHintTextStyle,
             ),
-            validator: (value) => (value?.isEmpty == false) ? null : Strings.error_required_field,
+            validator: (value) =>
+                (value?.isEmpty == false) ? null : Strings.error_required_field,
           ),
         ),
       ],
@@ -134,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
       children: <Widget>[
         Text(
           Strings.login_label_password,
-          style: AppStyles.subtitle2TextStyle,
+          style: Theme.of(context).textTheme.subtitle2,
         ),
         SizedBox(height: 10.0),
         Container(
@@ -154,7 +154,8 @@ class _LoginPageState extends State<LoginPage> {
               hintText: Strings.login_hint_enter_password,
               hintStyle: AppStyles.kHintTextStyle,
             ),
-            validator: (value) => (value?.isEmpty == false) ? null : Strings.error_required_field,
+            validator: (value) =>
+                (value?.isEmpty == false) ? null : Strings.error_required_field,
           ),
         ),
       ],
@@ -165,13 +166,10 @@ class _LoginPageState extends State<LoginPage> {
     return Container(
       alignment: Alignment.centerRight,
       child: TextButton(
-        onPressed: () => {
-
-        },
+        onPressed: () => {},
         style: TextButton.styleFrom(
-          padding: EdgeInsets.only(right: 0.0),
-          primary: Theme.of(context).colorScheme.onPrimary
-        ),
+            padding: EdgeInsets.only(right: 0.0),
+            primary: Theme.of(context).colorScheme.onPrimary),
         child: Text(
           Strings.login_action_recover_password,
         ),
@@ -181,42 +179,23 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _buildLoginButton(BuildContext context) {
     if (viewModel.error != null) {
-      scaffoldMessengerKey.currentState?.showSnackBar(
-          SnackBar(content: Text(viewModel.error!), duration: const Duration(seconds: 1)));
+      scaffoldMessengerKey.currentState?.showSnackBar(SnackBar(
+          content: Text(viewModel.error!),
+          duration: const Duration(seconds: 1)));
       viewModel.error = null;
     }
 
     return viewModel.loading
         ? Center(child: CircularProgressIndicator())
-        : Container(
-            padding: EdgeInsets.symmetric(vertical: 25.0),
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  _formKey.currentState!.save();
-                  viewModel.signIn(_emailController!.text, _passwordController!.text);
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                elevation: 5.0,
-                padding: EdgeInsets.all(15.0),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),
-                ),
-                primary: Theme.of(context).colorScheme.surface,
-              ),
-              child: Text(
-                Strings.login_action_login,
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onSurface,
-                  letterSpacing: 1.5,
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold
-                ),
-              ),
-            ),
-          );
+        : LoginButton(
+            title: Strings.login_action_login,
+            onPressed: () {
+              if (_formKey.currentState!.validate()) {
+                _formKey.currentState!.save();
+                viewModel.signIn(
+                    _emailController!.text, _passwordController!.text);
+              }
+            });
   }
 
   Widget _buildSignInWithText(BuildContext context) {
@@ -224,12 +203,12 @@ class _LoginPageState extends State<LoginPage> {
       children: <Widget>[
         Text(
           '- OR -',
-          style: AppStyles.body2TextStyle,
+          style: Theme.of(context).textTheme.bodyText2,
         ),
         SizedBox(height: 20.0),
         Text(
           Strings.login_label_sign_in,
-          style: AppStyles.subtitle2TextStyle,
+          style: Theme.of(context).textTheme.subtitle2,
         ),
       ],
     );
@@ -240,7 +219,7 @@ class _LoginPageState extends State<LoginPage> {
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
         onTap: () {
-          Navigator.of(context).pushNamed(RegisterPage.routeName);
+          viewModel.signInWithGoogle();
         },
         child: Container(
           height: 60.0,
@@ -272,11 +251,11 @@ class _LoginPageState extends State<LoginPage> {
             children: [
               TextSpan(
                 text: Strings.login_label_dont_have_account,
-                style: AppStyles.body1TextStyle,
+                style: Theme.of(context).textTheme.bodyText1,
               ),
               TextSpan(
                 text: Strings.login_action_sign_up,
-                style: AppStyles.subtitle1TextStyle,
+                style: Theme.of(context).textTheme.subtitle1,
               ),
             ],
           ),

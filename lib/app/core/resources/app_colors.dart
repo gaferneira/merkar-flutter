@@ -8,6 +8,6 @@ class AppColors {
   static const Color errorColor = Colors.red;
 
   static const Color darkColor = Colors.amber;
-  static const Color darkColorAcent = Colors.amberAccent;
-  static const Color textColorButtomDark = Colors.black;
+  static const Color darkColorAccent = Colors.amberAccent;
+  static const Color textColorButtonDark = Colors.black;
 }
