@@ -1,11 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:merkar/app/core/constants.dart';
-import 'package:merkar/app/core/strings.dart';
+import 'package:merkar/app/core/resources/constants.dart';
+import 'package:merkar/app/core/resources/strings.dart';
 import 'package:merkar/app/pages/favorites/select_my_favorites/select_my_favorites_page.dart';
-import 'package:merkar/data/entities/list_product.dart';
 import 'package:merkar/data/entities/product.dart';
-import 'package:merkar/data/entities/shopping_list.dart';
 import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
 

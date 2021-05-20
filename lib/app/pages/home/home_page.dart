@@ -1,10 +1,10 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:merkar/app/core/constants.dart';
+import 'package:merkar/app/core/resources/constants.dart';
 import 'package:provider/provider.dart';
 
-import '../../../app/core/strings.dart';
+import '../../../app/core/resources/strings.dart';
 import '../../../app/widgets/widgets.dart';
 import '../../../injection_container.dart';
 import '../shopping//new_shopping_list/new_shopping_list_page.dart';
@@ -151,8 +151,8 @@ class _HomePageState extends State<HomePage> {
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(Constant.raduiusBorder),
-                          topLeft: Radius.circular(Constant.raduiusBorder),
+                          topRight: Radius.circular(Constant.radiusBorder),
+                          topLeft: Radius.circular(Constant.radiusBorder),
                         ),
                         color: Colors.white54,
                       ),

@@ -1,14 +1,14 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import 'package:merkar/app/core/constants.dart';
-import 'package:merkar/app/core/strings.dart';
 import 'package:merkar/app/core/extensions/extended_string.dart';
+import 'package:merkar/app/core/resources/constants.dart';
+import 'package:merkar/app/core/resources/strings.dart';
 import 'package:merkar/app/widgets/widgets.dart';
 import 'package:merkar/data/entities/purchase.dart';
 import 'package:merkar/injection_container.dart';
+import 'package:provider/provider.dart';
+
 import '../purchase_history_show_info/purchase_history_show_info_page.dart';
 import 'purchase_history_view_model.dart';
 

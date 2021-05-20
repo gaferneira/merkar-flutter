@@ -1,9 +1,11 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:merkar/app/core/constants.dart';
 import 'package:merkar/app/core/extensions/extended_string.dart';
-import 'package:merkar/app/core/strings.dart';
+import 'package:merkar/app/core/resources/app_colors.dart';
+import 'package:merkar/app/core/resources/app_styles.dart';
+import 'package:merkar/app/core/resources/constants.dart';
+import 'package:merkar/app/core/resources/strings.dart';
 import 'package:merkar/data/entities/list_product.dart';
 import 'package:merkar/data/entities/shopping_list.dart';
 import 'package:merkar/injection_container.dart';
@@ -118,13 +120,13 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                             child: Center(
                                 child: Text(
                               "No seleccionados",
-                              style: Constant.resaltText,
+                              style: Theme.of(context).textTheme.headline6,
                             )),
                           ),
                           (viewModel.unselectedList == null)
                               ? Text(
                                   'Loading...',
-                                  style: Constant.resaltText,
+                                  style: Theme.of(context).textTheme.headline6,
                                 )
                               : _showProductsList(viewModel.unselectedList),
                           Padding(
@@ -132,7 +134,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                             child: Center(
                                 child: Text(
                               "Seleccionados",
-                              style: Constant.resaltText,
+                              style: Theme.of(context).textTheme.headline6,
                             )),
                           ),
                           (viewModel.selectedList == null)
@@ -140,9 +142,9 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                               : _showSelectProductsList(viewModel.selectedList),
                           RaisedButton(
                               child: Text(Strings.label_finish),
-                              color: Constant.lightColor,
-                              textColor: Constant.textColorButtomLight,
-                              shape: Constant.borderRadius,
+                              color: AppColors.lightColor,
+                              textColor: AppColors.textColorButtomLight,
+                              shape: AppStyles.borderRadius,
                               onPressed:onPressed
                                   //() {
                                 //_showFinishDialog(shoppingList);
