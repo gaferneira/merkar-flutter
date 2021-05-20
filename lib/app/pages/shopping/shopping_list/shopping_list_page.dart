@@ -56,16 +56,16 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
 
   @override
   Widget build(BuildContext context) {
+    shoppingList =
+        ModalRoute.of(context)!.settings.arguments as ShoppingList;
+    viewModel.loadData(shoppingList);
+
     var onPressed;
     if(_ennable){
       onPressed=(){
         _showFinishDialog(shoppingList);
-        print("Mostrar dialogo");
       };
     }
-    shoppingList =
-        ModalRoute.of(context)!.settings.arguments as ShoppingList;
-    viewModel.loadData(shoppingList);
 
     return ChangeNotifierProvider<ShoppingListViewModel>.value(
         value: viewModel,
@@ -257,6 +257,10 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   }
 
   Widget _showSelectProductsList(List<ListProduct> listProducts) {
+    if(listProducts.isNotEmpty){
+        _ennable=true;
+      }
+
     return ListView.separated(
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
