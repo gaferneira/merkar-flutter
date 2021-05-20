@@ -1,9 +1,10 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
-
-import 'package:merkar/app/core/constants.dart';
-import 'package:merkar/app/core/strings.dart';
+import 'package:merkar/app/core/resources/app_colors.dart';
+import 'package:merkar/app/core/resources/app_styles.dart';
+import 'package:merkar/app/core/resources/constants.dart';
+import 'package:merkar/app/core/resources/strings.dart';
 
 String? _message = "";
 Future<void> CommentePage(BuildContext context) {
@@ -50,9 +51,9 @@ Future<void> CommentePage(BuildContext context) {
                               ),
                               RaisedButton(
                                 child: Text(Strings.label_send),
-                                color: Constant.lightColor,
-                                textColor: Constant.textColorButtomLight,
-                                shape: Constant.borderRadius,
+                                color: AppColors.lightColor,
+                                textColor: AppColors.textColorButtomLight,
+                                shape: AppStyles.borderRadius,
                                 onPressed: () {
                                   if (keyFormComments.currentState!
                                       .validate()) {

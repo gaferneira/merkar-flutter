@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "217116638618-e00pjfjruo28i5lvbmspcb42mna3bonm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.merkar.app",
+            "certificate_hash": "e913b32397c9a6d8b15f2604bf7364009cc58ecf"
+          }
+        },
+        {
           "client_id": "217116638618-28uts0m3sg2uob68sukcu7ljvjst2oha.apps.googleusercontent.com",
           "client_type": 3
         }

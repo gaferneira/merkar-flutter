@@ -1,5 +1,3 @@
-import '../../data/entities/list_product.dart';
-
 class Strings {
   //Drawer
   static const String route_new_list = 'Nueva lista';
@@ -68,4 +66,28 @@ class Strings {
   static const String tittle_sing_in = "Ingresar";
 
   static const String title_sugger_products = "Sugeridos";
+
+
+  static const String login_label_title = "Sign in";
+
+  static const String login_label_email = "Email";
+
+  static const String login_hint_enter_email = 'Enter your Email';
+  static const String login_hint_enter_password = 'Enter your password';
+
+  static const String error_required_field = "Campo requerido";
+
+  static const String login_label_password = "Password";
+
+  static const String login_action_recover_password = 'Forgot Password?';
+
+  static const String login_label_sign_in = 'Sign in with';
+
+  static const String login_action_login = "LOGIN";
+
+  static const String login_label_dont_have_account = 'Don\'t have an Account? ';
+
+  static const String login_action_sign_up = 'Sign Up';
+
+
 }

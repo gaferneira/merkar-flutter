@@ -1,7 +1,9 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:merkar/app/core/constants.dart';
-import 'package:merkar/app/core/strings.dart';
+import 'package:merkar/app/core/resources/app_colors.dart';
+import 'package:merkar/app/core/resources/app_styles.dart';
+import 'package:merkar/app/core/resources/constants.dart';
+import 'package:merkar/app/core/resources/strings.dart';
 import 'package:merkar/data/entities/product.dart';
 import 'package:merkar/injection_container.dart';
 
@@ -88,9 +90,9 @@ class _CreateNewProductState extends State<CreateNewProduct> {
             Center(
               child: RaisedButton(
                 child: Text(Strings.label_save),
-                color: Constant.lightColor,
-                textColor: Constant.textColorButtomLight,
-                shape: Constant.borderRadius,
+                color: AppColors.lightColor,
+                textColor: AppColors.textColorButtomLight,
+                shape: AppStyles.borderRadius,
                 onPressed: () {
                   _saveNewProduct();
                 },

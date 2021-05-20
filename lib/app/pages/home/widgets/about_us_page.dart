@@ -1,10 +1,11 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:merkar/app/core/resources/app_colors.dart';
+import 'package:merkar/app/core/resources/app_styles.dart';
+import 'package:merkar/app/core/resources/constants.dart';
+import 'package:merkar/app/core/resources/strings.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'package:merkar/app/core/constants.dart';
-import 'package:merkar/app/core/strings.dart';
 
 Future<void> AboutUsPage(BuildContext context) {
   return showDialog(
@@ -126,9 +127,9 @@ Future<void> AboutUsPage(BuildContext context) {
                             ),
                             RaisedButton(
                               child: Text(Strings.label_close),
-                              color: Constant.lightColor,
-                              textColor: Constant.textColorButtomLight,
-                              shape: Constant.borderRadius,
+                              color: AppColors.lightColor,
+                              textColor: AppColors.textColorButtomLight,
+                              shape: AppStyles.borderRadius,
                               onPressed: () {
                                 Navigator.pop(context);
                               },
