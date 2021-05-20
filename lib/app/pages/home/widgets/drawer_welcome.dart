@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:in_app_review/in_app_review.dart';
-import 'package:merkar/app/core/constants.dart';
+import 'package:merkar/app/core/app_colors.dart';
 import 'package:merkar/app/core/strings.dart';
 import 'package:merkar/app/pages/favorites/favorites_list/favorite_list_page.dart';
 import 'package:merkar/app/pages/home/widgets/about_us_page.dart';
 import 'package:merkar/app/pages/home/widgets/comment_page.dart';
 import 'package:merkar/app/pages/login/sign_in/login_view_model.dart';
 import 'package:merkar/injection_container.dart';
+
 import '../../purchases/purchase_history/purchase_history_page.dart';
 import '../../shopping/new_shopping_list/new_shopping_list_page.dart';
 
@@ -42,7 +43,7 @@ class _DrawerWelcomeState extends State<DrawerWelcome> {
       child: ListView(
         children: <Widget>[
           DrawerHeader(
-            decoration: BoxDecoration(color: Constant.lightColor),
+            decoration: BoxDecoration(color: AppColors.lightColor),
             child: Stack(
               children: <Widget>[
                 Align(
@@ -75,11 +76,11 @@ class _DrawerWelcomeState extends State<DrawerWelcome> {
             title: Text(Strings.route_new_list),
             leading: Icon(
               Icons.shopping_cart,
-              color: Constant.lightColor,
+              color: AppColors.lightColor,
             ),
             trailing: Icon(
               Icons.keyboard_arrow_right,
-              color: Constant.lightColor,
+              color: AppColors.lightColor,
             ),
             onTap: () => _goToRoute(DrawerOptions.route_new_list, context),
           ),
@@ -88,11 +89,11 @@ class _DrawerWelcomeState extends State<DrawerWelcome> {
             title: Text(Strings.route_purchase_history),
             leading: Icon(
               Icons.history,
-              color: Constant.lightColor,
+              color: AppColors.lightColor,
             ),
             trailing: Icon(
               Icons.keyboard_arrow_right,
-              color: Constant.lightColor,
+              color: AppColors.lightColor,
             ),
             onTap: () =>
                 _goToRoute(DrawerOptions.route_purchase_history, context),
@@ -102,11 +103,11 @@ class _DrawerWelcomeState extends State<DrawerWelcome> {
             title: Text(Strings.route_favorites),
             leading: Icon(
               Icons.favorite,
-              color: Constant.lightColor,
+              color: AppColors.lightColor,
             ),
             trailing: Icon(
               Icons.keyboard_arrow_right,
-              color: Constant.lightColor,
+              color: AppColors.lightColor,
             ),
             onTap: () => _goToRoute(DrawerOptions.route_favorites, context),
           ),
@@ -115,11 +116,11 @@ class _DrawerWelcomeState extends State<DrawerWelcome> {
             title: Text(Strings.route_comments),
             leading: Icon(
               Icons.comment,
-              color: Constant.lightColor,
+              color: AppColors.lightColor,
             ),
             trailing: Icon(
               Icons.keyboard_arrow_right,
-              color: Constant.lightColor,
+              color: AppColors.lightColor,
             ),
             onTap: () => _goToRoute(DrawerOptions.route_comments, context),
           ),
@@ -128,11 +129,11 @@ class _DrawerWelcomeState extends State<DrawerWelcome> {
             title: Text(Strings.route_about_us),
             leading: Icon(
               Icons.info,
-              color: Constant.lightColor,
+              color: AppColors.lightColor,
             ),
             trailing: Icon(
               Icons.keyboard_arrow_right,
-              color: Constant.lightColor,
+              color: AppColors.lightColor,
             ),
             onTap: () => _goToRoute(DrawerOptions.route_about_us, context),
           ),
@@ -141,7 +142,7 @@ class _DrawerWelcomeState extends State<DrawerWelcome> {
             leading: Icon(
               Icons.close,
               textDirection: TextDirection.rtl,
-              color: Constant.lightColor,
+              color: AppColors.lightColor,
             ),
             title: Text(Strings.route_close_session),
             onTap: () => _goToRoute(DrawerOptions.route_close_session, context),

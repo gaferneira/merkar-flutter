@@ -67,4 +67,19 @@ class AppTheme {
       ),
     ),
   );
+
+  static final ThemeData loginTheme = ThemeData(
+    colorScheme: ColorScheme.dark(
+        primary: Colors.blue,
+        onPrimary: Colors.white,
+        primaryVariant: Color(0xFF205592),
+        secondary: Colors.black12,
+        onSecondary: Colors.grey,
+        surface: Colors.white,
+        onSurface: Color(0xFF205592)
+    ),
+    textTheme: TextTheme(
+
+    ),
+  );
 }
