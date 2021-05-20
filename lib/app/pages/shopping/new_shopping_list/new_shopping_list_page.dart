@@ -1,7 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/extensions/extended_string.dart';
-import 'package:merkar/app/core/strings.dart';
+import 'package:merkar/app/core/resources/strings.dart';
 import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
 

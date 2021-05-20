@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:merkar/app/core/resources/app_images.dart';
 import 'package:merkar/app/core/resources/app_styles.dart';
 import 'package:merkar/app/core/resources/app_theme.dart';
-import 'package:merkar/app/core/strings.dart';
+import 'package:merkar/app/core/resources/strings.dart';
 import 'package:merkar/app/pages/login/sign_in/login_view_model.dart';
 import 'package:merkar/app/pages/login/widgets/background_login.dart';
 import 'package:merkar/app/pages/login/widgets/login_button.dart';
