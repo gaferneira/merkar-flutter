@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:merkar/app/core/resources/app_styles.dart';
+import 'package:merkar/app/core/resources/app_theme.dart';
 import 'package:merkar/app/core/resources/constants.dart';
 import 'package:merkar/app/core/resources/strings.dart';
 import 'package:merkar/app/pages/login/register/register_view_model.dart';
+import 'package:merkar/app/pages/login/widgets/background_login.dart';
+import 'package:merkar/app/pages/login/widgets/login_button.dart';
 import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
 
@@ -12,113 +16,290 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final key_form_register = GlobalKey<FormState>();
-  String name = "";
-  String email = "";
-  String password = "";
-  String confirmPassword = "";
+  final form_register_key = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
+  GlobalKey<ScaffoldMessengerState>();
+  String _name = "";
+  String _email = "";
+  String _password = "";
+  String _confirmPassword = "";
 
   final RegisterViewModel viewModel = serviceLocator<RegisterViewModel>();
+
+  bool _obscurePassword= true;
+  bool _obscureConfirmPassword=true;
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<RegisterViewModel>.value(
         value: viewModel,
         child: Consumer<RegisterViewModel>(
-            builder: (context, model, child) => Scaffold(
-                  appBar: AppBar(
-                    title: Text(Strings.label_register),
-                  ),
-                  body: _showFormRegister(),
-                )));
+            builder: (context, model, child) => Theme(
+              data: AppTheme.loginTheme,
+              child: Builder(
+                builder:(context) => ScaffoldMessenger(
+                  key: scaffoldMessengerKey,
+                  child: Scaffold(
+                        body: _showFormRegister(),
+                      ),
+                ),
+              ),
+            )));
   }
 
   Widget _showFormRegister() {
-    return Padding(
-      padding: const EdgeInsets.all(Constant.normalspace),
-      child: Form(
-        key: key_form_register,
-        child: Column(
-          children: <Widget>[
-            TextFormField(
-              initialValue: "",
-              decoration: InputDecoration(labelText: Strings.label_name),
-              onSaved: (value) {
-                this.name = value ?? "";
-              },
-              validator: (value) {
-                if (value?.isNotEmpty == true) {
-                  return null;
-                } else
-                  return "Llene el nombre";
-              },
-              keyboardType: TextInputType.text,
+    return Form(
+      key: form_register_key,
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Stack(
+          children:<Widget> [
+            BackgroundLogin(),
+            Container(
+            height: double.infinity,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              physics: AlwaysScrollableScrollPhysics(),
+              padding: EdgeInsets.symmetric(
+                horizontal: 40.0,
+                vertical: 60.0,
+              ),
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    Strings.label_register,
+                    style: Theme.of(context).textTheme.headline4,
+                  ),
+                  SizedBox(height: 30.0),
+                 _buildNameTextField(context),
+                  SizedBox(height: 30.0),
+                  _buildEmailTextField(context),
+                  SizedBox(height: 30.0),
+                  _buildPasswordTextField(context),
+                  SizedBox(height: 30.0),
+                  _buildConfirmPasswordTextField(context),
+                  SizedBox(height: 30.0),
+                  _buildRegisterButton(context),
+
+                ],
+              ),
             ),
-            TextFormField(
-              initialValue: "",
-              decoration: InputDecoration(labelText: Strings.label_email),
-              onSaved: (value) {
-                this.email = value ?? "";
-              },
-              validator: (value) {
-                if (value?.isNotEmpty == true) {
-                  return null;
-                } else
-                  return "Llene el email";
-              },
-              keyboardType: TextInputType.emailAddress,
-            ),
-            TextFormField(
-              initialValue: "",
-              decoration: InputDecoration(labelText: Strings.label_password),
-              onSaved: (value) {
-                this.password = value ?? "";
-              },
-              onChanged: (value) {
-                this.password = value;
-              },
-              validator: (value) {
-                if (value?.isNotEmpty == true) {
-                  return null;
-                } else
-                  return "La contraseña es requerida";
-              },
-              keyboardType: TextInputType.text,
-            ),
-            TextFormField(
-              initialValue: "",
-              decoration:
-                  InputDecoration(labelText: Strings.label_confirm_password),
-              onSaved: (value) {
-                this.confirmPassword = value ?? "";
-              },
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return "Confirme la contraseña";
-                }
-                if (value != this.password) {
-                  return "Las constraseñas no coinciden";
-                } else
-                  return null;
-              },
-              keyboardType: TextInputType.text,
-            ),
-            ElevatedButton(
-              child: Text(Strings.label_register),
-              onPressed: () {
-                if (key_form_register.currentState?.validate() == true) {
-                  key_form_register.currentState!.save();
-                  _registerNewUser();
-                }
-              },
-            ),
-          ],
+          ),
+          ]
         ),
       ),
     );
   }
 
-  void _registerNewUser() {
-    viewModel.signUp(context, name, email, password);
+  Widget _buildNameTextField(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          Strings.label_name,
+          style: Theme.of(context).textTheme.subtitle2,
+        ),
+        SizedBox(height: 10.0),
+        Container(
+          alignment: Alignment.centerLeft,
+          decoration: AppStyles.kBoxDecorationStyle,
+          height: 60.0,
+          child: TextFormField(
+            keyboardType: TextInputType.text,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(top: 14.0),
+              prefixIcon: Icon(
+                Icons.person,
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
+              hintText: Strings.login_hint_enter_name,
+              hintStyle: AppStyles.kHintTextStyle,
+            ),
+            onSaved: (value) {
+              this._name = value ?? "";
+            },
+            validator: (value) {
+              if (value?.isNotEmpty == true) {
+                return null;
+              } else
+                return Strings.login_hint_enter_name;
+            },
+          ),
+        ),
+      ]
+    );
   }
+
+  Widget _buildEmailTextField(BuildContext context) {
+    return  Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+      Text(
+      Strings.label_email,
+      style: Theme.of(context).textTheme.subtitle2,
+    ),
+    SizedBox(height: 10.0),
+    Container(
+        alignment: Alignment.centerLeft,
+        decoration: AppStyles.kBoxDecorationStyle,
+        height: 60.0,
+        child: TextFormField(
+          keyboardType: TextInputType.text,
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            contentPadding: EdgeInsets.only(top: 14.0),
+            prefixIcon: Icon(
+              Icons.email,
+              color: Theme.of(context).colorScheme.onPrimary,
+            ),
+            hintText: Strings.login_hint_enter_email,
+            hintStyle: AppStyles.kHintTextStyle,
+          ),
+          onSaved: (value) {
+            this._email = value ?? "";
+          },
+          validator: (value) {
+            if (value?.isNotEmpty == true) {
+              return null;
+            } else
+              return Strings.login_hint_enter_email;
+          },
+        )
+        ),
+      ]
+    );
+  }
+
+  Widget _buildPasswordTextField(BuildContext context) {
+    return  Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+      Text(
+      Strings.label_password,
+      style: Theme.of(context).textTheme.subtitle2,
+    ),
+    SizedBox(height: 10.0),
+    Container(
+    alignment: Alignment.centerLeft,
+    decoration: AppStyles.kBoxDecorationStyle,
+    height: 60.0,
+    child: TextFormField(
+            obscureText: _obscurePassword,
+            keyboardType: TextInputType.text,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(top: 14.0),
+              prefixIcon: Icon(
+                Icons.lock,
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
+              suffixIcon: IconButton(
+                icon: Icon(
+                  Icons.remove_red_eye_sharp,
+                ),
+                onPressed: (){
+                  setState(() {
+                    if(_obscurePassword)
+                      _obscurePassword=false;
+                    else _obscurePassword=true;
+                  });
+                },
+              ),
+              hintText: Strings.login_hint_enter_password,
+              hintStyle: AppStyles.kHintTextStyle,
+            ),
+            onSaved: (value) {
+              this._password = value ?? "";
+            },
+            onChanged: (value) {
+              this._password = value;
+            },
+            validator: (value) {
+              if (value?.isNotEmpty == true) {
+                return null;
+              } else
+                return Strings.login_hint_enter_password;
+            },
+          )
+        ),
+      ]
+    );
+
+  }
+  Widget _buildConfirmPasswordTextField(BuildContext context) {
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+        Text(
+        Strings.label_confirm_password,
+        style: Theme.of(context).textTheme.subtitle2,
+      ),
+    SizedBox(height: 10.0),
+    Container(
+    alignment: Alignment.centerLeft,
+    decoration: AppStyles.kBoxDecorationStyle,
+    height: 60.0,
+    child: TextFormField(
+            obscureText: _obscureConfirmPassword,
+            keyboardType: TextInputType.text,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(top: 14.0),
+              prefixIcon: Icon(
+                Icons.lock,
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
+              suffixIcon: IconButton(
+                icon: Icon(
+                  Icons.remove_red_eye_sharp,
+                ),
+                onPressed: (){
+                  setState(() {
+                    if(_obscureConfirmPassword)
+                      _obscureConfirmPassword=false;
+                    else _obscureConfirmPassword=true;
+                  });
+                },
+              ),
+              hintText: Strings.login_hint_confirm_password,
+              hintStyle: AppStyles.kHintTextStyle,
+            ),
+            onSaved: (value) {
+              this._confirmPassword = value ?? "";
+            },
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return Strings.login_hint_confirm_password;
+              }
+              if (value != this._password) {
+                return Strings.login_hint_password_diferents;
+              } else
+                return null;
+            },
+          )
+          ),
+        ]
+    );
+
+  }
+
+ Widget _buildRegisterButton(BuildContext context) {
+   if (viewModel.error != null) {
+     scaffoldMessengerKey.currentState?.showSnackBar(SnackBar(
+         content: Text(viewModel.error!),
+         duration: const Duration(seconds: 1)));
+     viewModel.error = null;
+   }
+    return LoginButton(
+        title: Strings.label_button_register,
+        onPressed: () {
+          if (form_register_key.currentState?.validate() == true) {
+            form_register_key.currentState!.save();
+            viewModel.signUp(context, _name, _email, _password);
+          }
+        });
+ }
 }
+
+

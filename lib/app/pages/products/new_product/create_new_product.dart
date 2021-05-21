@@ -105,7 +105,7 @@ class _CreateNewProductState extends State<CreateNewProduct> {
   }
 
   void _saveNewProduct() {
-    if (keyNewProduct.currentState?.validate() == true) {
+    if (keyNewProduct.currentState!.validate() == true) {
       keyNewProduct.currentState!.save();
       Product product = new Product(
           category: nameCategory, name: nameProduct, price: price.toString());

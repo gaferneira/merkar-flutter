@@ -20,18 +20,18 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final viewModel = serviceLocator<LoginViewModel>();
 
-  final _formKey = GlobalKey<FormState>();
-  TextEditingController? _emailController;
-  TextEditingController? _passwordController;
+  final _formLogginKey = GlobalKey<FormState>();
+  String? _email="";
+  String? _password="";
 
   final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
       GlobalKey<ScaffoldMessengerState>();
 
+  bool _obscurePassword=true;
+
   @override
   void initState() {
     super.initState();
-    _emailController = TextEditingController(text: "");
-    _passwordController = TextEditingController(text: "");
   }
 
   @override
@@ -46,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
                 key: scaffoldMessengerKey,
                 child: Scaffold(
                   body: Form(
-                    key: _formKey,
+                    key: _formLogginKey,
                     child: GestureDetector(
                       onTap: () => FocusScope.of(context).unfocus(),
                       child: Stack(
@@ -108,7 +108,6 @@ class _LoginPageState extends State<LoginPage> {
           decoration: AppStyles.kBoxDecorationStyle,
           height: 60.0,
           child: TextFormField(
-            controller: _emailController,
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
               border: InputBorder.none,
@@ -120,6 +119,9 @@ class _LoginPageState extends State<LoginPage> {
               hintText: Strings.login_hint_enter_email,
               hintStyle: AppStyles.kHintTextStyle,
             ),
+            onSaved: (value){
+              _email=value;
+            },
             validator: (value) =>
                 (value?.isEmpty == false) ? null : Strings.error_required_field,
           ),
@@ -142,8 +144,7 @@ class _LoginPageState extends State<LoginPage> {
           decoration: AppStyles.kBoxDecorationStyle,
           height: 60.0,
           child: TextFormField(
-            controller: _passwordController,
-            obscureText: true,
+            obscureText: _obscurePassword,
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(top: 14.0),
@@ -151,9 +152,24 @@ class _LoginPageState extends State<LoginPage> {
                 Icons.lock,
                 color: Theme.of(context).colorScheme.onPrimary,
               ),
+              suffixIcon: IconButton(
+                icon: Icon(
+                    Icons.remove_red_eye_sharp,
+                ),
+                onPressed: (){
+                  setState(() {
+                    if(_obscurePassword)
+                    _obscurePassword=false;
+                    else _obscurePassword=true;
+                  });
+                },
+              ),
               hintText: Strings.login_hint_enter_password,
               hintStyle: AppStyles.kHintTextStyle,
             ),
+            onSaved: (value){
+              _password=value;
+            },
             validator: (value) =>
                 (value?.isEmpty == false) ? null : Strings.error_required_field,
           ),
@@ -183,19 +199,18 @@ class _LoginPageState extends State<LoginPage> {
           content: Text(viewModel.error!),
           duration: const Duration(seconds: 1)));
       viewModel.error = null;
-    }
-
-    return viewModel.loading
-        ? Center(child: CircularProgressIndicator())
-        : LoginButton(
-            title: Strings.login_action_login,
-            onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                _formKey.currentState!.save();
-                viewModel.signIn(
-                    _emailController!.text, _passwordController!.text);
-              }
-            });
+      }
+      return viewModel.loading
+          ? Center(child: CircularProgressIndicator())
+          : LoginButton(
+          title: Strings.login_action_login,
+          onPressed: () {
+            if (_formLogginKey.currentState!.validate()) {
+              _formLogginKey.currentState!.save();
+              viewModel.signIn(
+                  _email!, _password!);
+            }
+          });
   }
 
   Widget _buildSignInWithText(BuildContext context) {
@@ -266,8 +281,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void dispose() {
-    _emailController?.dispose();
-    _passwordController?.dispose();
     super.dispose();
   }
 }
