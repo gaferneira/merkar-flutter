@@ -4,6 +4,7 @@ import 'package:merkar/app/core/resources/app_images.dart';
 import 'package:merkar/app/core/resources/app_styles.dart';
 import 'package:merkar/app/core/resources/app_theme.dart';
 import 'package:merkar/app/core/resources/strings.dart';
+import 'package:merkar/app/pages/login/reset_password/reset_password_page.dart';
 import 'package:merkar/app/pages/login/sign_in/login_view_model.dart';
 import 'package:merkar/app/pages/login/widgets/background_login.dart';
 import 'package:merkar/app/pages/login/widgets/login_button.dart';
@@ -182,7 +183,9 @@ class _LoginPageState extends State<LoginPage> {
     return Container(
       alignment: Alignment.centerRight,
       child: TextButton(
-        onPressed: () => {},
+        onPressed: () => {
+          Navigator.of(context).pushNamed(ResetPasswordPage.routeName)
+        },
         style: TextButton.styleFrom(
             padding: EdgeInsets.only(right: 0.0),
             primary: Theme.of(context).colorScheme.onPrimary),
