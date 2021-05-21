@@ -19,7 +19,7 @@ class Strings {
   static const String label_tootip_new_product = "Agregar Nuevo Producto";
   static const String label_save = "Guardar";
   static const String label_edit = "Editar";
-  static const String label_register = "Registrar";
+  static const String label_register = "Registro";
   static const String label_description = "Descripción";
   static const String label_finish = "Finalizar";
   static const String title_my_products = "Productos";
@@ -72,8 +72,11 @@ class Strings {
 
   static const String login_label_email = "Email";
 
-  static const String login_hint_enter_email = 'Enter your Email';
-  static const String login_hint_enter_password = 'Enter your password';
+  static const String login_hint_enter_email = 'Ingresa tu Email';
+  static const String login_hint_enter_password = 'Ingresa tu Contraseña';
+  static const String login_hint_enter_name = 'Ingresa tu Nombre';
+  static const String login_hint_confirm_password = 'Confirma tu Contraseña';
+  static const String login_hint_password_diferents = 'Las Contraseñas No Coinciden';
 
   static const String error_required_field = "Campo requerido";
 
@@ -84,10 +87,13 @@ class Strings {
   static const String login_label_sign_in = 'Sign in with';
 
   static const String login_action_login = "LOGIN";
-
+  static const String login_action_reset = "RESTAURAR";
   static const String login_label_dont_have_account = 'Don\'t have an Account? ';
 
   static const String login_action_sign_up = 'Sign Up';
+
+  static const String label_button_register="REGISTRAR";
+  static const String label_restore_password="Restaurar Contraseña";
 
 
 }

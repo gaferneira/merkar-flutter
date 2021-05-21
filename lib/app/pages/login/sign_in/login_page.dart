@@ -4,6 +4,7 @@ import 'package:merkar/app/core/resources/app_images.dart';
 import 'package:merkar/app/core/resources/app_styles.dart';
 import 'package:merkar/app/core/resources/app_theme.dart';
 import 'package:merkar/app/core/resources/strings.dart';
+import 'package:merkar/app/pages/login/reset_password/reset_password_page.dart';
 import 'package:merkar/app/pages/login/sign_in/login_view_model.dart';
 import 'package:merkar/app/pages/login/widgets/background_login.dart';
 import 'package:merkar/app/pages/login/widgets/login_button.dart';
@@ -21,17 +22,17 @@ class _LoginPageState extends State<LoginPage> {
   final viewModel = serviceLocator<LoginViewModel>();
 
   final _formKey = GlobalKey<FormState>();
-  TextEditingController? _emailController;
-  TextEditingController? _passwordController;
+  String? _email = "";
+  String? _password = "";
 
   final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
       GlobalKey<ScaffoldMessengerState>();
 
+  bool _obscurePassword = true;
+
   @override
   void initState() {
     super.initState();
-    _emailController = TextEditingController(text: "");
-    _passwordController = TextEditingController(text: "");
   }
 
   @override
@@ -108,7 +109,6 @@ class _LoginPageState extends State<LoginPage> {
           decoration: AppStyles.kBoxDecorationStyle,
           height: 60.0,
           child: TextFormField(
-            controller: _emailController,
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
               border: InputBorder.none,
@@ -120,6 +120,12 @@ class _LoginPageState extends State<LoginPage> {
               hintText: Strings.login_hint_enter_email,
               hintStyle: AppStyles.kHintTextStyle,
             ),
+            onChanged: (value) {
+              _email = value;
+            },
+            onSaved: (value) {
+              _email = value;
+            },
             validator: (value) =>
                 (value?.isEmpty == false) ? null : Strings.error_required_field,
           ),
@@ -142,8 +148,7 @@ class _LoginPageState extends State<LoginPage> {
           decoration: AppStyles.kBoxDecorationStyle,
           height: 60.0,
           child: TextFormField(
-            controller: _passwordController,
-            obscureText: true,
+            obscureText: _obscurePassword,
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(top: 14.0),
@@ -151,9 +156,25 @@ class _LoginPageState extends State<LoginPage> {
                 Icons.lock,
                 color: Theme.of(context).colorScheme.onPrimary,
               ),
+              suffixIcon: IconButton(
+                icon: Icon(
+                  Icons.remove_red_eye_sharp,
+                ),
+                onPressed: () {
+                  setState(() {
+                    if (_obscurePassword)
+                      _obscurePassword = false;
+                    else
+                      _obscurePassword = true;
+                  });
+                },
+              ),
               hintText: Strings.login_hint_enter_password,
               hintStyle: AppStyles.kHintTextStyle,
             ),
+            onSaved: (value) {
+              _password = value;
+            },
             validator: (value) =>
                 (value?.isEmpty == false) ? null : Strings.error_required_field,
           ),
@@ -166,7 +187,10 @@ class _LoginPageState extends State<LoginPage> {
     return Container(
       alignment: Alignment.centerRight,
       child: TextButton(
-        onPressed: () => {},
+        onPressed: () => {
+          Navigator.pushNamed(context, ResetPasswordPage.routeName,
+              arguments: _email)
+        },
         style: TextButton.styleFrom(
             padding: EdgeInsets.only(right: 0.0),
             primary: Theme.of(context).colorScheme.onPrimary),
@@ -184,7 +208,6 @@ class _LoginPageState extends State<LoginPage> {
           duration: const Duration(seconds: 1)));
       viewModel.error = null;
     }
-
     return viewModel.loading
         ? Center(child: CircularProgressIndicator())
         : LoginButton(
@@ -192,8 +215,7 @@ class _LoginPageState extends State<LoginPage> {
             onPressed: () {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                viewModel.signIn(
-                    _emailController!.text, _passwordController!.text);
+                viewModel.signIn(_email!, _password!);
               }
             });
   }
@@ -262,12 +284,5 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _emailController?.dispose();
-    _passwordController?.dispose();
-    super.dispose();
   }
 }
