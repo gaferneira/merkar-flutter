@@ -9,9 +9,9 @@ import 'package:merkar/app/pages/login/widgets/login_button.dart';
 import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
 
-
 class ResetPasswordPage extends StatefulWidget {
   static const routeName = "/resetpassword";
+
   @override
   _ResetPasswordPageState createState() => _ResetPasswordPageState();
 }
@@ -19,8 +19,8 @@ class ResetPasswordPage extends StatefulWidget {
 class _ResetPasswordPageState extends State<ResetPasswordPage> {
   final viewModel = serviceLocator<ResetPasswordViewModel>();
 
-  final _formRessetPasswordKey = GlobalKey<FormState>();
-  String? _email="";
+  final _formKey = GlobalKey<FormState>();
+  String? _email = "";
 
   final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
       GlobalKey<ScaffoldMessengerState>();
@@ -32,6 +32,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
 
   @override
   Widget build(BuildContext buildContext) {
+    _email = ModalRoute.of(buildContext)!.settings.arguments as String? ?? "";
     return ChangeNotifierProvider<ResetPasswordViewModel>.value(
         value: viewModel,
         child: Consumer<ResetPasswordViewModel>(
@@ -42,7 +43,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 key: scaffoldMessengerKey,
                 child: Scaffold(
                   body: Form(
-                    key: _formRessetPasswordKey,
+                    key: _formKey,
                     child: GestureDetector(
                       onTap: () => FocusScope.of(context).unfocus(),
                       child: Stack(
@@ -99,6 +100,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
           decoration: AppStyles.kBoxDecorationStyle,
           height: 60.0,
           child: TextFormField(
+            initialValue: _email,
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
               border: InputBorder.none,
@@ -110,8 +112,8 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
               hintText: Strings.login_hint_enter_email,
               hintStyle: AppStyles.kHintTextStyle,
             ),
-            onSaved: (value){
-              _email=value;
+            onSaved: (value) {
+              _email = value;
             },
             validator: (value) =>
                 (value?.isEmpty == false) ? null : Strings.error_required_field,
@@ -127,18 +129,17 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
           content: Text(viewModel.error!),
           duration: const Duration(seconds: 1)));
       viewModel.error = null;
-      }
-      return viewModel.loading
-          ? Center(child: CircularProgressIndicator())
-          : LoginButton(
-          title: Strings.login_action_reset,
-          onPressed: () {
-            if (_formRessetPasswordKey.currentState!.validate()) {
-              _formRessetPasswordKey.currentState!.save();
-              viewModel.recoverPassword(
-                  _email!, context);
-            }
-          });
+    }
+    return viewModel.loading
+        ? Center(child: CircularProgressIndicator())
+        : LoginButton(
+            title: Strings.login_action_reset,
+            onPressed: () {
+              if (_formKey.currentState!.validate()) {
+                _formKey.currentState!.save();
+                viewModel.recoverPassword(_email!, context);
+              }
+            });
   }
 
   @override

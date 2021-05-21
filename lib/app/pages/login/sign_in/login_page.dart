@@ -21,14 +21,14 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final viewModel = serviceLocator<LoginViewModel>();
 
-  final _formLogginKey = GlobalKey<FormState>();
-  String? _email="";
-  String? _password="";
+  final _formKey = GlobalKey<FormState>();
+  String? _email = "";
+  String? _password = "";
 
   final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
       GlobalKey<ScaffoldMessengerState>();
 
-  bool _obscurePassword=true;
+  bool _obscurePassword = true;
 
   @override
   void initState() {
@@ -47,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
                 key: scaffoldMessengerKey,
                 child: Scaffold(
                   body: Form(
-                    key: _formLogginKey,
+                    key: _formKey,
                     child: GestureDetector(
                       onTap: () => FocusScope.of(context).unfocus(),
                       child: Stack(
@@ -120,8 +120,11 @@ class _LoginPageState extends State<LoginPage> {
               hintText: Strings.login_hint_enter_email,
               hintStyle: AppStyles.kHintTextStyle,
             ),
-            onSaved: (value){
-              _email=value;
+            onChanged: (value) {
+              _email = value;
+            },
+            onSaved: (value) {
+              _email = value;
             },
             validator: (value) =>
                 (value?.isEmpty == false) ? null : Strings.error_required_field,
@@ -155,21 +158,22 @@ class _LoginPageState extends State<LoginPage> {
               ),
               suffixIcon: IconButton(
                 icon: Icon(
-                    Icons.remove_red_eye_sharp,
+                  Icons.remove_red_eye_sharp,
                 ),
-                onPressed: (){
+                onPressed: () {
                   setState(() {
-                    if(_obscurePassword)
-                    _obscurePassword=false;
-                    else _obscurePassword=true;
+                    if (_obscurePassword)
+                      _obscurePassword = false;
+                    else
+                      _obscurePassword = true;
                   });
                 },
               ),
               hintText: Strings.login_hint_enter_password,
               hintStyle: AppStyles.kHintTextStyle,
             ),
-            onSaved: (value){
-              _password=value;
+            onSaved: (value) {
+              _password = value;
             },
             validator: (value) =>
                 (value?.isEmpty == false) ? null : Strings.error_required_field,
@@ -184,7 +188,8 @@ class _LoginPageState extends State<LoginPage> {
       alignment: Alignment.centerRight,
       child: TextButton(
         onPressed: () => {
-          Navigator.of(context).pushNamed(ResetPasswordPage.routeName)
+          Navigator.pushNamed(context, ResetPasswordPage.routeName,
+              arguments: _email)
         },
         style: TextButton.styleFrom(
             padding: EdgeInsets.only(right: 0.0),
@@ -202,18 +207,17 @@ class _LoginPageState extends State<LoginPage> {
           content: Text(viewModel.error!),
           duration: const Duration(seconds: 1)));
       viewModel.error = null;
-      }
-      return viewModel.loading
-          ? Center(child: CircularProgressIndicator())
-          : LoginButton(
-          title: Strings.login_action_login,
-          onPressed: () {
-            if (_formLogginKey.currentState!.validate()) {
-              _formLogginKey.currentState!.save();
-              viewModel.signIn(
-                  _email!, _password!);
-            }
-          });
+    }
+    return viewModel.loading
+        ? Center(child: CircularProgressIndicator())
+        : LoginButton(
+            title: Strings.login_action_login,
+            onPressed: () {
+              if (_formKey.currentState!.validate()) {
+                _formKey.currentState!.save();
+                viewModel.signIn(_email!, _password!);
+              }
+            });
   }
 
   Widget _buildSignInWithText(BuildContext context) {
@@ -280,10 +284,5 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 }

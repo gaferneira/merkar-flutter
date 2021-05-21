@@ -35,7 +35,7 @@ class LoginViewModel with ChangeNotifier {
   }
 
   void signInWithGoogle() async {
-     repository.signInWithGoogle().then((result) {
+    repository.signInWithGoogle().then((result) {
       if (result != null) {
         error = result;
         notifyListeners();
