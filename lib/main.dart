@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/resources/app_theme.dart';
+import 'package:merkar/app/pages/login/widgets/background_login.dart';
 import 'package:provider/provider.dart';
 
 import 'app/pages/favorites/favorites_list/favorite_list_page.dart';
@@ -88,10 +89,6 @@ class AuthenticationPage extends StatelessWidget {
 class Splash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Center(
-        child: Text("Splash Screen"),
-      ),
-    );
+    return BackgroundLogin();
   }
 }

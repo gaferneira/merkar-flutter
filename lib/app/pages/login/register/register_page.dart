@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/resources/app_styles.dart';
 import 'package:merkar/app/core/resources/app_theme.dart';
-import 'package:merkar/app/core/resources/constants.dart';
 import 'package:merkar/app/core/resources/strings.dart';
 import 'package:merkar/app/pages/login/register/register_view_model.dart';
 import 'package:merkar/app/pages/login/widgets/background_login.dart';
@@ -30,7 +29,7 @@ class _RegisterPageState extends State<RegisterPage> {
   bool _obscureConfirmPassword=true;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext buildContext) {
     return ChangeNotifierProvider<RegisterViewModel>.value(
         value: viewModel,
         child: Consumer<RegisterViewModel>(
@@ -40,14 +39,14 @@ class _RegisterPageState extends State<RegisterPage> {
                 builder:(context) => ScaffoldMessenger(
                   key: scaffoldMessengerKey,
                   child: Scaffold(
-                        body: _showFormRegister(),
+                        body: _showFormRegister(context),
                       ),
                 ),
               ),
             )));
   }
 
-  Widget _showFormRegister() {
+  Widget _showFormRegister(BuildContext context) {
     return Form(
       key: form_register_key,
       child: GestureDetector(
