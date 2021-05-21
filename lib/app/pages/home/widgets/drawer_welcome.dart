@@ -27,15 +27,15 @@ class DrawerWelcome extends StatefulWidget {
   DrawerWelcome({this.displayName, this.displayEmail});
 
   @override
-  _DrawerWelcomeState createState() => _DrawerWelcomeState();
+  _DrawerWelcomeState createState() =>
+      _DrawerWelcomeState(this.displayName, this.displayEmail);
 }
 
 class _DrawerWelcomeState extends State<DrawerWelcome> {
   final InAppReview inAppReview = InAppReview.instance;
-  final String? displayName;
-  final String? displayEmail;
-
-  _DrawerWelcomeState({this.displayName, this.displayEmail});
+  String? displayName;
+  String? displayEmail;
+  _DrawerWelcomeState(this.displayName, this.displayEmail);
 
   @override
   Widget build(BuildContext context) {

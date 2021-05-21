@@ -19,6 +19,7 @@ class ShoppingListViewModel extends ChangeNotifier {
   late List<ListProduct> unselectedList = [];
   late List<ListProduct> selectedList = [];
   String? error;
+  bool? ennable;
 
   Future<void> loadData(ShoppingList shoppingList) async {
     this.shoppingList = shoppingList;
@@ -44,6 +45,11 @@ class ShoppingListViewModel extends ChangeNotifier {
         unselectedList.add(product);
       }
     });
+   // unselectedList=unselectedList.toList()..sort();
+    if(selectedList.isNotEmpty){
+        ennable=true;
+      }
+    else ennable=false;
 
     notifyListeners();
   }
@@ -101,10 +107,10 @@ class ShoppingListViewModel extends ChangeNotifier {
       case SingingCharacter.nothing:
         break;
     }
-
-    var count = 0;
-    Navigator.popUntil(context, (route) {
-      return count++ == 2;
-    });
+    Navigator.of(context).popUntil((route) => route.isFirst);
+  }
+  Future<void> removeProduct(String productId, ShoppingList list)async {
+    repository.removeProduct(productId, list);
+    notifyListeners();
   }
 }

@@ -39,9 +39,10 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   ];
 
   SingingCharacter _character = SingingCharacter.nothing;
-
+  ShoppingList shoppingList= new ShoppingList();
   var _selectedId;
   String? _selected;
+  bool _ennable=false;
 
   onItemChangedSelect(String value) {
     viewModel.selectedList = viewModel.filterselectedList!
@@ -57,9 +58,16 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
 
   @override
   Widget build(BuildContext context) {
-    final shoppingList =
+    shoppingList =
         ModalRoute.of(context)!.settings.arguments as ShoppingList;
     viewModel.loadData(shoppingList);
+
+    var onPressed;
+    if(_ennable){
+      onPressed=(){
+        _showFinishDialog(shoppingList);
+      };
+    }
 
     return ChangeNotifierProvider<ShoppingListViewModel>.value(
         value: viewModel,
@@ -96,9 +104,10 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                         Bounce(
                           child: IconButton(
                             icon: Icon(Icons.check_circle),
-                            onPressed: () {
-                              _showFinishDialog(shoppingList);
-                            },
+                            onPressed:onPressed
+                                //() {
+                              //_showFinishDialog(shoppingList);
+                           // },
                           ),
                         ),
                       ],
@@ -136,9 +145,11 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                               color: AppColors.lightColor,
                               textColor: AppColors.textColorButtomLight,
                               shape: AppStyles.borderRadius,
-                              onPressed: () {
-                                _showFinishDialog(shoppingList);
-                              }),
+                              onPressed:onPressed
+                                  //() {
+                                //_showFinishDialog(shoppingList);
+                              //}
+                            ),
                         ],
                       ),
                     ),
@@ -195,42 +206,63 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       ),
       itemCount: listProducts.length,
       itemBuilder: (context, index) {
-        return CheckboxListTile(
-          title: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                "${listProducts[index].name}",
-              ),
-              Row(
-                children: <Widget>[
-                  Text(
-                      "${listProducts[index].quantity} a \$ ${listProducts[index].price}"),
-                ],
-              )
-            ],
-          ),
-          controlAffinity: ListTileControlAffinity.leading,
-          onChanged: (bool? value) {
-            viewModel.selectProduct(index);
-          },
-          secondary: IconButton(
-            icon: Icon(Icons.edit),
-            tooltip: Strings.label_edit,
-            onPressed: () {
-              _showEditProduct(listProducts[index], context);
+        return Dismissible(
+          child: CheckboxListTile(
+            title: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  "${listProducts[index].name}",
+                ),
+                Row(
+                  children: <Widget>[
+                    Text(
+                        "${listProducts[index].quantity} a \$ ${listProducts[index].price}"),
+                  ],
+                )
+              ],
+            ),
+            controlAffinity: ListTileControlAffinity.leading,
+            onChanged: (bool? value) {
+              viewModel.selectProduct(index);
+              setState(() {
+                _ennable=true;
+              });
             },
+            secondary: IconButton(
+              icon: Icon(Icons.edit),
+              tooltip: Strings.label_edit,
+              onPressed: () {
+                _showEditProduct(listProducts[index], context);
+              },
+            ),
+            value: listProducts[index].selected,
+            activeColor: Colors.cyan,
+            checkColor: Colors.green,
           ),
-          value: listProducts[index].selected,
-          activeColor: Colors.cyan,
-          checkColor: Colors.green,
+          background: Container(color: Colors.red,child: Icon(Icons.cancel),),
+          key: Key(listProducts[index].id!),
+          onDismissed: (direction){
+            viewModel.removeProduct(listProducts[index].id!, shoppingList);
+            listProducts.removeAt(index);
+            Scaffold
+                .of(context)
+                .showSnackBar(SnackBar(content: Text("$index Eliminado")));
+            viewModel.notifyListeners();
+
+          },
+
         );
       },
     );
   }
 
   Widget _showSelectProductsList(List<ListProduct> listProducts) {
+    if(listProducts.isNotEmpty){
+        _ennable=true;
+      }
+
     return ListView.separated(
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
@@ -239,39 +271,56 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       ),
       itemCount: listProducts.length,
       itemBuilder: (context, index) {
-        return CheckboxListTile(
-          title: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                "${listProducts[index].name}",
-              ),
-              Row(
-                children: <Widget>[
-                  Text(
-                      "${listProducts[index].quantity} = ${listProducts[index].price}"),
-                ],
-              )
-            ],
-          ),
-          controlAffinity: ListTileControlAffinity.leading,
-          onChanged: (bool? value) {
-            if (value == true)
-              viewModel.selectProduct(index);
-            else
-              viewModel.unselectProduct(index);
-          },
-          secondary: IconButton(
-            icon: Icon(Icons.edit),
-            tooltip: Strings.label_edit,
-            onPressed: () {
-              _showEditProduct(listProducts[index], context);
+        return Dismissible(
+          child: CheckboxListTile(
+            title: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  "${listProducts[index].name}",
+                ),
+                Row(
+                  children: <Widget>[
+                    Text(
+                        "${listProducts[index].quantity} = ${listProducts[index].price}"),
+                  ],
+                )
+              ],
+            ),
+            controlAffinity: ListTileControlAffinity.leading,
+            onChanged: (bool? value) {
+              if (value == true)
+                viewModel.selectProduct(index);
+              else {
+                viewModel.unselectProduct(index);
+                if(viewModel.selectedList.isEmpty){
+                  setState(() {
+                    _ennable=false;
+                  });
+                }
+              }
             },
+            secondary: IconButton(
+              icon: Icon(Icons.edit),
+              tooltip: Strings.label_edit,
+              onPressed: () {
+                _showEditProduct(listProducts[index], context);
+              },
+            ),
+            value: listProducts[index].selected,
+            activeColor: Colors.cyan,
+            checkColor: Colors.green,
           ),
-          value: listProducts[index].selected,
-          activeColor: Colors.cyan,
-          checkColor: Colors.green,
+          key: Key(listProducts[index].id!),
+          background: Container(color: Colors.red,child: Icon(Icons.cancel)),
+          onDismissed: (direction){
+            viewModel.removeProduct(listProducts[index].id!, shoppingList);
+            listProducts.removeAt(index);
+            Scaffold
+                .of(context)
+                .showSnackBar(SnackBar(content:Text("$index Eliminado")));
+          },
         );
         /*return ListTile(
           title: Text("${listProducts[index].name}"),
@@ -450,7 +499,6 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                             if (value != null) {
                               setState(() {
                                 _character = value;
-                                print(_character);
                               });
                             }
                           },
@@ -465,7 +513,6 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                             if (value != null) {
                               setState(() {
                                 _character = value;
-                                print(_character);
                               });
                             }
                           },
@@ -480,7 +527,6 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                             if (value != null) {
                               setState(() {
                                 _character = value;
-                                print(_character);
                               });
                             }
                           },

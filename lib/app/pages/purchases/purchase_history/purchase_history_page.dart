@@ -40,8 +40,9 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
   @override
   Widget build(BuildContext context) {
     final _scaffKey = GlobalKey<ScaffoldState>();
-    return ChangeNotifierProvider<PurchaseHistoryViewModel>(
-      create: (context) => viewModel,
+    return ChangeNotifierProvider<PurchaseHistoryViewModel>.value(
+      //create: (context) => viewModel,
+      value: viewModel,
       child: Consumer<PurchaseHistoryViewModel>(
         builder: (context, model, child) => JelloIn(
           duration: Duration(seconds: 1),

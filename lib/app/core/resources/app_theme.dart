@@ -1,23 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:merkar/app/core/resources/app_colors.dart';
 
 class AppTheme {
 
   AppTheme._();
 
   static final ThemeData lightTheme = ThemeData(
-    scaffoldBackgroundColor: Colors.teal,
+    scaffoldBackgroundColor: Colors.white,
     appBarTheme: AppBarTheme(
-      color: Colors.teal,
+      color: AppColors.primaryDarkColor,
       iconTheme: IconThemeData(
         color: Colors.white,
       ),
     ),
     colorScheme: ColorScheme.light(
-      primary: Colors.white,
+      primary: AppColors.primaryColor,
       onPrimary: Colors.white,
-      primaryVariant: Colors.white38,
-      secondary: Colors.red,
-    ),
+      primaryVariant: AppColors.primaryDarkColor,
+      secondary: AppColors.secondaryColor,
+      secondaryVariant: AppColors.secondaryDarkColor,
+      surface: Colors.white
+  ),
     cardTheme: CardTheme(
       color: Colors.teal,
     ),

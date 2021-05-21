@@ -76,7 +76,7 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
                     ),
                     body: SingleChildScrollView(
                       child: Column(
-                        children: [
+                       children: [
                           (viewModel.userProducts == null)
                               ? Text('Loading...')
                               : _showProductsList(viewModel.userProducts),
@@ -96,6 +96,7 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
 
   Widget _showProductsList(List<Product>? userProducts) {
     return ListView.separated(
+        physics: NeverScrollableScrollPhysics(),
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         separatorBuilder: (context, index) => Divider(

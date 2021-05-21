@@ -71,4 +71,5 @@ class ProductsRepositoryImpl implements ProductsRepository {
   CollectionReference getDefaultCollection() {
     return firestoreDataSource.db.collection(COLLECTION_DEFAULT_PRODUCTS);
   }
+
 }

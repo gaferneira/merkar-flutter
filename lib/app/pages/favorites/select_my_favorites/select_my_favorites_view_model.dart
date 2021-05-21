@@ -33,11 +33,14 @@ class SelectMyFavoritesViewModel extends ChangeNotifier {
       userProducts = data;
       error = null;
       updateList();
+      notifyListeners();
+
     }, onError: (e) {
       error = e;
       notifyListeners();
     });
     updateList();
+    notifyListeners();
   }
 
   void updateList() {
