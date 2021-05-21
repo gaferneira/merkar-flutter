@@ -87,12 +87,13 @@ class Strings {
   static const String login_label_sign_in = 'Sign in with';
 
   static const String login_action_login = "LOGIN";
-
+  static const String login_action_reset = "RESTAURAR";
   static const String login_label_dont_have_account = 'Don\'t have an Account? ';
 
   static const String login_action_sign_up = 'Sign Up';
 
-  static var label_button_register="REGISTRAR";
+  static const String label_button_register="REGISTRAR";
+  static const String label_restore_password="Restaurar Contraseña";
 
 
 }

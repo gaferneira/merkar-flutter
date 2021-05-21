@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/resources/app_theme.dart';
+import 'package:merkar/app/pages/login/reset_password/reset_password_page.dart';
 import 'package:provider/provider.dart';
 
 import 'app/pages/favorites/favorites_list/favorite_list_page.dart';
@@ -53,6 +54,7 @@ class MyApp extends StatelessWidget {
         SelectMyProductsPage.routeName: (context) => SelectMyProductsPage(),
         CreateNewProduct.routeName: (context) => CreateNewProduct(),
         RegisterPage.routeName: (context) => RegisterPage(),
+        ResetPasswordPage.routeName:(context)=>ResetPasswordPage(),
         HomePage.routeName: (context) => HomePage(),
         FavoriteListPage.routeName: (context) => FavoriteListPage(),
         SelectMyFavoritesPage.routeName: (context) => SelectMyFavoritesPage(),
