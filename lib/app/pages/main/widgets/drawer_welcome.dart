@@ -158,7 +158,7 @@ class _DrawerWelcomeState extends State<DrawerWelcome> {
       case DrawerOptions.route_new_list:
         {
           Navigator.of(context).pop();
-          Navigator.of(context).pushNamed(NewShoppingListPage.routeName);
+         // Navigator.of(context).pushNamed(NewShoppingListPage.routeName);
           break;
         }
       case DrawerOptions.route_favorites:

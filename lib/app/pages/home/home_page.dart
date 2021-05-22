@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import '../../../app/widgets/widgets.dart';
 import '../../../injection_container.dart';
 import '../../core/resources/strings.dart';
-import '../shopping//new_shopping_list/new_shopping_list_page.dart';
+import '../shopping/new_shopping_list/new_shopping_list_page.dart';
 import 'home_view_model.dart';
 import 'widgets/sliver_fab.dart';
 
@@ -28,8 +28,9 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-  void _goToCreateList() async {
-    Navigator.of(context).pushNamed(NewShoppingListPage.routeName);
+  void _goToCreateList(BuildContext context) async {
+    NewShoppingListPage(context);
+    //Navigator.of(context).pushNamed(NewShoppingListPage.routeName);
   }
 
   onItemChanged(String value) {
@@ -52,7 +53,7 @@ class _HomePageState extends State<HomePage> {
           body: new SliverContainer(
             floatingActionButton: FloatingActionButton(
               heroTag: "new_list",
-              onPressed: _goToCreateList,
+              onPressed: ()=>_goToCreateList(context),
               tooltip: Strings.label_tootip_new_list,
               child: Icon(Icons.add),
             ),

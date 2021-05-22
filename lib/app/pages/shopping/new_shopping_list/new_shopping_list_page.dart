@@ -6,40 +6,24 @@ import 'package:provider/provider.dart';
 
 import 'new_shopping_list_view_model.dart';
 
-class NewShoppingListPage extends StatefulWidget {
-  static const routeName = "/newlist";
+String? nameList;
+final formListKey = GlobalKey<FormState>();
+NewShoppingListViewModel viewModel =
+serviceLocator<NewShoppingListViewModel>();
 
-  @override
-  _NewShoppingListPageState createState() => _NewShoppingListPageState();
+Future<void> NewShoppingListPage(BuildContext context) {
+
+  return showDialog(
+    context: context,
+    builder: (context)=>AlertDialog(
+          title: Text(Strings.label_create_new_list),
+        content: StatefulBuilder(
+           builder : (BuildContext context, StateSetter setState)=>_fromNewList(viewModel, context)
+    ),
+      ),
+  );
+
 }
-
-class _NewShoppingListPageState extends State<NewShoppingListPage> {
-
-  String? nameList;
-  final formListKey = GlobalKey<FormState>();
-
-  NewShoppingListViewModel viewModel =
-      serviceLocator<NewShoppingListViewModel>();
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider<NewShoppingListViewModel>.value(
-      value: viewModel,
-      child: Consumer<NewShoppingListViewModel>(
-        builder: (context, model, child) =>  Scaffold(
-            appBar: AppBar(
-              title: Text(Strings.label_create_new_list),
-            ),
-            body: _fromNewList(viewModel, context),
-          ),
-        ),
-    );
-  }
 
   Widget _fromNewList(
       NewShoppingListViewModel viewModel, BuildContext context) {
@@ -87,4 +71,4 @@ class _NewShoppingListPageState extends State<NewShoppingListPage> {
   void _showDefaultSugger(String value) {
     //Search a suggered name to a old list of shoppinglist
   }
-}
+

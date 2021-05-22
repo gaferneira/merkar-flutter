@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
         PurchaseHistoryPage.routeName: (context) => PurchaseHistoryPage(),
         PurchaseHistoryShowInfoPage.routeName: (context) =>
             PurchaseHistoryShowInfoPage(),
-        NewShoppingListPage.routeName: (context) => NewShoppingListPage(),
+        //NewShoppingListPage.routeName: (context) => NewShoppingListPage(),
         SelectMyProductsPage.routeName: (context) => SelectMyProductsPage(),
         CreateNewProduct.routeName: (context) => CreateNewProduct(),
         RegisterPage.routeName: (context) => RegisterPage(),
