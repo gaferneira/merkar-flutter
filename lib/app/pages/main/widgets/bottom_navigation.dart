@@ -23,6 +23,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+
       type: BottomNavigationBarType.fixed,
       items: [
         BottomNavigationBarItem(

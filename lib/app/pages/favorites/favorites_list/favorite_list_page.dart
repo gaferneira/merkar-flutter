@@ -76,6 +76,7 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
                     ),
                   ),
                   floatingActionButton: FloatingActionButton(
+                    heroTag: "add_favorite",
                     onPressed: () => {_showListSuggerProducts(context)},
                     tooltip: Strings.label_tootip_add_products,
                     child: Icon(Icons.add),

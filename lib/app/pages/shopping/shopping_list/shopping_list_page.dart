@@ -156,6 +156,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                     floatingActionButton: Pulse(
                       infinite: true,
                       child: FloatingActionButton(
+                        heroTag: "add_product",
                         onPressed: () =>
                             {_showListSuggerProducts(context, shoppingList)},
                         tooltip: Strings.label_tootip_add_products,

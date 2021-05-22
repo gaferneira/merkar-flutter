@@ -159,6 +159,7 @@ class _HomePageState extends State<HomePage> {
                 ]),
           ),
           floatingActionButton: FloatingActionButton(
+            heroTag: "new_list",
             onPressed: _goToCreateList,
             tooltip: Strings.label_tootip_new_list,
             child: Icon(Icons.add),
