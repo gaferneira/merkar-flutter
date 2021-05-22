@@ -7,38 +7,37 @@ import 'package:merkar/data/entities/shopping_list.dart';
 
 Widget shoppingListsDisplay(List<ShoppingList> list) {
   if (list.length == 0) {
-    return Padding(
-      padding: const EdgeInsets.all(Constant.normalspace),
-      child: Center(child: Text(Strings.noCategoriesAvailable)),
+    return SliverFillRemaining(
+      child: Padding(
+        padding: const EdgeInsets.all(Constant.normalspace),
+        child: Center(child: Text(Strings.noCategoriesAvailable)),
+      ),
     );
   }
-  return Expanded(
-    child: listProducts(list),
-  );
+  return  listProducts(list);
 }
 
 Widget listProducts(List<ShoppingList> list) {
-  return ListView.separated(
-    scrollDirection: Axis.vertical,
-    shrinkWrap: true,
-    separatorBuilder: (context, index) => Divider(
-      color: Colors.black,
+  return SliverList(
+    delegate: SliverChildBuilderDelegate(
+          (BuildContext context, int index) {
+        return Container(
+          color: index.isOdd ? Colors.white : Colors.black12,
+          height: 100.0,
+          child: ListTile(
+            title: Text(list[index].name!.capitalize()),
+            trailing: Icon(Icons.arrow_right),
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                ShoppingListPage.routeName,
+                arguments: list[index],
+              );
+            },
+          ),
+        );
+      },
+      childCount: list.length,
     ),
-    //scroll the listView
-    physics: const NeverScrollableScrollPhysics(),
-    itemCount: list.length,
-    itemBuilder: (context, index) {
-      return ListTile(
-        title: Text(list[index].name!.capitalize()),
-        trailing: Icon(Icons.arrow_right),
-        onTap: () {
-          Navigator.pushNamed(
-            context,
-            ShoppingListPage.routeName,
-            arguments: list[index],
-          );
-        },
-      );
-    },
   );
 }

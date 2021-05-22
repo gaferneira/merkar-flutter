@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:merkar/app/pages/home/widgets/shopping_lists_display.dart';
 import 'package:merkar/app/pages/shopping/shopping_list/shopping_list_page.dart';
 import 'package:merkar/data/entities/shopping_list.dart';
 import 'package:merkar/app/core/extensions/extended_string.dart';
@@ -112,7 +113,7 @@ class _HomePageState extends State<HomePage> {
              const SliverToBoxAdapter(child: SizedBox(height: 30.0,)),
               (viewModel.list == null)
                   ? SliverFillRemaining(child: Center(child: LoadingWidget()))
-                  : shoppingListsDisplayItems(viewModel.list!),
+                  : shoppingListsDisplay(viewModel.list!),
             ],
           ),
           floatingActionButton: FloatingActionButton(
@@ -128,30 +129,5 @@ class _HomePageState extends State<HomePage> {
 
   void changeTheme() {
     viewModel.changeTheme();
-  }
-
-  Widget shoppingListsDisplayItems(List<ShoppingList> list) {
-    return SliverList(
-      delegate: SliverChildBuilderDelegate(
-            (BuildContext context, int index) {
-              return Container(
-                color: index.isOdd ? Colors.white : Colors.black12,
-                height: 100.0,
-                child: ListTile(
-                  title: Text(list[index].name!.capitalize()),
-                  trailing: Icon(Icons.arrow_right),
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      ShoppingListPage.routeName,
-                      arguments: list[index],
-                    );
-                  },
-                ),
-              );
-        },
-        childCount: list.length,
-      ),
-    );
   }
 }
