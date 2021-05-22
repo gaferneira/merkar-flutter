@@ -21,19 +21,28 @@ Widget listProducts(List<ShoppingList> list) {
   return SliverList(
     delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
-        return Container(
-          color: index.isOdd ? Colors.white : Colors.black12,
-          height: 100.0,
-          child: ListTile(
-            title: Text(list[index].name!.capitalize()),
-            trailing: Icon(Icons.arrow_right),
-            onTap: () {
-              Navigator.pushNamed(
-                context,
-                ShoppingListPage.routeName,
-                arguments: list[index],
-              );
-            },
+        return Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(
+                  Radius.circular(25)
+                ),
+              color: index.isOdd ? Colors.blue : Colors.black38,
+
+            ),
+            height: 75.0,
+            child: ListTile(
+              title: Text(list[index].name!.capitalize()),
+              trailing: Icon(Icons.arrow_right),
+              onTap: () {
+                Navigator.pushNamed(
+                  context,
+                  ShoppingListPage.routeName,
+                  arguments: list[index],
+                );
+              },
+            ),
           ),
         );
       },
