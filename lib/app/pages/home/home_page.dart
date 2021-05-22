@@ -1,7 +1,8 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:merkar/app/core/resources/constants.dart';
+import 'package:merkar/app/pages/shopping/shopping_list/shopping_list_page.dart';
+import 'package:merkar/data/entities/shopping_list.dart';
+import 'package:merkar/app/core/extensions/extended_string.dart';
 import 'package:provider/provider.dart';
 
 import '../../../app/widgets/widgets.dart';
@@ -9,7 +10,6 @@ import '../../../injection_container.dart';
 import '../../core/resources/strings.dart';
 import '../shopping//new_shopping_list/new_shopping_list_page.dart';
 import 'home_view_model.dart';
-import 'widgets/shopping_lists_display.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = '/home';
@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
       child: Consumer<HomePageViewModel>(
         builder: (context, model, child) => Scaffold(
           key: _scaffKey,
-          appBar: AppBar(
+          /*appBar: AppBar(
             title: Container(
               width: double.infinity,
               height: 50.0,
@@ -92,71 +92,28 @@ class _HomePageState extends State<HomePage> {
               )*/
             ],
           ),
-          // drawer: DrawerWelcome(),
-          body: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Column(
-                // crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Stack(children: <Widget>[
-                    Container(
-                      width: double.infinity,
-                      height: 150.0,
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                        colors: [Colors.white70, Colors.white70],
+           drawer: DrawerWelcome(),
+           */
 
-                        // colors: [Colors.cyan[300], Colors.cyan[800]]
-                      )),
-                      child: ZoomIn(
-                        duration: Duration(
-                          seconds: 1,
-                        ),
-                        child: Image.asset(
-                          'assets/images/logo.png',
-                          width: 10.0,
-                        ),
-                      ),
-                    ),
-                  ]),
-                  /* Padding(
-                    padding: const EdgeInsets.all(Constant.normalspace),
-                    child: Form(
-                      key: _key_search,
-                      child: SizedBox(
-                        height: 30,
-                        child: TextField(
-                          controller: _search_textController,
-                          decoration: InputDecoration(
-                            labelText: 'Buscar Actual...',
-                            //hintText: ,
-                          ),
-                          textDirection: TextDirection.ltr,
-                          onChanged: onItemChanged,
-                        ),
-                      ),
-                    ),
-                  ),*/
-
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(Constant.radiusBorder),
-                        topLeft: Radius.circular(Constant.radiusBorder),
-                      ),
-                      color: Colors.white54,
-                    ),
-                    child: Row(
-                      //  mainAxisAlignment: MainAxisAlignment.center,
-                      // crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        (viewModel.list == null)
-                            ? Center(child: LoadingWidget())
-                            : shoppingListsDisplay(viewModel.list!),
-                      ],
-                    ),
-                  ),
-                ]),
+          body: CustomScrollView(
+            slivers:[
+              SliverAppBar(
+                pinned: true,
+                floating: false,
+                expandedHeight: 160.0,
+                flexibleSpace: FlexibleSpaceBar(
+                  title: Text(Strings.label_name_app),
+                  background: Image.asset(
+                    'assets/images/logo.png',
+                    fit: BoxFit.cover,
+                  )
+                ),
+              ),
+             const SliverToBoxAdapter(child: SizedBox(height: 30.0,)),
+              (viewModel.list == null)
+                  ? SliverFillRemaining(child: Center(child: LoadingWidget()))
+                  : shoppingListsDisplayItems(viewModel.list!),
+            ],
           ),
           floatingActionButton: FloatingActionButton(
             heroTag: "new_list",
@@ -171,5 +128,30 @@ class _HomePageState extends State<HomePage> {
 
   void changeTheme() {
     viewModel.changeTheme();
+  }
+
+  Widget shoppingListsDisplayItems(List<ShoppingList> list) {
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+            (BuildContext context, int index) {
+              return Container(
+                color: index.isOdd ? Colors.white : Colors.black12,
+                height: 100.0,
+                child: ListTile(
+                  title: Text(list[index].name!.capitalize()),
+                  trailing: Icon(Icons.arrow_right),
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      ShoppingListPage.routeName,
+                      arguments: list[index],
+                    );
+                  },
+                ),
+              );
+        },
+        childCount: list.length,
+      ),
+    );
   }
 }
