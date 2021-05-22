@@ -6,8 +6,8 @@ import 'package:provider/provider.dart';
 import '../../../app/widgets/widgets.dart';
 import '../../../injection_container.dart';
 import '../../core/resources/strings.dart';
-import '../shopping/new_shopping_list/new_shopping_list_page.dart';
 import 'home_view_model.dart';
+import 'widgets/new_shopping_list_dialog.dart';
 import 'widgets/sliver_fab.dart';
 
 class HomePage extends StatefulWidget {
@@ -20,8 +20,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   HomePageViewModel viewModel = serviceLocator<HomePageViewModel>();
 
-  //bool _light = true;
-
   @override
   void initState() {
     viewModel.loadData();
@@ -29,16 +27,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _goToCreateList(BuildContext context) async {
-    NewShoppingListPage(context);
-    //Navigator.of(context).pushNamed(NewShoppingListPage.routeName);
-  }
-
-  onItemChanged(String value) {
-    setState(() {
-      viewModel.list = viewModel.filter_list!
-          .where((shoppingList) =>
-              shoppingList.name!.toLowerCase().contains(value.toLowerCase()))
-          .toList();
+    newShoppingListDialog(context, (value) {
+      viewModel.saveList(value, context);
     });
   }
 
@@ -53,7 +43,7 @@ class _HomePageState extends State<HomePage> {
           body: new SliverContainer(
             floatingActionButton: FloatingActionButton(
               heroTag: "new_list",
-              onPressed: ()=>_goToCreateList(context),
+              onPressed: () => _goToCreateList(context),
               tooltip: Strings.label_tootip_new_list,
               child: Icon(Icons.add),
             ),
@@ -84,7 +74,7 @@ class _HomePageState extends State<HomePage> {
               )),
               (viewModel.list == null)
                   ? SliverFillRemaining(child: Center(child: LoadingWidget()))
-                  : shoppingListsDisplay(viewModel.list!),
+                  : shoppingListsDisplay(viewModel.list!, _onRemoveItem),
             ],
           ),
         ),
@@ -92,7 +82,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void changeTheme() {
-    viewModel.changeTheme();
+  void _onRemoveItem(int index) {
+    viewModel.removeList(index);
   }
 }

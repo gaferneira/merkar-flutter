@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:merkar/app/core/resources/strings.dart';
+import 'package:merkar/data/entities/error/failures.dart';
+import 'package:merkar/data/entities/shopping_list.dart';
+import 'package:merkar/data/repositories/shopping_lists_repository.dart';
 
 import '../../../data/entities/shopping_list.dart';
 import '../../../data/repositories/login_repository.dart';
-import '../../../data/repositories/shopping_lists_repository.dart';
+import '../shopping/shopping_list/shopping_list_page.dart';
 
 class HomePageViewModel extends ChangeNotifier {
   final ShoppingListsRepository shoppingListsRepository;
@@ -12,9 +16,8 @@ class HomePageViewModel extends ChangeNotifier {
       {required this.shoppingListsRepository, required this.loginRepository});
 
   List<ShoppingList>? list;
-  List<ShoppingList>? filter_list;
-  String? error;
 
+  String? error;
   String? username;
   String? userEmail;
 
@@ -25,7 +28,6 @@ class HomePageViewModel extends ChangeNotifier {
 
     shoppingListsRepository.fetchItems().listen((data) {
       list = data;
-      filter_list = List.from(data);
       error = null;
       notifyListeners();
     }, onError: (e) {
@@ -34,7 +36,32 @@ class HomePageViewModel extends ChangeNotifier {
     });
   }
 
-  void changeTheme() {
-    notifyListeners();
+  void saveList(String? name, BuildContext context) async {
+    final result = await shoppingListsRepository.save(ShoppingList(name: name));
+    Navigator.pop(context);
+    result.fold(
+            (failure) => {_mapFailureToMessage(failure)},
+            (value) => {
+          Navigator.pushNamed(
+            context,
+            ShoppingListPage.routeName,
+            arguments: value,
+          )
+        });
+  }
+
+  Future<void> removeList(int index) async{
+    shoppingListsRepository.remove(list![index]);
+  }
+
+  String _mapFailureToMessage(Failure failure) {
+    switch (failure.runtimeType) {
+      case ServerFailure:
+        return Strings.SERVER_FAILURE_MESSAGE;
+      case CacheFailure:
+        return Strings.CACHE_FAILURE_MESSAGE;
+      default:
+        return 'Unexpected error';
+    }
   }
 }

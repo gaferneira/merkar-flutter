@@ -1,4 +1,3 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/resources/constants.dart';
@@ -41,55 +40,53 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
     return ChangeNotifierProvider<SelectMyProductsViewModel>.value(
         value: viewModel,
         child: Consumer<SelectMyProductsViewModel>(
-            builder: (context, model, child) => ElasticInDown(
-                  child: Scaffold(
-                    appBar: AppBar(
-                      title: Text(Strings.title_my_products),
-                      actions: [
-                        Padding(
-                          padding: const EdgeInsets.all(Constant.normalspace),
-                          child: Form(
-                            key: _keySearchP,
-                            child: SizedBox(
-                              height: 30,
-                              width: 270,
-                              child: TextField(
-                                controller: _search_textController,
-                                decoration: InputDecoration(
-                                  labelText: 'Buscar Actual...',
-                                  fillColor: Colors.white,
-                                  filled: true,
-                                  border: OutlineInputBorder(
-                                    borderRadius: const BorderRadius.all(
-                                      const Radius.circular(10.0),
-                                    ),
+            builder: (context, model, child) => Scaffold(
+                  appBar: AppBar(
+                    title: Text(Strings.title_my_products),
+                    actions: [
+                      Padding(
+                        padding: const EdgeInsets.all(Constant.normalspace),
+                        child: Form(
+                          key: _keySearchP,
+                          child: SizedBox(
+                            height: 30,
+                            width: 270,
+                            child: TextField(
+                              controller: _search_textController,
+                              decoration: InputDecoration(
+                                labelText: 'Buscar Actual...',
+                                fillColor: Colors.white,
+                                filled: true,
+                                border: OutlineInputBorder(
+                                  borderRadius: const BorderRadius.all(
+                                    const Radius.circular(10.0),
                                   ),
-                                  //hintText: ,
                                 ),
-                                onChanged: onItemChanged,
+                                //hintText: ,
                               ),
+                              onChanged: onItemChanged,
                             ),
                           ),
                         ),
-                        IconButton(icon: Icon(Icons.search), onPressed: () {}),
+                      ),
+                      IconButton(icon: Icon(Icons.search), onPressed: () {}),
+                    ],
+                  ),
+                  body: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        (viewModel.userProducts == null)
+                            ? Text('Loading...')
+                            : _showProductsList(viewModel.userProducts),
                       ],
                     ),
-                    body: SingleChildScrollView(
-                      child: Column(
-                       children: [
-                          (viewModel.userProducts == null)
-                              ? Text('Loading...')
-                              : _showProductsList(viewModel.userProducts),
-                        ],
-                      ),
-                    ),
-                    floatingActionButton: FloatingActionButton(
-                      tooltip: Strings.label_tootip_new_product,
-                      child: Icon(Icons.add),
-                      onPressed: () {
-                        _createNewProduct(context);
-                      },
-                    ),
+                  ),
+                  floatingActionButton: FloatingActionButton(
+                    tooltip: Strings.label_tootip_new_product,
+                    child: Icon(Icons.add),
+                    onPressed: () {
+                      _createNewProduct(context);
+                    },
                   ),
                 )));
   }

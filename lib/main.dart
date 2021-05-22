@@ -16,7 +16,6 @@ import 'app/pages/login/sign_in/login_page.dart';
 import 'app/pages/products/new_product/create_new_product.dart';
 import 'app/pages/purchases/purchase_history/purchase_history_page.dart';
 import 'app/pages/purchases/purchase_history_show_info/purchase_history_show_info_page.dart';
-import 'app/pages/shopping/new_shopping_list/new_shopping_list_page.dart';
 import 'app/pages/shopping/select_my_products/select_my_products_page.dart';
 import 'app/pages/shopping/shopping_list/shopping_list_page.dart';
 import 'injection_container.dart' as di;

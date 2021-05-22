@@ -9,7 +9,6 @@ import 'package:merkar/app/pages/main/widgets/comment_page.dart';
 import 'package:merkar/injection_container.dart';
 
 import '../../purchases/purchase_history/purchase_history_page.dart';
-import '../../shopping/new_shopping_list/new_shopping_list_page.dart';
 
 enum DrawerOptions {
   route_new_list,
