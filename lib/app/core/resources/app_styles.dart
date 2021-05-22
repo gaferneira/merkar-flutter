@@ -26,4 +26,12 @@ class AppStyles {
         color: AppColors.textColorButtonDark,
       ),
       borderRadius: BorderRadius.circular(18.0));
+  static BoxDecoration listDecoration(index){
+    return BoxDecoration(
+    borderRadius: BorderRadius.all(
+    Radius.circular(25)
+    ),
+    color: index.isOdd ? Colors.lightBlueAccent : Colors.black38,
+    );
+  }
 }

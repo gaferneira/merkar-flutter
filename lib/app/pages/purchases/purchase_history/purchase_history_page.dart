@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/extensions/extended_string.dart';
+import 'package:merkar/app/core/resources/app_styles.dart';
 import 'package:merkar/app/core/resources/constants.dart';
 import 'package:merkar/app/core/resources/strings.dart';
 import 'package:merkar/app/widgets/widgets.dart';
@@ -105,27 +106,30 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
   }
 
   Widget listProducts(List<Purchase> list) {
-    return ListView.separated(
+    return ListView.builder(
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
-      separatorBuilder: (context, index) => Divider(
-        color: Colors.black,
-      ),
       itemCount: list.length,
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(list[index].name?.capitalize() ?? ""),
-          trailing: Icon(Icons.arrow_right),
-          onTap: () {
-            print(list[index].name);
-            print(list[index].total);
-            Navigator.pushNamed(
-              context,
-              PurchaseHistoryShowInfoPage.routeName,
-              arguments: list[index],
-            );
-          },
+        return Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Container(
+            decoration: AppStyles.listDecoration(index),
+            child: ListTile(
+              title: Text(list[index].name?.capitalize() ?? ""),
+              trailing: Icon(Icons.arrow_right),
+              onTap: () {
+                print(list[index].name);
+                print(list[index].total);
+                Navigator.pushNamed(
+                  context,
+                  PurchaseHistoryShowInfoPage.routeName,
+                  arguments: list[index],
+                );
+              },
+            ),
+          ),
         );
       },
     );

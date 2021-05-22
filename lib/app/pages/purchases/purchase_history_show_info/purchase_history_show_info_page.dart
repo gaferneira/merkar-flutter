@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:merkar/app/core/resources/app_styles.dart';
 import 'package:provider/provider.dart';
 
 import 'package:merkar/data/entities/list_product.dart';
@@ -65,24 +66,27 @@ class _PurchaseHistoryShowInfoPageState
   }*/
 
 Widget _showProductsList(List<ListProduct> listProduct) {
-  return ListView.separated(
+  return ListView.builder(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
       scrollDirection: Axis.vertical,
-      separatorBuilder: (context, index) => Divider(
-            color: Colors.black,
-          ),
       itemCount: listProduct.length,
       itemBuilder: (context, index) {
-        return ListTile(
-          title: Text("${listProduct[index].name}"),
-          /* controlAffinity: ListTileControlAffinity.leading,
-            onChanged: (bool value) {
-              //viewModel.selectProduct(index, value);
-            },
-            value: listProduct[index].selected,
-            activeColor: Colors.cyan,
-            checkColor: Colors.green,*/
+        return Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Container(
+            decoration: AppStyles.listDecoration(index),
+            child: ListTile(
+              title: Text("${listProduct[index].name}"),
+              /* controlAffinity: ListTileControlAffinity.leading,
+                onChanged: (bool value) {
+                  //viewModel.selectProduct(index, value);
+                },
+                value: listProduct[index].selected,
+                activeColor: Colors.cyan,
+                checkColor: Colors.green,*/
+            ),
+          ),
         );
       });
 }

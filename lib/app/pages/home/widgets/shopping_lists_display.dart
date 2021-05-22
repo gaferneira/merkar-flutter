@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/extensions/extended_string.dart';
+import 'package:merkar/app/core/resources/app_styles.dart';
 import 'package:merkar/app/core/resources/constants.dart';
 import 'package:merkar/app/core/resources/strings.dart';
 import 'package:merkar/app/pages/shopping/shopping_list/shopping_list_page.dart';
@@ -24,13 +25,7 @@ Widget listProducts(List<ShoppingList> list) {
         return Padding(
           padding: const EdgeInsets.all(10.0),
           child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(
-                  Radius.circular(25)
-                ),
-              color: index.isOdd ? Colors.blue : Colors.black38,
-
-            ),
+            decoration: AppStyles.listDecoration(index),
             height: 75.0,
             child: ListTile(
               title: Text(list[index].name!.capitalize()),

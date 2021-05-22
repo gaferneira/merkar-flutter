@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:merkar/app/core/resources/app_styles.dart';
 import 'package:merkar/app/core/resources/constants.dart';
 import 'package:merkar/app/core/resources/strings.dart';
 import 'package:merkar/data/entities/product.dart';
@@ -76,24 +77,27 @@ class _SelectMyFavoritesPageState extends State<SelectMyFavoritesPage> {
   }
 
   Widget _showProductsList(List<Product> defaultProducts) {
-    return ListView.separated(
+    return ListView.builder(
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
-        separatorBuilder: (context, index) => Divider(
-              color: Colors.black,
-            ),
         itemCount: defaultProducts.length,
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
-          return CheckboxListTile(
-            title: Text("${defaultProducts[index].name}"),
-            controlAffinity: ListTileControlAffinity.leading,
-            onChanged: (bool? value) {
-              viewModel.selectProduct(index, value == true);
-            },
-            value: defaultProducts[index].selected,
-            activeColor: Colors.cyan,
-            checkColor: Colors.green,
+          return Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Container(
+              decoration: AppStyles.listDecoration(index),
+              child: CheckboxListTile(
+                title: Text("${defaultProducts[index].name}"),
+                controlAffinity: ListTileControlAffinity.leading,
+                onChanged: (bool? value) {
+                  viewModel.selectProduct(index, value == true);
+                },
+                value: defaultProducts[index].selected,
+                activeColor: Colors.cyan,
+                checkColor: Colors.green,
+              ),
+            ),
           );
         });
   }
