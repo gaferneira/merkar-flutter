@@ -31,18 +31,19 @@ class AppTheme {
   );
 
   static final ThemeData darkTheme = ThemeData(
-    scaffoldBackgroundColor: Colors.black,
+    scaffoldBackgroundColor: Colors.black87,
+    accentColor: Colors.blue[200]!,
     appBarTheme: AppBarTheme(
-      color: Colors.black,
+      color: Colors.grey[800]!,
       iconTheme: IconThemeData(
         color: Colors.white,
       ),
     ),
     colorScheme: ColorScheme.dark(
-      primary: Colors.black,
+      primary: Colors.blue[200]!,
       onPrimary: Colors.black,
-      primaryVariant: Colors.black,
-      secondary: Colors.red,
+      primaryVariant: Colors.blue[700]!,
+      secondary: Colors.grey,
     ),
     cardTheme: CardTheme(
       color: Colors.black,

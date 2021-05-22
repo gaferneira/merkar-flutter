@@ -86,7 +86,7 @@ class _SelectMyFavoritesPageState extends State<SelectMyFavoritesPage> {
           return Padding(
             padding: const EdgeInsets.all(10.0),
             child: Container(
-              decoration: AppStyles.listDecoration(index),
+              decoration: AppStyles.listDecoration(index.toDouble()/defaultProducts.length),
               child: CheckboxListTile(
                 title: Text("${defaultProducts[index].name}"),
                 controlAffinity: ListTileControlAffinity.leading,

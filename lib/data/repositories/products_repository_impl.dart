@@ -23,6 +23,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
   @override
   Stream<List<Product>> fetchDefaultProducts() {
     return getDefaultCollection()
+        .orderBy("name")
         .snapshots()
         .map((querySnapshot) => querySnapshot.docs
             .map((documentSnapshot) => Product.fromJson(documentSnapshot.data())

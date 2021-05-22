@@ -115,7 +115,7 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
         return Padding(
           padding: const EdgeInsets.all(10.0),
           child: Container(
-            decoration: AppStyles.listDecoration(index),
+            decoration: AppStyles.listDecoration(index.toDouble()/list.length),
             child: ListTile(
               title: Text(list[index].name?.capitalize() ?? ""),
               trailing: Icon(Icons.arrow_right),

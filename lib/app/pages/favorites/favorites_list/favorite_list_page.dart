@@ -108,7 +108,7 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Container(
-              decoration: AppStyles.listDecoration(index),
+              decoration: AppStyles.listDecoration(index.toDouble()/listProducts.length),
               child: ListTile(
                 title: Column(
                   mainAxisAlignment: MainAxisAlignment.start,

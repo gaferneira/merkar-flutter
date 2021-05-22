@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/resources/app_styles.dart';
-import 'package:provider/provider.dart';
-
 import 'package:merkar/data/entities/list_product.dart';
 import 'package:merkar/data/entities/purchase.dart';
 import 'package:merkar/injection_container.dart';
+import 'package:provider/provider.dart';
+
 import 'purchase_history_show_info_view_model.dart';
 
 class PurchaseHistoryShowInfoPage extends StatefulWidget {
@@ -75,7 +75,7 @@ Widget _showProductsList(List<ListProduct> listProduct) {
         return Padding(
           padding: const EdgeInsets.all(10.0),
           child: Container(
-            decoration: AppStyles.listDecoration(index),
+            decoration: AppStyles.listDecoration(index.toDouble()/listProduct.length),
             child: ListTile(
               title: Text("${listProduct[index].name}"),
               /* controlAffinity: ListTileControlAffinity.leading,

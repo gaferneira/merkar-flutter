@@ -25,7 +25,7 @@ Widget listProducts(List<ShoppingList> list) {
         return Padding(
           padding: const EdgeInsets.all(10.0),
           child: Container(
-            decoration: AppStyles.listDecoration(index),
+            decoration: AppStyles.listDecoration(index.toDouble()/list.length),
             height: 75.0,
             child: ListTile(
               title: Text(list[index].name!.capitalize()),

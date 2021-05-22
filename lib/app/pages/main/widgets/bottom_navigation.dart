@@ -44,8 +44,6 @@ class _BottomNavigationState extends State<BottomNavigation> {
         ),
       ],
       currentIndex: _selectedIndex,
-      selectedItemColor: Colors.amber[800],
-      unselectedItemColor: Theme.of(context).primaryColor,
       onTap: (index) {
         _selectedIndex = index;
         onSelectTab(index);
