@@ -102,5 +102,6 @@ class Strings {
   static const String delete="ELIMINAR";
   static const String calcel="CANCELAR";
 
+  static const String home_no_items_available = "Para comenzar crea una lista pulsando en el botón +";
 
 }

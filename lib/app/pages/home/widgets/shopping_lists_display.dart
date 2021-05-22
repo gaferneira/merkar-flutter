@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/extensions/extended_string.dart';
 import 'package:merkar/app/core/resources/app_styles.dart';
-import 'package:merkar/app/core/resources/constants.dart';
 import 'package:merkar/app/core/resources/strings.dart';
 import 'package:merkar/app/pages/shopping/shopping_list/shopping_list_page.dart';
 import 'package:merkar/data/entities/shopping_list.dart';
 
-Widget shoppingListsDisplay(
+Widget shoppingListsDisplay(BuildContext context,
     List<ShoppingList> list, final ValueChanged<int> onRemoveItem) {
   if (list.isEmpty) {
     return SliverFillRemaining(
       child: Padding(
-        padding: const EdgeInsets.all(Constant.normalspace),
-        child: Center(child: Text(Strings.noCategoriesAvailable)),
+        padding: const EdgeInsets.all(50),
+        child: Center(child: Text(
+            Strings.home_no_items_available,
+            style: Theme.of(context).textTheme.headline6,
+        )),
       ),
     );
   }
