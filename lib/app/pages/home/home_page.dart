@@ -27,9 +27,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _goToCreateList(BuildContext context) async {
-    newShoppingListDialog(context, (value) {
-      viewModel.saveList(value, context);
-    });
+    newShoppingListDialog(context, _saveNewItem);
   }
 
   @override
@@ -82,7 +80,12 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  void _saveNewItem(String value) {
+    viewModel.saveList(value, context);
+  }
+
   void _onRemoveItem(int index) {
     viewModel.removeList(index);
   }
+  
 }
