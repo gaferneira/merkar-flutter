@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/resources/constants.dart';
+import 'package:merkar/app/pages/home/widgets/bottom_bar_home.dart';
 import 'package:provider/provider.dart';
 
 import '../../../app/widgets/widgets.dart';
@@ -20,10 +21,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   HomePageViewModel viewModel = serviceLocator<HomePageViewModel>();
-  bool _light = true;
-  final _key_search = GlobalKey<FormState>();
-  TextEditingController _search_textController =
-      TextEditingController(); //controller search_text
+  //bool _light = true;
+
   @override
   void initState() {
     viewModel.loadData();
@@ -53,33 +52,27 @@ class _HomePageState extends State<HomePage> {
         builder: (context, model, child) => Scaffold(
           key: _scaffKey,
           appBar: AppBar(
-            title: Text('Merkar'),
-            actions: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(Constant.normalspace),
-                child: Form(
-                  key: _key_search,
-                  child: SizedBox(
-                    height: 30,
-                    width: 270,
-                    child: TextField(
-                      controller: _search_textController,
-                      decoration: InputDecoration(
-                        labelText: 'Buscar ...',
-                        fillColor: Colors.white,
-                        filled: true,
-                        border: OutlineInputBorder(
-                          borderRadius: const BorderRadius.all(
-                            const Radius.circular(10.0),
-                          ),
-                        ),
-                      ),
-                      onChanged: onItemChanged,
-                    ),
-                  ),
+            title: Container(
+              width: double.infinity,
+              height: 50.0,
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.white70, Colors.white70],
+
+                    // colors: [Colors.cyan[300], Colors.cyan[800]]
+                  )),
+              child: ZoomIn(
+                duration: Duration(
+                  seconds: 1,
+                ),
+                child: Image.asset(
+                  'assets/images/market.png',
+                  width: 10.0,
                 ),
               ),
-              IconButton(icon: Icon(Icons.search), onPressed: () {}),
+            ),
+            actions: <Widget>[
+
               /* Switch(
                   value: providerTheme.light,
                   onChanged: (toggle) {
@@ -100,7 +93,7 @@ class _HomePageState extends State<HomePage> {
               )*/
             ],
           ),
-          drawer: DrawerWelcome(),
+         // drawer: DrawerWelcome(),
           body: SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Column(
@@ -171,6 +164,7 @@ class _HomePageState extends State<HomePage> {
             tooltip: Strings.label_tootip_new_list,
             child: Icon(Icons.add),
           ),
+          bottomNavigationBar: BottomBarHome(),
         ),
       ),
     );

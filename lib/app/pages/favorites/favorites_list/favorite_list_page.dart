@@ -69,8 +69,8 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
                   body: SingleChildScrollView(
                     child: Column(
                       children: <Widget>[
-                        (viewModel.userProducts == null)
-                            ? Text('Loading...')
+                        (viewModel.userProducts == null || viewModel.userProducts!.isEmpty)
+                            ? Text(Strings.noCategoriesAvailable)
                             : _showProductsList(viewModel.userProducts!),
                       ],
                     ),
