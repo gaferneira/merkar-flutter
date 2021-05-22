@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:merkar/app/core/resources/app_theme.dart';
 import 'package:merkar/app/pages/login/reset_password/reset_password_page.dart';
 import 'package:merkar/app/pages/login/widgets/background_login.dart';
+import 'package:merkar/app/pages/main/main_page.dart';
 import 'package:provider/provider.dart';
 
 import 'app/pages/favorites/favorites_list/favorite_list_page.dart';
@@ -77,7 +78,7 @@ class AuthenticationPage extends StatelessWidget {
             case AuthStatus.Unauthenticated:
               return LoginPage();
             case AuthStatus.Authenticated:
-              return HomePage();
+              return MainPage();
             case AuthStatus.Uninitialized:
             default:
               return Splash();

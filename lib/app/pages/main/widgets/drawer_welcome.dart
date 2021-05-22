@@ -3,9 +3,9 @@ import 'package:in_app_review/in_app_review.dart';
 import 'package:merkar/app/core/resources/app_colors.dart';
 import 'package:merkar/app/core/resources/strings.dart';
 import 'package:merkar/app/pages/favorites/favorites_list/favorite_list_page.dart';
-import 'package:merkar/app/pages/home/widgets/about_us_page.dart';
-import 'package:merkar/app/pages/home/widgets/comment_page.dart';
 import 'package:merkar/app/pages/login/sign_in/login_view_model.dart';
+import 'package:merkar/app/pages/main/widgets/about_us_page.dart';
+import 'package:merkar/app/pages/main/widgets/comment_page.dart';
 import 'package:merkar/injection_container.dart';
 
 import '../../purchases/purchase_history/purchase_history_page.dart';

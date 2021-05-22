@@ -1,4 +1,3 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/extensions/extended_string.dart';
 import 'package:merkar/app/core/resources/strings.dart';
@@ -15,6 +14,7 @@ class NewShoppingListPage extends StatefulWidget {
 }
 
 class _NewShoppingListPageState extends State<NewShoppingListPage> {
+
   String? nameList;
   final formListKey = GlobalKey<FormState>();
 
@@ -31,15 +31,13 @@ class _NewShoppingListPageState extends State<NewShoppingListPage> {
     return ChangeNotifierProvider<NewShoppingListViewModel>.value(
       value: viewModel,
       child: Consumer<NewShoppingListViewModel>(
-        builder: (context, model, child) => FadeInUp(
-          child: Scaffold(
+        builder: (context, model, child) =>  Scaffold(
             appBar: AppBar(
               title: Text(Strings.label_create_new_list),
             ),
             body: _fromNewList(viewModel, context),
           ),
         ),
-      ),
     );
   }
 
@@ -61,10 +59,10 @@ class _NewShoppingListPageState extends State<NewShoppingListPage> {
                 nameList = value.toString().capitalize();
               },
               validator: (value) {
-                if (value!.isEmpty) {
-                  return "Llene este campo";
+                if (value?.isNotEmpty == true) {
+                  return null;
                 }
-                return null;
+                return "Llene este campo";
               },
             ),
             ElevatedButton(
@@ -80,7 +78,7 @@ class _NewShoppingListPageState extends State<NewShoppingListPage> {
   }
 
   void _saveNewList(BuildContext context) {
-    if (formListKey.currentState!.validate()) {
+    if (formListKey.currentState?.validate() == true) {
       formListKey.currentState!.save();
       viewModel.saveList(nameList, context);
     }

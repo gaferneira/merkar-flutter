@@ -2,7 +2,6 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/resources/constants.dart';
-import 'package:merkar/app/pages/home/widgets/bottom_bar_home.dart';
 import 'package:provider/provider.dart';
 
 import '../../../app/widgets/widgets.dart';
@@ -10,17 +9,18 @@ import '../../../injection_container.dart';
 import '../../core/resources/strings.dart';
 import '../shopping//new_shopping_list/new_shopping_list_page.dart';
 import 'home_view_model.dart';
-import 'widgets/drawer_welcome.dart';
 import 'widgets/shopping_lists_display.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = '/home';
+
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
   HomePageViewModel viewModel = serviceLocator<HomePageViewModel>();
+
   //bool _light = true;
 
   @override
@@ -36,8 +36,8 @@ class _HomePageState extends State<HomePage> {
   onItemChanged(String value) {
     setState(() {
       viewModel.list = viewModel.filter_list!
-          .where((shopping_list) =>
-              shopping_list.name!.toLowerCase().contains(value.toLowerCase()))
+          .where((shoppingList) =>
+              shoppingList.name!.toLowerCase().contains(value.toLowerCase()))
           .toList();
     });
   }
@@ -57,10 +57,10 @@ class _HomePageState extends State<HomePage> {
               height: 50.0,
               decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Colors.white70, Colors.white70],
+                colors: [Colors.white70, Colors.white70],
 
-                    // colors: [Colors.cyan[300], Colors.cyan[800]]
-                  )),
+                // colors: [Colors.cyan[300], Colors.cyan[800]]
+              )),
               child: ZoomIn(
                 duration: Duration(
                   seconds: 1,
@@ -72,7 +72,6 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             actions: <Widget>[
-
               /* Switch(
                   value: providerTheme.light,
                   onChanged: (toggle) {
@@ -93,7 +92,7 @@ class _HomePageState extends State<HomePage> {
               )*/
             ],
           ),
-         // drawer: DrawerWelcome(),
+          // drawer: DrawerWelcome(),
           body: SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Column(
@@ -164,7 +163,6 @@ class _HomePageState extends State<HomePage> {
             tooltip: Strings.label_tootip_new_list,
             child: Icon(Icons.add),
           ),
-          bottomNavigationBar: BottomBarHome(),
         ),
       ),
     );
