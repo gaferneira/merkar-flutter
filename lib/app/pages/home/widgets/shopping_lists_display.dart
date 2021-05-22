@@ -5,7 +5,6 @@ import 'package:merkar/app/core/resources/constants.dart';
 import 'package:merkar/app/core/resources/strings.dart';
 import 'package:merkar/app/pages/shopping/shopping_list/shopping_list_page.dart';
 import 'package:merkar/app/pages/shopping/shopping_list/shopping_list_view_model.dart';
-import 'package:merkar/app/pages/shopping/widgets/alet_confirm.dart';
 import 'package:merkar/data/entities/shopping_list.dart';
 
 import '../../../../injection_container.dart';
@@ -61,7 +60,9 @@ Widget listShoppingList(List<ShoppingList> list) {
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  title: const Text(Strings.confirm),
+                  shape: AppStyles.borderRadiusDialog,
+                 // contentPadding: EdgeInsets.only(top: 10.0),
+                  title: Center(child: const Text(Strings.confirm)),
                   content: const Text("Estás seguro de eliminar el Elemento?"),
                   actions: <Widget>[
                     FlatButton(
