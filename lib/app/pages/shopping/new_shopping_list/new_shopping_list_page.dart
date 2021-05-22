@@ -64,6 +64,7 @@ Future<void> NewShoppingListPage(BuildContext context) {
   void _saveNewList(BuildContext context) {
     if (formListKey.currentState?.validate() == true) {
       formListKey.currentState!.save();
+      Navigator.pop(context);
       viewModel.saveList(nameList, context);
     }
   }
