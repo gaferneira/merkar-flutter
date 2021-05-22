@@ -98,5 +98,9 @@ class Strings {
   static const String label_button_register="REGISTRAR";
   static const String label_restore_password="Restaurar Contraseña";
 
+  static const String confirm="Confirmar";
+  static const String delete="ELIMINAR";
+  static const String calcel="CANCELAR";
+
 
 }
