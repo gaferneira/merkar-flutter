@@ -13,7 +13,7 @@ class NewShoppingListViewModel extends ChangeNotifier {
 
   void saveList(String? name, BuildContext context) async {
     final result = await repository.save(ShoppingList(name: name));
-
+    Navigator.pop(context);
     result.fold(
         (failure) => {_mapFailureToMessage(failure)},
         (value) => {
