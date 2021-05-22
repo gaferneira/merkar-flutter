@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/resources/strings.dart';
 import 'package:merkar/app/pages/favorites/favorites_list/favorite_list_page.dart';
+import 'package:merkar/app/pages/home/widgets/more_page.dart';
 import 'package:merkar/app/pages/purchases/purchase_history/purchase_history_page.dart';
 
 
@@ -69,26 +70,9 @@ class _BottomBarHomeState extends State<BottomBarHome> {
         }
       case 3:
         {
-          //Mostrar subMenú con las otras opciones
-          //CommentePage(context);
+          MorePage(context);
           break;
         }
-
-  /*    case DrawerOptions.route_about_us:
-        {
-          Navigator.of(context).pop();
-          AboutUsPage(context);
-          break;
-        }
-
-      case DrawerOptions.route_close_session:
-        {
-          final viewModel = serviceLocator<LoginViewModel>();
-          viewModel.signOut();
-          break;
-        }
-  */
-
     }
   }
 }
