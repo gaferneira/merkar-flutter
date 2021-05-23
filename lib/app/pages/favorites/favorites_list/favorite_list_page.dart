@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:merkar/app/core/resources/app_styles.dart';
 import 'package:merkar/app/core/resources/constants.dart';
 import 'package:merkar/app/core/resources/strings.dart';
 import 'package:merkar/app/pages/favorites/select_my_favorites/select_my_favorites_page.dart';
@@ -69,13 +70,14 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
                   body: SingleChildScrollView(
                     child: Column(
                       children: <Widget>[
-                        (viewModel.userProducts == null)
-                            ? Text('Loading...')
+                        (viewModel.userProducts == null || viewModel.userProducts!.isEmpty)
+                            ? Text(Strings.noCategoriesAvailable)
                             : _showProductsList(viewModel.userProducts!),
                       ],
                     ),
                   ),
                   floatingActionButton: FloatingActionButton(
+                    heroTag: "add_favorite",
                     onPressed: () => {_showListSuggerProducts(context)},
                     tooltip: Strings.label_tootip_add_products,
                     child: Icon(Icons.add),
@@ -96,26 +98,29 @@ class _FavoriteListPageState extends State<FavoriteListPage> {
   }
 
   Widget _showProductsList(List<Product> listProducts) {
-    return ListView.separated(
+    return ListView.builder(
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
-      separatorBuilder: (context, index) => Divider(
-        color: Colors.black,
-      ),
       itemCount: listProducts.length,
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         return Dismissible(
-          child: ListTile(
-            title: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  "${listProducts[index].name}",
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Container(
+              decoration: AppStyles.listDecoration(index.toDouble()/listProducts.length),
+              child: ListTile(
+                title: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      "${listProducts[index].name}",
+                    ),
+                    Text("\$ ${listProducts[index].price}"),
+                  ],
                 ),
-                Text("\$ ${listProducts[index].price}"),
-              ],
+              ),
             ),
           ),
           background: Container(color: Colors.red,child: Icon(Icons.cancel),),

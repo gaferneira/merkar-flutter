@@ -42,6 +42,7 @@ class ShoppingListsRepositoryImpl implements ShoppingListsRepository {
     return firestoreDataSource
         .getDataDocument()
         .collection(COLLECTION_SHOPPING_LIST)
+        .orderBy("name")
         .snapshots()
         .map((querySnapshot) => querySnapshot.docs
             .map((documentSnapshot) =>

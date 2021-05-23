@@ -4,7 +4,10 @@ class Strings {
   static const String route_comments = 'Comentarios';
   static const String route_about_us = 'Acerca de';
   static const String route_close_session = 'Cerrar Sesión';
-  static const String route_purchase_history = 'Historial de compras';
+  static const String route_home = 'Home';
+  static const String route_favorites = "Mis Productos";
+  static const String route_purchase_history = 'Historial';
+  static const String route_more = "Más";
 
   //Failure
   static const String SERVER_FAILURE_MESSAGE = 'Server Failure';
@@ -61,7 +64,7 @@ class Strings {
 
   static const String name_repository = "merkar-flutter";
 
-  static const String route_favorites = "Mis Productos";
+
 
   static const String tittle_sing_in = "Ingresar";
 
@@ -95,5 +98,10 @@ class Strings {
   static const String label_button_register="REGISTRAR";
   static const String label_restore_password="Restaurar Contraseña";
 
+  static const String confirm="Confirmar";
+  static const String delete="ELIMINAR";
+  static const String calcel="CANCELAR";
+
+  static const String home_no_items_available = "Para comenzar crea una lista pulsando en el botón +";
 
 }

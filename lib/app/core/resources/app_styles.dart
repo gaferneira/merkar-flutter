@@ -26,4 +26,16 @@ class AppStyles {
         color: AppColors.textColorButtonDark,
       ),
       borderRadius: BorderRadius.circular(18.0));
+
+  static BoxDecoration listDecoration(double opacity){
+    return BoxDecoration(
+    borderRadius: BorderRadius.all(
+    Radius.circular(25)
+    ),
+    color: Colors.black.withOpacity(0.05 + opacity*0.4),
+    );
+  }
+  static RoundedRectangleBorder borderRadiusDialog = RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(32.0)
+  );
 }

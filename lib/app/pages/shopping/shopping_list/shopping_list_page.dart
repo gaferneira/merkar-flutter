@@ -18,6 +18,7 @@ enum SingingCharacter { delete, reset, nothing }
 
 class ShoppingListPage extends StatefulWidget {
   static const routeName = '/showselectlist';
+
   @override
   _ShoppingListPageState createState() => _ShoppingListPageState();
 }
@@ -39,32 +40,31 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   ];
 
   SingingCharacter _character = SingingCharacter.nothing;
-  ShoppingList shoppingList= new ShoppingList();
+  ShoppingList shoppingList = new ShoppingList();
   var _selectedId;
   String? _selected;
-  bool _ennable=false;
+  bool _ennable = false;
 
   onItemChangedSelect(String value) {
     viewModel.selectedList = viewModel.filterselectedList!
-        .where((shopping_list) =>
-            shopping_list.name!.toLowerCase().contains(value.toLowerCase()))
+        .where((shoppingList) =>
+            shoppingList.name!.toLowerCase().contains(value.toLowerCase()))
         .toList();
     viewModel.unselectedList = viewModel.filterunselectedList!
-        .where((shopping_list) =>
-            shopping_list.name!.toLowerCase().contains(value.toLowerCase()))
+        .where((shoppingList) =>
+            shoppingList.name!.toLowerCase().contains(value.toLowerCase()))
         .toList();
     viewModel.notifyListeners();
   }
 
   @override
   Widget build(BuildContext context) {
-    shoppingList =
-        ModalRoute.of(context)!.settings.arguments as ShoppingList;
+    shoppingList = ModalRoute.of(context)!.settings.arguments as ShoppingList;
     viewModel.loadData(shoppingList);
 
     var onPressed;
-    if(_ennable){
-      onPressed=(){
+    if (_ennable) {
+      onPressed = () {
         _showFinishDialog(shoppingList);
       };
     }
@@ -72,120 +72,117 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
     return ChangeNotifierProvider<ShoppingListViewModel>.value(
         value: viewModel,
         child: Consumer<ShoppingListViewModel>(
-            builder: (context, model, child) => ElasticIn(
-                  child: Scaffold(
-                    appBar: AppBar(
-                      title: Text('${shoppingList.name}'.capitalize()),
-                      actions: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(Constant.normalspace),
-                          child: Form(
-                            key: _keySearchFormUnsel,
-                            child: SizedBox(
-                              height: 30,
-                              width: 270,
-                              child: TextFormField(
-                                controller: _text_searchController,
-                                decoration: InputDecoration(
-                                  labelText: "Buscar ...",
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  border: OutlineInputBorder(
-                                    borderRadius: const BorderRadius.all(
-                                      const Radius.circular(10.0),
-                                    ),
+            builder: (context, model, child) => Scaffold(
+                  appBar: AppBar(
+                    title: Text('${shoppingList.name}'.capitalize()),
+                    actions: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(Constant.normalspace),
+                        child: Form(
+                          key: _keySearchFormUnsel,
+                          child: SizedBox(
+                            height: 30,
+                            width: 270,
+                            child: TextFormField(
+                              controller: _text_searchController,
+                              decoration: InputDecoration(
+                                labelText: "Buscar ...",
+                                filled: true,
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderRadius: const BorderRadius.all(
+                                    const Radius.circular(10.0),
                                   ),
                                 ),
-                                onChanged: onItemChangedSelect,
                               ),
+                              onChanged: onItemChangedSelect,
                             ),
                           ),
                         ),
-                        Bounce(
-                          child: IconButton(
-                            icon: Icon(Icons.check_circle),
-                            onPressed:onPressed
-                                //() {
-                              //_showFinishDialog(shoppingList);
-                           // },
-                          ),
+                      ),
+                      Bounce(
+                        child: IconButton(
+                            icon: Icon(Icons.check_circle), onPressed: onPressed
+                            //() {
+                            //_showFinishDialog(shoppingList);
+                            // },
+                            ),
+                      ),
+                    ],
+                  ),
+                  body: SingleChildScrollView(
+                    child: Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(Constant.normalspace),
+                          child: Center(
+                              child: Text(
+                            "No seleccionados",
+                            style: Theme.of(context).textTheme.headline6,
+                          )),
                         ),
+                        (viewModel.unselectedList == null)
+                            ? Text(
+                                'Loading...',
+                                style: Theme.of(context).textTheme.headline6,
+                              )
+                            : _showProductsList(viewModel.unselectedList),
+                        Padding(
+                          padding: const EdgeInsets.all(Constant.normalspace),
+                          child: Center(
+                              child: Text(
+                            "Seleccionados",
+                            style: Theme.of(context).textTheme.headline6,
+                          )),
+                        ),
+                        (viewModel.selectedList == null)
+                            ? Text('Loading...')
+                            : _showSelectProductsList(viewModel.selectedList),
+                        RaisedButton(
+                            child: Text(Strings.label_finish),
+                            color: AppColors.lightColor,
+                            textColor: AppColors.textColorButtomLight,
+                            shape: AppStyles.borderRadius,
+                            onPressed: onPressed
+                            //() {
+                            //_showFinishDialog(shoppingList);
+                            //}
+                            ),
                       ],
                     ),
-                    body: SingleChildScrollView(
-                      child: Column(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.all(Constant.normalspace),
-                            child: Center(
-                                child: Text(
-                              "No seleccionados",
-                              style: Theme.of(context).textTheme.headline6,
-                            )),
-                          ),
-                          (viewModel.unselectedList == null)
-                              ? Text(
-                                  'Loading...',
-                                  style: Theme.of(context).textTheme.headline6,
-                                )
-                              : _showProductsList(viewModel.unselectedList),
-                          Padding(
-                            padding: const EdgeInsets.all(Constant.normalspace),
-                            child: Center(
-                                child: Text(
-                              "Seleccionados",
-                              style: Theme.of(context).textTheme.headline6,
-                            )),
-                          ),
-                          (viewModel.selectedList == null)
-                              ? Text('Loading...')
-                              : _showSelectProductsList(viewModel.selectedList),
-                          RaisedButton(
-                              child: Text(Strings.label_finish),
-                              color: AppColors.lightColor,
-                              textColor: AppColors.textColorButtomLight,
-                              shape: AppStyles.borderRadius,
-                              onPressed:onPressed
-                                  //() {
-                                //_showFinishDialog(shoppingList);
-                              //}
-                            ),
-                        ],
-                      ),
-                    ),
-                    floatingActionButton: Pulse(
-                      infinite: true,
-                      child: FloatingActionButton(
-                        onPressed: () =>
-                            {_showListSuggerProducts(context, shoppingList)},
-                        tooltip: Strings.label_tootip_add_products,
-                        child: Icon(Icons.add),
-                      ),
-                    ),
-                    bottomNavigationBar: Container(
-                        height: Constant.bottomBarHeight,
-                        width: MediaQuery.of(context).size.width,
-                        child: BottomNavigationBar(
-                          fixedColor: Colors.white70,
-                          unselectedItemColor: Colors.white70,
-                          backgroundColor: Colors.black45,
-                          currentIndex:
-                              1, // this will be set when a new tab is tapped
-                          items: [
-                            BottomNavigationBarItem(
-                              icon: new Icon(Icons.insert_chart),
-                              title:
-                                  Text('Total: \$ ${viewModel.totalPrice()}'),
-                              backgroundColor: Colors.white,
-                            ),
-                            BottomNavigationBarItem(
-                              icon: new Icon(Icons.shopping_cart),
-                              title: new Text(
-                                  'Carrito (\$ ${viewModel.totalShopping()})'),
-                            ),
-                          ],
-                        )),
                   ),
+                  floatingActionButton: Pulse(
+                    infinite: true,
+                    child: FloatingActionButton(
+                      heroTag: "add_product",
+                      onPressed: () =>
+                          {_showListSuggerProducts(context, shoppingList)},
+                      tooltip: Strings.label_tootip_add_products,
+                      child: Icon(Icons.add),
+                    ),
+                  ),
+                  bottomNavigationBar: Container(
+                      height: Constant.bottomBarHeight,
+                      width: MediaQuery.of(context).size.width,
+                      child: BottomNavigationBar(
+                        fixedColor: Colors.white70,
+                        unselectedItemColor: Colors.white70,
+                        backgroundColor: Colors.black45,
+                        currentIndex: 1,
+                        // this will be set when a new tab is tapped
+                        items: [
+                          BottomNavigationBarItem(
+                            icon: new Icon(Icons.insert_chart),
+                            title: Text('Total: \$ ${viewModel.totalPrice()}'),
+                            backgroundColor: Colors.white,
+                          ),
+                          BottomNavigationBarItem(
+                            icon: new Icon(Icons.shopping_cart),
+                            title: new Text(
+                                'Carrito (\$ ${viewModel.totalShopping()})'),
+                          ),
+                        ],
+                      )),
                 )));
   }
 
@@ -227,7 +224,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
             onChanged: (bool? value) {
               viewModel.selectProduct(index);
               setState(() {
-                _ennable=true;
+                _ennable = true;
               });
             },
             secondary: IconButton(
@@ -241,27 +238,27 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
             activeColor: Colors.cyan,
             checkColor: Colors.green,
           ),
-          background: Container(color: Colors.red,child: Icon(Icons.cancel),),
+          background: Container(
+            color: Colors.red,
+            child: Icon(Icons.cancel),
+          ),
           key: Key(listProducts[index].id!),
-          onDismissed: (direction){
+          onDismissed: (direction) {
             viewModel.removeProduct(listProducts[index].id!, shoppingList);
             listProducts.removeAt(index);
-            Scaffold
-                .of(context)
+            Scaffold.of(context)
                 .showSnackBar(SnackBar(content: Text("$index Eliminado")));
             viewModel.notifyListeners();
-
           },
-
         );
       },
     );
   }
 
   Widget _showSelectProductsList(List<ListProduct> listProducts) {
-    if(listProducts.isNotEmpty){
-        _ennable=true;
-      }
+    if (listProducts.isNotEmpty) {
+      _ennable = true;
+    }
 
     return ListView.separated(
       scrollDirection: Axis.vertical,
@@ -294,9 +291,9 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                 viewModel.selectProduct(index);
               else {
                 viewModel.unselectProduct(index);
-                if(viewModel.selectedList.isEmpty){
+                if (viewModel.selectedList.isEmpty) {
                   setState(() {
-                    _ennable=false;
+                    _ennable = false;
                   });
                 }
               }
@@ -313,13 +310,12 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
             checkColor: Colors.green,
           ),
           key: Key(listProducts[index].id!),
-          background: Container(color: Colors.red,child: Icon(Icons.cancel)),
-          onDismissed: (direction){
+          background: Container(color: Colors.red, child: Icon(Icons.cancel)),
+          onDismissed: (direction) {
             viewModel.removeProduct(listProducts[index].id!, shoppingList);
             listProducts.removeAt(index);
-            Scaffold
-                .of(context)
-                .showSnackBar(SnackBar(content:Text("$index Eliminado")));
+            Scaffold.of(context)
+                .showSnackBar(SnackBar(content: Text("$index Eliminado")));
           },
         );
         /*return ListTile(

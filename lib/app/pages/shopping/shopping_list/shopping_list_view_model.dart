@@ -113,4 +113,7 @@ class ShoppingListViewModel extends ChangeNotifier {
     repository.removeProduct(productId, list);
     notifyListeners();
   }
+  Future<void> removeList(ShoppingList shoppingList) async{
+    repository.remove(shoppingList);
+  }
 }

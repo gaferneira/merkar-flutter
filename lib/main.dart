@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:merkar/app/core/resources/app_theme.dart';
 import 'package:merkar/app/pages/login/reset_password/reset_password_page.dart';
 import 'package:merkar/app/pages/login/widgets/background_login.dart';
+import 'package:merkar/app/pages/main/main_page.dart';
 import 'package:provider/provider.dart';
 
 import 'app/pages/favorites/favorites_list/favorite_list_page.dart';
@@ -15,7 +16,6 @@ import 'app/pages/login/sign_in/login_page.dart';
 import 'app/pages/products/new_product/create_new_product.dart';
 import 'app/pages/purchases/purchase_history/purchase_history_page.dart';
 import 'app/pages/purchases/purchase_history_show_info/purchase_history_show_info_page.dart';
-import 'app/pages/shopping/new_shopping_list/new_shopping_list_page.dart';
 import 'app/pages/shopping/select_my_products/select_my_products_page.dart';
 import 'app/pages/shopping/shopping_list/shopping_list_page.dart';
 import 'injection_container.dart' as di;
@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
         PurchaseHistoryPage.routeName: (context) => PurchaseHistoryPage(),
         PurchaseHistoryShowInfoPage.routeName: (context) =>
             PurchaseHistoryShowInfoPage(),
-        NewShoppingListPage.routeName: (context) => NewShoppingListPage(),
+        //NewShoppingListPage.routeName: (context) => NewShoppingListPage(),
         SelectMyProductsPage.routeName: (context) => SelectMyProductsPage(),
         CreateNewProduct.routeName: (context) => CreateNewProduct(),
         RegisterPage.routeName: (context) => RegisterPage(),
@@ -77,7 +77,7 @@ class AuthenticationPage extends StatelessWidget {
             case AuthStatus.Unauthenticated:
               return LoginPage();
             case AuthStatus.Authenticated:
-              return HomePage();
+              return MainPage();
             case AuthStatus.Uninitialized:
             default:
               return Splash();

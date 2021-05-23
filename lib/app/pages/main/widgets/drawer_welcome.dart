@@ -3,13 +3,12 @@ import 'package:in_app_review/in_app_review.dart';
 import 'package:merkar/app/core/resources/app_colors.dart';
 import 'package:merkar/app/core/resources/strings.dart';
 import 'package:merkar/app/pages/favorites/favorites_list/favorite_list_page.dart';
-import 'package:merkar/app/pages/home/widgets/about_us_page.dart';
-import 'package:merkar/app/pages/home/widgets/comment_page.dart';
 import 'package:merkar/app/pages/login/sign_in/login_view_model.dart';
+import 'package:merkar/app/pages/main/widgets/about_us_page.dart';
+import 'package:merkar/app/pages/main/widgets/comment_page.dart';
 import 'package:merkar/injection_container.dart';
 
 import '../../purchases/purchase_history/purchase_history_page.dart';
-import '../../shopping/new_shopping_list/new_shopping_list_page.dart';
 
 enum DrawerOptions {
   route_new_list,
@@ -158,7 +157,7 @@ class _DrawerWelcomeState extends State<DrawerWelcome> {
       case DrawerOptions.route_new_list:
         {
           Navigator.of(context).pop();
-          Navigator.of(context).pushNamed(NewShoppingListPage.routeName);
+         // Navigator.of(context).pushNamed(NewShoppingListPage.routeName);
           break;
         }
       case DrawerOptions.route_favorites:
