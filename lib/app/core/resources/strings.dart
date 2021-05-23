@@ -15,9 +15,10 @@ class Strings {
 
   //Shopping list
   static const String noCategoriesAvailable = "No hay registros";
-
   static const String label_create_new_list = "Crear Nueva Lista";
   static const String label_tootip_new_list = "Nueva Lista";
+  //Products
+  static const String products_no_items= "Agregue productos pulsando en el botón inferior";
   static const String label_tootip_add_products = "Agregar Productos";
   static const String label_tootip_new_product = "Agregar Nuevo Producto";
   static const String label_save = "Guardar";

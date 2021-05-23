@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:merkar/app/core/resources/app_styles.dart';
 import 'package:merkar/app/core/resources/constants.dart';
 import 'package:merkar/app/core/resources/strings.dart';
+import 'package:merkar/app/widgets/loading_widget.dart';
 import 'package:merkar/data/entities/product.dart';
 import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
@@ -65,12 +66,7 @@ class _SelectProductsPageState extends State<SelectProductsPage> {
                     slivers:(viewModel.defaultProducts == null) ? [SliverList(
                       delegate: SliverChildBuilderDelegate(
                             (BuildContext context, int index) {
-                          return Container(
-                            alignment: Alignment.center,
-                            color: Colors.blue[200],
-                            height: 75.0,
-                            child: Text(Strings.noCategoriesAvailable),
-                          );
+                          return LoadingWidget();
                         },
                         childCount: 1,
                       ),
@@ -88,42 +84,15 @@ class _SelectProductsPageState extends State<SelectProductsPage> {
     viewModel.notifyListeners();
   }
 
-  Widget _showProductsList(List<Product> defaultProducts) {
-    return ListView.builder(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemCount: defaultProducts.length,
-        physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Container(
-              decoration: AppStyles.listDecoration(index.toDouble()/defaultProducts.length),
-              child: CheckboxListTile(
-                title: Text("${defaultProducts[index].name} ${defaultProducts[index].category}"),
-                controlAffinity: ListTileControlAffinity.leading,
-                onChanged: (bool? value) {
-                  viewModel.selectProduct(defaultProducts[index], value == true);
-                },
-                value: defaultProducts[index].selected,
-                activeColor: Colors.cyan,
-                checkColor: Colors.green,
-              ),
-            ),
-          );
-        });
-  }
-
   List<Widget> _sliverList(List<Product> list) {
-
     var productsMap = groupBy(list, (Product obj) => obj.category);
-
     var widgetList = <Widget>[];
     var keys = productsMap.keys;
     for (int index = 0; index < keys.length; index++) {
       var category = keys.elementAt(index)!;
       var products = productsMap[keys.elementAt(index)]!;
       widgetList..add(SliverAppBar(
+        leading: Container(),
         title: Text(category),
         pinned: true,
       ))..add(SliverFixedExtentList(

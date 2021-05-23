@@ -47,6 +47,7 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
         builder: (context, model, child) => Scaffold(
           key: _scaffKey,
           appBar: AppBar(
+            leading: Container(),
             title: Text('Historial'),
             actions: [
               Padding(

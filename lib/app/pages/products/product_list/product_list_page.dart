@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/resources/app_styles.dart';
@@ -69,7 +70,6 @@ class _ProductsListPageState extends State<ProductsListPage> with
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     viewModel.loadData();
@@ -116,14 +116,26 @@ class _ProductsListPageState extends State<ProductsListPage> with
                       ),
                     ],
                   ),
-                  body: SingleChildScrollView(
-                    child: Column(
-                      children: <Widget>[
-                        (viewModel.userProducts == null || viewModel.userProducts!.isEmpty)
-                            ? Text(Strings.noCategoriesAvailable)
-                            : _showProductsList(viewModel.userProducts!),
-                      ],
-                    ),
+                  body: CustomScrollView(
+                      slivers:(viewModel.userProducts == null || viewModel.userProducts!.isEmpty) ? [SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                              (BuildContext context, int index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: Center(
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  color: Colors.blue[200],
+                                  height: 75.0,
+                                  child: Text(Strings.products_no_items),
+                                ),
+                              ),
+                            );
+                          },
+                          childCount: 1,
+                        ),
+                        // : _showProductsList(viewModel.defaultProducts!),
+                      )]: _sliverList(viewModel.userProducts!),
                   ),
               floatingActionButton: AnimatedOpacity(
                 opacity: _fabOpacity,
@@ -131,12 +143,6 @@ class _ProductsListPageState extends State<ProductsListPage> with
                 curve: Curves.easeOut,
                 child: _buildFabMenu(context),
               ),
-                /*  floatingActionButton: FloatingActionButton(
-                    heroTag: "add_favorite",
-                    onPressed: () => {_showListSuggerProducts(context)},
-                    tooltip: Strings.label_tootip_add_products,
-                    child: Icon(Icons.add),
-                  ),*/
                 )));
   }
   double _fabOpacity = 1;
@@ -208,11 +214,75 @@ class _ProductsListPageState extends State<ProductsListPage> with
     viewModel.notifyListeners();
   }
 
-  _showListSuggerProducts(BuildContext context) async {
-    Navigator.of(context).pushNamed(SelectProductsPage.routeName);
-  }
+  List<Widget> _sliverList(List<Product> listProducts) {
+    var productsMap = groupBy(listProducts, (Product obj) => obj.category);
+    var widgetList = <Widget>[];
+    var keys = productsMap.keys;
+    for (int index = 0; index < keys.length; index++) {
+      var category = keys.elementAt(index)!;
+      var products = productsMap[keys.elementAt(index)]!;
+      widgetList..add(SliverAppBar(
+        leading: Container(),
+        title: Text(category),
+        pinned: true,
+      ))..add(SliverFixedExtentList(
+        itemExtent: 50.0,
+        delegate:
+        SliverChildBuilderDelegate((BuildContext context, int index) {
+          return Dismissible(
+            child: Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: Container(
+                decoration: AppStyles.listDecoration(index.toDouble()/products.length),
+                child: ListTile(
+                  title: Center(
+                    child: Text(
+                      "${products[index].name}   ${products[index].price}",
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            background: Container(color: Colors.red,child: Icon(Icons.cancel),),
+            key: Key(listProducts[index].id!),
+            onDismissed: (direction){
+              Scaffold
+                  .of(context)
+                  .showSnackBar(SnackBar(content: Text("Eliminado")));
+              viewModel.userProducts!.remove(products[index]);
+              viewModel.removeProduct(products[index]);
+              viewModel.notifyListeners();
+            },
+            confirmDismiss: (DismissDirection direction) async {
+              return await showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    shape: AppStyles.borderRadiusDialog,
+                    // contentPadding: EdgeInsets.only(top: 10.0),
+                    title: Center(child: const Text(Strings.confirm)),
+                    content: const Text("Estás seguro de eliminar el Elemento?"),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pop(false),
+                        child: const Text(Strings.calcel),
+                      ),
+                      TextButton(
+                          onPressed: () => Navigator.of(context).pop(true),
+                          child: const Text(Strings.delete)),
+                    ],
+                  );
+                },
+              );
+            },
 
-  Widget _showProductsList(List<Product> listProducts) {
+          );
+        }, childCount: products.length),
+      ));
+    }
+    return widgetList;
+  }
+  /* Widget _showProductsList(List<Product> listProducts) {
     return ListView.builder(
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
@@ -274,6 +344,6 @@ class _ProductsListPageState extends State<ProductsListPage> with
         );
       },
     );
-  }
+  }*/
 
 }
