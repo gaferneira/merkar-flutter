@@ -111,7 +111,6 @@ class _ProductsListPageState extends State<ProductsListPage> with
                       IconButton(
                         icon: Icon(Icons.search),
                         onPressed: () {
-                          //_showFinishDialog(shoppingList);
                         },
                       ),
                     ],
@@ -237,7 +236,7 @@ class _ProductsListPageState extends State<ProductsListPage> with
                 child: ListTile(
                   title: Center(
                     child: Text(
-                      "${products[index].name}   ${products[index].price}",
+                      "${products[index].name}: ${products[index].unit} x ${products[index].price}",
                     ),
                   ),
                 ),
@@ -248,10 +247,9 @@ class _ProductsListPageState extends State<ProductsListPage> with
             onDismissed: (direction){
               Scaffold
                   .of(context)
-                  .showSnackBar(SnackBar(content: Text("Eliminado")));
+                  .showSnackBar(SnackBar(content: Text(Strings.deleted)));
               viewModel.userProducts!.remove(products[index]);
               viewModel.removeProduct(products[index]);
-              viewModel.notifyListeners();
             },
             confirmDismiss: (DismissDirection direction) async {
               return await showDialog(

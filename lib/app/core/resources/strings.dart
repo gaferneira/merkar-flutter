@@ -105,4 +105,6 @@ class Strings {
 
   static const String home_no_items_available = "Para comenzar crea una lista pulsando en el botón +";
 
+  static const String deleted="Eliminado";
+
 }

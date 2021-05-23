@@ -25,6 +25,7 @@ class _CreateNewProductState extends State<CreateNewProduct> {
   String? nameProduct;
   String? nameCategory;
   String? price;
+  String? unit;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,8 @@ class _CreateNewProductState extends State<CreateNewProduct> {
         appBar: AppBar(
           title: Text(Strings.title_new_product),
         ),
-        body: _fromCreateProduct(),
+        body: SingleChildScrollView(
+            child: _fromCreateProduct()),
       ),
     );
   }
@@ -42,7 +44,7 @@ class _CreateNewProductState extends State<CreateNewProduct> {
     return Form(
       key: keyNewProduct,
       child: Padding(
-        padding: const EdgeInsets.all(Constant.normalspace),
+        padding: const EdgeInsets.all(Constant.normalspacecontainer),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -60,19 +62,21 @@ class _CreateNewProductState extends State<CreateNewProduct> {
               },
               textInputAction: TextInputAction.next,
             ),
+            SizedBox(height: Constant.normalspace),
             TextFormField(
               decoration: InputDecoration(labelText: "Categoría"),
               onSaved: (value) {
                 nameCategory = value;
               },
               validator: (value) {
-                if (value?.isNotEmpty == false) {
+                if (value!.isNotEmpty) {
                   return null;
                 }
                 return "Escriba una categoría";
               },
               textInputAction: TextInputAction.next,
             ),
+            SizedBox(height: Constant.normalspace),
             TextFormField(
               decoration: InputDecoration(labelText: "Precio"),
               keyboardType: TextInputType.number,
@@ -80,13 +84,29 @@ class _CreateNewProductState extends State<CreateNewProduct> {
                 price = value;
               },
               validator: (value) {
-                if (value?.isNotEmpty == false) {
+                if (value!.isNotEmpty) {
                   return null;
                 }
                 return "Ingrese el Precio";
               },
+              textInputAction: TextInputAction.next,
+            ),
+            SizedBox(height: Constant.normalspace),
+            TextFormField(
+              decoration: InputDecoration(labelText: "Unidad"),
+              keyboardType: TextInputType.text,
+              onSaved: (value) {
+                unit = value;
+              },
+              validator: (value) {
+                if (value!.isNotEmpty) {
+                  return null;
+                }
+                return "Ingrese la Unidad";
+              },
               textInputAction: TextInputAction.done,
             ),
+            SizedBox(height: Constant.normalspace),
             Center(
               child: RaisedButton(
                 child: Text(Strings.label_save),
@@ -108,10 +128,10 @@ class _CreateNewProductState extends State<CreateNewProduct> {
     if (keyNewProduct.currentState!.validate() == true) {
       keyNewProduct.currentState!.save();
       Product product = new Product(
-          category: nameCategory, name: nameProduct, price: price.toString());
+          category: nameCategory, name: nameProduct, price: price.toString(),
+      unit: unit.toString());
       //Implement save
       viewModel.saveProduct(product, context);
-      Navigator.pop(context);
     }
   }
 }

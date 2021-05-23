@@ -64,7 +64,7 @@ class SelectProductsViewModel extends ChangeNotifier {
   Future<void> selectProduct(Product product, bool selected) async {
     if (selected) {
       var newProduct = Product(
-          category: product.category, name: product.name, price: product.price);
+          category: product.category, name: product.name, price: product.price,unit: product.unit);
       productsRepository.save(newProduct);
       product.selected = true;
     } else {

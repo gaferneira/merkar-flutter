@@ -3,6 +3,7 @@ class ListProduct {
   String? path;
   final String? name;
   final String? category;
+  final String? unit;
   String price = '0';
   int quantity = 1;
   String total = '0';
@@ -13,6 +14,7 @@ class ListProduct {
       this.name,
       required this.price,
       this.category,
+      this.unit,
       required this.quantity,
       required this.total,
       this.selected})
@@ -23,6 +25,7 @@ class ListProduct {
         price: json["price"],
         category: json["category"],
         quantity: json["quantity"],
+        unit: json["unit"],
         total: json["total"],
         selected: json["selected"],
       );
@@ -32,6 +35,7 @@ class ListProduct {
         "price": price,
         "category": category,
         "quantity": quantity,
+        "unit": unit,
         "total": total,
         "selected": selected,
       };

@@ -104,7 +104,7 @@ class _SelectProductsPageState extends State<SelectProductsPage> {
             child: Container(
               decoration: AppStyles.listDecoration(index.toDouble()/products.length),
               child: CheckboxListTile(
-                title: Text("${products[index].name}"),
+                title: Text("${products[index].name}: ${products[index].unit} x ${products[index].price}"),
                 controlAffinity: ListTileControlAffinity.leading,
                 onChanged: (bool? value) {
                   viewModel.selectProduct(products[index], value == true);
