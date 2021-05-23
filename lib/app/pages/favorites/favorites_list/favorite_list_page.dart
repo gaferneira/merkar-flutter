@@ -243,13 +243,34 @@ class _FavoriteListPageState extends State<FavoriteListPage> with
           background: Container(color: Colors.red,child: Icon(Icons.cancel),),
           key: Key(listProducts[index].id!),
           onDismissed: (direction){
-            viewModel.removeProduct(viewModel.userProducts![index]);
-            viewModel.userProducts!.removeAt(index);
             Scaffold
                 .of(context)
-                .showSnackBar(SnackBar(content: Text("$index Eliminado")));
+                .showSnackBar(SnackBar(content: Text("Eliminado")));
+            viewModel.removeProduct(viewModel.userProducts![index]);
+            viewModel.userProducts!.removeAt(index);
             viewModel.notifyListeners();
-
+          },
+          confirmDismiss: (DismissDirection direction) async {
+            return await showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  shape: AppStyles.borderRadiusDialog,
+                  // contentPadding: EdgeInsets.only(top: 10.0),
+                  title: Center(child: const Text(Strings.confirm)),
+                  content: const Text("Estás seguro de eliminar el Elemento?"),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(false),
+                      child: const Text(Strings.calcel),
+                    ),
+                    TextButton(
+                        onPressed: () => Navigator.of(context).pop(true),
+                        child: const Text(Strings.delete)),
+                  ],
+                );
+              },
+            );
           },
 
         );
