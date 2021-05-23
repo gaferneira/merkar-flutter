@@ -21,4 +21,7 @@ class CreateNewProductsViewModel extends ChangeNotifier {
               Navigator.pop(context)
             });
   }
+  void editProduct(Product product, BuildContext context) async {
+
+  }
 }

@@ -234,11 +234,23 @@ class _ProductsListPageState extends State<ProductsListPage> with
               child: Container(
                 decoration: AppStyles.listDecoration(index.toDouble()/products.length),
                 child: ListTile(
+
                   title: Center(
                     child: Text(
                       "${products[index].name}: ${products[index].unit} x ${products[index].price}",
                     ),
                   ),
+                trailing: IconButton(
+                  icon: Icon(Icons.edit),
+                  tooltip: Strings.label_edit,
+                  onPressed: () {
+                    Navigator.pushNamed(
+                      context,
+                      CreateNewProduct.routeName,
+                      arguments: products[index],
+                    );
+                  },
+                ),
                 ),
               ),
             ),

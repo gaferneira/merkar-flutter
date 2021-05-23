@@ -26,13 +26,23 @@ class _CreateNewProductState extends State<CreateNewProduct> {
   String? nameCategory;
   String? price;
   String? unit;
+  Product? product;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    product = ModalRoute.of(context)!.settings.arguments as Product;
+
     return SlideInDown(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(Strings.title_new_product),
+          title: (product==null)?Text(Strings.title_new_product)
+              :Text(Strings.editProductTittle+" "+product!.name! ),
         ),
         body: SingleChildScrollView(
             child: _fromCreateProduct()),
@@ -49,6 +59,7 @@ class _CreateNewProductState extends State<CreateNewProduct> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             TextFormField(
+              initialValue: (product==null)?"":product!.name!,
               autofocus: true,
               decoration: InputDecoration(labelText: "Nombre"),
               onSaved: (value) {
@@ -64,6 +75,7 @@ class _CreateNewProductState extends State<CreateNewProduct> {
             ),
             SizedBox(height: Constant.normalspace),
             TextFormField(
+              initialValue: (product==null)?"":product!.category!,
               decoration: InputDecoration(labelText: "Categoría"),
               onSaved: (value) {
                 nameCategory = value;
@@ -78,6 +90,7 @@ class _CreateNewProductState extends State<CreateNewProduct> {
             ),
             SizedBox(height: Constant.normalspace),
             TextFormField(
+              initialValue: (product==null)?"":product!.price!,
               decoration: InputDecoration(labelText: "Precio"),
               keyboardType: TextInputType.number,
               onSaved: (value) {
@@ -93,6 +106,7 @@ class _CreateNewProductState extends State<CreateNewProduct> {
             ),
             SizedBox(height: Constant.normalspace),
             TextFormField(
+              initialValue: (product==null)?"":product!.unit!,
               decoration: InputDecoration(labelText: "Unidad"),
               keyboardType: TextInputType.text,
               onSaved: (value) {
@@ -127,11 +141,14 @@ class _CreateNewProductState extends State<CreateNewProduct> {
   void _saveNewProduct() {
     if (keyNewProduct.currentState!.validate() == true) {
       keyNewProduct.currentState!.save();
-      Product product = new Product(
-          category: nameCategory, name: nameProduct, price: price.toString(),
-      unit: unit.toString());
-      //Implement save
-      viewModel.saveProduct(product, context);
+      if(product==null) {
+        Product product = new Product(
+            category: nameCategory, name: nameProduct, price: price.toString(),
+            unit: unit.toString());
+        //Implement save
+        viewModel.saveProduct(product, context);
+      }
+      else viewModel.editProduct(product!, context);
     }
   }
 }
