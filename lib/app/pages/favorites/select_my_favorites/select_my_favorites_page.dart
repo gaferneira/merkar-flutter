@@ -60,12 +60,23 @@ class _SelectMyFavoritesPageState extends State<SelectMyFavoritesPage> {
                       IconButton(icon: Icon(Icons.search), onPressed: () {}),
                     ],
                   ),
-                  body: SingleChildScrollView(
-                    child: (viewModel.defaultProducts == null)
-                        ? Text('Loading...')
-                        : _showProductsList(viewModel.defaultProducts!),
-                  ),
-                )));
+                  body: CustomScrollView(
+                    slivers:(viewModel.defaultProducts == null) ? [SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                            (BuildContext context, int index) {
+                          return Container(
+                            alignment: Alignment.center,
+                            color: Colors.blue[200],
+                            height: 75.0,
+                            child: Text(Strings.noCategoriesAvailable),
+                          );
+                        },
+                        childCount: 1,
+                      ),
+                       // : _showProductsList(viewModel.defaultProducts!),
+                  )]: _sliverList(20,10),
+            )))
+    );
   }
 
   onItemChanged(String value) {
@@ -88,7 +99,7 @@ class _SelectMyFavoritesPageState extends State<SelectMyFavoritesPage> {
             child: Container(
               decoration: AppStyles.listDecoration(index.toDouble()/defaultProducts.length),
               child: CheckboxListTile(
-                title: Text("${defaultProducts[index].name}"),
+                title: Text("${defaultProducts[index].name} ${defaultProducts[index].category}"),
                 controlAffinity: ListTileControlAffinity.leading,
                 onChanged: (bool? value) {
                   viewModel.selectProduct(index, value == true);
@@ -101,4 +112,28 @@ class _SelectMyFavoritesPageState extends State<SelectMyFavoritesPage> {
           );
         });
   }
+
+  List<Widget> _sliverList(int size, int sliverChildCount) {
+    var widgetList = <Widget>[];
+    for (int index = 0; index < size; index++)
+      widgetList
+        ..add(SliverAppBar(
+          title: Text("Title $index"),
+          pinned: true,
+        ))
+        ..add(SliverFixedExtentList(
+          itemExtent: 50.0,
+          delegate:
+          SliverChildBuilderDelegate((BuildContext context, int index) {
+            return Container(
+              alignment: Alignment.center,
+              color: Colors.lightBlue[100 * (index % 9)],
+              child: Text('list item $index'),
+            );
+          }, childCount: sliverChildCount),
+        ));
+
+    return widgetList;
+  }
+
 }
