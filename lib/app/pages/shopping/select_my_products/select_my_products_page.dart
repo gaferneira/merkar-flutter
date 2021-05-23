@@ -54,7 +54,7 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
                             child: TextField(
                               controller: _search_textController,
                               decoration: InputDecoration(
-                                labelText: 'Buscar Actual...',
+                                labelText: 'Buscar',
                                 fillColor: Colors.white,
                                 filled: true,
                                 border: OutlineInputBorder(

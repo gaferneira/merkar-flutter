@@ -42,7 +42,7 @@ class _SelectMyFavoritesPageState extends State<SelectMyFavoritesPage> {
                             child: TextField(
                               controller: _search_textController,
                               decoration: InputDecoration(
-                                labelText: 'Buscar Actual...',
+                                labelText: 'Buscar',
                                 fillColor: Colors.white,
                                 filled: true,
                                 border: OutlineInputBorder(
