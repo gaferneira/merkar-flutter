@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/resources/app_styles.dart';
@@ -74,7 +75,7 @@ class _SelectMyFavoritesPageState extends State<SelectMyFavoritesPage> {
                         childCount: 1,
                       ),
                        // : _showProductsList(viewModel.defaultProducts!),
-                  )]: _sliverList(20,10),
+                  )]: _sliverList(viewModel.defaultProducts!),
             )))
     );
   }
@@ -102,7 +103,7 @@ class _SelectMyFavoritesPageState extends State<SelectMyFavoritesPage> {
                 title: Text("${defaultProducts[index].name} ${defaultProducts[index].category}"),
                 controlAffinity: ListTileControlAffinity.leading,
                 onChanged: (bool? value) {
-                  viewModel.selectProduct(index, value == true);
+                  viewModel.selectProduct(defaultProducts[index], value == true);
                 },
                 value: defaultProducts[index].selected,
                 activeColor: Colors.cyan,
@@ -113,26 +114,33 @@ class _SelectMyFavoritesPageState extends State<SelectMyFavoritesPage> {
         });
   }
 
-  List<Widget> _sliverList(int size, int sliverChildCount) {
-    var widgetList = <Widget>[];
-    for (int index = 0; index < size; index++)
-      widgetList
-        ..add(SliverAppBar(
-          title: Text("Title $index"),
-          pinned: true,
-        ))
-        ..add(SliverFixedExtentList(
-          itemExtent: 50.0,
-          delegate:
-          SliverChildBuilderDelegate((BuildContext context, int index) {
-            return Container(
-              alignment: Alignment.center,
-              color: Colors.lightBlue[100 * (index % 9)],
-              child: Text('list item $index'),
-            );
-          }, childCount: sliverChildCount),
-        ));
+  List<Widget> _sliverList(List<Product> list) {
 
+    var productsMap = groupBy(list, (Product obj) => obj.category);
+
+    var widgetList = <Widget>[];
+    var keys = productsMap.keys;
+    for (int index = 0; index < keys.length; index++) {
+      var category = keys.elementAt(index)!;
+      var products = productsMap[keys.elementAt(index)]!;
+      widgetList..add(SliverAppBar(
+        title: Text(category),
+        pinned: true,
+      ))..add(SliverFixedExtentList(
+        itemExtent: 50.0,
+        delegate:
+        SliverChildBuilderDelegate((BuildContext context, int index) {
+          return CheckboxListTile(
+            title: Text("${products[index].name} ${products[index].category}"),
+            controlAffinity: ListTileControlAffinity.leading,
+            onChanged: (bool? value) {
+              viewModel.selectProduct(products[index], value == true);
+            },
+            value: products[index].selected
+          );
+        }, childCount: products.length),
+      ));
+    }
     return widgetList;
   }
 

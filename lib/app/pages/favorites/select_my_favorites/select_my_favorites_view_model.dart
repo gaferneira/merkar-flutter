@@ -1,9 +1,8 @@
-import 'package:dartz/dartz_unsafe.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/data/entities/product.dart';
 import 'package:merkar/data/entities/shopping_list.dart';
 import 'package:merkar/data/repositories/products_repository.dart';
-import 'package:collection/collection.dart';
 
 class SelectMyFavoritesViewModel extends ChangeNotifier {
   final ProductsRepository productsRepository;
@@ -64,8 +63,7 @@ class SelectMyFavoritesViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> selectProduct(int index, bool selected) async {
-    var product = defaultProducts![index];
+  Future<void> selectProduct(Product product, bool selected) async {
     if (selected) {
       var newProduct = Product(
           category: product.category, name: product.name, price: product.price);
