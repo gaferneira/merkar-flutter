@@ -5,7 +5,7 @@ class Strings {
   static const String route_about_us = 'Acerca de';
   static const String route_close_session = 'Cerrar Sesión';
   static const String route_home = 'Home';
-  static const String route_favorites = "Mis Productos";
+  static const String route_products = "Mis Productos";
   static const String route_purchase_history = 'Historial';
   static const String route_more = "Más";
 

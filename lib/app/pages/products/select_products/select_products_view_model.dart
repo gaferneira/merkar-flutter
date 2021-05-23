@@ -1,13 +1,12 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/data/entities/product.dart';
 import 'package:merkar/data/entities/shopping_list.dart';
 import 'package:merkar/data/repositories/products_repository.dart';
 
-class SelectMyFavoritesViewModel extends ChangeNotifier {
+class SelectProductsViewModel extends ChangeNotifier {
   final ProductsRepository productsRepository;
 
-  SelectMyFavoritesViewModel({required this.productsRepository});
+  SelectProductsViewModel({required this.productsRepository});
 
   late ShoppingList shoppingList;
 
@@ -21,7 +20,6 @@ class SelectMyFavoritesViewModel extends ChangeNotifier {
   Future<void> loadData() async {
     productsRepository.fetchDefaultProducts().listen((data) {
       defaultProducts = data;
-      _groupByCollection(data,'categoty');
       error = null;
       updateList();
       filterDefaultProducts = defaultProducts;
@@ -79,12 +77,6 @@ class SelectMyFavoritesViewModel extends ChangeNotifier {
       });
     }
     notifyListeners();
-  }
-
-  void _groupByCollection(List<Product> data,String groupByAttribute) {
-    productsMap = groupBy(data, (Product obj) => obj.category);
-    //forEach(productsMap, (List<String>category)=>print(category));
-    print(productsMap);
   }
 
 }

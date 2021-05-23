@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:merkar/app/core/resources/app_colors.dart';
 import 'package:merkar/app/core/resources/strings.dart';
-import 'package:merkar/app/pages/favorites/favorites_list/favorite_list_page.dart';
+import 'package:merkar/app/pages/products/product_list/product_list_page.dart';
 import 'package:merkar/app/pages/login/sign_in/login_view_model.dart';
 import 'package:merkar/app/pages/main/widgets/about_us_page.dart';
 import 'package:merkar/app/pages/main/widgets/comment_page.dart';
@@ -16,7 +16,7 @@ enum DrawerOptions {
   route_comments,
   route_about_us,
   route_close_session,
-  route_favorites,
+  route_products,
 }
 
 class DrawerWelcome extends StatefulWidget {
@@ -99,7 +99,7 @@ class _DrawerWelcomeState extends State<DrawerWelcome> {
           ),
           Divider(),
           ListTile(
-            title: Text(Strings.route_favorites),
+            title: Text(Strings.route_products),
             leading: Icon(
               Icons.favorite,
               color: AppColors.lightColor,
@@ -108,7 +108,7 @@ class _DrawerWelcomeState extends State<DrawerWelcome> {
               Icons.keyboard_arrow_right,
               color: AppColors.lightColor,
             ),
-            onTap: () => _goToRoute(DrawerOptions.route_favorites, context),
+            onTap: () => _goToRoute(DrawerOptions.route_products, context),
           ),
           Divider(),
           ListTile(
@@ -160,10 +160,10 @@ class _DrawerWelcomeState extends State<DrawerWelcome> {
          // Navigator.of(context).pushNamed(NewShoppingListPage.routeName);
           break;
         }
-      case DrawerOptions.route_favorites:
+      case DrawerOptions.route_products:
         {
           Navigator.of(context).pop();
-          Navigator.of(context).pushNamed(FavoriteListPage.routeName);
+          Navigator.of(context).pushNamed(ProductsListPage.routeName);
           break;
         }
       case DrawerOptions.route_purchase_history:

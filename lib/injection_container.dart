@@ -3,8 +3,8 @@ import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'app/pages/favorites/favorites_list/favorite_list_view_model.dart';
-import 'app/pages/favorites/select_my_favorites/select_my_favorites_view_model.dart';
+import 'app/pages/products/product_list/product_list_view_model.dart';
+import 'app/pages/products/select_products/select_products_view_model.dart';
 import 'app/pages/home/home_view_model.dart';
 import 'app/pages/login/auth_view_model.dart';
 import 'app/pages/login/register/register_view_model.dart';
@@ -76,9 +76,9 @@ void createViewModels() {
       repository: serviceLocator(), purchasesRepository: serviceLocator()));
 
   serviceLocator.registerFactory(
-      () => FavoriteListViewModel(repository: serviceLocator()));
+      () => ProductsListViewModel(repository: serviceLocator()));
 
-  serviceLocator.registerFactory(() => SelectMyFavoritesViewModel(
+  serviceLocator.registerFactory(() => SelectProductsViewModel(
         productsRepository: serviceLocator(),
       ));
 

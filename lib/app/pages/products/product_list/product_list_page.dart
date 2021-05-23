@@ -1,32 +1,30 @@
-import 'dart:io';
 import 'dart:math' as math;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/resources/app_styles.dart';
 import 'package:merkar/app/core/resources/constants.dart';
 import 'package:merkar/app/core/resources/strings.dart';
-import 'package:merkar/app/pages/favorites/select_my_favorites/select_my_favorites_page.dart';
-import 'package:merkar/app/pages/favorites/widgets/fab_menu.dart';
+import 'package:merkar/app/pages/products/select_products/select_products_page.dart';
+import 'package:merkar/app/pages/products/widgets/fab_menu.dart';
 import 'package:merkar/app/pages/products/new_product/create_new_product.dart';
 import 'package:merkar/data/entities/product.dart';
 import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
-
-import 'favorite_list_view_model.dart';
+import 'product_list_view_model.dart';
 
 enum SingingCharacter { delete, reset, nothing }
 
-class FavoriteListPage extends StatefulWidget {
+class ProductsListPage extends StatefulWidget {
   static const routeName = '/showfavoritelist';
   @override
-  _FavoriteListPageState createState() => _FavoriteListPageState();
+  _ProductsListPageState createState() => _ProductsListPageState();
 }
 
-class _FavoriteListPageState extends State<FavoriteListPage> with
+class _ProductsListPageState extends State<ProductsListPage> with
     TickerProviderStateMixin{
   TextEditingController _search_textController = TextEditingController();
   final _keySearchP = GlobalKey<FormState>();
-  FavoriteListViewModel viewModel = serviceLocator<FavoriteListViewModel>();
+  ProductsListViewModel viewModel = serviceLocator<ProductsListViewModel>();
 
   late AnimationController _controller;
   final _scaffoldKey = GlobalKey<ScaffoldState>(); // new line
@@ -63,7 +61,7 @@ class _FavoriteListPageState extends State<FavoriteListPage> with
   void _chooseFile(int option) async {
     switch (option){
       case 0:
-        Navigator.of(context).pushNamed(SelectMyFavoritesPage.routeName);
+        Navigator.of(context).pushNamed(SelectProductsPage.routeName);
         break;
       case 1:
         Navigator.of(context).pushNamed(CreateNewProduct.routeName);
@@ -76,14 +74,14 @@ class _FavoriteListPageState extends State<FavoriteListPage> with
   Widget build(BuildContext context) {
     viewModel.loadData();
 
-    return ChangeNotifierProvider<FavoriteListViewModel>.value(
+    return ChangeNotifierProvider<ProductsListViewModel>.value(
         value: viewModel,
-        child: Consumer<FavoriteListViewModel>(
+        child: Consumer<ProductsListViewModel>(
             builder: (context, model, child) => Scaffold(
               key: _scaffoldKey,
                   appBar: AppBar(
                     leading: Container(),
-                    title: Text(Strings.route_favorites),
+                    title: Text(Strings.route_products),
                     actions: <Widget>[
                       Padding(
                         padding: const EdgeInsets.all(Constant.normalspace),
@@ -211,7 +209,7 @@ class _FavoriteListPageState extends State<FavoriteListPage> with
   }
 
   _showListSuggerProducts(BuildContext context) async {
-    Navigator.of(context).pushNamed(SelectMyFavoritesPage.routeName);
+    Navigator.of(context).pushNamed(SelectProductsPage.routeName);
   }
 
   Widget _showProductsList(List<Product> listProducts) {

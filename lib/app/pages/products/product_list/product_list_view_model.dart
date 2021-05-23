@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:merkar/data/entities/product.dart';
 import 'package:merkar/data/repositories/products_repository.dart';
 
-class FavoriteListViewModel extends ChangeNotifier {
+class ProductsListViewModel extends ChangeNotifier {
   final ProductsRepository repository;
 
-  FavoriteListViewModel({
+  ProductsListViewModel({
     required this.repository,
   });
 

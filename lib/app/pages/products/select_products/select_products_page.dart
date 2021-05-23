@@ -8,27 +8,27 @@ import 'package:merkar/data/entities/product.dart';
 import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
 
-import 'select_my_favorites_view_model.dart';
+import 'select_products_view_model.dart';
 
-class SelectMyFavoritesPage extends StatefulWidget {
-  static const routeName = "/select_my_favorites_page";
+class SelectProductsPage extends StatefulWidget {
+  static const routeName = "/select_products_page";
 
   @override
-  _SelectMyFavoritesPageState createState() => _SelectMyFavoritesPageState();
+  _SelectProductsPageState createState() => _SelectProductsPageState();
 }
 
-class _SelectMyFavoritesPageState extends State<SelectMyFavoritesPage> {
-  SelectMyFavoritesViewModel viewModel =
-      serviceLocator<SelectMyFavoritesViewModel>();
+class _SelectProductsPageState extends State<SelectProductsPage> {
+  SelectProductsViewModel viewModel =
+      serviceLocator<SelectProductsViewModel>();
   TextEditingController _search_textController = TextEditingController();
   final _keySearchP = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     viewModel.loadData();
 
-    return ChangeNotifierProvider<SelectMyFavoritesViewModel>.value(
+    return ChangeNotifierProvider<SelectProductsViewModel>.value(
         value: viewModel,
-        child: Consumer<SelectMyFavoritesViewModel>(
+        child: Consumer<SelectProductsViewModel>(
             builder: (context, model, child) => Scaffold(
                   appBar: AppBar(
                     title: Text(Strings.title_sugger_products),
@@ -130,13 +130,19 @@ class _SelectMyFavoritesPageState extends State<SelectMyFavoritesPage> {
         itemExtent: 50.0,
         delegate:
         SliverChildBuilderDelegate((BuildContext context, int index) {
-          return CheckboxListTile(
-            title: Text("${products[index].name} ${products[index].category}"),
-            controlAffinity: ListTileControlAffinity.leading,
-            onChanged: (bool? value) {
-              viewModel.selectProduct(products[index], value == true);
-            },
-            value: products[index].selected
+          return Padding(
+            padding: const EdgeInsets.all(2.0),
+            child: Container(
+              decoration: AppStyles.listDecoration(index.toDouble()/products.length),
+              child: CheckboxListTile(
+                title: Text("${products[index].name}"),
+                controlAffinity: ListTileControlAffinity.leading,
+                onChanged: (bool? value) {
+                  viewModel.selectProduct(products[index], value == true);
+                },
+                value: products[index].selected
+              ),
+            ),
           );
         }, childCount: products.length),
       ));
