@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:merkar/app/core/resources/app_colors.dart';
 import 'package:merkar/app/core/resources/constants.dart';
 import 'package:merkar/app/core/resources/strings.dart';
@@ -38,12 +39,29 @@ class _PurchaseHistoryShowInfoPageState
             //physics: NeverScrollableScrollPhysics(),
             child: Column(children: <Widget>[
               Text("Fecha: ${purchase.date}"),
-              Text("Total: ${purchase.total}"),
               SizedBox(height: Constant.normalspacecontainer,),
               Text("Productos"),
+              SizedBox(height: Constant.normalspace,),
               (viewModel.listProducts == null)
                   ? Text('Loading...')
                   : _showTable(viewModel.listProducts!),
+               Row(
+                 children: [
+                   Padding(
+                     padding: const EdgeInsets.all(8.0),
+                     child: Text(Strings.label_total,
+                     textAlign: TextAlign.left,
+                     ),
+                   ),
+                   Expanded(
+                     child: Padding(
+                       padding: const EdgeInsets.all(8.0),
+                       child: Text((purchase.total!=null)? purchase.total!:"0",
+                       textAlign: TextAlign.right),
+                     ),
+                   ),
+                 ],
+               ),
                  // : _showProductsList(viewModel.listProducts!),
             ]),
           ),
