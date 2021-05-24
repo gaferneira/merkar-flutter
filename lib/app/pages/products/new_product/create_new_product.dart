@@ -2,7 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/resources/constants.dart';
 import 'package:merkar/app/core/resources/strings.dart';
-import 'package:merkar/app/core/widgets/internal_button.dart';
+import 'package:merkar/app/widgets/primary_button.dart';
 import 'package:merkar/data/entities/product.dart';
 import 'package:merkar/injection_container.dart';
 
@@ -129,7 +129,7 @@ class _CreateNewProductState extends State<CreateNewProduct> {
           duration: const Duration(seconds: 1)));
       viewModel.error = null;
     }
-    return  InternalButton(
+    return  PrimaryButton(
         title: Strings.label_save,
         onPressed: () {
       if (keyNewProduct.currentState!.validate() == true) {

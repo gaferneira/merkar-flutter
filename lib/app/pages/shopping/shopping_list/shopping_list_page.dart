@@ -6,6 +6,7 @@ import 'package:merkar/app/core/resources/app_colors.dart';
 import 'package:merkar/app/core/resources/app_styles.dart';
 import 'package:merkar/app/core/resources/constants.dart';
 import 'package:merkar/app/core/resources/strings.dart';
+import 'package:merkar/app/widgets/primary_button.dart';
 import 'package:merkar/data/entities/list_product.dart';
 import 'package:merkar/data/entities/shopping_list.dart';
 import 'package:merkar/injection_container.dart';
@@ -138,16 +139,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                         (viewModel.selectedList == null)
                             ? Text('Loading...')
                             : _showSelectProductsList(viewModel.selectedList),
-                        RaisedButton(
-                            child: Text(Strings.label_finish),
-                            color: AppColors.lightColor,
-                            textColor: AppColors.textColorButtomLight,
-                            shape: AppStyles.borderRadius,
-                            onPressed: onPressed
-                            //() {
-                            //_showFinishDialog(shoppingList);
-                            //}
-                            ),
+                        PrimaryButton(title: Strings.label_finish, onPressed: onPressed),
                       ],
                     ),
                   ),
@@ -332,7 +324,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       context: context,
       builder: (context) => Center(
         child: Container(
-          height: 325.0,
+          height:368.0,
           child: AlertDialog(
             title: Text(Strings.editProductTittle + ": ${product.name}"),
             content: Form(
@@ -368,16 +360,12 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                     },
                     textInputAction: TextInputAction.done,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(Constant.normalspace),
-                    child: Center(
-                      child: RaisedButton(
-                          child: Text(Strings.label_save),
-                          onPressed: () {
-                            _saveEditProduct(product);
-                            Navigator.pop(context, "${Strings.label_save}");
-                          }),
-                    ),
+                  Center(
+                    child: PrimaryButton(title: Strings.label_save,onPressed: () {
+                      _saveEditProduct(product);
+                      Navigator.pop(context, "${Strings.label_save}");
+                    }),
+
                   ),
                 ],
               ),

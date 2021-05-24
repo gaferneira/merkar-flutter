@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class InternalButton extends StatelessWidget {
+class PrimaryButton extends StatelessWidget {
   final String title;
-  final Function() onPressed;
+  final Function()? onPressed;
 
-  InternalButton({required this.title, required this.onPressed});
+  PrimaryButton({required this.title, this.onPressed});
 
   @override
   Widget build(BuildContext context) {

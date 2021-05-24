@@ -5,7 +5,7 @@ import 'package:merkar/app/core/resources/app_colors.dart';
 import 'package:merkar/app/core/resources/app_styles.dart';
 import 'package:merkar/app/core/resources/constants.dart';
 import 'package:merkar/app/core/resources/strings.dart';
-import 'package:merkar/app/core/widgets/internal_button.dart';
+import 'package:merkar/app/widgets/primary_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 Future<void> AboutUsPage(BuildContext context) {
@@ -126,7 +126,7 @@ Future<void> AboutUsPage(BuildContext context) {
                                 ),
                               ],
                             ),
-                            InternalButton(title: Strings.label_close,
+                            PrimaryButton(title: Strings.label_close,
                               onPressed: () {
                                 Navigator.pop(context);
                               }),
