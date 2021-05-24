@@ -29,7 +29,7 @@ class Strings {
   static const String title_my_products = "Productos";
   static const String comments = "Comentarios";
   static const String about_us = "Acerca de";
-  static const String editProductTittle = "Editar Producto";
+  static const String editProductTittle = "Editar";
   static const String title_new_product = "Nuevo Producto";
   static const String label_quantity = "Cantidad";
   static const String label_price = "Precio";
