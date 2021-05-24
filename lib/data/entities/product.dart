@@ -1,7 +1,6 @@
 class Product {
-  String? defaultId;
   String? id;
-  late String path;
+  String? path;
   final String? name;
   final String price;
   final String? category;

@@ -72,11 +72,11 @@ class PurchasesRepositoryImpl implements PurchasesRepository {
 
   @override
   Future<Either<Failure, bool>> remove(Purchase item) async {
-    if (item.id != null) {
+    if (item.path != null) {
       final products = await this
           .firestoreDataSource
           .db
-          .doc(item.path)
+          .doc(item.path!)
           .collection(COLLECTION_PURCHASES)
           .get();
 
@@ -84,7 +84,7 @@ class PurchasesRepositoryImpl implements PurchasesRepository {
       products.docs.forEach((product) {
         batch.delete(product.reference);
       });
-      batch.delete(this.firestoreDataSource.db.doc(item.path));
+      batch.delete(this.firestoreDataSource.db.doc(item.path!));
       batch.commit();
 
       return Right(true);
@@ -95,7 +95,7 @@ class PurchasesRepositoryImpl implements PurchasesRepository {
   @override
   Stream<List<ListProduct>> fetchProducts(Purchase item) {
     return firestoreDataSource.db
-        .doc(item.path)
+        .doc(item.path!)
         .collection(COLLECTION_PRODUCTS)
         .snapshots()
         .map((querySnapshot) => querySnapshot.docs

@@ -26,7 +26,16 @@ class ProductsListViewModel extends ChangeNotifier {
   }
 
   Future<void> removeProduct(Product product) async {
+    userProducts?.remove(product);
     repository.remove(product);
+    notifyListeners();
+  }
+
+  searchByText(String value) {
+    userProducts = filterUserProducts
+        .where((product) =>
+        product.name!.toLowerCase().contains(value.toLowerCase()))
+        .toList();
     notifyListeners();
   }
 }

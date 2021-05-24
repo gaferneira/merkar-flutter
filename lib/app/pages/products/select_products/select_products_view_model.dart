@@ -15,9 +15,11 @@ class SelectProductsViewModel extends ChangeNotifier {
   List<Product>? filterDefaultProducts;
   var productsMap;
 
+  var firstLoadTime = true;
   String? error;
 
   Future<void> loadData() async {
+    firstLoadTime = true;
     productsRepository.fetchDefaultProducts().listen((data) {
       defaultProducts = data;
       error = null;
@@ -46,12 +48,18 @@ class SelectProductsViewModel extends ChangeNotifier {
 
   void updateList() {
     if (userProducts != null && defaultProducts != null) {
+
+      if (firstLoadTime) {
+        firstLoadTime = false;
+        removeInitialUserProducts();
+      }
+
       defaultProducts?.forEach((product) {
         product.selected = false;
       });
 
-      userProducts?.forEach((userProduct) {
-        defaultProducts?.forEach((product) {
+      defaultProducts?.forEach((product) {
+        userProducts?.forEach((userProduct) {
           if (product.name == userProduct.name) {
             product.selected = true;
             userProduct.selected = true;
@@ -59,6 +67,24 @@ class SelectProductsViewModel extends ChangeNotifier {
         });
       });
     }
+  }
+
+  void removeInitialUserProducts() {
+    var newList = <Product>[];
+    defaultProducts?.forEach((product) {
+      product.selected = false;
+      var found = false;
+      userProducts?.forEach((userProduct) {
+        if (product.name == userProduct.name) {
+          found = true;
+        }
+      });
+      if (!found) {
+        newList.add(product);
+      }
+    });
+
+    defaultProducts = newList;
   }
 
   Future<void> selectProduct(Product product, bool selected) async {
@@ -76,6 +102,14 @@ class SelectProductsViewModel extends ChangeNotifier {
         }
       });
     }
+    notifyListeners();
+  }
+
+  void searchByText(String value) {
+    defaultProducts = filterDefaultProducts!
+        .where((product) =>
+        product.name!.toLowerCase().contains(value.toLowerCase()))
+        .toList();
     notifyListeners();
   }
 

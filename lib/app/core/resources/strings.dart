@@ -107,4 +107,6 @@ class Strings {
 
   static const String deleted="Eliminado";
 
+  static const String label_search = "Buscar...";
+
 }

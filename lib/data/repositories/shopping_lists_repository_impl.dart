@@ -23,8 +23,8 @@ class ShoppingListsRepositoryImpl implements ShoppingListsRepository {
 
   @override
   Future<Either<Failure, ShoppingList>> save(ShoppingList item) async {
-    if (item.id != null) {
-      await this.firestoreDataSource.db.doc(item.id!).set(item.toJson());
+    if (item.path != null) {
+      await this.firestoreDataSource.db.doc(item.path!).set(item.toJson());
     } else {
       final ref = await firestoreDataSource
           .getDataDocument()
@@ -54,11 +54,11 @@ class ShoppingListsRepositoryImpl implements ShoppingListsRepository {
 
   @override
   Future<Either<Failure, bool>> remove(ShoppingList? item) async {
-    if (item!.id != null) {
+    if (item!.path != null) {
       final products = await this
           .firestoreDataSource
           .db
-          .doc(item.path)
+          .doc(item.path!)
           .collection(COLLECTION_SHOPPING_LIST)
           .get();
 
@@ -66,7 +66,7 @@ class ShoppingListsRepositoryImpl implements ShoppingListsRepository {
       products.docs.forEach((product) {
         batch.delete(product.reference);
       });
-      batch.delete(this.firestoreDataSource.db.doc(item.path));
+      batch.delete(this.firestoreDataSource.db.doc(item.path!));
       batch.commit();
 
       return Right(true);
@@ -77,7 +77,7 @@ class ShoppingListsRepositoryImpl implements ShoppingListsRepository {
   @override
   Stream<List<ListProduct>> fetchProducts(ShoppingList? list) {
     return firestoreDataSource.db
-        .doc(list!.path)
+        .doc(list!.path!)
         .collection(COLLECTION_PRODUCTS)
         .snapshots()
         .map((querySnapshot) => querySnapshot.docs
@@ -92,7 +92,7 @@ class ShoppingListsRepositoryImpl implements ShoppingListsRepository {
   Future<Either<Failure, bool>> removeProduct(
       String? productId, ShoppingList? list) async {
     await firestoreDataSource.db
-        .doc(list!.path)
+        .doc(list!.path!)
         .collection(COLLECTION_PRODUCTS)
         .doc(productId)
         .delete();
@@ -103,7 +103,7 @@ class ShoppingListsRepositoryImpl implements ShoppingListsRepository {
   Future<Either<Failure, ListProduct>> saveProduct(
       ListProduct product, ShoppingList? list) async {
     await firestoreDataSource.db
-        .doc(list!.path)
+        .doc(list!.path!)
         .collection(COLLECTION_PRODUCTS)
         .doc(product.id)
         .set(product.toJson());
