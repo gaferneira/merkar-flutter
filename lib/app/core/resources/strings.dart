@@ -31,8 +31,6 @@ class Strings {
   static const String about_us = "Acerca de";
   static const String editProductTittle = "Editar:";
   static const String title_new_product = "Nuevo Producto";
-  static const String label_quantity = "Cantidad";
-  static const String label_price = "Precio";
   static const String label_send = "Enviar";
   static const String label_message = "Mensaje";
   static const String label_email = "Email";
@@ -108,5 +106,11 @@ class Strings {
   static const String deleted="Eliminado";
 
   static const String label_search = "Buscar...";
+//PURCHASE
+  static const String label_product="Producto";
+  static const String label_quantity = "Cantidad";
+  static const String label_price = "Precio";
+  static const String label_subtotal="Subtotal";
+  static const String label_total="Total";
 
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:merkar/app/core/resources/app_styles.dart';
+import 'package:merkar/app/core/resources/app_colors.dart';
+import 'package:merkar/app/core/resources/constants.dart';
+import 'package:merkar/app/core/resources/strings.dart';
 import 'package:merkar/data/entities/list_product.dart';
 import 'package:merkar/data/entities/purchase.dart';
 import 'package:merkar/injection_container.dart';
@@ -37,11 +39,12 @@ class _PurchaseHistoryShowInfoPageState
             child: Column(children: <Widget>[
               Text("Fecha: ${purchase.date}"),
               Text("Total: ${purchase.total}"),
-              Divider(),
+              SizedBox(height: Constant.normalspacecontainer,),
               Text("Productos"),
               (viewModel.listProducts == null)
                   ? Text('Loading...')
-                  : _showProductsList(viewModel.listProducts!),
+                  : _showTable(viewModel.listProducts!),
+                 // : _showProductsList(viewModel.listProducts!),
             ]),
           ),
         ),
@@ -49,44 +52,131 @@ class _PurchaseHistoryShowInfoPageState
     );
   }
 }
-/*
-  @override
-  Widget build(BuildContext context) {
-    initialState(context);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(purchase.name),
-      ),
-      body: SingleChildScrollView(
-        child: (viewModel.listProducts == null)
-            ? Text('Loading...')
-            : _showProductsList(viewModel.listProducts),
-      ),
-    );
-  }*/
 
-Widget _showProductsList(List<ListProduct> listProduct) {
-  return ListView.builder(
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      scrollDirection: Axis.vertical,
-      itemCount: listProduct.length,
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.all(10.0),
+Widget _showTable(List<ListProduct> list){
+  return Table(
+        border: TableBorder.all(),
+        columnWidths: const <int, TableColumnWidth>{
+          0: FlexColumnWidth(),
+          1: FlexColumnWidth(),
+          2: FlexColumnWidth(),
+          3: FlexColumnWidth(),
+        },
+        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+        children: _buildData(list),
+      );
+}
+List<TableRow>_buildData(List<ListProduct> list){
+  List<TableRow> tableRows=[];
+  tableRows.add(
+                TableRow(
+                  children: <Widget>[
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.top,
+                      child: Container(
+                        height: Constant.normalspacecontainer,
+                        color: AppColors.primaryColor,
+                        child: Center(
+                          child: Text(Strings.label_product,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: AppColors.secondaryLightColor),
+                          ),
+                        ),
+                      ),
+                    ),
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.top,
+                      child: Container(
+                        height: Constant.normalspacecontainer,
+                        color: AppColors.primaryColor,
+                        child: Center(
+                          child: Text(Strings.label_quantity,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: AppColors.secondaryLightColor),
+                          ),
+                        ),
+                      ),
+                    ),
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.top,
+                      child: Container(
+                        height: Constant.normalspacecontainer,
+                        color: AppColors.primaryColor,
+                        child: Center(
+                          child: Text(Strings.label_price,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: AppColors.secondaryLightColor),
+                          ),
+                        ),
+                      ),
+                    ),
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.top,
+                      child: Container(
+                        height: Constant.normalspacecontainer,
+                        color: AppColors.primaryColor,
+                        child: Center(
+                          child: Text(Strings.label_subtotal,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: AppColors.secondaryLightColor),
+                          ),
+                        ),
+                      ),
+                    ),
+
+                  ],
+                )
+  );
+  for(int index=0; index<list.length;index++){
+    tableRows.add(TableRow(
+      children: <Widget>[
+        TableCell(
+          verticalAlignment: TableCellVerticalAlignment.top,
           child: Container(
-            decoration: AppStyles.listDecoration(index.toDouble()/listProduct.length),
-            child: ListTile(
-              title: Text("${listProduct[index].name}"),
-              /* controlAffinity: ListTileControlAffinity.leading,
-                onChanged: (bool value) {
-                  //viewModel.selectProduct(index, value);
-                },
-                value: listProduct[index].selected,
-                activeColor: Colors.cyan,
-                checkColor: Colors.green,*/
+            height: Constant.normalspacecontainer,
+            child: Center(
+              child: Text(list[index].name!,
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
-        );
-      });
+        ),
+        TableCell(
+          verticalAlignment: TableCellVerticalAlignment.top,
+          child: Container(
+            height: Constant.normalspacecontainer,
+            child: Center(
+              child: Text(list[index].quantity.toString(),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        ),
+        TableCell(
+          verticalAlignment: TableCellVerticalAlignment.top,
+          child: Container(
+            height: Constant.normalspacecontainer,
+            child: Center(
+              child: Text(list[index].price,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        ),
+        TableCell(
+          verticalAlignment: TableCellVerticalAlignment.top,
+          child: Container(
+            height: Constant.normalspacecontainer,
+            child: Center(
+              child: Text(list[index].price*list[index].quantity,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        ),
+      ],
+    ));
+  }
+  return tableRows;
 }
+
