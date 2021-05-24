@@ -1,6 +1,6 @@
 class ShoppingList {
   String? id;
-  late String path;
+  String? path;
   final String? name;
 
   ShoppingList({this.name, this.id}) : super();

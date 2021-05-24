@@ -35,6 +35,13 @@ class AppStyles {
     color: Colors.black.withOpacity(0.05 + opacity*0.4),
     );
   }
+
+  static BoxDecoration checklistDecoration(double opacity){
+    return BoxDecoration(
+      color: Colors.black.withOpacity(0.05 + opacity*0.4),
+    );
+  }
+
   static RoundedRectangleBorder borderRadiusDialog = RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(32.0)
   );

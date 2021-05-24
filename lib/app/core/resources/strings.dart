@@ -5,7 +5,7 @@ class Strings {
   static const String route_about_us = 'Acerca de';
   static const String route_close_session = 'Cerrar Sesión';
   static const String route_home = 'Home';
-  static const String route_favorites = "Mis Productos";
+  static const String route_products = "Mis Productos";
   static const String route_purchase_history = 'Historial';
   static const String route_more = "Más";
 
@@ -15,12 +15,13 @@ class Strings {
 
   //Shopping list
   static const String noCategoriesAvailable = "No hay registros";
-
   static const String label_create_new_list = "Crear Nueva Lista";
   static const String label_tootip_new_list = "Nueva Lista";
+  //Products
+  static const String products_no_items= "Agregue productos pulsando en el botón inferior";
   static const String label_tootip_add_products = "Agregar Productos";
   static const String label_tootip_new_product = "Agregar Nuevo Producto";
-  static const String label_save = "Guardar";
+  static const String label_save = "GUARDAR";
   static const String label_edit = "Editar";
   static const String label_register = "Registro";
   static const String label_description = "Descripción";
@@ -28,7 +29,7 @@ class Strings {
   static const String title_my_products = "Productos";
   static const String comments = "Comentarios";
   static const String about_us = "Acerca de";
-  static const String editProductTittle = "Editar Producto";
+  static const String editProductTittle = "Editar:";
   static const String title_new_product = "Nuevo Producto";
   static const String label_quantity = "Cantidad";
   static const String label_price = "Precio";
@@ -103,5 +104,9 @@ class Strings {
   static const String calcel="CANCELAR";
 
   static const String home_no_items_available = "Para comenzar crea una lista pulsando en el botón +";
+
+  static const String deleted="Eliminado";
+
+  static const String label_search = "Buscar...";
 
 }

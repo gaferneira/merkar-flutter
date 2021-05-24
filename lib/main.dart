@@ -5,10 +5,11 @@ import 'package:merkar/app/core/resources/app_theme.dart';
 import 'package:merkar/app/pages/login/reset_password/reset_password_page.dart';
 import 'package:merkar/app/pages/login/widgets/background_login.dart';
 import 'package:merkar/app/pages/main/main_page.dart';
+import 'package:merkar/app/pages/products/select_products/select_products_page.dart';
 import 'package:provider/provider.dart';
 
-import 'app/pages/favorites/favorites_list/favorite_list_page.dart';
-import 'app/pages/favorites/select_my_favorites/select_my_favorites_page.dart';
+import 'app/pages/products/product_list/product_list_page.dart';
+import 'app/pages/products/select_products/select_products_page.dart';
 import 'app/pages/home/home_page.dart';
 import 'app/pages/login/auth_view_model.dart';
 import 'app/pages/login/register/register_page.dart';
@@ -57,8 +58,8 @@ class MyApp extends StatelessWidget {
         RegisterPage.routeName: (context) => RegisterPage(),
         ResetPasswordPage.routeName:(context)=>ResetPasswordPage(),
         HomePage.routeName: (context) => HomePage(),
-        FavoriteListPage.routeName: (context) => FavoriteListPage(),
-        SelectMyFavoritesPage.routeName: (context) => SelectMyFavoritesPage(),
+        ProductsListPage.routeName: (context) => ProductsListPage(),
+        SelectProductsPage.routeName: (context) => SelectProductsPage(),
       },
     );
   }

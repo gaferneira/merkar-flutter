@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:merkar/data/entities/product.dart';
 import 'package:merkar/data/repositories/products_repository.dart';
 
-class FavoriteListViewModel extends ChangeNotifier {
+class ProductsListViewModel extends ChangeNotifier {
   final ProductsRepository repository;
 
-  FavoriteListViewModel({
+  ProductsListViewModel({
     required this.repository,
   });
 
@@ -26,7 +26,16 @@ class FavoriteListViewModel extends ChangeNotifier {
   }
 
   Future<void> removeProduct(Product product) async {
+    userProducts?.remove(product);
     repository.remove(product);
+    notifyListeners();
+  }
+
+  searchByText(String value) {
+    userProducts = filterUserProducts
+        .where((product) =>
+            product.name!.toLowerCase().contains(value.toLowerCase()))
+        .toList();
     notifyListeners();
   }
 }

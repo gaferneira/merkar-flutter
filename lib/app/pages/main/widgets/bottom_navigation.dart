@@ -32,7 +32,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.favorite),
-          label: Strings.route_favorites,
+          label: Strings.route_products,
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.history),

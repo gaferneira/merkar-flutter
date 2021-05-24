@@ -19,7 +19,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   HomePageViewModel viewModel = serviceLocator<HomePageViewModel>();
-
+  final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
+  GlobalKey<ScaffoldMessengerState>();
   @override
   void initState() {
     viewModel.loadData();
@@ -81,6 +82,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _saveNewItem(String value) {
+    if (viewModel.error != null) {
+      scaffoldMessengerKey.currentState?.showSnackBar(SnackBar(
+          content: Text(viewModel.error!),
+          duration: const Duration(seconds: 1)));
+      viewModel.error = null;
+    } else
     viewModel.saveList(value, context);
   }
 

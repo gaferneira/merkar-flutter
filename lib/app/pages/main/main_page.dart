@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:merkar/app/pages/favorites/favorites_list/favorite_list_page.dart';
+import 'package:merkar/app/pages/products/product_list/product_list_page.dart';
 import 'package:merkar/app/pages/home/home_page.dart';
 import 'package:merkar/app/pages/main/widgets/more_page.dart';
 import 'package:merkar/app/pages/purchases/purchase_history/purchase_history_page.dart';
@@ -23,7 +23,7 @@ class MainPageState extends State<MainPage> {
     return Scaffold(
       body: Stack(children: <Widget>[
         _buildOffstageNavigator(0, HomePage()),
-        _buildOffstageNavigator(1, FavoriteListPage()),
+        _buildOffstageNavigator(1, ProductsListPage()),
         _buildOffstageNavigator(2, PurchaseHistoryPage()),
         _buildOffstageNavigator(3, MorePage()),
       ]),

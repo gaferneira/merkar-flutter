@@ -1,6 +1,6 @@
 class Purchase {
   String? id;
-  late String path;
+  String? path;
   final String? name;
   final String? date;
   final String? total;

@@ -21,4 +21,7 @@ class PurchaseHistoryViewModel extends ChangeNotifier {
       notifyListeners();
     });
   }
+  void delete(Purchase list){
+    purchaseHistoryRepository.remove(list);
+  }
 }

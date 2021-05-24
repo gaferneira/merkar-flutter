@@ -330,53 +330,58 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       ListProduct product, BuildContext context) async {
     switch (await showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(Strings.editProductTittle + ": ${product.name}"),
-        content: Form(
-          key: keyFormEditProduct,
-          child: Column(
-            children: <Widget>[
-              TextFormField(
-                initialValue: "${product.quantity}",
-                decoration: InputDecoration(labelText: Strings.label_quantity),
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value?.isNotEmpty == true) {
-                    return null;
-                  } else
-                    return "Ingrese la cantidad";
-                },
-                onSaved: (value) {
-                  this.temp_quantity = int.parse(value!);
-                },
+      builder: (context) => Center(
+        child: Container(
+          height: 325.0,
+          child: AlertDialog(
+            title: Text(Strings.editProductTittle + ": ${product.name}"),
+            content: Form(
+              key: keyFormEditProduct,
+              child: Column(
+                children: <Widget>[
+                  TextFormField(
+                    initialValue: "${product.quantity}",
+                    decoration: InputDecoration(labelText: Strings.label_quantity),
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value?.isNotEmpty == true) {
+                        return null;
+                      } else
+                        return "Ingrese la cantidad";
+                    },
+                    onSaved: (value) {
+                      this.temp_quantity = int.parse(value!);
+                    },
+                  ),
+                  TextFormField(
+                    initialValue: "${product.price}",
+                    decoration: InputDecoration(labelText: Strings.label_price),
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value?.isNotEmpty == true) {
+                        return null;
+                      } else
+                        return "Ingrese un valor";
+                    },
+                    onSaved: (value) {
+                      this.temp_price = double.parse(value!);
+                    },
+                    textInputAction: TextInputAction.done,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(Constant.normalspace),
+                    child: Center(
+                      child: RaisedButton(
+                          child: Text(Strings.label_save),
+                          onPressed: () {
+                            _saveEditProduct(product);
+                            Navigator.pop(context, "${Strings.label_save}");
+                          }),
+                    ),
+                  ),
+                ],
               ),
-              TextFormField(
-                initialValue: "${product.price}",
-                decoration: InputDecoration(labelText: Strings.label_price),
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value?.isNotEmpty == true) {
-                    return null;
-                  } else
-                    return "Ingrese un valor";
-                },
-                onSaved: (value) {
-                  this.temp_price = double.parse(value!);
-                },
-                textInputAction: TextInputAction.done,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(Constant.normalspace),
-                child: Center(
-                  child: RaisedButton(
-                      child: Text(Strings.label_save),
-                      onPressed: () {
-                        _saveEditProduct(product);
-                        Navigator.pop(context, "${Strings.label_save}");
-                      }),
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),

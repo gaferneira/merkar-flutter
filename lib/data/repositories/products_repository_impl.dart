@@ -47,8 +47,8 @@ class ProductsRepositoryImpl implements ProductsRepository {
 
   @override
   Future<Either<Failure, Product>> save(Product item) async {
-    if (item.id != null) {
-      await this.firestoreDataSource.db.doc(item.id!).set(item.toJson());
+    if (item.path != null) {
+      await this.firestoreDataSource.db.doc(item.path!).set(item.toJson());
     } else {
       final ref = await firestoreDataSource
           .getDataDocument()
@@ -62,8 +62,8 @@ class ProductsRepositoryImpl implements ProductsRepository {
 
   @override
   Future<Either<Failure, bool>> remove(Product item) async {
-    if (item.id != null) {
-      await this.firestoreDataSource.db.doc(item.path).delete();
+    if (item.path != null) {
+      await this.firestoreDataSource.db.doc(item.path!).delete();
       return Right(true);
     }
     return Right(false);

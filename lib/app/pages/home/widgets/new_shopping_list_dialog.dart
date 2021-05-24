@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/extensions/extended_string.dart';
 import 'package:merkar/app/core/resources/strings.dart';
+import 'package:merkar/app/widgets/primary_button.dart';
 
 Future<void> newShoppingListDialog(
     BuildContext context, final ValueChanged<String> saveNewList) {
@@ -31,18 +32,16 @@ Future<void> newShoppingListDialog(
                   if (value?.isNotEmpty == true) {
                     return null;
                   }
-                  return "Llene este campo";
+                  return "Llene el nombre";
                 },
               ),
-              ElevatedButton(
-                child: Text(Strings.label_save),
-                onPressed: () {
-                  if (formListKey.currentState?.validate() == true) {
-                    formListKey.currentState!.save();
-                    saveNewList(nameList!);
-                  }
-                },
-              )
+              PrimaryButton(title: Strings.label_save,
+                  onPressed: () {
+                      if (formListKey.currentState?.validate() == true) {
+                      formListKey.currentState!.save();
+                      saveNewList(nameList!);
+                      }
+              }),
             ],
           ),
         ),
