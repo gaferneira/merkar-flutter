@@ -5,9 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/resources/app_styles.dart';
 import 'package:merkar/app/core/resources/strings.dart';
+import 'package:merkar/app/pages/products/models/fab_menu.dart';
 import 'package:merkar/app/pages/products/new_product/create_new_product.dart';
 import 'package:merkar/app/pages/products/select_products/select_products_page.dart';
-import 'package:merkar/app/pages/products/widgets/fab_menu.dart';
 import 'package:merkar/data/entities/product.dart';
 import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
@@ -123,7 +123,9 @@ class _ProductsListPageState extends State<ProductsListPage>
                                     child: Center(
                                       child: Container(
                                         alignment: Alignment.center,
-                                        color: Colors.blue[200],
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
                                         height: 75.0,
                                         child: Text(Strings.products_no_items),
                                       ),
@@ -290,68 +292,4 @@ class _ProductsListPageState extends State<ProductsListPage>
     }
     return widgetList;
   }
-/* Widget _showProductsList(List<Product> listProducts) {
-    return ListView.builder(
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      itemCount: listProducts.length,
-      physics: const NeverScrollableScrollPhysics(),
-      itemBuilder: (context, index) {
-        return Dismissible(
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Container(
-              decoration: AppStyles.listDecoration(index.toDouble()/listProducts.length),
-              child: ListTile(
-                title: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "${listProducts[index].name}",
-                    ),
-                    Text("\$ ${listProducts[index].price}"),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          background: Container(color: Colors.red,child: Icon(Icons.cancel),),
-          key: Key(listProducts[index].id!),
-          onDismissed: (direction){
-            Scaffold
-                .of(context)
-                .showSnackBar(SnackBar(content: Text("Eliminado")));
-            viewModel.removeProduct(viewModel.userProducts![index]);
-            viewModel.userProducts!.removeAt(index);
-            viewModel.notifyListeners();
-          },
-          confirmDismiss: (DismissDirection direction) async {
-            return await showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  shape: AppStyles.borderRadiusDialog,
-                  // contentPadding: EdgeInsets.only(top: 10.0),
-                  title: Center(child: const Text(Strings.confirm)),
-                  content: const Text("Estás seguro de eliminar el Elemento?"),
-                  actions: <Widget>[
-                    TextButton(
-                      onPressed: () => Navigator.of(context).pop(false),
-                      child: const Text(Strings.calcel),
-                    ),
-                    TextButton(
-                        onPressed: () => Navigator.of(context).pop(true),
-                        child: const Text(Strings.delete)),
-                  ],
-                );
-              },
-            );
-          },
-
-        );
-      },
-    );
-  }*/
-
 }

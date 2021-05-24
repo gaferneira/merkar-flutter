@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/extensions/extended_string.dart';
 import 'package:merkar/app/core/resources/strings.dart';
-import 'package:merkar/app/core/widgets/internal_button.dart';
+import 'package:merkar/app/widgets/primary_button.dart';
 
 Future<void> newShoppingListDialog(
     BuildContext context, final ValueChanged<String> saveNewList) {
@@ -35,7 +35,7 @@ Future<void> newShoppingListDialog(
                   return "Llene el nombre";
                 },
               ),
-              InternalButton(title: Strings.label_save,
+              PrimaryButton(title: Strings.label_save,
                   onPressed: () {
                       if (formListKey.currentState?.validate() == true) {
                       formListKey.currentState!.save();

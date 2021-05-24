@@ -34,7 +34,7 @@ class ProductsListViewModel extends ChangeNotifier {
   searchByText(String value) {
     userProducts = filterUserProducts
         .where((product) =>
-        product.name!.toLowerCase().contains(value.toLowerCase()))
+            product.name!.toLowerCase().contains(value.toLowerCase()))
         .toList();
     notifyListeners();
   }

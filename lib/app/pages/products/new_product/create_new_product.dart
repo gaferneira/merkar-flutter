@@ -2,7 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/resources/constants.dart';
 import 'package:merkar/app/core/resources/strings.dart';
-import 'package:merkar/app/core/widgets/internal_button.dart';
+import 'package:merkar/app/widgets/primary_button.dart';
 import 'package:merkar/data/entities/product.dart';
 import 'package:merkar/injection_container.dart';
 
@@ -18,7 +18,7 @@ class CreateNewProduct extends StatefulWidget {
 class _CreateNewProductState extends State<CreateNewProduct> {
   final keyNewProduct = GlobalKey<FormState>();
   final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
-  GlobalKey<ScaffoldMessengerState>();
+      GlobalKey<ScaffoldMessengerState>();
   CreateNewProductsViewModel viewModel =
       serviceLocator<CreateNewProductsViewModel>();
 
@@ -122,30 +122,30 @@ class _CreateNewProductState extends State<CreateNewProduct> {
       ),
     );
   }
-  Widget _buildSaveButton(){
+
+  Widget _buildSaveButton() {
     if (viewModel.error != null) {
       scaffoldMessengerKey.currentState?.showSnackBar(SnackBar(
           content: Text(viewModel.error!),
           duration: const Duration(seconds: 1)));
       viewModel.error = null;
     }
-    return  InternalButton(
+    return PrimaryButton(
         title: Strings.label_save,
         onPressed: () {
-      if (keyNewProduct.currentState!.validate() == true) {
-        keyNewProduct.currentState!.save();
-        Product newProduct = new Product(
-            category: nameCategory,
-            name: nameProduct,
-            price: price.toString(),
-            unit: unit.toString());
-        if (product != null) {
-          newProduct.id = product!.id;
-          newProduct.path = product!.path;
-        }
-        viewModel.saveProduct(newProduct, context);
-      }
+          if (keyNewProduct.currentState!.validate() == true) {
+            keyNewProduct.currentState!.save();
+            Product newProduct = new Product(
+                category: nameCategory,
+                name: nameProduct,
+                price: price.toString(),
+                unit: unit.toString());
+            if (product != null) {
+              newProduct.id = product!.id;
+              newProduct.path = product!.path;
+            }
+            viewModel.saveProduct(newProduct, context);
           }
-        );
+        });
   }
 }
