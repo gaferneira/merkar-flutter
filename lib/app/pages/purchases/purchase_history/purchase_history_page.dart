@@ -113,26 +113,62 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
       itemCount: list.length,
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Container(
-            decoration: AppStyles.listDecoration(index.toDouble()/list.length),
-            child: ListTile(
-              title: Text(list[index].name?.capitalize() ?? ""),
-              trailing: Icon(Icons.arrow_right),
-              onTap: () {
-                print(list[index].name);
-                print(list[index].total);
-                Navigator.pushNamed(
-                  context,
-                  PurchaseHistoryShowInfoPage.routeName,
-                  arguments: list[index],
-                );
-              },
+        return Dismissible(
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Container(
+              decoration: AppStyles.listDecoration(index.toDouble()/list.length),
+              child: ListTile(
+                title: Text(list[index].name?.capitalize() ?? ""),
+                trailing: Icon(Icons.arrow_right),
+                onTap: () {
+                  print(list[index].name);
+                  print(list[index].total);
+                  Navigator.pushNamed(
+                    context,
+                    PurchaseHistoryShowInfoPage.routeName,
+                    arguments: list[index],
+                  );
+                },
+              ),
             ),
           ),
+          background: Container(
+            color: Colors.red,
+            child: Icon(Icons.cancel),
+          ),
+          key: Key(list[index].id!),
+          onDismissed: (direction) => {
+            onRemoveItem(list[index])
+          },
+          confirmDismiss: (DismissDirection direction) async {
+            return await showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  shape: AppStyles.borderRadiusDialog,
+                  // contentPadding: EdgeInsets.only(top: 10.0),
+                  title: Center(child: const Text(Strings.confirm)),
+                  content: const Text("Estás seguro de eliminar el Elemento?"),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(false),
+                      child: const Text(Strings.calcel),
+                    ),
+                    TextButton(
+                        onPressed: () => Navigator.of(context).pop(true),
+                        child: const Text(Strings.delete)),
+                  ],
+                );
+              },
+            );
+          },
         );
       },
     );
+  }
+
+  void onRemoveItem(Purchase list) {
+    viewModel.delete(list);
   }
 }
