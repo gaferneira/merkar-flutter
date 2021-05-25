@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:merkar/app/core/extensions/numberFormat.dart';
 import 'package:merkar/app/core/resources/app_colors.dart';
 import 'package:merkar/app/core/resources/constants.dart';
 import 'package:merkar/app/core/resources/strings.dart';
@@ -56,7 +57,7 @@ class _PurchaseHistoryShowInfoPageState
                    Expanded(
                      child: Padding(
                        padding: const EdgeInsets.all(8.0),
-                       child: Text((purchase.total!=null)? purchase.total!:"0",
+                       child: Text((purchase.total!=null)? numberFormat(purchase.total!) : "",
                        textAlign: TextAlign.right),
                      ),
                    ),
@@ -175,7 +176,7 @@ List<TableRow>_buildData(List<ListProduct> list){
           child: Container(
             height: Constant.normalspacecontainer,
             child: Center(
-              child: Text(list[index].price,
+              child: Text(numberFormat(list[index].price),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -186,7 +187,7 @@ List<TableRow>_buildData(List<ListProduct> list){
           child: Container(
             height: Constant.normalspacecontainer,
             child: Center(
-              child: Text(list[index].price*list[index].quantity,
+              child: Text(numberFormat(list[index].price*list[index].quantity),
                 textAlign: TextAlign.center,
               ),
             ),
