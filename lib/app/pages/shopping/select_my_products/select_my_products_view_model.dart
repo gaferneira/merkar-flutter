@@ -63,8 +63,9 @@ class SelectMyProductsViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> selectProduct(int index, bool selected) async {
-    var product = userProducts![index];
+  Future<void> selectProduct(int index, Product product,bool selected) async {
+    //var product = userProducts![index];
+    userProducts![index].selected=selected;
     if (selected) {
       var productList = ListProduct(
           id: product.id,
@@ -75,8 +76,11 @@ class SelectMyProductsViewModel extends ChangeNotifier {
           total: product.price,
           selected: false);
       shoppingListRepository.saveProduct(productList, shoppingList);
+      print(product.name!+" Added");
     } else {
       shoppingListRepository.removeProduct(product.id!, shoppingList);
+      print(product.name!+" Eliminado");
     }
+    notifyListeners();
   }
 }

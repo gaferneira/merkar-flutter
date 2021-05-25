@@ -1,5 +1,7 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:merkar/app/core/resources/app_styles.dart';
 import 'package:merkar/app/core/resources/constants.dart';
 import 'package:merkar/app/core/resources/strings.dart';
 import 'package:merkar/app/pages/products/new_product/create_new_product.dart';
@@ -72,7 +74,7 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
                       IconButton(icon: Icon(Icons.search), onPressed: () {}),
                     ],
                   ),
-                  body: SingleChildScrollView(
+                 /* body: SingleChildScrollView(
                     child: Column(
                       children: [
                         (viewModel.userProducts == null)
@@ -80,7 +82,32 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
                             : _showProductsList(viewModel.userProducts),
                       ],
                     ),
-                  ),
+                  ),*/
+              body: CustomScrollView(
+                  slivers: (viewModel.userProducts == null)
+                  ? [
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                          (BuildContext context, int index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Center(
+                            child: Container(
+                              alignment: Alignment.center,
+                              color: Colors.blue[200],
+                              height: 75.0,
+                              child: Text(Strings.products_no_items),
+                            ),
+                          ),
+                        );
+                      },
+                      childCount: 1,
+                    ),
+                    // : _showProductsList(viewModel.defaultProducts!),
+                  )
+                  ]
+                      : _sliverList(viewModel.userProducts!),
+            ),
                   floatingActionButton: FloatingActionButton(
                     tooltip: Strings.label_tootip_new_product,
                     child: Icon(Icons.add),
@@ -89,6 +116,45 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
                     },
                   ),
                 )));
+  }
+  List<Widget> _sliverList(List<Product> list) {
+    var productsMap = groupBy(list, (Product obj) => obj.category);
+    var widgetList = <Widget>[];
+    var keys = productsMap.keys.sorted((a, b) => a!.compareTo(b!));
+    for (int index = 0; index < keys.length; index++) {
+      var category = keys.elementAt(index)!;
+      var products = productsMap[keys.elementAt(index)]!;
+      widgetList
+        ..add(SliverAppBar(
+          leading: Container(),
+          title: Text(category),
+          pinned: true,
+        ))
+        ..add(SliverFixedExtentList(
+          itemExtent: 50.0,
+          delegate:
+          SliverChildBuilderDelegate((BuildContext context, int index) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 2.0),
+              child: Container(
+                decoration: AppStyles.checklistDecoration(
+                    index.toDouble() / products.length),
+                child: CheckboxListTile(
+                    title: Text(
+                        "${products[index].name}: ${products[index].unit} x ${products[index].price}"),
+                    controlAffinity: ListTileControlAffinity.leading,
+                    onChanged: (bool? value) {
+                      viewModel.selectProduct(index, products[index],value!);
+                    },
+                    value: products[index].selected,
+                  activeColor: Colors.cyan,
+                  checkColor: Colors.green,),
+              ),
+            );
+          }, childCount: products.length),
+        ));
+    }
+    return widgetList;
   }
 
   Widget _showProductsList(List<Product>? userProducts) {
@@ -105,7 +171,7 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
             title: Text("${userProducts![index].name}"),
             controlAffinity: ListTileControlAffinity.leading,
             onChanged: (bool? value) {
-              viewModel.selectProduct(index, value!);
+              viewModel.selectProduct(index,userProducts[index] ,value!);
             },
             value: userProducts[index].selected,
             activeColor: Colors.cyan,
