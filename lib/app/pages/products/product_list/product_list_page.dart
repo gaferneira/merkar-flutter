@@ -1,5 +1,4 @@
 import 'dart:math' as math;
-
 import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +28,9 @@ class _ProductsListPageState extends State<ProductsListPage>
   final _keySearchP = GlobalKey<FormState>();
   ProductsListViewModel viewModel = serviceLocator<ProductsListViewModel>();
 
+  //floating buttons
   late AnimationController _controller;
+  late List<FabMenu> fabItems;
   final _scaffoldKey = GlobalKey<ScaffoldState>(); // new line
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       new GlobalKey<RefreshIndicatorState>();
@@ -50,8 +51,6 @@ class _ProductsListPageState extends State<ProductsListPage>
     _controller.dispose();
     super.dispose();
   }
-
-  late List<FabMenu> fabItems;
 
   void _buildFabMenus() {
     fabItems = [
