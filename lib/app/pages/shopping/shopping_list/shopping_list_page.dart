@@ -322,57 +322,57 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       ListProduct product, BuildContext context) async {
     switch (await showDialog(
       context: context,
-      builder: (context) => Center(
-        child: Container(
+      builder: (context) => Container(
           height:368.0,
           child: AlertDialog(
-            title: Text(Strings.editProductTittle + ": ${product.name}"),
+            title: Text(Strings.editProductTittle + " ${product.name}"),
             content: Form(
               key: keyFormEditProduct,
-              child: Column(
-                children: <Widget>[
-                  TextFormField(
-                    initialValue: "${product.quantity}",
-                    decoration: InputDecoration(labelText: Strings.label_quantity),
-                    keyboardType: TextInputType.number,
-                    validator: (value) {
-                      if (value?.isNotEmpty == true) {
-                        return null;
-                      } else
-                        return "Ingrese la cantidad";
-                    },
-                    onSaved: (value) {
-                      this.temp_quantity = int.parse(value!);
-                    },
-                  ),
-                  TextFormField(
-                    initialValue: "${product.price}",
-                    decoration: InputDecoration(labelText: Strings.label_price),
-                    keyboardType: TextInputType.number,
-                    validator: (value) {
-                      if (value?.isNotEmpty == true) {
-                        return null;
-                      } else
-                        return "Ingrese un valor";
-                    },
-                    onSaved: (value) {
-                      this.temp_price = double.parse(value!);
-                    },
-                    textInputAction: TextInputAction.done,
-                  ),
-                  Center(
-                    child: PrimaryButton(title: Strings.label_save,onPressed: () {
-                      _saveEditProduct(product);
-                      Navigator.pop(context, "${Strings.label_save}");
-                    }),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    TextFormField(
+                      initialValue: "${product.quantity}",
+                      decoration: InputDecoration(labelText: Strings.label_quantity),
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if (value?.isNotEmpty == true) {
+                          return null;
+                        } else
+                          return "Ingrese la cantidad";
+                      },
+                      onSaved: (value) {
+                        this.temp_quantity = int.parse(value!);
+                      },
+                    ),
+                    TextFormField(
+                      initialValue: "${product.price}",
+                      decoration: InputDecoration(labelText: Strings.label_price),
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if (value?.isNotEmpty == true) {
+                          return null;
+                        } else
+                          return "Ingrese el precio";
+                      },
+                      onSaved: (value) {
+                        this.temp_price = double.parse(value!);
+                      },
+                      textInputAction: TextInputAction.done,
+                    ),
+                    Center(
+                      child: PrimaryButton(title: Strings.label_save,onPressed: () {
+                        _saveEditProduct(product);
+                        Navigator.pop(context, "${Strings.label_save}");
+                      }),
 
-                  ),
-                ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
         ),
-      ),
     )) {
       default:
         //Whatever
@@ -417,7 +417,6 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
               if (value != null) {
                 setState(() {
                   _character = value;
-                  print(_character);
                 });
               }
             },
@@ -432,7 +431,6 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
               if (value != null) {
                 setState(() {
                   _character = value;
-                  print(_character);
                 });
               }
             },

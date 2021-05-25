@@ -73,7 +73,6 @@ Future<void> CommentePage(BuildContext context) {
 
 Future<void> _sendEmail(GlobalKey<FormState> keyForm) async {
   try {
-//    print(keyForm.currentState.validate());
     final Email email = Email(
       body: 'Merkar Comment: $_message',
       subject: 'Sugerencia',

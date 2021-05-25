@@ -122,8 +122,6 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
                 title: Text(list[index].name?.capitalize() ?? ""),
                 trailing: Icon(Icons.arrow_right),
                 onTap: () {
-                  print(list[index].name);
-                  print(list[index].total);
                   Navigator.pushNamed(
                     context,
                     PurchaseHistoryShowInfoPage.routeName,
