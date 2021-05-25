@@ -39,7 +39,12 @@ class _PurchaseHistoryShowInfoPageState
             // scrollDirection: Axis.vertical,
             //physics: NeverScrollableScrollPhysics(),
             child: Column(children: <Widget>[
-              Text("Fecha: ${purchase.date}"),
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: 20.0,left: 0.0,right: 0.0),
+                child: Text("Fecha: ${purchase.date}",
+                textAlign: TextAlign.start,),
+              ),
               SizedBox(height: Constant.normalspacecontainer,),
               Text("Productos"),
               SizedBox(height: Constant.normalspace,),
@@ -49,14 +54,18 @@ class _PurchaseHistoryShowInfoPageState
                Row(
                  children: [
                    Padding(
-                     padding: const EdgeInsets.all(8.0),
+                     padding: const EdgeInsets.only(
+                       left: 55.0,top: 8.0,
+                     ),
                      child: Text(Strings.label_total,
                      textAlign: TextAlign.left,
                      ),
                    ),
                    Expanded(
                      child: Padding(
-                       padding: const EdgeInsets.all(8.0),
+                       padding: const EdgeInsets.only(
+                         top: 8.0,right: 40.0
+                       ),
                        child: Text((purchase.total!=null)? numberFormat(purchase.total!) : "",
                        textAlign: TextAlign.right),
                      ),
@@ -73,17 +82,20 @@ class _PurchaseHistoryShowInfoPageState
 }
 
 Widget _showTable(List<ListProduct> list){
-  return Table(
-        border: TableBorder.all(),
-        columnWidths: const <int, TableColumnWidth>{
-          0: FlexColumnWidth(),
-          1: FlexColumnWidth(),
-          2: FlexColumnWidth(),
-          3: FlexColumnWidth(),
-        },
-        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-        children: _buildData(list),
-      );
+  return Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Table(
+          border: TableBorder.all(),
+          columnWidths: const <int, TableColumnWidth>{
+            0: FlexColumnWidth(),
+            1: FixedColumnWidth(60),
+            2: FixedColumnWidth(80),
+            3: FixedColumnWidth(100),
+          },
+          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+          children: _buildData(list),
+        ),
+  );
 }
 List<TableRow>_buildData(List<ListProduct> list){
   List<TableRow> tableRows=[];
@@ -109,7 +121,7 @@ List<TableRow>_buildData(List<ListProduct> list){
                         height: Constant.normalspacecontainer,
                         color: AppColors.primaryColor,
                         child: Center(
-                          child: Text(Strings.label_quantity,
+                          child: Text(Strings.label_quantity_r,
                             textAlign: TextAlign.center,
                             style: TextStyle(color: AppColors.secondaryLightColor),
                           ),

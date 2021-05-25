@@ -109,6 +109,7 @@ class Strings {
 //PURCHASE
   static const String label_product="Producto";
   static const String label_quantity = "Cantidad";
+  static const String label_quantity_r = "Cant";
   static const String label_price = "Precio";
   static const String label_subtotal="Subtotal";
   static const String label_total="Total";
