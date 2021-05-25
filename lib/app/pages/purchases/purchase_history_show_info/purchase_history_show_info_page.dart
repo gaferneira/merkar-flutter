@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:merkar/app/core/extensions/numberFormat.dart';
 import 'package:merkar/app/core/resources/app_colors.dart';
+import 'package:merkar/app/core/resources/app_styles.dart';
+import 'package:merkar/app/core/resources/app_theme.dart';
 import 'package:merkar/app/core/resources/constants.dart';
 import 'package:merkar/app/core/resources/strings.dart';
 import 'package:merkar/data/entities/list_product.dart';
@@ -39,42 +41,43 @@ class _PurchaseHistoryShowInfoPageState
             // scrollDirection: Axis.vertical,
             //physics: NeverScrollableScrollPhysics(),
             child: Column(children: <Widget>[
-              Align(
-                alignment: Alignment.bottomLeft,
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      top: 20.0,left: 20.0,right: 0.0),
-                  child: Text("Fecha: ${purchase.date}",
-                  textAlign: TextAlign.start,),
-                ),
+              Column(
+                children: [
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text((purchase.total!=null)? "\$ "+numberFormat(purchase.total!) : "",
+                        textAlign: TextAlign.right,
+                        style: Theme.of(context).textTheme.headline4,
+                      ),
+                    ),
+                  ),
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(0.0),
+                      child: Text("Fecha: ${purchase.date}",
+                        textAlign: TextAlign.left,
+                        style: Theme.of(context).textTheme.subtitle1,
+                      ),
+                    ),
+                  ),
+
+                ],
               ),
               SizedBox(height: Constant.normalspacecontainer,),
-              Text("Productos"),
+              Align(
+                alignment: Alignment.bottomLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child: Text(Strings.label_detalle,
+                      style: Theme.of(context).textTheme.subtitle1
+                    ),
+                  )),
               SizedBox(height: Constant.normalspace,),
               (viewModel.listProducts == null)
                   ? Text('Loading...')
                   : _showTable(viewModel.listProducts!),
-               Row(
-                 children: [
-                   Padding(
-                     padding: const EdgeInsets.only(
-                       left: 55.0,top: 8.0,
-                     ),
-                     child: Text(Strings.label_total,
-                     textAlign: TextAlign.left,
-                     ),
-                   ),
-                   Expanded(
-                     child: Padding(
-                       padding: const EdgeInsets.only(
-                         top: 8.0,right: 40.0
-                       ),
-                       child: Text((purchase.total!=null)? numberFormat(purchase.total!) : "",
-                       textAlign: TextAlign.right),
-                     ),
-                   ),
-                 ],
-               ),
+
                  // : _showProductsList(viewModel.listProducts!),
             ]),
           ),
