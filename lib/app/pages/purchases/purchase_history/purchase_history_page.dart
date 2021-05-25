@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/extensions/extended_string.dart';
+import 'package:merkar/app/core/extensions/numberFormat.dart';
 import 'package:merkar/app/core/resources/app_styles.dart';
 import 'package:merkar/app/core/resources/constants.dart';
 import 'package:merkar/app/core/resources/strings.dart';
@@ -119,7 +120,17 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
             child: Container(
               decoration: AppStyles.listDecoration(index.toDouble()/list.length),
               child: ListTile(
-                title: Text(list[index].name?.capitalize() ?? ""),
+                title: Row(
+                  children: [
+                    Expanded(
+                      child: Text(list[index].name!.capitalize() + ": ",
+                    textAlign: TextAlign.left,),
+                    ),
+                    Text("\$ "+numberFormat(list[index].total!.toString()),
+                      textAlign: TextAlign.right,),
+
+                  ],
+                ),
                 trailing: Icon(Icons.arrow_right),
                 onTap: () {
                   Navigator.pushNamed(
