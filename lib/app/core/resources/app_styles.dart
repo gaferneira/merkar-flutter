@@ -45,4 +45,10 @@ class AppStyles {
   static RoundedRectangleBorder borderRadiusDialog = RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(32.0)
   );
+
+  static TextStyle resalt_text=TextStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: 20.0,
+    color: AppColors.secondaryLightColor,
+  );
 }

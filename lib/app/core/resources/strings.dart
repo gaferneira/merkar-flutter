@@ -114,4 +114,8 @@ class Strings {
   static const String label_subtotal="Subtotal";
   static const String label_detalle="Detalle";
 
+  //SHOPPINGLIST
+  static const String car="Carrito";
+  static const String in_list="En lista";
+
 }

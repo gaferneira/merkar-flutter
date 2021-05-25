@@ -3,6 +3,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/extensions/extended_string.dart';
+import 'package:merkar/app/core/resources/app_styles.dart';
 import 'package:merkar/app/core/resources/constants.dart';
 import 'package:merkar/app/core/resources/strings.dart';
 import 'package:merkar/app/pages/products/new_product/create_new_product.dart';
@@ -146,10 +147,10 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                       ),
                       Bounce(
                         child: IconButton(
-                            icon: Icon(Icons.check_circle), onPressed: onPressed
-                            //() {
-                            //_showFinishDialog(shoppingList);
-                            // },
+                            icon: Icon(Icons.home),
+                            onPressed: () {
+                              Navigator.of(context).popUntil((route) => route.isFirst);
+                             },
                             ),
                       ),
                     ],
@@ -158,26 +159,48 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                     child: Column(
                       children: <Widget>[
                         Padding(
-                          padding: const EdgeInsets.all(Constant.normalspace),
-                          child: Center(
-                              child: Text(
-                            "No seleccionados",
-                            style: Theme.of(context).textTheme.headline6,
-                          )),
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            decoration: AppStyles.kBoxDecorationStyle,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.list_alt),
+                                Padding(
+                                  padding: const EdgeInsets.all(Constant.normalspace),
+                                  child: Center(
+                                      child: Text(Strings.in_list,
+                                        style: AppStyles.resalt_text,
+                                      )),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                         (viewModel.unselectedList == null)
                             ? Text(
-                                'Loading...',
+                                Strings.products_no_items,
                                 style: Theme.of(context).textTheme.headline6,
                               )
                             : _showProductsList(viewModel.unselectedList),
                         Padding(
-                          padding: const EdgeInsets.all(Constant.normalspace),
-                          child: Center(
-                              child: Text(
-                            "Seleccionados",
-                            style: Theme.of(context).textTheme.headline6,
-                          )),
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            decoration: AppStyles.kBoxDecorationStyle,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.shopping_cart),
+                                Padding(
+                                  padding: const EdgeInsets.all(Constant.normalspace),
+                                  child: Center(
+                                      child: Text(Strings.car,
+                                        style: AppStyles.resalt_text,
+                                      )),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                         (viewModel.selectedList == null)
                             ? Text('Loading...')
@@ -192,23 +215,14 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                     curve: Curves.easeOut,
                     child: _buildFabMenu(context),
                   ),
-                  /*floatingActionButton: Pulse(
-                    infinite: true,
-                    child: FloatingActionButton(
-                      heroTag: "add_product",
-                      onPressed: () =>
-                          {_showListSuggerProducts(context, shoppingList)},
-                      tooltip: Strings.label_tootip_add_products,
-                      child: Icon(Icons.add),
-                    ),
-                  ),*/
+
                   bottomNavigationBar: Container(
                       height: Constant.bottomBarHeight,
                       width: MediaQuery.of(context).size.width,
                       child: BottomNavigationBar(
                         fixedColor: Colors.white70,
                         unselectedItemColor: Colors.white70,
-                        backgroundColor: Colors.black45,
+                        backgroundColor: Theme.of(context).colorScheme.primaryVariant,
                         currentIndex: 1,
                         // this will be set when a new tab is tapped
                         items: [
@@ -306,39 +320,46 @@ class _ShoppingListPageState extends State<ShoppingListPage>
       itemCount: listProducts.length,
       itemBuilder: (context, index) {
         return Dismissible(
-          child: CheckboxListTile(
-            title: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  "${listProducts[index].name}",
-                ),
-                Row(
+          child: Padding(
+            padding: const EdgeInsets.all(2.0),
+            child: Container(
+              decoration: AppStyles.checklistDecoration(
+                  index.toDouble() / listProducts.length),
+              child: CheckboxListTile(
+                title: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                        "${listProducts[index].quantity} a \$ ${listProducts[index].price}"),
+                      "${listProducts[index].name}",
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Text(
+                            "${listProducts[index].quantity} a \$ ${listProducts[index].price}"),
+                      ],
+                    )
                   ],
-                )
-              ],
+                ),
+                controlAffinity: ListTileControlAffinity.leading,
+                onChanged: (bool? value) {
+                  viewModel.selectProduct(index);
+                  setState(() {
+                    _ennable = true;
+                  });
+                },
+                secondary: IconButton(
+                  icon: Icon(Icons.edit),
+                  tooltip: Strings.label_edit,
+                  onPressed: () {
+                    _showEditProduct(listProducts[index], context);
+                  },
+                ),
+                value: listProducts[index].selected,
+                activeColor: Colors.cyan,
+                checkColor: Colors.green,
+              ),
             ),
-            controlAffinity: ListTileControlAffinity.leading,
-            onChanged: (bool? value) {
-              viewModel.selectProduct(index);
-              setState(() {
-                _ennable = true;
-              });
-            },
-            secondary: IconButton(
-              icon: Icon(Icons.edit),
-              tooltip: Strings.label_edit,
-              onPressed: () {
-                _showEditProduct(listProducts[index], context);
-              },
-            ),
-            value: listProducts[index].selected,
-            activeColor: Colors.cyan,
-            checkColor: Colors.green,
           ),
           background: Container(
             color: Colors.red,
@@ -371,45 +392,49 @@ class _ShoppingListPageState extends State<ShoppingListPage>
       itemCount: listProducts.length,
       itemBuilder: (context, index) {
         return Dismissible(
-          child: CheckboxListTile(
-            title: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  "${listProducts[index].name}",
-                ),
-                Row(
-                  children: <Widget>[
-                    Text(
-                        "${listProducts[index].quantity} = ${listProducts[index].price}"),
-                  ],
-                )
-              ],
-            ),
-            controlAffinity: ListTileControlAffinity.leading,
-            onChanged: (bool? value) {
-              if (value == true)
-                viewModel.selectProduct(index);
-              else {
-                viewModel.unselectProduct(index);
-                if (viewModel.selectedList.isEmpty) {
-                  setState(() {
-                    _ennable = false;
-                  });
+          child: Container(
+            decoration: AppStyles.checklistDecoration(
+                index.toDouble() / listProducts.length),
+            child: CheckboxListTile(
+              title: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "${listProducts[index].name}",
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Text(
+                          "${listProducts[index].quantity} = ${listProducts[index].price}"),
+                    ],
+                  )
+                ],
+              ),
+              controlAffinity: ListTileControlAffinity.leading,
+              onChanged: (bool? value) {
+                if (value == true)
+                  viewModel.selectProduct(index);
+                else {
+                  viewModel.unselectProduct(index);
+                  if (viewModel.selectedList.isEmpty) {
+                    setState(() {
+                      _ennable = false;
+                    });
+                  }
                 }
-              }
-            },
-            secondary: IconButton(
-              icon: Icon(Icons.edit),
-              tooltip: Strings.label_edit,
-              onPressed: () {
-                _showEditProduct(listProducts[index], context);
               },
+              secondary: IconButton(
+                icon: Icon(Icons.edit),
+                tooltip: Strings.label_edit,
+                onPressed: () {
+                  _showEditProduct(listProducts[index], context);
+                },
+              ),
+              value: listProducts[index].selected,
+              activeColor: Colors.cyan,
+              checkColor: Colors.green,
             ),
-            value: listProducts[index].selected,
-            activeColor: Colors.cyan,
-            checkColor: Colors.green,
           ),
           key: Key(listProducts[index].id!),
           background: Container(color: Colors.red, child: Icon(Icons.cancel)),
