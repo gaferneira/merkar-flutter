@@ -39,11 +39,14 @@ class _PurchaseHistoryShowInfoPageState
             // scrollDirection: Axis.vertical,
             //physics: NeverScrollableScrollPhysics(),
             child: Column(children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(
-                    top: 20.0,left: 0.0,right: 0.0),
-                child: Text("Fecha: ${purchase.date}",
-                textAlign: TextAlign.start,),
+              Align(
+                alignment: Alignment.bottomLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      top: 20.0,left: 20.0,right: 0.0),
+                  child: Text("Fecha: ${purchase.date}",
+                  textAlign: TextAlign.start,),
+                ),
               ),
               SizedBox(height: Constant.normalspacecontainer,),
               Text("Productos"),
