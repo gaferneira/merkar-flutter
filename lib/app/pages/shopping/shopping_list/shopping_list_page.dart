@@ -309,14 +309,11 @@ class _ShoppingListPageState extends State<ShoppingListPage>
   }
 
   Widget _showProductsList(List<ListProduct> listProducts) {
-    return ListView.separated(
+    return ListView.builder(
       scrollDirection: Axis.vertical,
       //scroll the listView
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      separatorBuilder: (context, index) => Divider(
-        color: Colors.black,
-      ),
       itemCount: listProducts.length,
       itemBuilder: (context, index) {
         return Dismissible(
@@ -383,12 +380,9 @@ class _ShoppingListPageState extends State<ShoppingListPage>
       _ennable = true;
     }
 
-    return ListView.separated(
+    return ListView.builder(
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
-      separatorBuilder: (context, index) => Divider(
-        color: Colors.black,
-      ),
       itemCount: listProducts.length,
       itemBuilder: (context, index) {
         return Dismissible(
