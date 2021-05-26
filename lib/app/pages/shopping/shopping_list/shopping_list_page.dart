@@ -8,6 +8,7 @@ import 'package:merkar/app/core/resources/constants.dart';
 import 'package:merkar/app/core/resources/strings.dart';
 import 'package:merkar/app/pages/products/new_product/create_new_product.dart';
 import 'package:merkar/app/pages/products/widgets/fab_menu.dart';
+import 'package:merkar/app/widgets/confirmDismissDialog.dart';
 import 'package:merkar/app/widgets/primary_button.dart';
 import 'package:merkar/data/entities/list_product.dart';
 import 'package:merkar/data/entities/shopping_list.dart';
@@ -333,7 +334,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                     Row(
                       children: <Widget>[
                         Text(
-                            "${listProducts[index].quantity} a \$ ${listProducts[index].price}"),
+                            "${listProducts[index].quantity} ${listProducts[index].unit} a \$ ${listProducts[index].price}"),
                       ],
                     )
                   ],
@@ -367,9 +368,10 @@ class _ShoppingListPageState extends State<ShoppingListPage>
             viewModel.removeProduct(listProducts[index].id!, shoppingList);
             listProducts.removeAt(index);
             Scaffold.of(context)
-                .showSnackBar(SnackBar(content: Text("$index Eliminado")));
+                .showSnackBar(SnackBar(content: Text(Strings.deleted)));
             viewModel.notifyListeners();
           },
+          confirmDismiss: (DismissDirection)=>ConfirmDismissDialog(context, DismissDirection),
         );
       },
     );
@@ -400,7 +402,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                   Row(
                     children: <Widget>[
                       Text(
-                          "${listProducts[index].quantity} = ${listProducts[index].price}"),
+                          "${listProducts[index].quantity} ${listProducts[index].unit} = ${listProducts[index].price}"),
                     ],
                   )
                 ],
@@ -433,11 +435,12 @@ class _ShoppingListPageState extends State<ShoppingListPage>
           key: Key(listProducts[index].id!),
           background: Container(color: Colors.red, child: Icon(Icons.cancel)),
           onDismissed: (direction) {
+            Scaffold.of(context)
+                .showSnackBar(SnackBar(content: Text(Strings.deleted)));
             viewModel.removeProduct(listProducts[index].id!, shoppingList);
             listProducts.removeAt(index);
-            Scaffold.of(context)
-                .showSnackBar(SnackBar(content: Text("$index Eliminado")));
           },
+          confirmDismiss: (DismissDirection)=>ConfirmDismissDialog(context, DismissDirection),
         );
       },
     );
@@ -514,55 +517,6 @@ class _ShoppingListPageState extends State<ShoppingListPage>
       product.total = (this.temp_price! * this.temp_quantity).toString();
       viewModel.updateProduct(product, oldTotal);
     }
-  }
-
-  Widget _showCircleRadioButtoms(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        ListTile(
-          title: Text(_textRadioButton[0].toString()),
-          leading: Radio(
-            value: SingingCharacter.delete,
-            groupValue: _character,
-            onChanged: (SingingCharacter? value) {
-              if (value != null) {
-                setState(() {
-                  _character = value;
-                });
-              }
-            },
-          ),
-        ),
-        ListTile(
-          title: Text(_textRadioButton[1].toString()),
-          leading: Radio(
-            value: SingingCharacter.reset,
-            groupValue: _character,
-            onChanged: (SingingCharacter? value) {
-              if (value != null) {
-                setState(() {
-                  _character = value;
-                });
-              }
-            },
-          ),
-        ),
-        ListTile(
-          title: Text(_textRadioButton[2].toString()),
-          leading: Radio(
-            value: SingingCharacter.nothing,
-            groupValue: _character,
-            onChanged: (SingingCharacter? value) {
-              if (value != null) {
-                setState(() {
-                  _character = value;
-                });
-              }
-            },
-          ),
-        ),
-      ],
-    );
   }
 
   void _showFinishDialog(ShoppingList? shoppingList) {

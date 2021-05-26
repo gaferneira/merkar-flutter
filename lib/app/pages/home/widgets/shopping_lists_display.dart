@@ -3,6 +3,7 @@ import 'package:merkar/app/core/extensions/extended_string.dart';
 import 'package:merkar/app/core/resources/app_styles.dart';
 import 'package:merkar/app/core/resources/strings.dart';
 import 'package:merkar/app/pages/shopping/shopping_list/shopping_list_page.dart';
+import 'package:merkar/app/widgets/confirmDismissDialog.dart';
 import 'package:merkar/data/entities/shopping_list.dart';
 
 Widget shoppingListsDisplay(BuildContext context,
@@ -46,29 +47,12 @@ Widget shoppingListsDisplay(BuildContext context,
             child: Icon(Icons.cancel),
           ),
           key: Key(list[index].id!),
-          onDismissed: (direction) => {onRemoveItem(index)},
-          confirmDismiss: (DismissDirection direction) async {
-            return await showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  shape: AppStyles.borderRadiusDialog,
-                  // contentPadding: EdgeInsets.only(top: 10.0),
-                  title: Center(child: const Text(Strings.confirm)),
-                  content: const Text("Estás seguro de eliminar el Elemento?"),
-                  actions: <Widget>[
-                    TextButton(
-                      onPressed: () => Navigator.of(context).pop(false),
-                      child: const Text(Strings.calcel),
-                    ),
-                    TextButton(
-                        onPressed: () => Navigator.of(context).pop(true),
-                        child: const Text(Strings.delete)),
-                  ],
-                );
-              },
-            );
+          onDismissed: (direction)  {
+            onRemoveItem(index);
+            Scaffold.of(context)
+                .showSnackBar(SnackBar(content: Text(Strings.deleted)));
           },
+            confirmDismiss: (DismissDirection)=>ConfirmDismissDialog(context, DismissDirection),
         );
       },
       childCount: list.length,

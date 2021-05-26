@@ -5,6 +5,7 @@ import 'package:merkar/app/core/extensions/numberFormat.dart';
 import 'package:merkar/app/core/resources/app_styles.dart';
 import 'package:merkar/app/core/resources/constants.dart';
 import 'package:merkar/app/core/resources/strings.dart';
+import 'package:merkar/app/widgets/confirmDismissDialog.dart';
 import 'package:merkar/app/widgets/widgets.dart';
 import 'package:merkar/data/entities/purchase.dart';
 import 'package:merkar/injection_container.dart';
@@ -147,31 +148,13 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
             child: Icon(Icons.cancel),
           ),
           key: Key(list[index].id!),
-          onDismissed: (direction) => {
-            onRemoveItem(list[index])
+          onDismissed: (direction)  {
+            onRemoveItem(list[index]);
+            Scaffold.of(context)
+                .showSnackBar(SnackBar(content: Text(Strings.deleted)));
+
           },
-          confirmDismiss: (DismissDirection direction) async {
-            return await showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  shape: AppStyles.borderRadiusDialog,
-                  // contentPadding: EdgeInsets.only(top: 10.0),
-                  title: Center(child: const Text(Strings.confirm)),
-                  content: const Text("Estás seguro de eliminar el Elemento?"),
-                  actions: <Widget>[
-                    TextButton(
-                      onPressed: () => Navigator.of(context).pop(false),
-                      child: const Text(Strings.calcel),
-                    ),
-                    TextButton(
-                        onPressed: () => Navigator.of(context).pop(true),
-                        child: const Text(Strings.delete)),
-                  ],
-                );
-              },
-            );
-          },
+          confirmDismiss: (DismissDirection)=>ConfirmDismissDialog(context, DismissDirection),
         );
       },
     );
