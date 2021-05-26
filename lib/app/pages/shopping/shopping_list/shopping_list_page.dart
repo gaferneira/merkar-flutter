@@ -162,7 +162,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Container(
-                            decoration: AppStyles.kBoxDecorationStyle,
+                            decoration: AppStyles.primaryBoxDecorationStyle,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -187,7 +187,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Container(
-                            decoration: AppStyles.kBoxDecorationStyle,
+                            decoration: AppStyles.primaryBoxDecorationStyle,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -346,7 +346,9 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                 onChanged: (bool? value) {
                   viewModel.selectProduct(index);
                   setState(() {
-                    _ennable = true;
+                    if (viewModel.selectedList.isNotEmpty) {
+                      _ennable = true;
+                    } else _ennable =false;
                   });
                 },
                 secondary: IconButton(
@@ -417,11 +419,12 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                   viewModel.selectProduct(index);
                 else {
                   viewModel.unselectProduct(index);
-                  if (viewModel.selectedList.isEmpty) {
                     setState(() {
-                      _ennable = false;
+                    if (viewModel.selectedList.isNotEmpty) {
+                      _ennable = true;
+                    } else _ennable =false;
                     });
-                  }
+
                 }
               },
               secondary: IconButton(

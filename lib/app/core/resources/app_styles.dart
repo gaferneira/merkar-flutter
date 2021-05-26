@@ -21,6 +21,17 @@ class AppStyles {
     ],
   );
 
+  static final primaryBoxDecorationStyle = BoxDecoration(
+    color: Color(0xFF2373D5),
+    borderRadius: BorderRadius.circular(10.0),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.black12,
+        blurRadius: 6.0,
+        offset: Offset(0, 2),
+      ),
+    ],
+  );
   static RoundedRectangleBorder borderRadius = RoundedRectangleBorder(
       side: BorderSide(
         color: AppColors.textColorButtonDark,
