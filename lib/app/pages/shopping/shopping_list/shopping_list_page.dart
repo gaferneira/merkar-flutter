@@ -235,7 +235,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                           BottomNavigationBarItem(
                             icon: new Icon(Icons.shopping_cart),
                             title: new Text(
-                                'Carrito (\$ ${viewModel.totalShopping()})'),
+                                'Carrito \$ ${viewModel.totalShopping()}'),
                           ),
                         ],
                       )),
@@ -543,13 +543,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       TextFormField(
-                        initialValue: shoppingList!.name! +
-                            " " +
-                            DateTime.now().year.toString() +
-                            "/" +
-                            DateTime.now().month.toString() +
-                            "/" +
-                            DateTime.now().day.toString(),
+                        initialValue: shoppingList!.name!,
                         decoration: InputDecoration(
                             labelText: Strings.label_description),
                         keyboardType: TextInputType.text,
