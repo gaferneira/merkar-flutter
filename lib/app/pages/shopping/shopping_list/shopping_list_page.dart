@@ -310,6 +310,9 @@ class _ShoppingListPageState extends State<ShoppingListPage>
   }
 
   Widget _showProductsList(List<ListProduct> listProducts) {
+    if (listProducts.isNotEmpty) {
+      _ennable = true;
+    }
     return ListView.builder(
       scrollDirection: Axis.vertical,
       //scroll the listView
@@ -384,6 +387,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
 
     return ListView.builder(
       scrollDirection: Axis.vertical,
+      physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: listProducts.length,
       itemBuilder: (context, index) {
