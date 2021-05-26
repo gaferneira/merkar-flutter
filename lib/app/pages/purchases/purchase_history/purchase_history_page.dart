@@ -23,6 +23,7 @@ class PurchaseHistoryPage extends StatefulWidget {
 class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
   PurchaseHistoryViewModel viewModel =
       serviceLocator<PurchaseHistoryViewModel>();
+  final _scaffKey = GlobalKey<ScaffoldState>();
   final keyFormPurchaseList = GlobalKey<FormState>();
   TextEditingController _text_searchController = TextEditingController();
   onItemChangedSelect(String value) {
@@ -41,7 +42,6 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    final _scaffKey = GlobalKey<ScaffoldState>();
     return ChangeNotifierProvider<PurchaseHistoryViewModel>.value(
       //create: (context) => viewModel,
       value: viewModel,
@@ -49,7 +49,6 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
         builder: (context, model, child) => Scaffold(
           key: _scaffKey,
           appBar: AppBar(
-            leading: Container(),
             title: Text('Historial'),
             actions: [
               Padding(

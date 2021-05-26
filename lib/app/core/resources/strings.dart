@@ -118,4 +118,6 @@ class Strings {
   static const String car="Carrito";
   static const String in_list="En lista";
 
+  static const String statistics="ESTADÍSTICAS";
+
 }
