@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/resources/strings.dart';
 import 'package:merkar/app/pages/purchases/purchase_history/purchase_history_page.dart';
+import 'package:merkar/app/pages/purchases/statistics/widgets/pie_chart_view.dart';
 import 'package:merkar/app/pages/purchases/statistics/statistics_view_model.dart';
 import 'package:merkar/app/widgets/loading_widget.dart';
 import 'package:merkar/injection_container.dart';
@@ -26,6 +28,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
 
   @override
   Widget build(BuildContext context) {
+    viewModel.createDataMapForLists();
     return ChangeNotifierProvider<StatisticsViewModel>.value(
       value: viewModel,
       child: Consumer<StatisticsViewModel>(
@@ -42,21 +45,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
             ],
             title: Center(child: Text(Strings.statistics)),
           ),
-          body: SingleChildScrollView(
-            child: Column(
-
-              //  crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Row(
-                    // crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      (viewModel.list == null)
-                          ? Center(child: LoadingWidget())
-                          : _buildPieChart(context),
-                    ],
-                  ),
-                ]),
-          ),
+          body:(viewModel.dataMap.isNotEmpty)? PieChartView(colorList: viewModel.colorList, dataMap:viewModel.dataMap):Text("No hay datos"),
         ),
       ),
     );
