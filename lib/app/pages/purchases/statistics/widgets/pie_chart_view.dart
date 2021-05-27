@@ -6,8 +6,9 @@ import 'package:pie_chart/pie_chart.dart';
 class PieChartView extends StatefulWidget {
   final Map<String, double> dataMap;
   final List<Color> colorList;
+  final num total;
 
-  const PieChartView({Key? key, required this.dataMap, required this.colorList}) : super(key: key);
+  const PieChartView({Key? key, required this.dataMap, required this.colorList,required this.total}) : super(key: key);
   @override
   _PieChartViewState createState() => _PieChartViewState();
 }
@@ -34,7 +35,7 @@ class _PieChartViewState extends State<PieChartView> {
       colorList: widget.colorList,
       initialAngleInDegree: 0,
       chartType: ChartType.ring,
-      centerText:  "Central",
+      centerText:  widget.total.toString(),
       legendOptions: LegendOptions(
         showLegendsInRow: false,
         legendPosition: LegendPosition.bottom,

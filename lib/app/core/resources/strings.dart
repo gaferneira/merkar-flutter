@@ -118,6 +118,11 @@ class Strings {
   static const String car="Carrito";
   static const String in_list="En lista";
 
+//STATISTICS
   static const String statistics="ESTADÍSTICAS";
+  static const String day="Día";
+  static const String week="Semana";
+  static const String month="Mes";
+  static const String year="Año";
 
 }

@@ -7,5 +7,5 @@ class Constant {
   static const double radiusBorder = 50.0;
 //PIECHART
   static var chartLegendSpacing=32.0;
-  static var ringStrokeWidth=32.0;
+  static var ringStrokeWidth=20.0;
 }
