@@ -128,6 +128,7 @@ class _LoginPageState extends State<LoginPage> {
             },
             validator: (value) =>
                 (value?.isEmpty == false) ? null : Strings.error_required_field,
+            textInputAction: TextInputAction.next,
           ),
         ),
       ],
@@ -177,6 +178,7 @@ class _LoginPageState extends State<LoginPage> {
             },
             validator: (value) =>
                 (value?.isEmpty == false) ? null : Strings.error_required_field,
+            textInputAction: TextInputAction.done,
           ),
         ),
       ],

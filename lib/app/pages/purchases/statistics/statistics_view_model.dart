@@ -89,7 +89,7 @@ class StatisticsViewModel extends ChangeNotifier {
     }
     if(dataMap.isEmpty) {
       dataMap.putIfAbsent(
-          'No hay lista', () => 0.0);
+          'No hay datos', () => 0.0);
       colorList.add(Colors.red);
     }
     return dataMap;

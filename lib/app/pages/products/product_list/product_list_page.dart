@@ -118,25 +118,14 @@ class _ProductsListPageState extends State<ProductsListPage>
                     slivers: (viewModel.userProducts == null ||
                         viewModel.userProducts!.isEmpty)
                     ? [
-                    SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                            (BuildContext context, int index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: Center(
-                              child: Container(
-                                alignment: Alignment.center,
-                                color: Colors.blue[200],
-                                height: 75.0,
-                                child: Text(Strings.products_no_items),
-                              ),
-                            ),
-                          );
-                        },
-                        childCount: 1,
-                      ),
-                      // : _showProductsList(viewModel.defaultProducts!),
-                    )
+                    SliverFillRemaining(
+                        child:Center(child:Padding(
+                            padding: const EdgeInsets.all(40),
+                            child: Text(Strings.products_no_items,
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.headline6,)
+                        ))
+                    ),
                     ]
                         : _sliverList(viewModel.userProducts!),
               ),

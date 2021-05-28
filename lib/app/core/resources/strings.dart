@@ -18,7 +18,7 @@ class Strings {
   static const String label_create_new_list = "Crear Nueva Lista";
   static const String label_tootip_new_list = "Nueva Lista";
   //Products
-  static const String products_no_items= "Agregue productos pulsando en el botón inferior";
+  static const String products_no_items= "Agregue productos pulsando en el botón +";
   static const String label_tootip_add_products = "Agregar Productos";
   static const String label_tootip_new_product = "Agregar Nuevo Producto";
   static const String label_save = "GUARDAR";
@@ -38,11 +38,13 @@ class Strings {
   static const String label_name = "Nombre";
   static const String label_confirm_password = "Confirmar Contraseña";
   static const String label_sign_in = "Entrar";
+  static const String no_default_products="No hay productos para agregar."
+      " Cree un nuevo producto en el botón + de la pantalla anterior";
 
   static const String label_top_comments =
       "Envíanos tus comentarios. \n nos encantaría escucharlos!";
   static const String label_body_comments =
-      "¿Tienes problemas o sólo quieres enviarnos un comentario?. Cuéntanos sobre lo bueno y lo malo";
+      "¿Tienes problemas o sólo quieres enviarnos un comentario?.\n Cuéntanos sobre lo bueno y lo malo";
 
   static const String label_about_us = "Acerca de";
 
@@ -101,7 +103,8 @@ class Strings {
   static const String delete="ELIMINAR";
   static const String calcel="CANCELAR";
 
-  static const String home_no_items_available = "Para comenzar crea una lista pulsando en el botón +";
+  static const String home_no_items_available = "Para comenzar crea una lista pulsando "
+      "en el botón. +";
 
   static const String deleted="Eliminado";
 

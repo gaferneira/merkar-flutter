@@ -15,6 +15,7 @@ Widget shoppingListsDisplay(BuildContext context,
         child: Center(child: Text(
             Strings.home_no_items_available,
             style: Theme.of(context).textTheme.headline6,
+            textAlign: TextAlign.center,
         )),
       ),
     );

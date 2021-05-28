@@ -62,18 +62,18 @@ class _SelectProductsPageState extends State<SelectProductsPage> {
                   ),
                 ),
                 body: CustomScrollView(
-                  slivers: (viewModel.defaultProducts == null)
+                  slivers: (viewModel.defaultProducts == null || (viewModel.defaultProducts!.isEmpty))
                       ? [
-                          SliverList(
-                            delegate: SliverChildBuilderDelegate(
-                              (BuildContext context, int index) {
-                                return LoadingWidget();
-                              },
-                              childCount: 1,
-                            ),
-                            // : _showProductsList(viewModel.defaultProducts!),
-                          )
-                        ]
+                        //llena el espacio del customScrollview y centra el text
+                        SliverFillRemaining(
+                            child:Center(child:Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 80),
+                              child: Text(Strings.no_default_products,
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).textTheme.headline6,)
+                            ))
+                        ),
+                    ]
                       : _sliverList(viewModel.defaultProducts!),
                 ))));
   }

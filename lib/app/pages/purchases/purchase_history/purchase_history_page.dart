@@ -78,20 +78,17 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
               IconButton(icon: Icon(Icons.search), onPressed: () {}),
             ],
           ),
-          body: SingleChildScrollView(
-            child: Column(
-
-                //  crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Row(
-                    // crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      (viewModel.list == null)
-                          ? Center(child: LoadingWidget())
-                          : purchaseHistoryDisplay(viewModel.list!),
-                    ],
-                  ),
-                ]),
+          body: Center(
+            child: SingleChildScrollView(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    (viewModel.list == null)
+                        ? Center(child: LoadingWidget())
+                        : purchaseHistoryDisplay(viewModel.list!),
+                  ]),
+            ),
           ),
         ),
       ),
@@ -100,7 +97,9 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
 
   Widget purchaseHistoryDisplay(List<Purchase> list) {
     if (list.length == 0) {
-      return Center(child: Text(Strings.noCategoriesAvailable));
+      return Center(child: Text(Strings.noCategoriesAvailable,
+      textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline6,),
+      widthFactor: 32.0,);
     }
     return Expanded(
       child: listProducts(list),

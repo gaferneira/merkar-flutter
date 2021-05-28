@@ -86,7 +86,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
 
   void _buildFabMenus() {
     fabItems = [
-      FabMenu(icon: Icons.favorite_border, action: () => _chooseFile(0)),
+      FabMenu(icon: Icons.favorite, action: () => _chooseFile(0)),
       FabMenu(icon: Icons.add, action: () => _chooseFile(1)),
     ];
   }
@@ -460,7 +460,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
       builder: (context) => Container(
           height:368.0,
           child: AlertDialog(
-            title: Text(Strings.editProductTittle + " ${product.name}"),
+            title: Center(child: Text(Strings.editProductTittle + " ${product.name}")),
             content: Form(
               key: keyFormEditProduct,
               child: SingleChildScrollView(
@@ -468,7 +468,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                   children: <Widget>[
                     TextFormField(
                       initialValue: "${product.quantity}",
-                      decoration: InputDecoration(labelText: Strings.label_quantity),
+                      decoration: InputDecoration(labelText: Strings.label_quantity+ " en "+product.unit!),
                       keyboardType: TextInputType.number,
                       validator: (value) {
                         if (value?.isNotEmpty == true) {

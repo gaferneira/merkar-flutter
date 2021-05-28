@@ -29,9 +29,9 @@ class _PieChartViewState extends State<PieChartView> {
       dataMap: widget.dataMap,
       animationDuration: Duration(milliseconds: 800),
       chartLegendSpacing: Constant.chartLegendSpacing,
-      chartRadius: MediaQuery.of(context).size.width / 3.2 > 300
+      chartRadius: MediaQuery.of(context).size.width / 1.5 > 300
           ? 300
-          : MediaQuery.of(context).size.width / 3.2,
+          : MediaQuery.of(context).size.width / 1.5,
       colorList: widget.colorList,
       initialAngleInDegree: 0,
       chartType: ChartType.ring,

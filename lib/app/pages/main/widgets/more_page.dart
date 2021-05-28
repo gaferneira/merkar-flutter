@@ -36,11 +36,11 @@ class MorePageState extends State<MorePage> {
               title: Text(Strings.route_comments),
               leading: Icon(
                 Icons.comment,
-                color: AppColors.lightColor,
+                color: Theme.of(context).primaryColor,
               ),
               trailing: Icon(
                 Icons.keyboard_arrow_right,
-                color: AppColors.lightColor,
+                color: Theme.of(context).primaryColor,
               ),
               onTap: () => _goToRoute(0, context),
             ),
@@ -49,11 +49,11 @@ class MorePageState extends State<MorePage> {
               title: Text(Strings.route_about_us),
               leading: Icon(
                 Icons.info,
-                color: AppColors.lightColor,
+                color: Theme.of(context).primaryColor,
               ),
               trailing: Icon(
                 Icons.keyboard_arrow_right,
-                color: AppColors.lightColor,
+                color: Theme.of(context).primaryColor,
               ),
               onTap: () => _goToRoute(1, context),
             ),
@@ -62,7 +62,7 @@ class MorePageState extends State<MorePage> {
               leading: Icon(
                 Icons.close,
                 textDirection: TextDirection.rtl,
-                color: AppColors.lightColor,
+                color: Theme.of(context).primaryColor,
               ),
               title: Text(Strings.route_close_session),
               onTap: () => _goToRoute(2, context),

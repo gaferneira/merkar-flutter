@@ -121,6 +121,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 } else
                   return Strings.login_hint_enter_name;
               },
+              textInputAction: TextInputAction.next,
             ),
           ),
         ]);
@@ -160,6 +161,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   } else
                     return Strings.login_hint_enter_email;
                 },
+                textInputAction: TextInputAction.next,
               )),
         ]);
   }
@@ -267,6 +269,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   } else
                     return null;
                 },
+                textInputAction: TextInputAction.done,
               )),
         ]);
   }
