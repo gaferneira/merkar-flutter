@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../core/resources/strings.dart';
-import '../../../pages/purchases/purchase_history/purchase_history_page.dart';
-import '../../../pages/purchases/statistics/widgets/pie_chart_view.dart';
-import '../../../pages/purchases/statistics/statistics_view_model.dart';
+
 import '../../../../injection_container.dart';
+import '../../../core/resources/strings.dart';
+import '../../purchases/purchase_history/purchase_history_page.dart';
+import '../../purchases/statistics/statistics_view_model.dart';
+import '../../purchases/statistics/widgets/pie_chart_view.dart';
 
 class StatisticsPage extends StatefulWidget {
   static const routeName="/statistics";

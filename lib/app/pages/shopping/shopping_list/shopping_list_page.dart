@@ -1,22 +1,22 @@
-import 'dart:math' as math;
+
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/extensions/numberFormat.dart';
 import 'package:provider/provider.dart';
-import 'shopping_list_view_model.dart';
-import '../select_my_products/select_my_products_page.dart';
+
+import '../../../../data/entities/list_product.dart';
+import '../../../../data/entities/shopping_list.dart';
+import '../../../../injection_container.dart';
 import '../../../core/extensions/extended_string.dart';
 import '../../../core/resources/app_styles.dart';
 import '../../../core/resources/constants.dart';
 import '../../../core/resources/strings.dart';
 import '../../../pages/products/new_product/create_new_product.dart';
-import '../../../pages/products/widgets/fab_menu.dart';
 import '../../../widgets/confirmDismissDialog.dart';
 import '../../../widgets/primary_button.dart';
-import '../../../../data/entities/list_product.dart';
-import '../../../../data/entities/shopping_list.dart';
-import '../../../../injection_container.dart';
+import '../select_my_products/select_my_products_page.dart';
+import 'shopping_list_view_model.dart';
 
 
 enum SingingCharacter { delete, reset, nothing }
@@ -47,9 +47,6 @@ class _ShoppingListPageState extends State<ShoppingListPage>
 
   SingingCharacter _character = SingingCharacter.nothing;
   ShoppingList shoppingList = new ShoppingList();
-  var _selectedId;
-  String? _selected;
-  bool _ennable = false;
 
   onItemChangedSelect(String value) {
     viewModel.selectedList = viewModel.filterselectedList!
@@ -79,13 +76,6 @@ class _ShoppingListPageState extends State<ShoppingListPage>
   Widget build(BuildContext context) {
     shoppingList = ModalRoute.of(context)!.settings.arguments as ShoppingList;
     viewModel.loadData(shoppingList);
-
-    var onPressed;
-    if (_ennable) {
-      onPressed = () {
-        _showFinishDialog(shoppingList);
-      };
-    }
 
     return ChangeNotifierProvider<ShoppingListViewModel>.value(
         value: viewModel,
@@ -172,13 +162,18 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                             ),
                           ),
                         ),
-                        (viewModel.selectedList == null || viewModel.selectedList.isEmpty)
+                        (viewModel.selectedList.isEmpty)
                             ? Padding(
                               padding: const EdgeInsets.all(Constant.normalspacecontainer),
                               child: Text(Strings.add_products_from_list),
                             )
                             : _showSelectProductsList(viewModel.selectedList),
-                        PrimaryButton(title: Strings.label_finish, onPressed: onPressed),
+                        PrimaryButton(
+                            enable: viewModel.selectedList.isNotEmpty,
+                            title: Strings.label_finish,
+                            onPressed: () {
+                              _showFinishDialog(shoppingList);
+                            }),
                       ],
                     ),
                   ),
@@ -231,9 +226,6 @@ class _ShoppingListPageState extends State<ShoppingListPage>
         .pushNamed(SelectMyProductsPage.routeName, arguments: shoppingList);
   }
   Widget _showProductsList(List<ListProduct> listProducts) {
-    if (listProducts.isNotEmpty) {
-      _ennable = true;
-    }
     return ListView.builder(
       scrollDirection: Axis.vertical,
       //scroll the listView
@@ -266,11 +258,6 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                 controlAffinity: ListTileControlAffinity.leading,
                 onChanged: (bool? value) {
                   viewModel.selectProduct(index);
-                  setState(() {
-                    if (viewModel.selectedList.isNotEmpty) {
-                      _ennable = true;
-                    } else _ennable =false;
-                  });
                 },
                 secondary: IconButton(
                   icon: Icon(Icons.edit),
@@ -304,10 +291,6 @@ class _ShoppingListPageState extends State<ShoppingListPage>
   }
 
   Widget _showSelectProductsList(List<ListProduct> listProducts) {
-    if (listProducts.isNotEmpty) {
-      _ennable = true;
-    }
-
     return ListView.builder(
       scrollDirection: Axis.vertical,
       physics: const NeverScrollableScrollPhysics(),
@@ -340,12 +323,6 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                   viewModel.selectProduct(index);
                 else {
                   viewModel.unselectProduct(index);
-                    setState(() {
-                    if (viewModel.selectedList.isNotEmpty) {
-                      _ennable = true;
-                    } else _ennable =false;
-                    });
-
                 }
               },
               secondary: IconButton(

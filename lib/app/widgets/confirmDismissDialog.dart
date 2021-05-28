@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../../app/core/resources/app_styles.dart';
-import '../../../../app/core/resources/strings.dart';
+
+import '../core/resources/app_styles.dart';
+import '../core/resources/strings.dart';
 
 Future<bool> ConfirmDismissDialog (BuildContext context,DismissDirection) async{
     return await showDialog(

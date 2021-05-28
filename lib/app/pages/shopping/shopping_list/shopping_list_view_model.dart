@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'shopping_list_page.dart';
+
 import '../../../../data/entities/list_product.dart';
 import '../../../../data/entities/shopping_list.dart';
 import '../../../../data/repositories/purchases_repository.dart';
 import '../../../../data/repositories/shopping_lists_repository.dart';
+import 'shopping_list_page.dart';
 
 
 class ShoppingListViewModel extends ChangeNotifier {
@@ -16,8 +17,8 @@ class ShoppingListViewModel extends ChangeNotifier {
   late ShoppingList shoppingList;
   List<ListProduct>? filterunselectedList;
   List<ListProduct>? filterselectedList;
-  late List<ListProduct> unselectedList = [];
-  late List<ListProduct> selectedList = [];
+  List<ListProduct> unselectedList = [];
+  List<ListProduct> selectedList = [];
   String? error;
   bool? ennable;
 

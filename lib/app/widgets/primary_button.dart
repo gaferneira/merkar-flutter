@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class PrimaryButton extends StatelessWidget {
   final String title;
   final Function()? onPressed;
+  final bool enable;
 
-  PrimaryButton({required this.title, this.onPressed});
+  PrimaryButton({required this.title, this.onPressed, this.enable = true});
 
   @override
   Widget build(BuildContext context) {
@@ -12,14 +13,14 @@ class PrimaryButton extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 30.0),
       width: 250.0,
       child: ElevatedButton(
-        onPressed: onPressed,
+        onPressed: enable ? onPressed : null,
         style: ElevatedButton.styleFrom(
           elevation: 10.0,
           padding: EdgeInsets.all(15.0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),
           ),
-          primary: Theme.of(context).colorScheme.primary,
+          primary: enable ? Theme.of(context).colorScheme.primary : Colors.red,
         ),
         child: Text(
           title,
