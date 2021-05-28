@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:merkar/app/core/extensions/numberFormat.dart';
 import 'package:provider/provider.dart';
 import 'shopping_list_view_model.dart';
 import '../select_my_products/select_my_products_page.dart';
@@ -61,35 +62,6 @@ class _ShoppingListPageState extends State<ShoppingListPage>
         .toList();
     viewModel.notifyListeners();
   }
-  //floating buttons
-  late AnimationController _controller;
-  late List<FabMenu> fabItems;
-  final _scaffoldKey = GlobalKey<ScaffoldState>(); // new line
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-  new GlobalKey<RefreshIndicatorState>();
-
-  @override
-  void initState() {
-    super.initState();
-    _buildFabMenus();
-    _controller = new AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 500),
-    );
-    WidgetsBinding.instance!.addPostFrameCallback((_) {});
-  }
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  void _buildFabMenus() {
-    fabItems = [
-      FabMenu(icon: Icons.favorite, action: () => _chooseFile(0)),
-      FabMenu(icon: Icons.add, action: () => _chooseFile(1)),
-    ];
-  }
 
   void _chooseFile(int option) async {
     switch (option) {
@@ -145,14 +117,6 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                             ),
                           ),
                         ),
-                      ),
-                      Bounce(
-                        child: IconButton(
-                            icon: Icon(Icons.home),
-                            onPressed: () {
-                              Navigator.of(context).popUntil((route) => route.isFirst);
-                             },
-                            ),
                       ),
                     ],
                   ),
@@ -218,13 +182,16 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                       ],
                     ),
                   ),
-                  floatingActionButton: AnimatedOpacity(
-                    opacity: _fabOpacity,
-                    duration: Duration(milliseconds: 250),
-                    curve: Curves.easeOut,
-                    child: _buildFabMenu(context),
-                  ),
-
+                  floatingActionButton: Pulse(
+                      infinite: true,
+                      child: FloatingActionButton(
+                        heroTag: "add_product",
+                        onPressed: () =>
+                        {_showListSuggerProducts(context, shoppingList)},
+                        tooltip: Strings.label_tootip_add_products,
+                        child: Icon(Icons.add),
+                      ),
+                    ),
                   bottomNavigationBar: Container(
                       height: Constant.bottomBarHeight,
                       width: MediaQuery.of(context).size.width,
@@ -236,75 +203,33 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                         // this will be set when a new tab is tapped
                         items: [
                           BottomNavigationBarItem(
-                            icon: new Icon(Icons.insert_chart),
-                            title: Text(Strings.total+': \$ ${viewModel.totalPrice()}'),
-                            backgroundColor: Colors.white,
+                            icon: new Icon(Icons.list_alt),
+                            title: new Text('\$'+numberFormat((double.parse(viewModel.totalPrice())-double.parse(viewModel.totalShopping())).toString()),
+                              style: AppStyles.bottonbarTextStyle,
+                            ),
                           ),
                           BottomNavigationBarItem(
                             icon: new Icon(Icons.shopping_cart),
-                            title: new Text(
-                                Strings.car+' \$ ${viewModel.totalShopping()}'),
+                            title: new Text('\$ ${numberFormat(viewModel.totalShopping())}',
+                              style: AppStyles.bottonbarTextStyle,
+                            ),
+                          ),
+                          BottomNavigationBarItem(
+                            icon: new Icon(Icons.stacked_bar_chart),
+                            title: Text('\$ ${numberFormat(viewModel.totalPrice())}',
+                              style: AppStyles.bottonbarTextStyle,
+                            ),
+                            backgroundColor: Colors.white,
                           ),
                         ],
                       )),
                 )));
   }
-  double _fabOpacity = 1;
-
-  Widget _buildFabMenu(BuildContext context) {
-    Color backgroundColor = Theme.of(context).cardColor;
-    Color foregroundColor = Theme.of(context).accentColor;
-    return new Column(
-      mainAxisSize: MainAxisSize.min,
-      children: new List.generate(fabItems.length, (int index) {
-        Widget child = new Container(
-          padding: EdgeInsets.only(bottom: 10),
-          child: new ScaleTransition(
-            scale: new CurvedAnimation(
-              parent: _controller,
-              curve: Curves.fastOutSlowIn,
-            ),
-            child: new FloatingActionButton(
-              heroTag: null,
-              backgroundColor: backgroundColor,
-              mini: false,
-              child: new Icon(fabItems[index].icon, color: foregroundColor),
-              onPressed: () {
-                fabItems[index].action();
-                _controller.reverse();
-              },
-            ),
-          ),
-        );
-        return child;
-      }).toList()
-        ..add(
-          new FloatingActionButton(
-            heroTag: null,
-            child: new AnimatedBuilder(
-              animation: _controller,
-              builder: (BuildContext context, Widget? child) {
-                return new Transform(
-                  transform:
-                  Matrix4.rotationZ(_controller.value * 0.5 * math.pi),
-                  alignment: FractionalOffset.center,
-                  child: new Icon(
-                      _controller.isDismissed ? Icons.menu : Icons.close),
-                );
-              },
-            ),
-            onPressed: () {
-              if (_controller.isDismissed) {
-                _controller.forward();
-              } else {
-                _controller.reverse();
-              }
-            },
-          ),
-        ),
-    );
+  _showListSuggerProducts(
+      BuildContext context, ShoppingList? shoppingList) async {
+    Navigator.of(context)
+        .pushNamed(SelectMyProductsPage.routeName, arguments: shoppingList);
   }
-
   Widget _showProductsList(List<ListProduct> listProducts) {
     if (listProducts.isNotEmpty) {
       _ennable = true;

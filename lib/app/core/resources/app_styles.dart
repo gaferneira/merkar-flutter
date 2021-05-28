@@ -8,6 +8,11 @@ class AppStyles {
   static final kHintTextStyle = TextStyle(
     color: Colors.white54
   );
+  static final bottonbarTextStyle = TextStyle(
+      color: Colors.white,
+      fontWeight: FontWeight.w500,
+      fontSize: 20.0,
+  );
 
   static final kBoxDecorationStyle = BoxDecoration(
     color: Color(0xFF6CA8F1),
