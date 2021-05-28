@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:merkar/app/core/resources/app_styles.dart';
-import 'package:merkar/app/core/resources/strings.dart';
+import '../../../../app/core/resources/app_styles.dart';
+import '../../../../app/core/resources/strings.dart';
 
 Future<bool> ConfirmDismissDialog (BuildContext context,DismissDirection) async{
     return await showDialog(

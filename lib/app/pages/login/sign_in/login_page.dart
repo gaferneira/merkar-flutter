@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:merkar/app/core/resources/app_images.dart';
-import 'package:merkar/app/core/resources/app_styles.dart';
-import 'package:merkar/app/core/resources/app_theme.dart';
-import 'package:merkar/app/core/resources/strings.dart';
-import 'package:merkar/app/pages/login/reset_password/reset_password_page.dart';
-import 'package:merkar/app/pages/login/sign_in/login_view_model.dart';
-import 'package:merkar/app/pages/login/widgets/background_login.dart';
-import 'package:merkar/app/pages/login/widgets/login_button.dart';
-import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
-
+import '../../../core/resources/app_images.dart';
+import '../../../core/resources/app_styles.dart';
+import '../../../core/resources/app_theme.dart';
+import '../../../core/resources/strings.dart';
+import '../../../pages/login/reset_password/reset_password_page.dart';
+import '../../../pages/login/sign_in/login_view_model.dart';
+import '../../../pages/login/widgets/background_login.dart';
+import '../../../pages/login/widgets/login_button.dart';
+import '../../../../injection_container.dart';
 import '../register/register_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -225,8 +224,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget _buildSignInWithText(BuildContext context) {
     return Column(
       children: <Widget>[
-        Text(
-          '- OR -',
+        Text(Strings.or,
           style: Theme.of(context).textTheme.bodyText2,
         ),
         SizedBox(height: 20.0),

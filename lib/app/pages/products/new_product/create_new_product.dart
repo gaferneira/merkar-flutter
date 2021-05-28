@@ -1,11 +1,10 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:merkar/app/core/resources/constants.dart';
-import 'package:merkar/app/core/resources/strings.dart';
-import 'package:merkar/app/widgets/primary_button.dart';
-import 'package:merkar/data/entities/product.dart';
-import 'package:merkar/injection_container.dart';
-
+import '../../../core/resources/constants.dart';
+import '../../../core/resources/strings.dart';
+import '../../../widgets/primary_button.dart';
+import '../../../../data/entities/product.dart';
+import '../../../../injection_container.dart';
 import 'create_new_product_view_model.dart';
 
 class CreateNewProduct extends StatefulWidget {
@@ -54,13 +53,13 @@ class _CreateNewProductState extends State<CreateNewProduct> {
             TextFormField(
               initialValue: product?.name ?? "",
               autofocus: true,
-              decoration: InputDecoration(labelText: "Nombre"),
+              decoration: InputDecoration(labelText: Strings.label_name),
               onSaved: (value) {
                 nameProduct = value;
               },
               validator: (value) {
                 if (value!.isEmpty) {
-                  return "Llene este campo";
+                  return Strings.error_required_field;
                 }
                 return null;
               },
@@ -69,7 +68,7 @@ class _CreateNewProductState extends State<CreateNewProduct> {
             SizedBox(height: Constant.normalspace),
             TextFormField(
               initialValue: product?.category ?? "",
-              decoration: InputDecoration(labelText: "Categoría"),
+              decoration: InputDecoration(labelText: Strings.category),
               onSaved: (value) {
                 nameCategory = value;
               },
@@ -77,14 +76,14 @@ class _CreateNewProductState extends State<CreateNewProduct> {
                 if (value!.isNotEmpty) {
                   return null;
                 }
-                return "Escriba una categoría";
+                return Strings.error_required_field;
               },
               textInputAction: TextInputAction.next,
             ),
             SizedBox(height: Constant.normalspace),
             TextFormField(
               initialValue: product?.price ?? "",
-              decoration: InputDecoration(labelText: "Precio"),
+              decoration: InputDecoration(labelText: Strings.price),
               keyboardType: TextInputType.number,
               onSaved: (value) {
                 price = value;
@@ -93,14 +92,14 @@ class _CreateNewProductState extends State<CreateNewProduct> {
                 if (value!.isNotEmpty) {
                   return null;
                 }
-                return "Ingrese el Precio";
+                return Strings.error_required_field;
               },
               textInputAction: TextInputAction.next,
             ),
             SizedBox(height: Constant.normalspace),
             TextFormField(
               initialValue: product?.unit ?? "",
-              decoration: InputDecoration(labelText: "Unidad"),
+              decoration: InputDecoration(labelText: Strings.unit),
               keyboardType: TextInputType.text,
               onSaved: (value) {
                 unit = value;
@@ -109,7 +108,7 @@ class _CreateNewProductState extends State<CreateNewProduct> {
                 if (value!.isNotEmpty) {
                   return null;
                 }
-                return "Ingrese la Unidad";
+                return Strings.error_required_field;
               },
               textInputAction: TextInputAction.done,
             ),

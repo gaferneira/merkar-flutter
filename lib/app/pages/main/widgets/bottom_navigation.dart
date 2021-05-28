@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:merkar/app/core/resources/strings.dart';
+import '../../../core/resources/strings.dart';
 
 class BottomNavigation extends StatefulWidget {
 

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:merkar/data/entities/list_product.dart';
-import 'package:merkar/data/entities/product.dart';
-import 'package:merkar/data/entities/shopping_list.dart';
-import 'package:merkar/data/repositories/products_repository.dart';
-import 'package:merkar/data/repositories/shopping_lists_repository.dart';
+import '../../../../data/entities/list_product.dart';
+import '../../../../data/entities/product.dart';
+import '../../../../data/entities/shopping_list.dart';
+import '../../../../data/repositories/products_repository.dart';
+import '../../../../data/repositories/shopping_lists_repository.dart';
 
 class SelectMyProductsViewModel extends ChangeNotifier {
   final ShoppingListsRepository shoppingListRepository;
@@ -77,10 +77,8 @@ class SelectMyProductsViewModel extends ChangeNotifier {
           unit: product.unit,
           selected: false);
       shoppingListRepository.saveProduct(productList, shoppingList);
-      print(product.name!+" Added");
     } else {
       shoppingListRepository.removeProduct(product.id!, shoppingList);
-      print(product.name!+" Eliminado");
     }
     notifyListeners();
   }

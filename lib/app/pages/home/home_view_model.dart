@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:merkar/app/core/resources/strings.dart';
-import 'package:merkar/data/entities/error/failures.dart';
-import 'package:merkar/data/entities/shopping_list.dart';
-import 'package:merkar/data/repositories/shopping_lists_repository.dart';
-
+import '../../core/resources/strings.dart';
+import '../../../data/entities/error/failures.dart';
 import '../../../data/entities/shopping_list.dart';
+import '../../../data/repositories/shopping_lists_repository.dart';
 import '../../../data/repositories/login_repository.dart';
 import '../shopping/shopping_list/shopping_list_page.dart';
 

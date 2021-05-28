@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'package:merkar/app/core/resources/constants.dart';
 import 'package:pie_chart/pie_chart.dart';
+import '../../../../core/resources/constants.dart';
 
 class PieChartView extends StatefulWidget {
   final Map<String, double> dataMap;

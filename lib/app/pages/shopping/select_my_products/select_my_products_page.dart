@@ -1,16 +1,18 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:merkar/app/core/resources/app_styles.dart';
-import 'package:merkar/app/core/resources/constants.dart';
-import 'package:merkar/app/core/resources/strings.dart';
-import 'package:merkar/app/pages/products/new_product/create_new_product.dart';
-import 'package:merkar/data/entities/product.dart';
-import 'package:merkar/data/entities/shopping_list.dart';
-import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
-
 import 'select_my_products_view_model.dart';
+import '../../../core/resources/app_styles.dart';
+import '../../../core/resources/constants.dart';
+import '../../../core/resources/strings.dart';
+import '../../../pages/products/new_product/create_new_product.dart';
+import '../../../../data/entities/product.dart';
+import '../../../../data/entities/shopping_list.dart';
+import '../../../../injection_container.dart';
+
+
+
 
 class SelectMyProductsPage extends StatefulWidget {
   static const routeName = "/select_my_products_page";
@@ -56,7 +58,7 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
                             child: TextField(
                               controller: _search_textController,
                               decoration: InputDecoration(
-                                labelText: 'Buscar',
+                                labelText: Strings.label_search,
                                 fillColor: Colors.white,
                                 filled: true,
                                 border: OutlineInputBorder(
@@ -74,37 +76,17 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
                       IconButton(icon: Icon(Icons.search), onPressed: () {}),
                     ],
                   ),
-                 /* body: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        (viewModel.userProducts == null)
-                            ? Text('Loading...')
-                            : _showProductsList(viewModel.userProducts),
-                      ],
-                    ),
-                  ),*/
               body: CustomScrollView(
-                  slivers: (viewModel.userProducts == null)
+                  slivers: (viewModel.userProducts == null ||viewModel.userProducts!.isEmpty)
                   ? [
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                          (BuildContext context, int index) {
-                        return Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Center(
-                            child: Container(
-                              alignment: Alignment.center,
-                              color: Colors.blue[200],
-                              height: 75.0,
-                              child: Text(Strings.products_no_items),
-                            ),
-                          ),
-                        );
-                      },
-                      childCount: 1,
-                    ),
-                    // : _showProductsList(viewModel.defaultProducts!),
-                  )
+                  SliverFillRemaining(
+                      child:Center(child:Padding(
+                          padding: const EdgeInsets.all(40),
+                          child: Text(Strings.products_no_items,
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context).textTheme.headline6,)
+                      ))
+                  ),
                   ]
                       : _sliverList(viewModel.userProducts!),
             ),
@@ -155,29 +137,6 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
         ));
     }
     return widgetList;
-  }
-
-  Widget _showProductsList(List<Product>? userProducts) {
-    return ListView.separated(
-        physics: NeverScrollableScrollPhysics(),
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        separatorBuilder: (context, index) => Divider(
-              color: Colors.black,
-            ),
-        itemCount: userProducts?.length ?? 0,
-        itemBuilder: (context, index) {
-          return CheckboxListTile(
-            title: Text("${userProducts![index].name}"),
-            controlAffinity: ListTileControlAffinity.leading,
-            onChanged: (bool? value) {
-              viewModel.selectProduct(index,userProducts[index] ,value!);
-            },
-            value: userProducts[index].selected,
-            activeColor: Colors.cyan,
-            checkColor: Colors.green,
-          );
-        });
   }
 
   _createNewProduct(BuildContext context) {

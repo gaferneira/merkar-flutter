@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:merkar/data/repositories/login_repository.dart';
+import 'package:merkar/app/core/resources/strings.dart';
+import '../../../../data/repositories/login_repository.dart';
 
 class RegisterViewModel with ChangeNotifier {
   final LoginRepository repository;
@@ -28,7 +29,7 @@ class RegisterViewModel with ChangeNotifier {
 
   void manageResponse(BuildContext context, bool success) {
     if (!success) {
-      error = "No user found";
+      error = Strings.no_user_found;
     } else {
       error = null;
       Navigator.pop(context);

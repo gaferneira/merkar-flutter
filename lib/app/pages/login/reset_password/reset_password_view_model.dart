@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:merkar/data/repositories/login_repository.dart';
+import '../../../../data/repositories/login_repository.dart';
 
 class ResetPasswordViewModel with ChangeNotifier {
   final LoginRepository repository;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:merkar/data/entities/product.dart';
-import 'package:merkar/data/entities/shopping_list.dart';
-import 'package:merkar/data/repositories/products_repository.dart';
+import '../../../../data/entities/product.dart';
+import '../../../../data/entities/shopping_list.dart';
+import '../../../../data/repositories/products_repository.dart';
 
 class SelectProductsViewModel extends ChangeNotifier {
   final ProductsRepository productsRepository;

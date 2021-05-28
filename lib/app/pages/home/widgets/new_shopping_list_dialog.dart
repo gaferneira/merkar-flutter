@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:merkar/app/core/extensions/extended_string.dart';
-import 'package:merkar/app/core/resources/strings.dart';
-import 'package:merkar/app/widgets/primary_button.dart';
+import '../../../core/extensions/extended_string.dart';
+import '../../../core/resources/strings.dart';
+import '../../../widgets/primary_button.dart';
 
 Future<void> newShoppingListDialog(
     BuildContext context, final ValueChanged<String> saveNewList) {
@@ -21,7 +21,7 @@ Future<void> newShoppingListDialog(
             children: <Widget>[
               TextFormField(
                 autofocus: true,
-                decoration: InputDecoration(labelText: "Nombre de la lista"),
+                decoration: InputDecoration(labelText: Strings.list_name),
                 onChanged: (value) {
                   //_showDefaultSuggested(value);
                 },
@@ -32,7 +32,7 @@ Future<void> newShoppingListDialog(
                   if (value?.isNotEmpty == true) {
                     return null;
                   }
-                  return "Llene el nombre";
+                  return Strings.error_required_field;
                 },
               ),
               PrimaryButton(title: Strings.label_save,

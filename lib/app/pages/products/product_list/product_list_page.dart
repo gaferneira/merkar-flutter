@@ -2,16 +2,15 @@ import 'dart:math' as math;
 import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:merkar/app/core/resources/app_styles.dart';
-import 'package:merkar/app/core/resources/strings.dart';
-import 'package:merkar/app/pages/products/new_product/create_new_product.dart';
-import 'package:merkar/app/pages/products/select_products/select_products_page.dart';
-import 'package:merkar/app/pages/products/widgets/fab_menu.dart';
-import 'package:merkar/app/widgets/confirmDismissDialog.dart';
-import 'package:merkar/data/entities/product.dart';
-import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
-
+import '../../../core/resources/app_styles.dart';
+import '../../../core/resources/strings.dart';
+import '../../../pages/products/new_product/create_new_product.dart';
+import '../../../pages/products/select_products/select_products_page.dart';
+import '../../../pages/products/widgets/fab_menu.dart';
+import '../../../widgets/confirmDismissDialog.dart';
+import '../../../../data/entities/product.dart';
+import '../../../../injection_container.dart';
 import 'product_list_view_model.dart';
 
 enum SingingCharacter { delete, reset, nothing }
@@ -152,15 +151,9 @@ class _ProductsListPageState extends State<ProductsListPage>
       children: new List.generate(fabItems.length, (int index) {
         Widget child = new Container(
           padding: EdgeInsets.only(bottom: 10),
-          // height: 70.0,
-          // width: 56.0,
-          //alignment: FractionalOffset.bottomRight,
           child: new ScaleTransition(
             scale: new CurvedAnimation(
               parent: _controller,
-              //   curve: new Interval(
-              //       1.0 * index / 10.0, 1.0 - index / fabItems.length / 2.0,
-              //       curve: Curves.fastOutSlowIn),
               curve: Curves.fastOutSlowIn,
             ),
             child: new FloatingActionButton(

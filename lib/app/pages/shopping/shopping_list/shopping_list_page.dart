@@ -2,21 +2,21 @@ import 'dart:math' as math;
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:merkar/app/core/extensions/extended_string.dart';
-import 'package:merkar/app/core/resources/app_styles.dart';
-import 'package:merkar/app/core/resources/constants.dart';
-import 'package:merkar/app/core/resources/strings.dart';
-import 'package:merkar/app/pages/products/new_product/create_new_product.dart';
-import 'package:merkar/app/pages/products/widgets/fab_menu.dart';
-import 'package:merkar/app/widgets/confirmDismissDialog.dart';
-import 'package:merkar/app/widgets/primary_button.dart';
-import 'package:merkar/data/entities/list_product.dart';
-import 'package:merkar/data/entities/shopping_list.dart';
-import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
-
-import '../select_my_products/select_my_products_page.dart';
 import 'shopping_list_view_model.dart';
+import '../select_my_products/select_my_products_page.dart';
+import '../../../core/extensions/extended_string.dart';
+import '../../../core/resources/app_styles.dart';
+import '../../../core/resources/constants.dart';
+import '../../../core/resources/strings.dart';
+import '../../../pages/products/new_product/create_new_product.dart';
+import '../../../pages/products/widgets/fab_menu.dart';
+import '../../../widgets/confirmDismissDialog.dart';
+import '../../../widgets/primary_button.dart';
+import '../../../../data/entities/list_product.dart';
+import '../../../../data/entities/shopping_list.dart';
+import '../../../../injection_container.dart';
+
 
 enum SingingCharacter { delete, reset, nothing }
 
@@ -39,9 +39,9 @@ class _ShoppingListPageState extends State<ShoppingListPage>
   double? temp_price = null;
   String? descriptionShoppingList = "";
   List<String> _textRadioButton = [
-    "Eliminar Lista",
-    "Restaurar lista",
-    "No hacer nada"
+    Strings.delete_list,
+    Strings.restore_list,
+    Strings.do_nothing,
   ];
 
   SingingCharacter _character = SingingCharacter.nothing;
@@ -132,7 +132,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                             child: TextFormField(
                               controller: _text_searchController,
                               decoration: InputDecoration(
-                                labelText: "Buscar ...",
+                                labelText: Strings.label_search,
                                 filled: true,
                                 fillColor: Colors.white,
                                 border: OutlineInputBorder(
@@ -178,11 +178,16 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                             ),
                           ),
                         ),
-                        (viewModel.unselectedList == null)
-                            ? Text(
-                                Strings.products_no_items,
-                                style: Theme.of(context).textTheme.headline6,
-                              )
+                        (viewModel.unselectedList == null || viewModel.unselectedList.isEmpty)
+                            ? Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(Constant.normalspacecontainer),
+                                child: Text(
+                                    Strings.products_no_items_shopping_list,
+                                    style: Theme.of(context).textTheme.headline6,
+                                  ),
+                              ),
+                            )
                             : _showProductsList(viewModel.unselectedList),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -203,8 +208,11 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                             ),
                           ),
                         ),
-                        (viewModel.selectedList == null)
-                            ? Text('Loading...')
+                        (viewModel.selectedList == null || viewModel.selectedList.isEmpty)
+                            ? Padding(
+                              padding: const EdgeInsets.all(Constant.normalspacecontainer),
+                              child: Text(Strings.add_products_from_list),
+                            )
                             : _showSelectProductsList(viewModel.selectedList),
                         PrimaryButton(title: Strings.label_finish, onPressed: onPressed),
                       ],
@@ -229,13 +237,13 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                         items: [
                           BottomNavigationBarItem(
                             icon: new Icon(Icons.insert_chart),
-                            title: Text('Total: \$ ${viewModel.totalPrice()}'),
+                            title: Text(Strings.total+': \$ ${viewModel.totalPrice()}'),
                             backgroundColor: Colors.white,
                           ),
                           BottomNavigationBarItem(
                             icon: new Icon(Icons.shopping_cart),
                             title: new Text(
-                                'Carrito \$ ${viewModel.totalShopping()}'),
+                                Strings.car+' \$ ${viewModel.totalShopping()}'),
                           ),
                         ],
                       )),
@@ -251,15 +259,9 @@ class _ShoppingListPageState extends State<ShoppingListPage>
       children: new List.generate(fabItems.length, (int index) {
         Widget child = new Container(
           padding: EdgeInsets.only(bottom: 10),
-          // height: 70.0,
-          // width: 56.0,
-          //alignment: FractionalOffset.bottomRight,
           child: new ScaleTransition(
             scale: new CurvedAnimation(
               parent: _controller,
-              //   curve: new Interval(
-              //       1.0 * index / 10.0, 1.0 - index / fabItems.length / 2.0,
-              //       curve: Curves.fastOutSlowIn),
               curve: Curves.fastOutSlowIn,
             ),
             child: new FloatingActionButton(
@@ -301,12 +303,6 @@ class _ShoppingListPageState extends State<ShoppingListPage>
           ),
         ),
     );
-  }
-
-  _showListSuggerProducts(
-      BuildContext context, ShoppingList? shoppingList) async {
-    Navigator.of(context)
-        .pushNamed(SelectMyProductsPage.routeName, arguments: shoppingList);
   }
 
   Widget _showProductsList(List<ListProduct> listProducts) {
@@ -474,7 +470,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                         if (value?.isNotEmpty == true) {
                           return null;
                         } else
-                          return "Ingrese la cantidad";
+                          return Strings.error_required_field;
                       },
                       onSaved: (value) {
                         this.temp_quantity = int.parse(value!);
@@ -488,7 +484,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                         if (value?.isNotEmpty == true) {
                           return null;
                         } else
-                          return "Ingrese el precio";
+                          return Strings.error_required_field;
                       },
                       onSaved: (value) {
                         this.temp_price = double.parse(value!);
@@ -551,7 +547,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                           if (value?.isNotEmpty == true) {
                             return null;
                           } else
-                            return "Llene la Descripción";
+                            return Strings.error_required_field;
                         },
                         onSaved: (value) {
                           this.descriptionShoppingList = value;

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:merkar/app/pages/products/product_list/product_list_page.dart';
-import 'package:merkar/app/pages/home/home_page.dart';
-import 'package:merkar/app/pages/main/widgets/more_page.dart';
-import 'package:merkar/app/pages/purchases/statistics/statistics_page.dart';
-
+import '../../pages/products/product_list/product_list_page.dart';
+import '../../pages/home/home_page.dart';
+import '../../pages/main/widgets/more_page.dart';
+import '../../pages/purchases/statistics/statistics_page.dart';
 import 'widgets/bottom_navigation.dart';
 
 class MainPage extends StatefulWidget {

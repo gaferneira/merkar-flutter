@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:merkar/app/core/extensions/extended_string.dart';
-import 'package:merkar/app/core/resources/app_styles.dart';
-import 'package:merkar/app/core/resources/strings.dart';
-import 'package:merkar/app/pages/shopping/shopping_list/shopping_list_page.dart';
-import 'package:merkar/app/widgets/confirmDismissDialog.dart';
-import 'package:merkar/data/entities/shopping_list.dart';
+import '../../../core/extensions/extended_string.dart';
+import '../../../core/resources/app_styles.dart';
+import '../../../core/resources/strings.dart';
+import '../../../pages/shopping/shopping_list/shopping_list_page.dart';
+import '../../../widgets/confirmDismissDialog.dart';
+import '../../../../data/entities/shopping_list.dart';
 
 Widget shoppingListsDisplay(BuildContext context,
     List<ShoppingList> list, final ValueChanged<int> onRemoveItem) {

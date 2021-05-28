@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:merkar/app/core/resources/app_colors.dart';
+import '../../../../app/core/resources/app_colors.dart';
 
 class AppTheme {
 

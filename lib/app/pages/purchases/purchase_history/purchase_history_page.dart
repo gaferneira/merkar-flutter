@@ -1,18 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:merkar/app/core/extensions/extended_string.dart';
-import 'package:merkar/app/core/extensions/numberFormat.dart';
-import 'package:merkar/app/core/resources/app_styles.dart';
-import 'package:merkar/app/core/resources/constants.dart';
-import 'package:merkar/app/core/resources/strings.dart';
-import 'package:merkar/app/widgets/confirmDismissDialog.dart';
-import 'package:merkar/app/widgets/widgets.dart';
-import 'package:merkar/data/entities/purchase.dart';
-import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
-
-import '../purchase_history_show_info/purchase_history_show_info_page.dart';
 import 'purchase_history_view_model.dart';
+import '../purchase_history_show_info/purchase_history_show_info_page.dart';
+import '../../../core/extensions/extended_string.dart';
+import '../../../core/extensions/numberFormat.dart';
+import '../../../core/resources/app_styles.dart';
+import '../../../core/resources/constants.dart';
+import '../../../core/resources/strings.dart';
+import '../../../widgets/confirmDismissDialog.dart';
+import '../../../widgets/widgets.dart';
+import '../../../../data/entities/purchase.dart';
+import '../../../../injection_container.dart';
 
 class PurchaseHistoryPage extends StatefulWidget {
   static const routeName = "/purchasehistory";
@@ -49,7 +48,7 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
         builder: (context, model, child) => Scaffold(
           key: _scaffKey,
           appBar: AppBar(
-            title: Text('Historial'),
+            title: Text(Strings.history),
             actions: [
               Padding(
                 padding: const EdgeInsets.all(Constant.normalspace),
@@ -61,7 +60,7 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
                     child: TextFormField(
                       controller: _text_searchController,
                       decoration: InputDecoration(
-                        labelText: "Buscar ...",
+                        labelText: Strings.label_search,
                         filled: true,
                         fillColor: Colors.white,
                         border: OutlineInputBorder(
@@ -101,9 +100,7 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
       textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline6,),
       widthFactor: 32.0,);
     }
-    return Expanded(
-      child: listProducts(list),
-    );
+    return listProducts(list);
   }
 
   Widget listProducts(List<Purchase> list) {

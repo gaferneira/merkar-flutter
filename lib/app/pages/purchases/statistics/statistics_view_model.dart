@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart';
-import 'package:merkar/data/entities/list_product.dart';
-import 'package:merkar/data/entities/purchase.dart';
-import 'package:merkar/data/repositories/purchases_repository.dart';
+import 'package:merkar/app/core/resources/strings.dart';
+import '../../../../data/entities/purchase.dart';
+import '../../../../data/repositories/purchases_repository.dart';
 
 class StatisticsViewModel extends ChangeNotifier {
   final PurchasesRepository purchaseHistoryRepository;
@@ -89,7 +89,7 @@ class StatisticsViewModel extends ChangeNotifier {
     }
     if(dataMap.isEmpty) {
       dataMap.putIfAbsent(
-          'No hay datos', () => 0.0);
+          Strings.no_data, () => 0.0);
       colorList.add(Colors.red);
     }
     return dataMap;

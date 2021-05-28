@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:merkar/data/entities/product.dart';
-import 'package:merkar/data/repositories/products_repository.dart';
+import '../../../../data/entities/product.dart';
+import '../../../../data/repositories/products_repository.dart';
 
 class ProductsListViewModel extends ChangeNotifier {
   final ProductsRepository repository;

@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:merkar/app/core/extensions/numberFormat.dart';
-import 'package:merkar/app/core/resources/app_colors.dart';
-import 'package:merkar/app/core/resources/app_styles.dart';
-import 'package:merkar/app/core/resources/app_theme.dart';
-import 'package:merkar/app/core/resources/constants.dart';
-import 'package:merkar/app/core/resources/strings.dart';
-import 'package:merkar/data/entities/list_product.dart';
-import 'package:merkar/data/entities/purchase.dart';
-import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
-
 import 'purchase_history_show_info_view_model.dart';
+import '../../../core/extensions/numberFormat.dart';
+import '../../../core/resources/app_colors.dart';
+import '../../../core/resources/constants.dart';
+import '../../../core/resources/strings.dart';
+import '../../../../data/entities/list_product.dart';
+import '../../../../data/entities/purchase.dart';
+import '../../../../injection_container.dart';
+
 
 class PurchaseHistoryShowInfoPage extends StatefulWidget {
   static const routeName = "/show_info_purchase";
@@ -55,7 +53,7 @@ class _PurchaseHistoryShowInfoPageState
                   Center(
                     child: Padding(
                       padding: const EdgeInsets.all(0.0),
-                      child: Text("Fecha: ${purchase.date}",
+                      child: Text(Strings.date+" ${purchase.date}",
                         textAlign: TextAlign.left,
                         style: Theme.of(context).textTheme.subtitle1,
                       ),
@@ -75,7 +73,7 @@ class _PurchaseHistoryShowInfoPageState
                   )),
               SizedBox(height: Constant.normalspace,),
               (viewModel.listProducts == null)
-                  ? Text('Loading...')
+                  ? Text(Strings.no_products)
                   : _showTable(viewModel.listProducts!),
 
                  // : _showProductsList(viewModel.listProducts!),
