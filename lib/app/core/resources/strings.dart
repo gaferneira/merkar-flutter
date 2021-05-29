@@ -132,4 +132,7 @@ class Strings {
  //ERROR
   static const String error="Error:";
 
+  //CONFIRMDISMMISSDIALOG
+  static const String sure_to_delete = "Estás seguro de eliminar el Elemento?";
+
 }

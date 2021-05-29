@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:merkar/app/core/resources/app_styles.dart';
 import '../../../core/extensions/extended_string.dart';
 import '../../../core/resources/strings.dart';
 import '../../../widgets/primary_button.dart';
@@ -11,6 +12,7 @@ Future<void> newShoppingListDialog(
   return showDialog(
     context: context,
     builder: (context) => AlertDialog(
+      shape: AppStyles.borderRadiusDialog,
       title: Text(Strings.label_create_new_list),
       content: Form(
         key: formListKey,

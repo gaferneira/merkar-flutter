@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:merkar/app/core/resources/app_styles.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../core/resources/constants.dart';
 import '../../../core/resources/strings.dart';
@@ -15,6 +16,7 @@ Future<void> AboutUsPage(BuildContext context) {
 
         return FlipInX(
           child: AlertDialog(
+            shape: AppStyles.borderRadiusDialog,
             content: SingleChildScrollView(
               child: StatefulBuilder(
                 // You need this, notice the parameters below:

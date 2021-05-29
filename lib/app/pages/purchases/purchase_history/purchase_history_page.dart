@@ -114,8 +114,12 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
                 title: Row(
                   children: [
                     Expanded(
-                      child: Text(list[index].name!.capitalize() + ": \t\t\t"+list[index].date!,
+                      child: Text(list[index].name!.capitalize() + ":",
                     textAlign: TextAlign.left,),
+                    ),
+                    Expanded(
+                      child: Text(list[index].date!,
+                        textAlign: TextAlign.center,),
                     ),
                     Text("\$ "+numberFormat(list[index].total!.toString()),
                       textAlign: TextAlign.right,),

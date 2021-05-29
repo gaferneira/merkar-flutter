@@ -366,6 +366,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
       builder: (context) => Container(
           height:368.0,
           child: AlertDialog(
+            shape: AppStyles.borderRadiusDialog,
             title: Center(child: Text(Strings.editProductTittle + " ${product.name}")),
             content: Form(
               key: keyFormEditProduct,
@@ -439,6 +440,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
         int selectedRadio = 0; // Declare your variable outside the builder
 
         return AlertDialog(
+          shape: AppStyles.borderRadiusDialog,
           content: StatefulBuilder(
             // You need this, notice the parameters below:
             builder: (BuildContext context, StateSetter setState) {

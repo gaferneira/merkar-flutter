@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
+import 'package:merkar/app/core/resources/app_styles.dart';
 import '../../../core/resources/constants.dart';
 import '../../../core/resources/strings.dart';
 import '../../../widgets/primary_button.dart';
@@ -16,6 +17,7 @@ Future<void> CommentePage(BuildContext context) {
 
         return FlipInY(
           child: AlertDialog(
+            shape: AppStyles.borderRadiusDialog,
             content: SingleChildScrollView(
               child: StatefulBuilder(
                 // You need this, notice the parameters below:
