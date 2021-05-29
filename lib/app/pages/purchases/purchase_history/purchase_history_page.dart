@@ -77,30 +77,25 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
               IconButton(icon: Icon(Icons.search), onPressed: () {}),
             ],
           ),
-          body: Center(
-            child: SingleChildScrollView(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    (viewModel.list == null)
-                        ? Center(child: LoadingWidget())
-                        : purchaseHistoryDisplay(viewModel.list!),
-                  ]),
-            ),
+          body: (viewModel.list != null && viewModel.list!.isNotEmpty)?
+                SingleChildScrollView(
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                         purchaseHistoryDisplay(viewModel.list!),
+                      ]),
+                )
+              :Center(child: Text(Strings.noCategoriesAvailable,
+                  textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline6,),
+                  widthFactor: 32.0,),
           ),
-        ),
       ),
     );
   }
 
   Widget purchaseHistoryDisplay(List<Purchase> list) {
-    if (list.length == 0) {
-      return Center(child: Text(Strings.noCategoriesAvailable,
-      textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline6,),
-      widthFactor: 32.0,);
-    }
-    return listProducts(list);
+        return listProducts(list);
   }
 
   Widget listProducts(List<Purchase> list) {
@@ -119,7 +114,7 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
                 title: Row(
                   children: [
                     Expanded(
-                      child: Text(list[index].name!.capitalize() + ": ",
+                      child: Text(list[index].name!.capitalize() + ": \t\t\t"+list[index].date!,
                     textAlign: TextAlign.left,),
                     ),
                     Text("\$ "+numberFormat(list[index].total!.toString()),

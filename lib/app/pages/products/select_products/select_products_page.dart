@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:merkar/app/core/extensions/numberFormat.dart';
 import '../../../core/resources/app_styles.dart';
 import '../../../core/resources/strings.dart';
 import '../../../../data/entities/product.dart';
@@ -101,7 +102,7 @@ class _SelectProductsPageState extends State<SelectProductsPage> {
                     index.toDouble() / products.length),
                 child: CheckboxListTile(
                     title: Text(
-                        "${products[index].name}: ${products[index].unit} x ${products[index].price}"),
+                        "${products[index].name}: ${products[index].unit} x ${numberFormat(products[index].price)}"),
                     controlAffinity: ListTileControlAffinity.leading,
                     onChanged: (bool? value) {
                       viewModel.selectProduct(products[index], value == true);

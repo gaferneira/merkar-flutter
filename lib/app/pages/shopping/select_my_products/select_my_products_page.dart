@@ -82,7 +82,7 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
                   SliverFillRemaining(
                       child:Center(child:Padding(
                           padding: const EdgeInsets.all(40),
-                          child: Text(Strings.products_no_items,
+                          child: Text(Strings.select_products_no_items,
                             textAlign: TextAlign.center,
                             style: Theme.of(context).textTheme.headline6,)
                       ))

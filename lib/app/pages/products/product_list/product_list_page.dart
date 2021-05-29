@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:merkar/app/core/extensions/numberFormat.dart';
 import 'package:provider/provider.dart';
 import '../../../core/resources/app_styles.dart';
 import '../../../core/resources/strings.dart';
@@ -225,7 +226,7 @@ class _ProductsListPageState extends State<ProductsListPage>
                 child: ListTile(
                   title: Center(
                     child: Text(
-                      "${product.name}: ${product.unit} x ${product.price}",
+                      "${product.name}: ${product.unit} x ${numberFormat(product.price)}",
                     ),
                   ),
                   trailing: IconButton(

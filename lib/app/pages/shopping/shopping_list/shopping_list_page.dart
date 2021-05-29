@@ -3,12 +3,12 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/extensions/numberFormat.dart';
+import 'package:merkar/app/pages/products/select_products/select_products_page.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../data/entities/list_product.dart';
 import '../../../../data/entities/shopping_list.dart';
 import '../../../../injection_container.dart';
-import '../../../core/extensions/extended_string.dart';
 import '../../../core/resources/app_styles.dart';
 import '../../../core/resources/constants.dart';
 import '../../../core/resources/strings.dart';
@@ -16,6 +16,7 @@ import '../../../pages/products/new_product/create_new_product.dart';
 import '../../../widgets/confirmDismissDialog.dart';
 import '../../../widgets/primary_button.dart';
 import '../select_my_products/select_my_products_page.dart';
+
 import 'shopping_list_view_model.dart';
 
 
@@ -82,32 +83,36 @@ class _ShoppingListPageState extends State<ShoppingListPage>
         child: Consumer<ShoppingListViewModel>(
             builder: (context, model, child) => Scaffold(
                   appBar: AppBar(
-                    title: Text('${shoppingList.name}'.capitalize()),
                     actions: <Widget>[
                       Padding(
                         padding: const EdgeInsets.all(Constant.normalspace),
                         child: Form(
                           key: _keySearchFormUnsel,
                           child: SizedBox(
-                            height: 30,
+                            height: 36,
                             width: 270,
                             child: TextFormField(
                               controller: _text_searchController,
                               decoration: InputDecoration(
-                                labelText: Strings.label_search,
-                                filled: true,
+                                contentPadding:
+                                EdgeInsets.only(left: 10, right: 10),
                                 fillColor: Colors.white,
+                                filled: true,
                                 border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.transparent, width: 0.0),
                                   borderRadius: const BorderRadius.all(
                                     const Radius.circular(10.0),
                                   ),
                                 ),
+                                hintText: Strings.label_search,
                               ),
                               onChanged: onItemChangedSelect,
                             ),
                           ),
                         ),
                       ),
+                      IconButton(icon: Icon(Icons.search), onPressed: () {}),
                     ],
                   ),
                   body: SingleChildScrollView(
@@ -199,7 +204,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                         items: [
                           BottomNavigationBarItem(
                             icon: new Icon(Icons.list_alt),
-                            title: new Text('\$'+numberFormat((double.parse(viewModel.totalPrice())-double.parse(viewModel.totalShopping())).toString()),
+                            title: new Text('\$ '+numberFormat((double.parse(viewModel.totalPrice())-double.parse(viewModel.totalShopping())).toString()),
                               style: AppStyles.bottonbarTextStyle,
                             ),
                           ),
@@ -250,7 +255,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                     Row(
                       children: <Widget>[
                         Text(
-                            "${listProducts[index].quantity} ${listProducts[index].unit} a \$ ${listProducts[index].price}"),
+                            "${listProducts[index].quantity} ${listProducts[index].unit} a \$ ${numberFormat(listProducts[index].price)}"),
                       ],
                     )
                   ],
@@ -298,43 +303,46 @@ class _ShoppingListPageState extends State<ShoppingListPage>
       itemCount: listProducts.length,
       itemBuilder: (context, index) {
         return Dismissible(
-          child: Container(
-            decoration: AppStyles.checklistDecoration(
-                index.toDouble() / listProducts.length),
-            child: CheckboxListTile(
-              title: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    "${listProducts[index].name}",
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Text(
-                          "${listProducts[index].quantity} ${listProducts[index].unit} = ${listProducts[index].price}"),
-                    ],
-                  )
-                ],
-              ),
-              controlAffinity: ListTileControlAffinity.leading,
-              onChanged: (bool? value) {
-                if (value == true)
-                  viewModel.selectProduct(index);
-                else {
-                  viewModel.unselectProduct(index);
-                }
-              },
-              secondary: IconButton(
-                icon: Icon(Icons.edit),
-                tooltip: Strings.label_edit,
-                onPressed: () {
-                  _showEditProduct(listProducts[index], context);
+          child: Padding(
+            padding: const EdgeInsets.all(2.0),
+            child: Container(
+              decoration: AppStyles.checklistDecoration(
+                  index.toDouble() / listProducts.length),
+              child: CheckboxListTile(
+                title: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      "${listProducts[index].name}",
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Text(
+                            "${listProducts[index].quantity} ${listProducts[index].unit} = ${numberFormat(listProducts[index].price)}"),
+                      ],
+                    )
+                  ],
+                ),
+                controlAffinity: ListTileControlAffinity.leading,
+                onChanged: (bool? value) {
+                  if (value == true)
+                    viewModel.selectProduct(index);
+                  else {
+                    viewModel.unselectProduct(index);
+                  }
                 },
+                secondary: IconButton(
+                  icon: Icon(Icons.edit),
+                  tooltip: Strings.label_edit,
+                  onPressed: () {
+                    _showEditProduct(listProducts[index], context);
+                  },
+                ),
+                value: listProducts[index].selected,
+                activeColor: Colors.cyan,
+                checkColor: Colors.green,
               ),
-              value: listProducts[index].selected,
-              activeColor: Colors.cyan,
-              checkColor: Colors.green,
             ),
           ),
           key: Key(listProducts[index].id!),

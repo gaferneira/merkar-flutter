@@ -18,8 +18,9 @@ class Strings {
   static const String noCategoriesAvailable = "No hay registros en el historial";
   static const String label_create_new_list = "Crear Nueva Lista";
   static const String label_tootip_new_list = "Nueva Lista";
+  static const String select_products_no_items= "Agregue productos pulsando en el botón +";
   //Products
-  static const String products_no_items= "Agregue productos pulsando en el botón +";
+  static const String products_no_items= "Agregue productos pulsando en el botón ≡";
   static const String label_tootip_add_products = "Agregar Productos";
   static const String label_tootip_new_product = "Agregar Nuevo Producto";
   static const String label_save = "GUARDAR";
@@ -119,7 +120,7 @@ class Strings {
   static const String restore_list ="Restaurar Lista";
   static const String do_nothing ="No hacer nada";
   static const String add_products_from_list ="Agregue Productos de la lista superior";
-  static const String products_no_items_shopping_list= "Agregue productos pulsando en el botón ≡";
+  static const String products_no_items_shopping_list= "Agregue productos pulsando en el botón +";
   static const String total= "Total";
 
 //STATISTICS
