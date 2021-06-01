@@ -518,8 +518,8 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                       Padding(
                         padding: const EdgeInsets.all(Constant.normalspace),
                         child: Center(
-                          child: RaisedButton(
-                              child: Text(Strings.label_finish),
+                          child: PrimaryButton(
+                              title: Strings.label_finish,
                               onPressed: () {
                                 _actionOnSaveList(shoppingList);
                               }),

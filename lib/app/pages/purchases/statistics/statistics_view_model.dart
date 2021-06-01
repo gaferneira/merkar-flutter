@@ -40,7 +40,7 @@ class StatisticsViewModel extends ChangeNotifier {
                 int tempTotal = double.parse(list![i].total!).round();
                 dataMap.putIfAbsent(
                     list![i].name!, () => tempTotal.roundToDouble());
-                Color _randomColor = ([...Colors.primaries]..shuffle()).first;
+                Color _randomColor = ([...Colors.primaries]..shuffle()).last;
                 colorList.add(_randomColor);
                 total += num.parse(list![i].total!);
               }
