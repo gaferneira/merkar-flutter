@@ -206,7 +206,7 @@ class _LoginPageState extends State<LoginPage> {
     if (viewModel.error != null) {
       scaffoldMessengerKey.currentState?.showSnackBar(SnackBar(
           content: Text(viewModel.error!),
-          duration: const Duration(seconds: 1)));
+          duration: const Duration(seconds: 2)));
       viewModel.error = null;
     }
     return viewModel.loading

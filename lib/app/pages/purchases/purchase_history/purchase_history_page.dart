@@ -48,34 +48,37 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
         builder: (context, model, child) => Scaffold(
           key: _scaffKey,
           appBar: AppBar(
-            title: Text(Strings.history),
-            actions: [
-              Padding(
-                padding: const EdgeInsets.all(Constant.normalspace),
-                child: Form(
-                  key: keyFormPurchaseList,
-                  child: SizedBox(
-                    height: 30,
-                    width: 270,
-                    child: TextFormField(
-                      controller: _text_searchController,
-                      decoration: InputDecoration(
-                        labelText: Strings.label_search,
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderRadius: const BorderRadius.all(
-                            const Radius.circular(10.0),
-                          ),
+            title: Center(
+              child: Form(
+                key: keyFormPurchaseList,
+                child: Container(
+                  width: 270,
+                  height: 36,
+                  child: TextField(
+                    controller: _text_searchController,
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.search,
+                          color: Theme
+                              .of(context)
+                              .primaryColor),
+                      contentPadding:
+                      EdgeInsets.only(left: 10, right: 10),
+                      fillColor: Colors.white,
+                      filled: true,
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Colors.transparent, width: 0.0),
+                        borderRadius: const BorderRadius.all(
+                          const Radius.circular(10.0),
                         ),
                       ),
-                      onChanged: onItemChangedSelect,
+                      hintText: Strings.label_search,
                     ),
+                    onChanged: onItemChangedSelect,
                   ),
                 ),
               ),
-              IconButton(icon: Icon(Icons.search), onPressed: () {}),
-            ],
+            ),
           ),
           body: (viewModel.list != null)?
                 SingleChildScrollView(
