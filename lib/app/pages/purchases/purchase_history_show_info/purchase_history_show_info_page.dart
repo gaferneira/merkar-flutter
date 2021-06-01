@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:merkar/app/widgets/loading_widget.dart';
 import 'package:provider/provider.dart';
 import 'purchase_history_show_info_view_model.dart';
 import '../../../core/extensions/numberFormat.dart';
@@ -44,7 +45,7 @@ class _PurchaseHistoryShowInfoPageState
                   Center(
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: Text((purchase.total!=null)? "\$ "+numberFormat(purchase.total!) : "",
+                      child: Text(("\$ "+numberFormat(purchase.total!)),
                         textAlign: TextAlign.right,
                         style: Theme.of(context).textTheme.headline4,
                       ),
@@ -73,7 +74,7 @@ class _PurchaseHistoryShowInfoPageState
                   )),
               SizedBox(height: Constant.normalspace,),
               (viewModel.listProducts == null)
-                  ? Text(Strings.no_products)
+                  ? LoadingWidget()
                   : _showTable(viewModel.listProducts!),
 
                  // : _showProductsList(viewModel.listProducts!),
@@ -86,6 +87,9 @@ class _PurchaseHistoryShowInfoPageState
 }
 
 Widget _showTable(List<ListProduct> list){
+  if(list.isEmpty){
+    return Text(Strings.no_products);
+  }
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: Table(

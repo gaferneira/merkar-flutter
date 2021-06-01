@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/extensions/numberFormat.dart';
 import 'package:merkar/app/pages/products/select_products/select_products_page.dart';
+import 'package:merkar/app/widgets/loading_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../data/entities/list_product.dart';
@@ -137,16 +138,8 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                             ),
                           ),
                         ),
-                        (viewModel.unselectedList == null || viewModel.unselectedList.isEmpty)
-                            ? Center(
-                              child: Padding(
-                                padding: const EdgeInsets.all(Constant.normalspacecontainer),
-                                child: Text(
-                                    Strings.products_no_items_shopping_list,
-                                    style: Theme.of(context).textTheme.headline6,
-                                  ),
-                              ),
-                            )
+                        (viewModel.unselectedList == null)
+                            ? LoadingWidget()
                             : _showProductsList(viewModel.unselectedList),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -167,11 +160,8 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                             ),
                           ),
                         ),
-                        (viewModel.selectedList.isEmpty)
-                            ? Padding(
-                              padding: const EdgeInsets.all(Constant.normalspacecontainer),
-                              child: Text(Strings.add_products_from_list),
-                            )
+                        (viewModel.selectedList == null)
+                            ? LoadingWidget()
                             : _showSelectProductsList(viewModel.selectedList),
                         PrimaryButton(
                             enable: viewModel.selectedList.isNotEmpty,
@@ -230,7 +220,19 @@ class _ShoppingListPageState extends State<ShoppingListPage>
     Navigator.of(context)
         .pushNamed(SelectMyProductsPage.routeName, arguments: shoppingList);
   }
+
   Widget _showProductsList(List<ListProduct> listProducts) {
+    if(listProducts.isEmpty){
+      return  Center(
+        child: Padding(
+          padding: const EdgeInsets.all(Constant.normalspacecontainer),
+          child: Text(
+            Strings.products_no_items_shopping_list,
+            style: Theme.of(context).textTheme.headline6,
+          ),
+        ),
+      );
+    }
     return ListView.builder(
       scrollDirection: Axis.vertical,
       //scroll the listView
@@ -296,6 +298,12 @@ class _ShoppingListPageState extends State<ShoppingListPage>
   }
 
   Widget _showSelectProductsList(List<ListProduct> listProducts) {
+    if(listProducts.isEmpty){
+      return Padding(
+        padding: const EdgeInsets.all(Constant.normalspacecontainer),
+        child: Text(Strings.add_products_from_list),
+      );
+    }
     return ListView.builder(
       scrollDirection: Axis.vertical,
       physics: const NeverScrollableScrollPhysics(),

@@ -3,6 +3,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/extensions/numberFormat.dart';
+import 'package:merkar/app/widgets/loading_widget.dart';
 import 'package:provider/provider.dart';
 import '../../../core/resources/app_styles.dart';
 import '../../../core/resources/strings.dart';
@@ -115,15 +116,12 @@ class _ProductsListPageState extends State<ProductsListPage>
                   ),
                 ),
                 body: CustomScrollView(
-                    slivers: (viewModel.userProducts == null ||
-                        viewModel.userProducts!.isEmpty)
+                    slivers: (viewModel.userProducts == null)
                     ? [
                     SliverFillRemaining(
                         child:Center(child:Padding(
                             padding: const EdgeInsets.all(40),
-                            child: Text(Strings.products_no_items,
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.headline6,)
+                            child: LoadingWidget(),
                         ))
                     ),
                     ]
@@ -199,6 +197,18 @@ class _ProductsListPageState extends State<ProductsListPage>
   }
 
   List<Widget> _sliverList(List<Product> listProducts) {
+    if(listProducts.isEmpty){
+      return [
+        SliverFillRemaining(
+            child:Center(child:Padding(
+                padding: const EdgeInsets.all(40),
+                child: Text(Strings.products_no_items,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headline6,)
+            ))
+        ),
+      ];
+    }
     var productsMap = groupBy(listProducts, (Product obj) => obj.category);
     var widgetList = <Widget>[];
     var keys = productsMap.keys.sorted((a, b) => a!.compareTo(b!));

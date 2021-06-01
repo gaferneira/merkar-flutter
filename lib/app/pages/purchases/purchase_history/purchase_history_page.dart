@@ -77,7 +77,7 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
               IconButton(icon: Icon(Icons.search), onPressed: () {}),
             ],
           ),
-          body: (viewModel.list != null && viewModel.list!.isNotEmpty)?
+          body: (viewModel.list != null)?
                 SingleChildScrollView(
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -86,15 +86,18 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
                          purchaseHistoryDisplay(viewModel.list!),
                       ]),
                 )
-              :Center(child: Text(Strings.noCategoriesAvailable,
-                  textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline6,),
-                  widthFactor: 32.0,),
+              : LoadingWidget(),
           ),
       ),
     );
   }
 
   Widget purchaseHistoryDisplay(List<Purchase> list) {
+    if(list.isEmpty){
+      return Center(child: Text(Strings.noCategoriesAvailable,
+        textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline6,),
+        widthFactor: 32.0,);
+    }
         return listProducts(list);
   }
 

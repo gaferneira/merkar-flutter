@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/extensions/numberFormat.dart';
+import 'package:merkar/app/widgets/loading_widget.dart';
 import '../../../core/resources/app_styles.dart';
 import '../../../core/resources/strings.dart';
 import '../../../../data/entities/product.dart';
@@ -62,15 +63,13 @@ class _SelectProductsPageState extends State<SelectProductsPage> {
                   ),
                 ),
                 body: CustomScrollView(
-                  slivers: (viewModel.defaultProducts == null || (viewModel.defaultProducts!.isEmpty))
+                  slivers: (viewModel.defaultProducts == null)
                       ? [
                         //llena el espacio del customScrollview y centra el text
                         SliverFillRemaining(
                             child:Center(child:Padding(
                               padding: const EdgeInsets.symmetric(vertical: 80),
-                              child: Text(Strings.no_default_products,
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.headline6,)
+                              child: LoadingWidget(),
                             ))
                         ),
                     ]
@@ -79,6 +78,19 @@ class _SelectProductsPageState extends State<SelectProductsPage> {
   }
 
   List<Widget> _sliverList(List<Product> list) {
+    if(list.isEmpty){
+      return [
+        //llena el espacio del customScrollview y centra el text
+        SliverFillRemaining(
+            child:Center(child:Padding(
+                padding: const EdgeInsets.symmetric(vertical: 80),
+                child: Text(Strings.no_default_products,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headline6,)
+            ))
+        ),
+      ];
+    }
     var productsMap = groupBy(list, (Product obj) => obj.category);
     var widgetList = <Widget>[];
     var keys = productsMap.keys.sorted((a, b) => a!.compareTo(b!));
