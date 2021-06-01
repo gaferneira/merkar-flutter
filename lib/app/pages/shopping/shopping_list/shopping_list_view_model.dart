@@ -17,8 +17,8 @@ class ShoppingListViewModel extends ChangeNotifier {
   late ShoppingList shoppingList;
   List<ListProduct>? filterunselectedList;
   List<ListProduct>? filterselectedList;
-  List<ListProduct> unselectedList = [];
-  List<ListProduct> selectedList = [];
+  List<ListProduct>? unselectedList;
+  List<ListProduct>? selectedList;
   String? error;
   bool? ennable;
 
@@ -41,13 +41,13 @@ class ShoppingListViewModel extends ChangeNotifier {
 
     list.forEach((product) {
       if (product.selected!) {
-        selectedList.add(product);
+        selectedList!.add(product);
       } else {
-        unselectedList.add(product);
+        unselectedList!.add(product);
       }
     });
    // unselectedList=unselectedList.toList()..sort();
-    if(selectedList.isNotEmpty){
+    if(selectedList!.isNotEmpty){
         ennable=true;
       }
     else ennable=false;
@@ -56,16 +56,16 @@ class ShoppingListViewModel extends ChangeNotifier {
   }
 
   Future<void> selectProduct(int index) async {
-    var product = unselectedList[index];
+    var product = unselectedList![index];
     product.selected = true;
-    this.selectedList.add(product);
+    this.selectedList!.add(product);
     repository.saveProduct(product, shoppingList);
   }
 
   Future<void> unselectProduct(int index) async {
-    var product = selectedList[index];
+    var product = selectedList![index];
     product.selected = false;
-    this.selectedList.remove(product);
+    this.selectedList!.remove(product);
     repository.saveProduct(product, shoppingList);
   }
 
@@ -94,13 +94,13 @@ class ShoppingListViewModel extends ChangeNotifier {
 
   Future<void> finishShopping(
       BuildContext context, SingingCharacter option, String detail) async {
-    await purchasesRepository.create(detail, selectedList);
+    await purchasesRepository.create(detail, selectedList!);
     switch (option) {
       case SingingCharacter.delete:
         repository.remove(shoppingList);
         break;
       case SingingCharacter.reset:
-        selectedList.forEach((product) {
+        selectedList!.forEach((product) {
           product.selected = false;
           repository.saveProduct(product, shoppingList);
         });

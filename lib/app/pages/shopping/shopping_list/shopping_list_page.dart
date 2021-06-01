@@ -140,7 +140,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                         ),
                         (viewModel.unselectedList == null)
                             ? LoadingWidget()
-                            : _showProductsList(viewModel.unselectedList),
+                            : _showProductsList(viewModel.unselectedList!),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Container(
@@ -162,9 +162,9 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                         ),
                         (viewModel.selectedList == null)
                             ? LoadingWidget()
-                            : _showSelectProductsList(viewModel.selectedList),
+                            : _showSelectProductsList(viewModel.selectedList!),
                         PrimaryButton(
-                            enable: viewModel.selectedList.isNotEmpty,
+                            enable: (viewModel.selectedList==null)? false : viewModel.selectedList!.isNotEmpty,
                             title: Strings.label_finish,
                             onPressed: () {
                               _showFinishDialog(shoppingList);
