@@ -131,6 +131,7 @@ class _SelectProductsPageState extends State<SelectProductsPage> {
               key: Key(products[index].id!),
               onDismissed: (direction) {
                 viewModel.removeProduct(products[index]);
+                _searchTextController.text="";
                 Scaffold.of(context)
                     .showSnackBar(SnackBar(content: Text(Strings.deleted)));
               },

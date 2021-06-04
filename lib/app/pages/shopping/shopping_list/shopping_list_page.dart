@@ -36,7 +36,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
   final keyFormFinishShoppingList = GlobalKey<FormState>();
   final keyFormPurchaseList = GlobalKey<FormState>();
   ShoppingListViewModel viewModel = serviceLocator<ShoppingListViewModel>();
-  TextEditingController _text_searchController = TextEditingController();
+  TextEditingController _search_textController = TextEditingController();
   final _keySearchFormUnsel = GlobalKey<FormState>();
   int temp_quantity = 1;
   double? temp_price = null;
@@ -93,7 +93,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                             height: 36,
                             width: 270,
                             child: TextFormField(
-                              controller: _text_searchController,
+                              controller: _search_textController,
                               decoration: InputDecoration(
                                 contentPadding:
                                 EdgeInsets.only(left: 10, right: 10),
@@ -287,6 +287,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
           onDismissed: (direction) {
             viewModel.removeProduct(listProducts[index].id!, shoppingList);
             listProducts.removeAt(index);
+            _search_textController.text="";
             Scaffold.of(context)
                 .showSnackBar(SnackBar(content: Text(Strings.deleted)));
             viewModel.notifyListeners();
