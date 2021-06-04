@@ -113,4 +113,9 @@ class SelectProductsViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> removeProduct(Product product) async {
+    defaultProducts?.remove(product);
+    productsRepository.remove(product);
+    notifyListeners();
+  }
 }

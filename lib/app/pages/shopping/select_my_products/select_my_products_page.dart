@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:merkar/app/widgets/confirmDismissDialog.dart';
 import 'package:merkar/app/widgets/loading_widget.dart';
 import 'package:provider/provider.dart';
 import 'select_my_products_view_model.dart';
@@ -30,7 +31,7 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
   late ShoppingList shoppingList;
 
   onItemChanged(String value) {
-    viewModel.userProducts = viewModel.filteruserProducts!
+    viewModel.userProducts = viewModel.filterUserProducts!
         .where((product) =>
             product.name!.toLowerCase().contains(value.toLowerCase()))
         .toList();
@@ -129,22 +130,37 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
           itemExtent: 50.0,
           delegate:
           SliverChildBuilderDelegate((BuildContext context, int index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 2.0),
-              child: Container(
-                decoration: AppStyles.checklistDecoration(
-                    index.toDouble() / products.length),
-                child: CheckboxListTile(
-                    title: Text(
-                        "${products[index].name}: ${products[index].unit} x ${products[index].price}"),
-                    controlAffinity: ListTileControlAffinity.leading,
-                    onChanged: (bool? value) {
-                      viewModel.selectProduct(index, products[index],value!);
-                    },
-                    value: products[index].selected,
-                  activeColor: Colors.cyan,
-                  checkColor: Colors.green,),
+            return Dismissible(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                child: Container(
+                  decoration: AppStyles.checklistDecoration(
+                      index.toDouble() / products.length),
+                  child: CheckboxListTile(
+                      title: Text(
+                          "${products[index].name}: ${products[index].unit} x ${products[index].price}"),
+                      controlAffinity: ListTileControlAffinity.leading,
+                      onChanged: (bool? value) {
+                        viewModel.selectProduct(index, products[index],value!);
+                      },
+                      value: products[index].selected,
+                    activeColor: Colors.cyan,
+                    checkColor: Colors.green,),
+                ),
               ),
+              background: Container(
+                color: Colors.red,
+                child: Icon(Icons.cancel),
+              ),
+              key: Key(products[index].id!),
+              onDismissed: (direction) {
+                viewModel.removeProduct(products[index]);
+                _search_textController.text="";
+                Scaffold.of(context)
+                    .showSnackBar(SnackBar(content: Text(Strings.deleted)));
+              },
+              confirmDismiss: (DismissDirection) =>
+                  ConfirmDismissDialog(context, DismissDirection),
             );
           }, childCount: products.length),
         ));

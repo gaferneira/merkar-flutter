@@ -15,7 +15,7 @@ class SelectMyProductsViewModel extends ChangeNotifier {
   late ShoppingList shoppingList;
 
   List<Product>? userProducts;
-  List<Product>? filteruserProducts;
+  List<Product>? filterUserProducts;
   List<ListProduct>? shoppingProducts;
 
   String? error;
@@ -28,7 +28,7 @@ class SelectMyProductsViewModel extends ChangeNotifier {
       userProducts = data;
       error = null;
       updateList();
-      filteruserProducts = userProducts;
+      filterUserProducts = userProducts;
     }, onError: (e) {
       error = e;
       notifyListeners();
@@ -80,6 +80,12 @@ class SelectMyProductsViewModel extends ChangeNotifier {
     } else {
       shoppingListRepository.removeProduct(product.id!, shoppingList);
     }
+    notifyListeners();
+  }
+
+  Future<void> removeProduct(Product product) async {
+    userProducts?.remove(product);
+    productsRepository.remove(product);
     notifyListeners();
   }
 }

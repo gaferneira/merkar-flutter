@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/extensions/numberFormat.dart';
+import 'package:merkar/app/widgets/confirmDismissDialog.dart';
 import 'package:merkar/app/widgets/loading_widget.dart';
 import '../../../core/resources/app_styles.dart';
 import '../../../core/resources/strings.dart';
@@ -107,20 +108,34 @@ class _SelectProductsPageState extends State<SelectProductsPage> {
           itemExtent: 50.0,
           delegate:
               SliverChildBuilderDelegate((BuildContext context, int index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 2.0),
-              child: Container(
-                decoration: AppStyles.checklistDecoration(
-                    index.toDouble() / products.length),
-                child: CheckboxListTile(
-                    title: Text(
-                        "${products[index].name}: ${products[index].unit} x ${numberFormat(products[index].price)}"),
-                    controlAffinity: ListTileControlAffinity.leading,
-                    onChanged: (bool? value) {
-                      viewModel.selectProduct(products[index], value == true);
-                    },
-                    value: products[index].selected),
+            return Dismissible(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                child: Container(
+                  decoration: AppStyles.checklistDecoration(
+                      index.toDouble() / products.length),
+                  child: CheckboxListTile(
+                      title: Text(
+                          "${products[index].name}: ${products[index].unit} x ${numberFormat(products[index].price)}"),
+                      controlAffinity: ListTileControlAffinity.leading,
+                      onChanged: (bool? value) {
+                        viewModel.selectProduct(products[index], value == true);
+                      },
+                      value: products[index].selected),
+                ),
               ),
+              background: Container(
+                color: Colors.red,
+                child: Icon(Icons.cancel),
+              ),
+              key: Key(products[index].id!),
+              onDismissed: (direction) {
+                viewModel.removeProduct(products[index]);
+                Scaffold.of(context)
+                    .showSnackBar(SnackBar(content: Text(Strings.deleted)));
+              },
+              confirmDismiss: (DismissDirection) =>
+                  ConfirmDismissDialog(context, DismissDirection),
             );
           }, childCount: products.length),
         ));
