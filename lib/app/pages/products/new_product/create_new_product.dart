@@ -6,6 +6,7 @@ import '../../../widgets/primary_button.dart';
 import '../../../../data/entities/product.dart';
 import '../../../../injection_container.dart';
 import 'create_new_product_view_model.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 class CreateNewProduct extends StatefulWidget {
   static const routeName = "/create_new_product";
@@ -20,6 +21,8 @@ class _CreateNewProductState extends State<CreateNewProduct> {
   GlobalKey<ScaffoldMessengerState>();
   CreateNewProductsViewModel viewModel =
       serviceLocator<CreateNewProductsViewModel>();
+  final TextEditingController _typeAheadCategoryController = TextEditingController();
+  final TextEditingController _typeAheadUnitController = TextEditingController();
 
   String? nameProduct;
   String? nameCategory;
@@ -28,8 +31,22 @@ class _CreateNewProductState extends State<CreateNewProduct> {
   Product? product;
 
   @override
+  void initState() {
+    if(product != null){
+      _typeAheadCategoryController.text=product!.category!;
+      _typeAheadUnitController.text=product!.unit!;
+      print(_typeAheadCategoryController.text);
+    }
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     product = ModalRoute.of(context)!.settings.arguments as Product?;
+    if(product != null){
+      _typeAheadCategoryController.text=product!.category!;
+      _typeAheadUnitController.text=product!.unit!;
+      print(_typeAheadCategoryController.text);
+    }
     return SlideInDown(
       child: Scaffold(
         appBar: AppBar(
@@ -50,6 +67,7 @@ class _CreateNewProductState extends State<CreateNewProduct> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+
             TextFormField(
               initialValue: product?.name ?? "",
               autofocus: true,
@@ -66,6 +84,38 @@ class _CreateNewProductState extends State<CreateNewProduct> {
               textInputAction: TextInputAction.next,
             ),
             SizedBox(height: Constant.normalspace),
+            TypeAheadFormField(
+              textFieldConfiguration: TextFieldConfiguration(
+                  controller: this._typeAheadCategoryController,
+                  decoration: InputDecoration(
+                      labelText: Strings.category
+                  )
+              ),
+              suggestionsCallback: (pattern) {
+                return getCategorySuggestions(pattern);
+              },
+              itemBuilder: (context, suggestion) {
+                return ListTile(
+                  title: Text(suggestion.toString()),
+                );
+              },
+              transitionBuilder: (context, suggestionsBox, controller) {
+                return suggestionsBox;
+              },
+              onSuggestionSelected: (suggestion) {
+                this._typeAheadCategoryController.text = suggestion.toString();
+              },
+              onSaved: (value) {
+                nameCategory = value;
+              },
+              validator: (value) {
+                if (value!.isNotEmpty) {
+                  return null;
+                }
+                return Strings.error_required_field;
+              },
+            ),
+            /*
             TextFormField(
               initialValue: product?.category ?? "",
               decoration: InputDecoration(labelText: Strings.category),
@@ -80,6 +130,7 @@ class _CreateNewProductState extends State<CreateNewProduct> {
               },
               textInputAction: TextInputAction.next,
             ),
+            */
             SizedBox(height: Constant.normalspace),
             TextFormField(
               initialValue: product?.price ?? "",
@@ -97,7 +148,38 @@ class _CreateNewProductState extends State<CreateNewProduct> {
               textInputAction: TextInputAction.next,
             ),
             SizedBox(height: Constant.normalspace),
-            TextFormField(
+            TypeAheadFormField(
+              textFieldConfiguration: TextFieldConfiguration(
+                  controller: this._typeAheadUnitController,
+                  decoration: InputDecoration(
+                      labelText: Strings.unit
+                  )
+              ),
+              suggestionsCallback: (pattern) {
+                return getUnitSuggestions(pattern);
+              },
+              itemBuilder: (context, suggestion) {
+                return ListTile(
+                  title: Text(suggestion.toString()),
+                );
+              },
+              transitionBuilder: (context, suggestionsBox, controller) {
+                return suggestionsBox;
+              },
+              onSuggestionSelected: (suggestion) {
+                this._typeAheadUnitController.text = suggestion.toString();
+              },
+              onSaved: (value) {
+                unit = value;
+              },
+              validator: (value) {
+                if (value!.isNotEmpty) {
+                  return null;
+                }
+                return Strings.error_required_field;
+              },
+            ),
+            /*TextFormField(
               initialValue: product?.unit ?? "",
               decoration: InputDecoration(labelText: Strings.unit),
               keyboardType: TextInputType.text,
@@ -111,7 +193,7 @@ class _CreateNewProductState extends State<CreateNewProduct> {
                 return Strings.error_required_field;
               },
               textInputAction: TextInputAction.done,
-            ),
+            ),*/
             SizedBox(height: Constant.normalspace),
             Center(
               child: _buildSaveButton(),
@@ -121,6 +203,35 @@ class _CreateNewProductState extends State<CreateNewProduct> {
       ),
     );
   }
+  List<String>getCategorySuggestions(String query){
+    List<String> suggestions=[];
+    List<String> defaultCategorys=[
+      "Verduras", "Frutas","Despensa","Carnes"
+      ,"Lácteos y huevos","Otros","Panaderia","Aseo personal",
+      "Aseo hogar", "Galletas y dulces", "Bebidas", "Licores",
+      "Cerveza", "Mascotas", "Droguería", "Hogar", "Congelados",
+      "Vinos", "Pasabocas", "Saludable"
+    ];
+    suggestions = defaultCategorys
+        .where((category) =>
+        category.toLowerCase().contains(query.toLowerCase()))
+        .toList();
+    return suggestions;
+  }
+
+  List<String>getUnitSuggestions(String query){
+    List<String> suggestions=[];
+    List<String> defaultUnits=[
+      "Unidad", "Libra","Kilogramo",
+      "Paquete", "Atado", "Litro", "Ml"
+    ];
+    suggestions = defaultUnits
+        .where((category) =>
+        category.toLowerCase().contains(query.toLowerCase()))
+        .toList();
+    return suggestions;
+  }
+
   Widget _buildSaveButton(){
     if (viewModel.error != null) {
       scaffoldMessengerKey.currentState?.showSnackBar(SnackBar(
