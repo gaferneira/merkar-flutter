@@ -29,23 +29,25 @@ class _CreateNewProductState extends State<CreateNewProduct> {
   String? price;
   String? unit;
   Product? product;
+  List<String> defaultCategorys=[
+    "Verduras", "Frutas","Despensa","Carnes"
+    ,"Lácteos y huevos","Otros","Panaderia","Aseo personal",
+    "Aseo hogar", "Galletas y dulces", "Bebidas", "Licores",
+    "Cerveza", "Mascotas", "Droguería", "Hogar", "Congelados",
+    "Vinos", "Pasabocas", "Saludable"
+  ];
+  List<String> defaultUnits=[
+    "Unidad", "Libra","Kilogramo",
+    "Paquete", "Atado", "Litro", "Ml",
+    "Cubeta"
+  ];
 
-  @override
-  void initState() {
-    if(product != null){
-      _typeAheadCategoryController.text=product!.category!;
-      _typeAheadUnitController.text=product!.unit!;
-      print(_typeAheadCategoryController.text);
-    }
-    super.initState();
-  }
   @override
   Widget build(BuildContext context) {
     product = ModalRoute.of(context)!.settings.arguments as Product?;
     if(product != null){
       _typeAheadCategoryController.text=product!.category!;
       _typeAheadUnitController.text=product!.unit!;
-      print(_typeAheadCategoryController.text);
     }
     return SlideInDown(
       child: Scaffold(
@@ -102,6 +104,7 @@ class _CreateNewProductState extends State<CreateNewProduct> {
               transitionBuilder: (context, suggestionsBox, controller) {
                 return suggestionsBox;
               },
+              hideOnEmpty: true,
               onSuggestionSelected: (suggestion) {
                 this._typeAheadCategoryController.text = suggestion.toString();
               },
@@ -115,22 +118,6 @@ class _CreateNewProductState extends State<CreateNewProduct> {
                 return Strings.error_required_field;
               },
             ),
-            /*
-            TextFormField(
-              initialValue: product?.category ?? "",
-              decoration: InputDecoration(labelText: Strings.category),
-              onSaved: (value) {
-                nameCategory = value;
-              },
-              validator: (value) {
-                if (value!.isNotEmpty) {
-                  return null;
-                }
-                return Strings.error_required_field;
-              },
-              textInputAction: TextInputAction.next,
-            ),
-            */
             SizedBox(height: Constant.normalspace),
             TextFormField(
               initialValue: product?.price ?? "",
@@ -169,6 +156,7 @@ class _CreateNewProductState extends State<CreateNewProduct> {
               onSuggestionSelected: (suggestion) {
                 this._typeAheadUnitController.text = suggestion.toString();
               },
+              hideOnEmpty: true,
               onSaved: (value) {
                 unit = value;
               },
@@ -179,21 +167,6 @@ class _CreateNewProductState extends State<CreateNewProduct> {
                 return Strings.error_required_field;
               },
             ),
-            /*TextFormField(
-              initialValue: product?.unit ?? "",
-              decoration: InputDecoration(labelText: Strings.unit),
-              keyboardType: TextInputType.text,
-              onSaved: (value) {
-                unit = value;
-              },
-              validator: (value) {
-                if (value!.isNotEmpty) {
-                  return null;
-                }
-                return Strings.error_required_field;
-              },
-              textInputAction: TextInputAction.done,
-            ),*/
             SizedBox(height: Constant.normalspace),
             Center(
               child: _buildSaveButton(),
@@ -205,13 +178,6 @@ class _CreateNewProductState extends State<CreateNewProduct> {
   }
   List<String>getCategorySuggestions(String query){
     List<String> suggestions=[];
-    List<String> defaultCategorys=[
-      "Verduras", "Frutas","Despensa","Carnes"
-      ,"Lácteos y huevos","Otros","Panaderia","Aseo personal",
-      "Aseo hogar", "Galletas y dulces", "Bebidas", "Licores",
-      "Cerveza", "Mascotas", "Droguería", "Hogar", "Congelados",
-      "Vinos", "Pasabocas", "Saludable"
-    ];
     suggestions = defaultCategorys
         .where((category) =>
         category.toLowerCase().contains(query.toLowerCase()))
@@ -221,10 +187,7 @@ class _CreateNewProductState extends State<CreateNewProduct> {
 
   List<String>getUnitSuggestions(String query){
     List<String> suggestions=[];
-    List<String> defaultUnits=[
-      "Unidad", "Libra","Kilogramo",
-      "Paquete", "Atado", "Litro", "Ml"
-    ];
+
     suggestions = defaultUnits
         .where((category) =>
         category.toLowerCase().contains(query.toLowerCase()))
