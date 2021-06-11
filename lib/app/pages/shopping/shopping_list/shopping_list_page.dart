@@ -313,7 +313,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
       itemBuilder: (context, index) {
         return Dismissible(
           child: Padding(
-            padding: const EdgeInsets.all(2.0),
+            padding: const EdgeInsets.all(1.0),
             child: Container(
               decoration: AppStyles.checklistDecoration(
                   index.toDouble() / listProducts.length),
@@ -454,80 +454,79 @@ class _ShoppingListPageState extends State<ShoppingListPage>
           content: StatefulBuilder(
             // You need this, notice the parameters below:
             builder: (BuildContext context, StateSetter setState) {
-              return Form(
-                key: keyFormPurchaseList,
-                child: Column(
-                    // Then, the content of your dialog.
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      TextFormField(
-                        initialValue: shoppingList!.name!,
-                        decoration: InputDecoration(
-                            labelText: Strings.label_description),
-                        keyboardType: TextInputType.text,
-                        validator: (value) {
-                          if (value?.isNotEmpty == true) {
-                            return null;
-                          } else
-                            return Strings.error_required_field;
-                        },
-                        onSaved: (value) {
-                          this.descriptionShoppingList = value;
-                        },
-                      ),
-                      ListTile(
-                        title: Text(_textRadioButton[0].toString()),
-                        leading: Radio(
-                          value: SingingCharacter.delete,
-                          groupValue: _character,
-                          onChanged: (SingingCharacter? value) {
-                            if (value != null) {
-                              setState(() {
-                                _character = value;
-                              });
-                            }
+              return SingleChildScrollView(
+                child: Form(
+                  key: keyFormPurchaseList,
+                  child: Column(
+                      // Then, the content of your dialog.
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        TextFormField(
+                          initialValue: shoppingList!.name!,
+                          decoration: InputDecoration(
+                              labelText: Strings.label_description),
+                          keyboardType: TextInputType.text,
+                          validator: (value) {
+                            if (value?.isNotEmpty == true) {
+                              return null;
+                            } else
+                              return Strings.error_required_field;
+                          },
+                          onSaved: (value) {
+                            this.descriptionShoppingList = value;
                           },
                         ),
-                      ),
-                      ListTile(
-                        title: Text(_textRadioButton[1].toString()),
-                        leading: Radio(
-                          value: SingingCharacter.reset,
-                          groupValue: _character,
-                          onChanged: (SingingCharacter? value) {
-                            if (value != null) {
-                              setState(() {
-                                _character = value;
-                              });
-                            }
-                          },
+                        ListTile(
+                          title: Text(_textRadioButton[0].toString()),
+                          leading: Radio(
+                            value: SingingCharacter.delete,
+                            groupValue: _character,
+                            onChanged: (SingingCharacter? value) {
+                              if (value != null) {
+                                setState(() {
+                                  _character = value;
+                                });
+                              }
+                            },
+                          ),
                         ),
-                      ),
-                      ListTile(
-                        title: Text(_textRadioButton[2].toString()),
-                        leading: Radio(
-                          value: SingingCharacter.nothing,
-                          groupValue: _character,
-                          onChanged: (SingingCharacter? value) {
-                            if (value != null) {
-                              setState(() {
-                                _character = value;
-                              });
-                            }
-                          },
+                        ListTile(
+                          title: Text(_textRadioButton[1].toString()),
+                          leading: Radio(
+                            value: SingingCharacter.reset,
+                            groupValue: _character,
+                            onChanged: (SingingCharacter? value) {
+                              if (value != null) {
+                                setState(() {
+                                  _character = value;
+                                });
+                              }
+                            },
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(Constant.normalspace),
-                        child: Center(
+                        ListTile(
+                          title: Text(_textRadioButton[2].toString()),
+                          leading: Radio(
+                            value: SingingCharacter.nothing,
+                            groupValue: _character,
+                            onChanged: (SingingCharacter? value) {
+                              if (value != null) {
+                                setState(() {
+                                  _character = value;
+                                });
+                              }
+                            },
+                          ),
+                        ),
+                        Center(
                           child: PrimaryButton(
                               title: Strings.label_finish,
                               onPressed: () {
                                 _actionOnSaveList(shoppingList);
                               }),
                         ),
-                      ),
-                    ]),
+                      ]),
+                ),
               );
             },
           ),

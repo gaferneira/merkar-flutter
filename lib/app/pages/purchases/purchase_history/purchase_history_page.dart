@@ -113,7 +113,7 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
       itemBuilder: (context, index) {
         return Dismissible(
           child: Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(3.0),
             child: Container(
               decoration: AppStyles.listDecoration(index.toDouble()/list.length),
               child: ListTile(

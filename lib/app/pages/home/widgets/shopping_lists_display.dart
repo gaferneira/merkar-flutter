@@ -29,7 +29,7 @@ Widget shoppingListsDisplay(BuildContext context,
             child: Container(
               decoration:
                   AppStyles.listDecoration(index.toDouble() / list.length),
-              height: 75.0,
+              height: 60.0,
               child: ListTile(
                 title: Text(list[index].name!.capitalize()),
                 trailing: Icon(Icons.arrow_right),
