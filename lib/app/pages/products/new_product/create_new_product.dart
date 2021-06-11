@@ -1,5 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:merkar/app/core/extensions/numberFormat.dart';
 import '../../../core/resources/constants.dart';
 import '../../../core/resources/strings.dart';
 import '../../../widgets/primary_button.dart';
@@ -47,7 +48,7 @@ class _CreateNewProductState extends State<CreateNewProduct> {
     product = ModalRoute.of(context)!.settings.arguments as Product?;
     if(product != null){
       _typeAheadCategoryController.text=product!.category!;
-      _typeAheadUnitController.text=product!.unit!;
+      _typeAheadUnitController.text=numberFormat(product!.unit!.toString());
     }
     return SlideInDown(
       child: Scaffold(
@@ -211,7 +212,7 @@ class _CreateNewProductState extends State<CreateNewProduct> {
             category: nameCategory,
             name: nameProduct,
             price: price.toString(),
-            unit: unit.toString());
+            unit: unit);
         if (product != null) {
           newProduct.id = product!.id;
           newProduct.path = product!.path;

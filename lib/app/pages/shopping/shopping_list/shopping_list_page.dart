@@ -38,7 +38,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
   ShoppingListViewModel viewModel = serviceLocator<ShoppingListViewModel>();
   TextEditingController _search_textController = TextEditingController();
   final _keySearchFormUnsel = GlobalKey<FormState>();
-  int temp_quantity = 1;
+  double temp_quantity = 1.0;
   double? temp_price = null;
   String? descriptionShoppingList = "";
   List<String> _textRadioButton = [
@@ -328,7 +328,8 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                     Row(
                       children: <Widget>[
                         Text(
-                            "${listProducts[index].quantity} ${listProducts[index].unit} = ${numberFormat(listProducts[index].price)}"),
+                            "${listProducts[index].quantity} ${listProducts[index].unit} = "
+                                "${numberFormat((listProducts[index].quantity*double.parse(listProducts[index].price)).toString())}"),
                       ],
                     )
                   ],
@@ -393,7 +394,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                           return Strings.error_required_field;
                       },
                       onSaved: (value) {
-                        this.temp_quantity = int.parse(value!);
+                        this.temp_quantity = double.parse(value!);
                       },
                     ),
                     TextFormField(

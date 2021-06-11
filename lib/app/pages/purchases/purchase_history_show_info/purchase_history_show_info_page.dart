@@ -207,7 +207,7 @@ List<TableRow>_buildData(List<ListProduct> list){
           child: Container(
             height: Constant.normalspacecontainer,
             child: Center(
-              child: Text(numberFormat(list[index].price*list[index].quantity),
+              child: Text(numberFormat((double.parse(list[index].price)*list[index].quantity).toString()),
                 textAlign: TextAlign.center,
               ),
             ),
