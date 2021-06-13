@@ -113,7 +113,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                           ),
                         ),
                       ),
-                      IconButton(icon: Icon(Icons.search), onPressed: () {}),
+                      IconButton(icon: Icon(Icons.share), onPressed: () {}),
                     ],
                   ),
                   body: SingleChildScrollView(

@@ -35,7 +35,7 @@ class _CreateNewProductState extends State<CreateNewProduct> {
     ,"Lácteos y huevos","Otros","Panaderia","Aseo personal",
     "Aseo hogar", "Galletas y dulces", "Bebidas", "Licores",
     "Cerveza", "Mascotas", "Droguería", "Hogar", "Congelados",
-    "Vinos", "Pasabocas", "Saludable"
+    "Vinos", "Pasabocas", "Saludable","Aromáticas y espécias"
   ];
   List<String> defaultUnits=[
     "Unidad", "Libra","Kilogramo",
