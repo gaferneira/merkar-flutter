@@ -7,18 +7,20 @@ import '../../../pages/main/widgets/comment_page.dart';
 import '../../../../injection_container.dart';
 
 class MorePage extends StatefulWidget {
+  String? displayName;
+  String? displayEmail;
+
+  MorePage({this.displayName, this.displayEmail});
   @override
-  State<StatefulWidget> createState() => MorePageState();
+  State<StatefulWidget> createState() =>
+      MorePageState( this.displayName,this.displayEmail);
 }
 
 class MorePageState extends State<MorePage> {
 
-  var _currentTab = 0;
-
-  void _selectTab(var index) {
-    setState(() => _currentTab = index);
-  }
-
+  String? displayName;
+  String? displayEmail;
+  MorePageState(this.displayName,this.displayEmail);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,9 +29,50 @@ class MorePageState extends State<MorePage> {
             // Then, the content of your dialog.
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(
+              /*SizedBox(
                 width: double.infinity,
-                height: 100,
+                height: 20.0,
+              ),*/
+              Container(
+                decoration: BoxDecoration(color: Theme.of(context).colorScheme.primaryVariant),
+                child: ListTile(
+                  title: Padding(
+                    padding: const EdgeInsets.all(25.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Column(
+                          children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: CircleAvatar(
+                                backgroundImage:
+                                AssetImage('assets/images/defaultprofile.png'),
+                                backgroundColor: Colors.transparent,
+                                radius: 50.0,
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                displayName ?? "Nombre: ",
+                                style: TextStyle(color: Colors.white, fontSize: 20.0),
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.centerRight + Alignment(0, 0.4),
+                              child: Text(
+                                displayEmail ?? "Email: ",
+                                style: TextStyle(color: Colors.white70, fontSize: 15.0),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
               SizedBox(height: 30.0),
               ListTile(
