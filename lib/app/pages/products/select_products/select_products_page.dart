@@ -84,7 +84,7 @@ class _SelectProductsPageState extends State<SelectProductsPage> {
         //llena el espacio del customScrollview y centra el text
         SliverFillRemaining(
             child:Center(child:Padding(
-                padding: const EdgeInsets.symmetric(vertical: 80),
+                padding: const EdgeInsets.all(30.0),
                 child: Text(Strings.no_default_products,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headline6,)
