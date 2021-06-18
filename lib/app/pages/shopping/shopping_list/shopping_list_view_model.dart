@@ -120,7 +120,8 @@ class ShoppingListViewModel extends ChangeNotifier {
   }
 
   Future<void> getListFile() async {
-    String content='';
+    String content='Pedido:\n';
+    if(selectedList!.length>0)
     for(int i=0;i<selectedList!.length;i++) {
       content+='- ${selectedList![i].name} ${selectedList![i].quantity} ${selectedList![i].unit}(s)\n';
     }
