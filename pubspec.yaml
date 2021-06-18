@@ -46,6 +46,10 @@ dependencies:
   http: ^0.13.0
    # Local cache
   shared_preferences: ^2.0.4
+  #firebase_storage: Storage a images of user and then of products
+  firebase_storage: ^8.1.3
+  #image_picker: to take a photo of a camera or galery
+  image_picker: ^0.8.0+3
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2

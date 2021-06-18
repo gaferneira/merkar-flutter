@@ -1,5 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:merkar/app/core/storage/storage_view_model.dart';
+import 'package:provider/provider.dart';
 import '../../../core/resources/strings.dart';
 import '../../../pages/login/sign_in/login_view_model.dart';
 import '../../../pages/main/widgets/about_us_page.dart';
@@ -7,32 +12,88 @@ import '../../../pages/main/widgets/comment_page.dart';
 import '../../../../injection_container.dart';
 
 class MorePage extends StatefulWidget {
-  String? displayName;
-  String? displayEmail;
 
-  MorePage({this.displayName, this.displayEmail});
   @override
   State<StatefulWidget> createState() =>
-      MorePageState( this.displayName,this.displayEmail);
+      MorePageState();
 }
 
 class MorePageState extends State<MorePage> {
 
-  String? displayName;
-  String? displayEmail;
-  MorePageState(this.displayName,this.displayEmail);
+  MorePageState();
+  StorageViewModel viewModel= serviceLocator<StorageViewModel>();
+  File? _image;
+
+  @override
+  initState(){
+    super.initState();
+    viewModel.loadData();
+    //_image = viewModel.image;
+  }
+
+  _imgFromCamera() async {
+    PickedFile? image = (await ImagePicker.platform.pickImage(
+        source: ImageSource.camera, imageQuality: 50
+    )) ;
+    if(image!=null)
+    setState(() {
+      _image = File(image.path);
+    });
+    viewModel.uploadFile(_image!);
+  }
+
+  _imgFromGallery() async {
+    PickedFile? image = await  ImagePicker.platform.pickImage(
+        source: ImageSource.gallery, imageQuality: 75
+    );
+    if(image!=null)
+    setState(() {
+      _image = File(image.path);
+    });
+    viewModel.uploadFile(_image!);
+  }
+
+  void _showPicker(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child: new Wrap(
+                children: <Widget>[
+                  new ListTile(
+                      leading: new Icon(Icons.photo_library),
+                      title: new Text(Strings.gallery),
+                      onTap: () {
+                        _imgFromGallery();
+                        Navigator.of(context).pop();
+                      }),
+                  new ListTile(
+                    leading: new Icon(Icons.photo_camera),
+                    title: new Text(Strings.camera),
+                    onTap: () {
+                      _imgFromCamera();
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    _image = viewModel.image;
+    return ChangeNotifierProvider<StorageViewModel>.value(value: viewModel,
+    child: Scaffold(
       body: SingleChildScrollView(
         child: Column(
-            // Then, the content of your dialog.
+          // Then, the content of your dialog.
             mainAxisSize: MainAxisSize.min,
             children: [
-              /*SizedBox(
-                width: double.infinity,
-                height: 20.0,
-              ),*/
               Container(
                 decoration: BoxDecoration(color: Theme.of(context).colorScheme.primaryVariant),
                 child: ListTile(
@@ -46,24 +107,41 @@ class MorePageState extends State<MorePage> {
                           children: [
                             Align(
                               alignment: Alignment.centerLeft,
-                              child: CircleAvatar(
-                                backgroundImage:
-                                AssetImage('assets/images/defaultprofile.png'),
-                                backgroundColor: Colors.transparent,
-                                radius: 50.0,
+                              child: GestureDetector(
+                                onTap: () {
+                                  _showPicker(context);
+                                },
+                                child: CircleAvatar(
+                                  radius: 55,
+                                  backgroundColor: Theme.of(context).primaryColor,
+                                  backgroundImage: (_image != null) ? FileImage(_image!) :
+                                  null,
+                                  child: (_image == null)
+                                      ? Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.grey[200],
+                                        borderRadius: BorderRadius.circular(50)),
+                                    width: 100,
+                                    height: 100,
+                                    child: Icon(
+                                      Icons.camera_alt,
+                                      color: Colors.grey[800],
+                                    ),
+                                  ): null,
+                                ),
                               ),
                             ),
                             Align(
                               alignment: Alignment.centerRight,
                               child: Text(
-                                displayName ?? "Nombre: ",
+                                viewModel.userName ?? '',
                                 style: TextStyle(color: Colors.white, fontSize: 20.0),
                               ),
                             ),
                             Align(
                               alignment: Alignment.centerRight + Alignment(0, 0.4),
                               child: Text(
-                                displayEmail ?? "Email: ",
+                                viewModel.userEmail ?? '',
                                 style: TextStyle(color: Colors.white70, fontSize: 15.0),
                               ),
                             ),
@@ -112,7 +190,8 @@ class MorePageState extends State<MorePage> {
               ),
             ]),
       ),
-    );
+    ),);
+
   }
 
   void _goToRoute(int option, BuildContext context) async {
