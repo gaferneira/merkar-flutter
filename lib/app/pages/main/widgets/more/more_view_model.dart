@@ -21,39 +21,40 @@ class MoreViewModel extends ChangeNotifier {
 
   Future<void> uploadFile(File file) async {
 
-    firebase_storage.UploadTask uploadTask;
+
     final _currentUser = repository.getCurrentUser();
     // Create a Reference to the file
     if(_currentUser!=null){
-    firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance
-        .ref()
-        .child('images/')
-        .child('profiles')
-        .child('/${_currentUser.uid}.jpg');
+      firebase_storage.UploadTask uploadTask;
+      firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance
+          .ref()
+          .child('images/')
+          .child('profiles')
+          .child('/${_currentUser.uid}.jpg');
 
-    final metadata = firebase_storage.SettableMetadata(
-        contentType: 'image/jpeg',
-        customMetadata: {'picked-file-path': file.path});
+      final metadata = firebase_storage.SettableMetadata(
+          contentType: 'image/jpeg',
+          customMetadata: {'picked-file-path': file.path});
 
-      uploadTask = ref.putFile(File(file.path), metadata);
-      image=file;
-      notifyListeners();
-    }
+        uploadTask = ref.putFile(File(file.path), metadata);
+        image=file;
+        notifyListeners();
+      }
   }
 
   Future<void> downloadImageProfile() async {
     //search image in a local or then in fire base storage
     final _currentUser = repository.getCurrentUser();
-   // try{
+    final Directory systemTempDir = Directory.systemTemp;
+    final File tempFile = File('${systemTempDir.path}/${_currentUser!.uid}.jpg');
+    if(!tempFile.existsSync()){
       firebase_storage.Reference ref =firebase_storage.FirebaseStorage.instance
-          .ref('images/profiles/${_currentUser!.uid}.jpg');
+          .ref('images/profiles/${_currentUser.uid}.jpg');
       ref.getDownloadURL().then((respose){
-      final Directory systemTempDir = Directory.systemTemp;
-      final File tempFile = File('${systemTempDir.path}/${ref.name}.jpg');
-      ref.writeToFile(tempFile);
-      image=tempFile;
+        ref.writeToFile(tempFile);
       }, onError: onReject);
-
+    }
+    image=tempFile;
   }
 
   void onReject(error) {

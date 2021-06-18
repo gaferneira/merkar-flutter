@@ -30,7 +30,8 @@ void main() async {
   await Firebase.initializeApp();
   if (USE_FIRESTORE_EMULATOR) {
     FirebaseFirestore.instance.settings = Settings(
-        host: 'localhost:8080', sslEnabled: false, persistenceEnabled: true);
+        host: 'localhost:8080', sslEnabled: false, persistenceEnabled: true,
+    );
   }
   await di.init();
   runApp(MyApp());
