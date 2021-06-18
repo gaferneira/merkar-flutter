@@ -3,14 +3,14 @@ import 'dart:async';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import '../../../data/repositories/login_repository.dart';
+import '../../../../../data/repositories/login_repository.dart';
 
-class StorageViewModel extends ChangeNotifier {
+class MoreViewModel extends ChangeNotifier {
   final LoginRepository repository;
   String? userName;
   String? userEmail;
   File? image;
-  StorageViewModel({required this.repository});
+  MoreViewModel({required this.repository});
 
   void loadData() async {
     var userData = await repository.getUserData();
@@ -19,7 +19,7 @@ class StorageViewModel extends ChangeNotifier {
     downloadImageProfile();
   }
 
-  Future<String> uploadFile(File file) async {
+  Future<void> uploadFile(File file) async {
 
     firebase_storage.UploadTask uploadTask;
     final _currentUser = repository.getCurrentUser();
@@ -37,47 +37,26 @@ class StorageViewModel extends ChangeNotifier {
 
       uploadTask = ref.putFile(File(file.path), metadata);
       image=file;
-      print('Uploaded success!');
       notifyListeners();
-    return 'Uploaded success!';
     }
-    print('No file uploaded');
-    return 'No file uploaded';
   }
 
   Future<void> downloadImageProfile() async {
+    //search image in a local or then in fire base storage
     final _currentUser = repository.getCurrentUser();
    // try{
       firebase_storage.Reference ref =firebase_storage.FirebaseStorage.instance
           .ref('images/profiles/${_currentUser!.uid}.jpg');
       ref.getDownloadURL().then((respose){
-      print('Path:  ${ref.getDownloadURL().toString()}  ');
       final Directory systemTempDir = Directory.systemTemp;
       final File tempFile = File('${systemTempDir.path}/${ref.name}.jpg');
       ref.writeToFile(tempFile);
       image=tempFile;
-      print('Hay imágen');
       }, onError: onReject);
-
-      /*
-      print('Path:  ${ref.getDownloadURL()}  new: ${_currentUser.uid}');
-      final Directory systemTempDir = Directory.systemTemp;
-      final File tempFile = File('${systemTempDir.path}/${ref.name}.jpg');
-      await ref.writeToFile(tempFile);
-
-
-
-    }catch(e){
-      print('Error al cargar la imágen ${e.toString()}');
-    }
-     */
-
 
   }
 
-
   void onReject(error) {
-    //console.log(error.code);
     print('Error al cargar el archivo: ${error.toString()}');
   }
 

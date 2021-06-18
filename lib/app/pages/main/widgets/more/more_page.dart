@@ -3,13 +3,13 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:merkar/app/core/storage/storage_view_model.dart';
+import 'more_view_model.dart';
 import 'package:provider/provider.dart';
-import '../../../core/resources/strings.dart';
-import '../../../pages/login/sign_in/login_view_model.dart';
-import '../../../pages/main/widgets/about_us_page.dart';
-import '../../../pages/main/widgets/comment_page.dart';
-import '../../../../injection_container.dart';
+import '../../../../core/resources/strings.dart';
+import '../../../login/sign_in/login_view_model.dart';
+import '../about_us_page.dart';
+import '../comment_page.dart';
+import '../../../../../injection_container.dart';
 
 class MorePage extends StatefulWidget {
 
@@ -21,14 +21,13 @@ class MorePage extends StatefulWidget {
 class MorePageState extends State<MorePage> {
 
   MorePageState();
-  StorageViewModel viewModel= serviceLocator<StorageViewModel>();
+  MoreViewModel viewModel= serviceLocator<MoreViewModel>();
   File? _image;
 
   @override
   initState(){
     super.initState();
     viewModel.loadData();
-    //_image = viewModel.image;
   }
 
   _imgFromCamera() async {
@@ -44,7 +43,7 @@ class MorePageState extends State<MorePage> {
 
   _imgFromGallery() async {
     PickedFile? image = await  ImagePicker.platform.pickImage(
-        source: ImageSource.gallery, imageQuality: 75
+        source: ImageSource.gallery, imageQuality: 50
     );
     if(image!=null)
     setState(() {
@@ -87,7 +86,7 @@ class MorePageState extends State<MorePage> {
   @override
   Widget build(BuildContext context) {
     _image = viewModel.image;
-    return ChangeNotifierProvider<StorageViewModel>.value(value: viewModel,
+    return ChangeNotifierProvider<MoreViewModel>.value(value: viewModel,
     child: Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -105,6 +104,7 @@ class MorePageState extends State<MorePage> {
                       children: <Widget>[
                         Column(
                           children: [
+                            SizedBox(height: 30.0),
                             Align(
                               alignment: Alignment.centerLeft,
                               child: GestureDetector(
@@ -131,6 +131,7 @@ class MorePageState extends State<MorePage> {
                                 ),
                               ),
                             ),
+                            SizedBox(height: 15.0),
                             Align(
                               alignment: Alignment.centerRight,
                               child: Text(

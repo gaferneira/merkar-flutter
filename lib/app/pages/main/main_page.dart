@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../pages/products/product_list/product_list_page.dart';
 import '../../pages/home/home_page.dart';
-import '../../pages/main/widgets/more_page.dart';
+import '../../pages/main/widgets/more/more_page.dart';
 import '../../pages/purchases/statistics/statistics_page.dart';
 import 'widgets/bottom_navigation.dart';
 
