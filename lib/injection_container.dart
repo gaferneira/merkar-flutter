@@ -1,7 +1,7 @@
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
-import 'package:merkar/app/core/storage/more_view_model.dart';
+import 'package:merkar/app/pages/main/widgets/more/more_view_model.dart';
 import 'package:merkar/app/pages/purchases/statistics/statistics_view_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -57,7 +57,7 @@ void createViewModels() {
         repository: serviceLocator(),
       ));
 
-  serviceLocator.registerFactory(() => StorageViewModel(
+  serviceLocator.registerFactory(() => MoreViewModel(
     repository: serviceLocator(),
   ));
 
