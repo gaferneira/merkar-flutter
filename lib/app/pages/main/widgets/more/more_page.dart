@@ -105,31 +105,56 @@ class MorePageState extends State<MorePage> {
                         Column(
                           children: [
                             SizedBox(height: 30.0),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: GestureDetector(
-                                onTap: () {
-                                  _showPicker(context);
-                                },
-                                child: CircleAvatar(
-                                  radius: 55,
-                                  backgroundColor: Theme.of(context).primaryColor,
-                                  backgroundImage: (_image != null) ? FileImage(_image!) :
-                                  null,
-                                  child: (_image == null)
-                                      ? Container(
-                                    decoration: BoxDecoration(
-                                        color: Colors.grey[200],
-                                        borderRadius: BorderRadius.circular(50)),
-                                    width: 100,
-                                    height: 100,
-                                    child: Icon(
-                                      Icons.camera_alt,
-                                      color: Colors.grey[800],
-                                    ),
-                                  ): null,
+                            Stack(
+                              children: [
+                                Align(
+                                alignment: Alignment.center,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    _showPicker(context);
+                                  },
+                                  child: CircleAvatar(
+                                    radius: 55,
+                                    backgroundColor: Theme.of(context).primaryColor,
+                                    backgroundImage: (_image != null) ? FileImage(_image!): null,
+                                    child: (_image == null)
+                                        ? Container(
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey[600],
+                                          borderRadius: BorderRadius.circular(100)),
+                                      width: 100,
+                                      height: 100,
+                                      child: CircleAvatar(
+                                        backgroundImage:
+                                        AssetImage('assets/images/defaultprofile.png'),
+                                        backgroundColor: Colors.transparent,
+                                        radius: 50.0,
+                                      ),
+                                    ): null,
+                                  ),
                                 ),
                               ),
+
+                                Positioned(
+                                  right: 2.0,top: 80.0,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      _showPicker(context);
+                                    },
+                                    child: Center(
+                                      child: CircleAvatar(
+                                        radius: 15,
+                                        backgroundColor: Theme.of(context).iconTheme.color,
+                                        child:
+                                        Icon(
+                                          Icons.camera_alt,
+                                          color: Colors.grey[100],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ]
                             ),
                             SizedBox(height: 15.0),
                             Align(
