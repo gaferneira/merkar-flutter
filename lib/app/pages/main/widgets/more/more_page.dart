@@ -3,12 +3,13 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'more_view_model.dart';
 import 'package:provider/provider.dart';
-import '../../../../core/resources/strings.dart';
-import '../../../login/sign_in/login_view_model.dart';
+import 'more_view_model.dart';
 import '../about_us_page.dart';
 import '../comment_page.dart';
+import '../../../login/sign_in/login_view_model.dart';
+import '../../../../core/resources/app_styles.dart';
+import '../../../../core/resources/strings.dart';
 import '../../../../../injection_container.dart';
 
 class MorePage extends StatefulWidget {
@@ -54,26 +55,40 @@ class MorePageState extends State<MorePage> {
 
   void _showPicker(context) {
     showModalBottomSheet(
+        shape: AppStyles.safeAreaBoxDecorationStyle,
         context: context,
         builder: (BuildContext bc) {
           return SafeArea(
             child: Container(
+              //decoration: AppStyles.safeAreaBoxDecorationStyle,
               child: new Wrap(
                 children: <Widget>[
-                  new ListTile(
-                      leading: new Icon(Icons.photo_library),
-                      title: new Text(Strings.gallery),
+                  Padding(
+                    padding: const EdgeInsets.only(left:20.0),
+                    child: new ListTile(
+                        leading:
+                         Icon(Icons.photo_library,
+                           color: Theme.of(context).primaryColor,
+                         ),
+                        title: new Text(Strings.gallery),
+                        onTap: () {
+                          _imgFromGallery();
+                          Navigator.of(context).pop();
+                        }),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left:20.0),
+                    child: new ListTile(
+                      leading: new Icon(
+                          Icons.photo_camera,
+                          color: Theme.of(context).primaryColor,
+                      ),
+                      title: new Text(Strings.camera),
                       onTap: () {
-                        _imgFromGallery();
+                        _imgFromCamera();
                         Navigator.of(context).pop();
-                      }),
-                  new ListTile(
-                    leading: new Icon(Icons.photo_camera),
-                    title: new Text(Strings.camera),
-                    onTap: () {
-                      _imgFromCamera();
-                      Navigator.of(context).pop();
-                    },
+                      },
+                    ),
                   ),
                 ],
               ),

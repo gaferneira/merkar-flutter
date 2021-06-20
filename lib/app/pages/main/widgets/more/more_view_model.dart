@@ -46,6 +46,8 @@ class MoreViewModel extends ChangeNotifier {
     //search image in a local or then in fire base storage
     final _currentUser = repository.getCurrentUser();
     final Directory systemTempDir = Directory.systemTemp;
+    //try to open local file
+
     final File tempFile = File('${systemTempDir.path}/${_currentUser!.uid}.jpg');
     if(!tempFile.existsSync()){
       firebase_storage.Reference ref =firebase_storage.FirebaseStorage.instance
@@ -58,7 +60,7 @@ class MoreViewModel extends ChangeNotifier {
   }
 
   void onReject(error) {
-    print('Error al cargar el archivo: ${error.toString()}');
+    print('Error al descargar el archivo: ${error.toString()}');
   }
 
   Future<void> downloadFile(firebase_storage.Reference ref, BuildContext context) async {

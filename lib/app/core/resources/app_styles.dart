@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -37,6 +39,11 @@ class AppStyles {
       ),
     ],
   );
+
+  static final RoundedRectangleBorder safeAreaBoxDecorationStyle =  RoundedRectangleBorder(
+  borderRadius: BorderRadius.vertical(top: Radius.circular(20.0), bottom: Radius.zero)
+  );
+  
   static RoundedRectangleBorder borderRadius = RoundedRectangleBorder(
       side: BorderSide(
         color: AppColors.textColorButtonDark,
