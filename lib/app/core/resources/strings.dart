@@ -72,7 +72,7 @@ class Strings {
 
 //LOGIN
   static const String tittle_sing_in = "Ingresar";
-  static const String login_label_title = "Iniciar sesión";
+  static const String login_label_title = "Iniciar Sesión";
   static const String login_label_email = "Email";
   static const String login_hint_enter_email = 'Ingresa tu Email';
   static const String login_hint_enter_password = 'Ingresa tu Contraseña';

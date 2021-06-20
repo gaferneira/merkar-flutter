@@ -123,29 +123,31 @@ class MorePageState extends State<MorePage> {
                             Stack(
                               children: [
                                 Align(
-                                alignment: Alignment.center,
+                                alignment: Alignment.topCenter,
                                 child: GestureDetector(
                                   onTap: () {
                                     _showPicker(context);
                                   },
                                   child: CircleAvatar(
-                                    radius: 55,
+                                    radius: 55.0,
                                     backgroundColor: Theme.of(context).primaryColor,
                                     backgroundImage: (_image != null) ? FileImage(_image!): null,
                                     child: (_image == null)
-                                        ? Container(
+                                        ? Center(
+                                          child: Container(
                                       decoration: BoxDecoration(
-                                          color: Colors.grey[600],
-                                          borderRadius: BorderRadius.circular(100)),
+                                            color: Colors.grey[600],
+                                            borderRadius: BorderRadius.circular(100)),
                                       width: 100,
                                       height: 100,
                                       child: CircleAvatar(
-                                        backgroundImage:
-                                        AssetImage('assets/images/defaultprofile.png'),
-                                        backgroundColor: Colors.transparent,
-                                        radius: 50.0,
+                                          backgroundImage:
+                                          AssetImage('assets/images/defaultprofile.png'),
+                                          backgroundColor: Colors.transparent,
+                                          radius: 55.0,
                                       ),
-                                    ): null,
+                                    ),
+                                        ): null,
                                   ),
                                 ),
                               ),
@@ -159,7 +161,7 @@ class MorePageState extends State<MorePage> {
                                     child: Center(
                                       child: CircleAvatar(
                                         radius: 15,
-                                        backgroundColor: Theme.of(context).iconTheme.color,
+                                        backgroundColor: Colors.grey[400],
                                         child:
                                         Icon(
                                           Icons.camera_alt,
