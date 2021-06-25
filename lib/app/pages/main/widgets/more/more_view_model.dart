@@ -21,6 +21,7 @@ class MoreViewModel extends ChangeNotifier {
 
   Future<void> uploadFile(File file) async {
     final _currentUser = repository.getCurrentUser();
+     var newPath = file.path.split('cache/');
     // Create a Reference to the file
     if(_currentUser!=null){
       firebase_storage.UploadTask uploadTask;
@@ -35,7 +36,8 @@ class MoreViewModel extends ChangeNotifier {
           customMetadata: {'picked-file-path': file.path});
 
         uploadTask = ref.putFile(File(file.path), metadata);
-        image=file;
+        //Copy the file to cache storage
+        image = await file.copy('${newPath[0]}/code_cache/${_currentUser.uid}.jpg');
         notifyListeners();
       }
   }
@@ -44,29 +46,32 @@ class MoreViewModel extends ChangeNotifier {
     //search image in a local or then in fire base storage
     final _currentUser = repository.getCurrentUser();
     final Directory systemTempDir = Directory.systemTemp;
-    //try to open local file
-    try{
-    final File? tempFile = File('${systemTempDir.path}/${_currentUser!.uid}.jpg');
-    if(!tempFile!.existsSync()){
-        firebase_storage.Reference ref =firebase_storage.FirebaseStorage.instance
-            .ref('images/profiles/${_currentUser.uid}.jpg');
-        ref.getDownloadURL().then((respose){
-          ref.writeToFile(tempFile);
+    if(image==null || !image!.existsSync()){
+      //try to open local file
+      try{
+        final File? tempFile = File('${systemTempDir.path}/${_currentUser!.uid}.jpg');
+        if(!tempFile!.existsSync()){
+          firebase_storage.Reference ref =firebase_storage.FirebaseStorage.instance
+              .ref('images/profiles/${_currentUser.uid}.jpg');
+          ref.getDownloadURL().then((respose){
+            ref.writeToFile(tempFile);
+            image=tempFile;
+          }, onError: (error){
+            print('Error al descargar el archivo: ${error.toString()}');
+            //  image= null;
+          });
+        }
+        if(tempFile!=null){
           image=tempFile;
-        }, onError: (error){
-          print('Error al descargar el archivo: ${error.toString()}');
-        //  image= null;
-        });
-    }
-      if(tempFile!=null){
-        image=tempFile;
-      }else{
-      //  image=null;
+        }else{
+          //  image=null;
+        }
+        notifyListeners();
+      }catch(error){
+        print('Error al Cargar el arhcivo: $error');
       }
-    notifyListeners();
-    }catch(error){
-      print('Error al Cargar el arhcivo: $error');
     }
+
   }
 
   Future<void> downloadFile(firebase_storage.Reference ref, BuildContext context) async {
