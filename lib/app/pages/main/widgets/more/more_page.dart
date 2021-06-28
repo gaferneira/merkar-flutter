@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 import 'more_view_model.dart';
 import '../about_us_page.dart';
@@ -126,7 +127,7 @@ class MorePageState extends State<MorePage> {
                                 alignment: Alignment.topCenter,
                                 child: GestureDetector(
                                   onTap: () {
-                                    _showPicker(context);
+                                    showPhotoViewDialog(context);
                                   },
                                   child: CircleAvatar(
                                     radius: 55.0,
@@ -256,5 +257,25 @@ class MorePageState extends State<MorePage> {
           break;
         }
     }
+  }
+
+  Future<void> showPhotoViewDialog(BuildContext context){
+    return showDialog(
+        context: context,
+        builder: (context){
+          return AlertDialog(
+                shape: AppStyles.borderRadiusDialog,
+                content: SingleChildScrollView(
+                child:Container(
+                  width: MediaQuery.of(context).size.width-10.0,
+                  height: MediaQuery.of(context).size.height-10.0,
+                  child: PhotoView(
+                  imageProvider: FileImage(_image!),
+                ),
+                ),
+            ),
+          );
+        });
+
   }
 }
