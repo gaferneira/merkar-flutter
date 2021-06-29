@@ -55,6 +55,7 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
                           width: 270,
                           height: 36,
                           child: TextField(
+                            autofocus: true,
                             controller: _search_textController,
                             decoration: InputDecoration(
                               prefixIcon: Icon(Icons.search,
