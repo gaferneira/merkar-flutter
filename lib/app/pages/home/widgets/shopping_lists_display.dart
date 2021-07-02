@@ -7,7 +7,7 @@ import '../../../widgets/confirmDismissDialog.dart';
 import '../../../../data/entities/shopping_list.dart';
 
 Widget shoppingListsDisplay(BuildContext context,
-    List<ShoppingList> list, final ValueChanged<int> onRemoveItem) {
+    List<ShoppingList> list, final ValueChanged<int> onRemoveItem,) {
   if (list.isEmpty) {
     return SliverFillRemaining(
       child: Padding(
@@ -31,7 +31,17 @@ Widget shoppingListsDisplay(BuildContext context,
                   AppStyles.listDecoration(index.toDouble() / list.length),
               height: 60.0,
               child: ListTile(
-                title: Text(list[index].name!.capitalize()),
+                title: Row(
+                  children: [
+                    Text(list[index].name!.capitalize(),
+                    textAlign: TextAlign.left),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      //child: Text('T/s'),
+                      child: Text('${list[index].total_selected}/${list[index].total_items}',),
+                    ),
+                  ],
+                ),
                 trailing: Icon(Icons.arrow_right),
                 onTap: () {
                   Navigator.pushNamed(

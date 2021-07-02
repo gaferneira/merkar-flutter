@@ -19,6 +19,8 @@ class ShoppingListViewModel extends ChangeNotifier {
   List<ListProduct>? filterselectedList;
   List<ListProduct>? unselectedList;
   List<ListProduct>? selectedList;
+  int total_items=0;
+  int total_selected=0;
   String? error;
   bool? ennable;
 
@@ -58,8 +60,11 @@ class ShoppingListViewModel extends ChangeNotifier {
   Future<void> selectProduct(int index) async {
     var product = unselectedList![index];
     product.selected = true;
+
     this.selectedList!.add(product);
     repository.saveProduct(product, shoppingList);
+    shoppingList.total_selected= (int.parse(shoppingList.total_selected!)+1).toString();
+    repository.updateTotalSelected(shoppingList.total_selected);
   }
 
   Future<void> unselectProduct(int index) async {
@@ -67,6 +72,8 @@ class ShoppingListViewModel extends ChangeNotifier {
     product.selected = false;
     this.selectedList!.remove(product);
     repository.saveProduct(product, shoppingList);
+    shoppingList.total_selected= (int.parse(shoppingList.total_selected!)-1).toString();
+    repository.updateTotalSelected(shoppingList.total_selected);
   }
 
   Future<void> updateProduct(ListProduct product, String? oldTotal) async {
@@ -112,6 +119,8 @@ class ShoppingListViewModel extends ChangeNotifier {
   }
   Future<void> removeProduct(String productId, ShoppingList list)async {
     repository.removeProduct(productId, list);
+    shoppingList.total_items= (int.parse(shoppingList.total_items!)-1).toString();
+    repository.updateTotalItems(shoppingList.total_items);
     notifyListeners();
   }
 
@@ -120,11 +129,15 @@ class ShoppingListViewModel extends ChangeNotifier {
   }
 
   Future<void> getListFile() async {
-    String content='Pedido:\n';
-    if(selectedList!.length>0)
+    String content='Pedido: ${shoppingList.name}\n';
+    if(selectedList!=null && selectedList!.length>0)
     for(int i=0;i<selectedList!.length;i++) {
       content+='- ${selectedList![i].name} ${selectedList![i].quantity} ${selectedList![i].unit}(s)\n';
     }
+    if(unselectedList!=null && unselectedList!.length>0)
+      for(int i=0;i<unselectedList!.length;i++) {
+        content+='- ${unselectedList![i].name} ${unselectedList![i].quantity} ${unselectedList![i].unit}(s)\n';
+      }
     Share.share(content);
   }
 

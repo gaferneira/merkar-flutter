@@ -49,7 +49,7 @@ class ShoppingListsRepositoryImpl implements ShoppingListsRepository {
                 ShoppingList.fromJson(documentSnapshot.data())
                   ..id = documentSnapshot.id
                   ..path = documentSnapshot.reference.path)
-            .toList());
+            .toList()) ;
   }
 
   @override
@@ -108,5 +108,17 @@ class ShoppingListsRepositoryImpl implements ShoppingListsRepository {
         .doc(product.id)
         .set(product.toJson());
     return Right(product);
+  }
+
+  Future<void> updateTotalItems(String total_items) async {
+
+  }
+
+  Future<void> updateTotalSelected(String total_selected) async {
+
+  }
+
+  Future<void> updateName(String name) async {
+
   }
 }

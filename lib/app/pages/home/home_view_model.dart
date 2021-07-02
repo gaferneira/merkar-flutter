@@ -14,7 +14,8 @@ class HomePageViewModel extends ChangeNotifier {
       {required this.shoppingListsRepository, required this.loginRepository});
 
   List<ShoppingList>? list;
-
+  List? totalItems;
+  List? totalSelected;
   String? error;
   String? username;
   String? userEmail;
@@ -35,7 +36,8 @@ class HomePageViewModel extends ChangeNotifier {
   }
 
   void saveList(String? name, BuildContext context) async {
-    final result = await shoppingListsRepository.save(ShoppingList(name: name));
+    final result = await shoppingListsRepository.save(ShoppingList(name: name,
+    total_items: '0',total_selected: '0'));
     Navigator.pop(context);
     result.fold(
             (failure) => {_mapFailureToMessage(failure)},

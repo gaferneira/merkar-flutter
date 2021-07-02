@@ -1,15 +1,9 @@
-
-import 'dart:io';
-
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:merkar/app/core/extensions/numberFormat.dart';
-import 'package:merkar/app/pages/products/select_products/select_products_page.dart';
 import 'package:merkar/app/widgets/loading_widget.dart';
 import 'package:provider/provider.dart';
-import 'package:share_plus/share_plus.dart';
-
 import '../../../../data/entities/list_product.dart';
 import '../../../../data/entities/shopping_list.dart';
 import '../../../../injection_container.dart';
