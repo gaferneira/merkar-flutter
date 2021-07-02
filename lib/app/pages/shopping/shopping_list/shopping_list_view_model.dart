@@ -64,7 +64,7 @@ class ShoppingListViewModel extends ChangeNotifier {
     this.selectedList!.add(product);
     repository.saveProduct(product, shoppingList);
     shoppingList.total_selected= (int.parse(shoppingList.total_selected!)+1).toString();
-    repository.updateTotalSelected(shoppingList.total_selected);
+    repository.updateTotalSelected(shoppingList.total_selected!);
   }
 
   Future<void> unselectProduct(int index) async {
@@ -73,7 +73,7 @@ class ShoppingListViewModel extends ChangeNotifier {
     this.selectedList!.remove(product);
     repository.saveProduct(product, shoppingList);
     shoppingList.total_selected= (int.parse(shoppingList.total_selected!)-1).toString();
-    repository.updateTotalSelected(shoppingList.total_selected);
+    repository.updateTotalSelected(shoppingList.total_selected!);
   }
 
   Future<void> updateProduct(ListProduct product, String? oldTotal) async {
@@ -120,7 +120,7 @@ class ShoppingListViewModel extends ChangeNotifier {
   Future<void> removeProduct(String productId, ShoppingList list)async {
     repository.removeProduct(productId, list);
     shoppingList.total_items= (int.parse(shoppingList.total_items!)-1).toString();
-    repository.updateTotalItems(shoppingList.total_items);
+    repository.updateTotalItems(shoppingList.total_items!);
     notifyListeners();
   }
 

@@ -77,11 +77,11 @@ class SelectMyProductsViewModel extends ChangeNotifier {
           unit: product.unit,
           selected: false);
       shoppingList.total_items= (int.parse(shoppingList.total_items!)+1).toString();
-      shoppingListRepository.updateTotalItems(shoppingList.total_items);
+      shoppingListRepository.updateTotalItems(shoppingList.total_items!);
       shoppingListRepository.saveProduct(productList, shoppingList);
     } else {
       shoppingList.total_items= (int.parse(shoppingList.total_items!)-1).toString();
-      shoppingListRepository.updateTotalItems(shoppingList.total_items);
+      shoppingListRepository.updateTotalItems(shoppingList.total_items!);
       shoppingListRepository.removeProduct(product.id!, shoppingList);
     }
     notifyListeners();
