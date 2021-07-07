@@ -48,6 +48,7 @@ class HomePageViewModel extends ChangeNotifier {
             arguments: value,
           )
         });
+
   }
 
   Future<void> removeList(int index) async{

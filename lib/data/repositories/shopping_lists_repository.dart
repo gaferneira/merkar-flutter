@@ -11,7 +11,6 @@ abstract class ShoppingListsRepository {
   Stream<List<ListProduct>> fetchProducts(ShoppingList list);
   Future<Either<Failure, ListProduct>> saveProduct(ListProduct product, ShoppingList list);
   Future<Either<Failure, bool>> removeProduct(String productId, ShoppingList list);
-  Future<void> updateTotalItems(String total_items);
-  Future<void> updateTotalSelected(String total_selected);
-  Future<void> updateName(String name);
+  Future<void> updateTotalItems(String total_items, ShoppingList list);
+  Future<void> updateTotalSelected(String total_selected, ShoppingList list);
 }

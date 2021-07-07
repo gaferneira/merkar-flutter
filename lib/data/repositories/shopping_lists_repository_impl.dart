@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:merkar/app/core/resources/strings.dart';
 
 import '../entities/error/failures.dart';
 import '../entities/list_product.dart';
@@ -110,15 +111,23 @@ class ShoppingListsRepositoryImpl implements ShoppingListsRepository {
     return Right(product);
   }
 
-  Future<void> updateTotalItems(String total_items) async {
-
+  @override
+  Future<void> updateTotalItems(String total_items, ShoppingList list) async {
+    await firestoreDataSource.db
+        .doc(list.path!)
+        .update({'total_items': total_items});
   }
 
-  Future<void> updateTotalSelected(String total_selected) async {
-
+  @override
+  Future<void> updateTotalSelected(String total_selected, ShoppingList list) async {
+    await firestoreDataSource.db.
+        doc(list.path!)
+        .update({'total_selected': total_selected});
   }
 
-  Future<void> updateName(String name) async {
-
+  Future<void> updateName(String name,ShoppingList list) async {
+    await firestoreDataSource.db.
+         doc(list.path!)
+        .update({'name': name});
   }
 }
