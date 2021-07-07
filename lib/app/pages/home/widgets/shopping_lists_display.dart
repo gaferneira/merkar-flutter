@@ -33,13 +33,12 @@ Widget shoppingListsDisplay(BuildContext context,
               child: ListTile(
                 title: Row(
                   children: [
-                    Text(list[index].name!.capitalize(),
-                    textAlign: TextAlign.left),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      //child: Text('T/s'),
-                      child: Text('${list[index].total_selected}/${list[index].total_items}',),
+                    Expanded(
+                      child: Text(list[index].name!.capitalize(),
+                      textAlign: TextAlign.left),
                     ),
+                     Text('${list[index].total_selected}/${list[index].total_items}',
+                         textAlign: TextAlign.right),
                   ],
                 ),
                 trailing: Icon(Icons.arrow_right),
