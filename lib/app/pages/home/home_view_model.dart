@@ -51,10 +51,8 @@ class HomePageViewModel extends ChangeNotifier {
 
   }
 
-  Future <void> updateNameList( String value)async {
-    var values= value.split(',');
-    int index=int.parse(values[1]);
-    shoppingListsRepository.updateName(values[0], list![index]);
+  Future <void> updateNameList( List<String> value)async {
+    shoppingListsRepository.updateName(value[0], list![int.parse(value[1])]);
   }
 
   Future<void> removeList(int index) async{

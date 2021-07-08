@@ -92,7 +92,7 @@ class _HomePageState extends State<HomePage> {
     viewModel.saveList(value, context);
   }
 
-  void _onUpdateName(String value) {
+  void _onUpdateName(List<String> value) {
     if (viewModel.error != null) {
       scaffoldMessengerKey.currentState?.showSnackBar(SnackBar(
           content: Text(viewModel.error!),

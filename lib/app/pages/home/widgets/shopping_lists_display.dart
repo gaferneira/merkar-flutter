@@ -9,7 +9,7 @@ import '../../../../data/entities/shopping_list.dart';
 
 Widget shoppingListsDisplay(BuildContext context,
   List<ShoppingList> list, final ValueChanged<int> onRemoveItem,
-    final ValueChanged <String> onUpdateName) {
+    final ValueChanged <List<String>> onUpdateName) {
   String? nameList;
   final formListKey = GlobalKey<FormState>();
   if (list.isEmpty) {
@@ -50,7 +50,7 @@ Widget shoppingListsDisplay(BuildContext context,
                     itemBuilder: (_) => <PopupMenuItem<String>>[
                       new PopupMenuItem<String>(
                           child: Container(
-                              width: 100,
+                              width: 80,
                               height: 30,
                               child: Text(
                                 "Renombrar",
@@ -93,8 +93,10 @@ Widget shoppingListsDisplay(BuildContext context,
                                        onPressed: () {
                                          if (formListKey.currentState?.validate() == true) {
                                            formListKey.currentState!.save();
-                                           String value='${nameList!},$index';
-                                           onUpdateName(value);
+                                           List<String> values=[];
+                                           values.add(nameList!);
+                                           values.add('$index');
+                                           onUpdateName(values);
                                            Navigator.of(context).pop(context);
                                          }
                                        }),
