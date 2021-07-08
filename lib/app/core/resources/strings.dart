@@ -138,4 +138,6 @@ class Strings {
   //MAIN
   static const String gallery ="Galería";
   static const String camera ="Cámara";
+
+  static const String label_rename_list = "Renombrar List";
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../pages/home/widgets/shopping_lists_display.dart';
+import 'package:merkar/data/entities/shopping_list.dart';
+import 'widgets/shopping_lists_display.dart';
 import 'package:provider/provider.dart';
 
 import '../../../app/widgets/widgets.dart';
@@ -73,7 +74,7 @@ class _HomePageState extends State<HomePage> {
               )),
               (viewModel.list == null)
                   ? SliverFillRemaining(child: Center(child: LoadingWidget()))
-                  : shoppingListsDisplay(context, viewModel.list!,_onRemoveItem,),
+                  : shoppingListsDisplay(context, viewModel.list!,_onRemoveItem, _onUpdateName),
             ],
           ),
         ),
@@ -90,6 +91,17 @@ class _HomePageState extends State<HomePage> {
     } else
     viewModel.saveList(value, context);
   }
+
+  void _onUpdateName(String value) {
+    if (viewModel.error != null) {
+      scaffoldMessengerKey.currentState?.showSnackBar(SnackBar(
+          content: Text(viewModel.error!),
+          duration: const Duration(seconds: 1)));
+      viewModel.error = null;
+    } else
+      viewModel.updateNameList(value).then((value) => null);
+  }
+
 
   void _onRemoveItem(int index) {
     viewModel.removeList(index);

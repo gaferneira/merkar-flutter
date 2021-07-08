@@ -125,6 +125,7 @@ class ShoppingListsRepositoryImpl implements ShoppingListsRepository {
         .update({'total_selected': total_selected});
   }
 
+  @override
   Future<void> updateName(String name,ShoppingList list) async {
     await firestoreDataSource.db.
          doc(list.path!)

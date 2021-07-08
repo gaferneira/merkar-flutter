@@ -13,4 +13,5 @@ abstract class ShoppingListsRepository {
   Future<Either<Failure, bool>> removeProduct(String productId, ShoppingList list);
   Future<void> updateTotalItems(String total_items, ShoppingList list);
   Future<void> updateTotalSelected(String total_selected, ShoppingList list);
+  Future<void> updateName(String name, ShoppingList list);
 }
