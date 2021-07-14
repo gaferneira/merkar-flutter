@@ -127,7 +127,7 @@ class ShoppingListViewModel extends ChangeNotifier {
     repository.remove(shoppingList);
   }
 
-  Future<void> getListFile() async {
+  Future<void> shareShoppingList() async {
     String content='Pedido: ${shoppingList.name}\n';
     if(selectedList!=null && selectedList!.length>0)
     for(int i=0;i<selectedList!.length;i++) {

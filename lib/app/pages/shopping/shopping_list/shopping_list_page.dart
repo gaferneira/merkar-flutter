@@ -111,7 +111,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                         ),
                       ),
                       IconButton(icon: Icon(Icons.share), onPressed: () {
-                        viewModel.getListFile();
+                        viewModel.shareShoppingList();
 
                       }),
                     ],

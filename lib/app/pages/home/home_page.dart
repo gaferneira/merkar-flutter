@@ -74,7 +74,7 @@ class _HomePageState extends State<HomePage> {
               )),
               (viewModel.list == null)
                   ? SliverFillRemaining(child: Center(child: LoadingWidget()))
-                  : shoppingListsDisplay(context, viewModel.list!,_onRemoveItem, _onUpdateName),
+                  : shoppingListsDisplay(context, viewModel.list!,_onRemoveItem, _onUpdateName, _onCopyShoppingList,_onShareShoppingList),
             ],
           ),
         ),
@@ -106,5 +106,12 @@ class _HomePageState extends State<HomePage> {
   void _onRemoveItem(int index) {
     viewModel.removeList(index);
   }
-  
+
+  void _onCopyShoppingList(int index){
+    viewModel.copyShoppingList(index);
+  }
+
+  void _onShareShoppingList(int index){
+    viewModel.shareShoppingList(index);
+  }
 }

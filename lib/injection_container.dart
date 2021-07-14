@@ -75,7 +75,6 @@ void createViewModels() {
 
   serviceLocator.registerFactory(() => HomePageViewModel(
         shoppingListsRepository: serviceLocator(),
-        loginRepository: serviceLocator(),
       ));
 
   serviceLocator.registerFactory(() => ShoppingListViewModel(

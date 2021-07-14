@@ -1,32 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:merkar/data/entities/list_product.dart';
+import 'package:share_plus/share_plus.dart';
 import '../../core/resources/strings.dart';
 import '../../../data/entities/error/failures.dart';
 import '../../../data/entities/shopping_list.dart';
 import '../../../data/repositories/shopping_lists_repository.dart';
-import '../../../data/repositories/login_repository.dart';
+import '../../../data/repositories/products_repository.dart';
 import '../shopping/shopping_list/shopping_list_page.dart';
 
 class HomePageViewModel extends ChangeNotifier {
   final ShoppingListsRepository shoppingListsRepository;
-  final LoginRepository loginRepository;
 
   HomePageViewModel(
-      {required this.shoppingListsRepository, required this.loginRepository});
+      {required this.shoppingListsRepository});
 
   List<ShoppingList>? list;
   List? totalItems;
   List? totalSelected;
   String? error;
-  String? username;
-  String? userEmail;
+  List<ListProduct>? productList;
 
   void loadData() async {
-    var userData = await loginRepository.getUserData();
-    this.username = userData.name;
-    this.userEmail = userData.email;
 
     shoppingListsRepository.fetchItems().listen((data) {
       list = data;
+      error = null;
+      notifyListeners();
+    }, onError: (e) {
+      error = e;
+      notifyListeners();
+    });
+  }
+
+  Future<void> loadProducts(ShoppingList shoppingList) async{
+    shoppingListsRepository.fetchProducts(shoppingList).listen((data) {
+      this.productList = data;
       error = null;
       notifyListeners();
     }, onError: (e) {
@@ -58,6 +66,29 @@ class HomePageViewModel extends ChangeNotifier {
   Future<void> removeList(int index) async{
     shoppingListsRepository.remove(list![index]);
   }
+  
+  Future<void> shareShoppingList(int index) async {
+    String content='Pedido: ${list![index].name}\n';
+    loadProducts(list![index]);
+    if(productList!=null && productList!.length>0)
+      for(int i=0;i<productList!.length;i++) {
+        content+='- ${productList![i].name} ${productList![i].quantity} ${productList![i].unit}(s)\n';
+      }
+    Share.share(content);
+  }
+
+  Future<void> copyShoppingList(int index) async {
+    final result = await shoppingListsRepository.save(ShoppingList(name: '${list![index].name} copy',
+        total_items: '${list![index].total_items}',total_selected: '${list![index].total_selected}'));
+    print('new shopping list copy: ${result}');
+    print('${list![index+1].name}');
+    await loadProducts(list![index]);
+    print('Lista de productos: ${this.productList}');
+    if(productList!=null && productList!.length>0)
+      for(int i=0;i<productList!.length;i++) {
+        shoppingListsRepository.saveProduct(productList![i], list![index+1]);
+      }
+  }
 
   String _mapFailureToMessage(Failure failure) {
     switch (failure.runtimeType) {
@@ -69,4 +100,5 @@ class HomePageViewModel extends ChangeNotifier {
         return 'Unexpected error';
     }
   }
+
 }
