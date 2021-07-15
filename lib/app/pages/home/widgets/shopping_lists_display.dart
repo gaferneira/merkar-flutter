@@ -140,8 +140,7 @@ Widget shoppingListsDisplay(BuildContext context,
                           break;
                         case 'delete':
                           onRemoveItem(index);
-                          Scaffold.of(context)
-                              .showSnackBar(SnackBar(content: Text(Strings.deleted)));
+
                           break;
                         case 'copy':
                           onCopyShoppingList(index);

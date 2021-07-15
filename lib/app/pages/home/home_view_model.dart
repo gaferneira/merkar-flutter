@@ -65,6 +65,7 @@ class HomePageViewModel extends ChangeNotifier {
 
   Future<void> removeList(int index) async{
     shoppingListsRepository.remove(list![index]);
+
   }
   
   Future<void> shareShoppingList(int index) async {
