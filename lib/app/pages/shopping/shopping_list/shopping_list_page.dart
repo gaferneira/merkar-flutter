@@ -46,6 +46,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
 
   SingingCharacter _character = SingingCharacter.nothing;
   ShoppingList shoppingList = new ShoppingList();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   onItemChangedSelect(String value) {
     viewModel.selectedList = viewModel.filterselectedList!
@@ -80,6 +81,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
         value: viewModel,
         child: Consumer<ShoppingListViewModel>(
             builder: (context, model, child) => Scaffold(
+                  key: _scaffoldKey,
                   appBar: AppBar(
                     actions: <Widget>[
                       Padding(
@@ -110,13 +112,40 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                           ),
                         ),
                       ),
-                      IconButton(icon: Icon(Icons.share), onPressed: () {
-                        viewModel.shareShoppingList();
+                      SizedBox(
+                        width: 20.0,
+                        child: IconButton(icon: Icon(Icons.share), onPressed: () {
+                          viewModel.shareShoppingList();
+                        },
 
-                      }),
+                        ),
+                      ),
+                      PopupMenuButton(
+                          icon: Icon(Icons.more_vert), // add this line
+                          itemBuilder: (_) => <PopupMenuItem<String>>[
+                            PopupMenuItem<String>(
+                                child: Container(
+                                    width: 80.0,
+                                    height: 17.0,
+                                    child: Text(
+                                      "Reiniciar",
+                                    )
+                                ), value: 'reset'
+                            ),
+                          ],
+                          onSelected: (action_select) async {
+                            switch (action_select) {
+                              case 'reset':
+                                _resetShoppingList(context);
+                                break;
+                            }
+                          }
+                      ),
+
                     ],
                   ),
                   body: SingleChildScrollView(
+
                     child: Column(
                       children: <Widget>[
                         Padding(
@@ -541,5 +570,9 @@ class _ShoppingListPageState extends State<ShoppingListPage>
       viewModel.finishShopping(
           context, _character, descriptionShoppingList.toString());
     }
+  }
+  void _resetShoppingList(BuildContext context){
+    viewModel.resetShoppingList();
+    _scaffoldKey.currentState!.showSnackBar(SnackBar(content: Text(Strings.reseted)));
   }
 }

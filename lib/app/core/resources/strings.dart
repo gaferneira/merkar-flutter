@@ -122,6 +122,7 @@ class Strings {
   static const String add_products_from_list ="Agregue Productos de la lista superior";
   static const String products_no_items_shopping_list= "Agregue productos pulsando en el botón +";
   static const String total= "Total";
+  static const String reseted = "Lista Restaurada";
 
 //STATISTICS
   static const String statistics="ESTADÍSTICAS";

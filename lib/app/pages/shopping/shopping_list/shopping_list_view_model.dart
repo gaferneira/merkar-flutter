@@ -116,6 +116,15 @@ class ShoppingListViewModel extends ChangeNotifier {
     }
     Navigator.of(context).popUntil((route) => route.isFirst);
   }
+
+  Future<void> resetShoppingList() async{
+    repository.updateTotalSelected('0', shoppingList);
+    selectedList!.forEach((product) {
+      product.selected = false;
+      repository.saveProduct(product, shoppingList);
+    });
+    notifyListeners();
+  }
   Future<void> removeProduct(String productId, ShoppingList list)async {
     repository.removeProduct(productId, list);
     shoppingList.total_items= (int.parse(shoppingList.total_items!)-1).toString();

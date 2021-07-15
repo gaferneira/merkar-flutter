@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:merkar/data/entities/shopping_list.dart';
 import 'widgets/shopping_lists_display.dart';
 import 'package:provider/provider.dart';
 
