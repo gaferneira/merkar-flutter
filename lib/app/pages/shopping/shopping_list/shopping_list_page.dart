@@ -60,18 +60,6 @@ class _ShoppingListPageState extends State<ShoppingListPage>
     viewModel.notifyListeners();
   }
 
-  void _chooseFile(int option) async {
-    switch (option) {
-      case 0:
-        Navigator.of(context).pushNamed(SelectMyProductsPage.routeName,
-        arguments: shoppingList);
-        break;
-      case 1:
-        Navigator.of(context).pushNamed(CreateNewProduct.routeName);
-        break;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     shoppingList = ModalRoute.of(context)!.settings.arguments as ShoppingList;
@@ -125,18 +113,40 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                           itemBuilder: (_) => <PopupMenuItem<String>>[
                             PopupMenuItem<String>(
                                 child: Container(
-                                    width: 80.0,
+                                    width: 180.0,
                                     height: 17.0,
                                     child: Text(
                                       "Reiniciar",
                                     )
                                 ), value: 'reset'
                             ),
+                            PopupMenuItem<String>(
+                                child: Container(
+                                    width: 180.0,
+                                    height: 17.0,
+                                    child: Text(
+                                      "Ordenar Alfabéticamente",
+                                    )
+                                ), value: 'name'
+                            ),
+                            PopupMenuItem<String>(
+                                child: Container(
+                                    width: 180.0,
+                                    height: 17.0,
+                                    child: Text(
+                                      "Ordenar por Categoría",
+                                    )
+                                ), value: 'category'
+                            ),
                           ],
-                          onSelected: (action_select) async {
+                          onSelected: (String action_select) async {
                             switch (action_select) {
                               case 'reset':
                                 _resetShoppingList(context);
+                                break;
+                              case 'name':
+                              case 'category':
+                                _sortListProductsBy(action_select);
                                 break;
                             }
                           }
@@ -574,5 +584,19 @@ class _ShoppingListPageState extends State<ShoppingListPage>
   void _resetShoppingList(BuildContext context){
     viewModel.resetShoppingList();
     _scaffoldKey.currentState!.showSnackBar(SnackBar(content: Text(Strings.reseted)));
+  }
+
+  void _sortListProductsBy(String option){
+    switch (option){
+      case 'name':
+        viewModel.unselectedList!.sort((a, b) => a.name!.toLowerCase().compareTo(b.name!.toLowerCase()));
+        viewModel.selectedList!.sort((a, b) => a.name!.toLowerCase().compareTo(b.name!.toLowerCase()));
+        break;
+      case 'category':
+        viewModel.unselectedList!.sort((a, b) => a.category!.toLowerCase().compareTo(b.category!.toLowerCase()));
+        viewModel.selectedList!.sort((a, b) => a.category!.toLowerCase().compareTo(b.category!.toLowerCase()));
+        break;
+    }
+    viewModel.notifyListeners();
   }
 }
