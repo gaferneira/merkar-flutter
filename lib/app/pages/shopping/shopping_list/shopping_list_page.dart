@@ -125,19 +125,20 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                                     width: 180.0,
                                     height: 17.0,
                                     child: Text(
-                                      "Ordenar Alfabéticamente",
+                                      "Ordenar por Categoría",
                                     )
-                                ), value: 'name'
+                                ), value: 'category'
                             ),
                             PopupMenuItem<String>(
                                 child: Container(
                                     width: 180.0,
                                     height: 17.0,
                                     child: Text(
-                                      "Ordenar por Categoría",
+                                      "Ordenar Alfabéticamente",
                                     )
-                                ), value: 'category'
+                                ), value: 'name'
                             ),
+
                           ],
                           onSelected: (String action_select) async {
                             switch (action_select) {
