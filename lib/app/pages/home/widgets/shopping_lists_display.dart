@@ -49,7 +49,7 @@ Widget shoppingListsDisplay(BuildContext context,
                   ],
                 ),
                 trailing: PopupMenuButton(
-                    icon: Icon(Icons.more_vert,color: Colors.lightBlueAccent), // add this line
+                    icon: Icon(Icons.more_vert,color: Colors.blueGrey), // add this line
                     itemBuilder: (_) => <PopupMenuItem<String>>[
                       PopupMenuItem<String>(
                           child: Container(
