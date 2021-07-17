@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
               new SliverAppBar(
                 iconTheme: IconThemeData(color: Colors.white),
                 expandedHeight: 256.0,
-                pinned: true,
+                pinned: false,
                 flexibleSpace: new FlexibleSpaceBar(
                   title: Row(
                     children: [

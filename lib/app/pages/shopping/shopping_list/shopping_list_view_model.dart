@@ -106,6 +106,7 @@ class ShoppingListViewModel extends ChangeNotifier {
         repository.remove(shoppingList);
         break;
       case SingingCharacter.reset:
+        repository.updateTotalSelected('0', shoppingList);
         selectedList!.forEach((product) {
           product.selected = false;
           repository.saveProduct(product, shoppingList);

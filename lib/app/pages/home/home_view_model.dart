@@ -31,10 +31,7 @@ class HomePageViewModel extends ChangeNotifier {
   }
 
   Future <List<ListProduct>?> loadProducts(ShoppingList shoppingList) {
-    print('Load Products:shopping list : ${shoppingList.name}');
     return shoppingListsRepository.fetchProducts(shoppingList).first;
-   //print('Lenght : ${this.productList ?? this.productList!.length}');
-
   }
 
   void saveList(String? name, BuildContext context) async {
@@ -65,10 +62,7 @@ class HomePageViewModel extends ChangeNotifier {
   Future<void> shareShoppingList(int index) async {
     String content='Pedido: ${list![index].name}\n';
     List<ListProduct>? productList = await loadProducts(list![index]);
-
     if(productList !=null && productList.length>0){
-
-      print('Lista de productos to Share: ${productList}');
       for(int i=0;i<productList.length;i++) {
         content+='- ${productList[i].name} ${productList[i].quantity} ${productList[i].unit}(s)\n';
       }
@@ -79,13 +73,9 @@ class HomePageViewModel extends ChangeNotifier {
 
   Future<void> copyShoppingList(int index) async {
     copyList(index);
-    print('Lista a copiar productos: ${list![index].name}');
     List<ListProduct>? productList = await loadProducts(list![index]);
-
     if(productList!=null && productList.length>0) {
-      print('Lista de productos to Share: ${productList}');
       for (int i = 0; i < productList.length; i++) {
-        print('Producto: ${productList[i].name}');
         shoppingListsRepository.saveProduct(productList[i], list![index + 1]);
       }
     }
@@ -95,8 +85,6 @@ class HomePageViewModel extends ChangeNotifier {
   void copyList(int index) async{
     final result = await shoppingListsRepository.save(ShoppingList(name: '${list![index].name} copy',
         total_items: '${list![index].total_items}',total_selected: '${list![index].total_selected}'));
-    print('new shopping list copy: ${result}');
-
   }
 
   String _mapFailureToMessage(Failure failure) {

@@ -55,7 +55,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
     "Despensa": FaIcon(FontAwesomeIcons.doorClosed,color: Colors.blueGrey),
     "Carnes": FaIcon(FontAwesomeIcons.drumstickBite,color: Colors.blueGrey),
     "Lácteos y huevos":FaIcon(FontAwesomeIcons.egg,color: Colors.blueGrey),
-    "Otros":FaIcon(FontAwesomeIcons.bookmark,color: Colors.blueGrey),
+    "Otros":FaIcon(FontAwesomeIcons.solidBookmark,color: Colors.blueGrey),
     "Panaderia":FaIcon(FontAwesomeIcons.breadSlice,color: Colors.blueGrey),
     "Aseo personal":FaIcon(FontAwesomeIcons.toiletPaper,color: Colors.blueGrey),
     "Aseo hogar":FaIcon(FontAwesomeIcons.soap,color: Colors.blueGrey),
@@ -69,7 +69,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
     "Congelados":FaIcon(FontAwesomeIcons.solidSnowflake,color: Colors.blueGrey),
     "Vinos":FaIcon(FontAwesomeIcons.wineBottle,color: Colors.blueGrey),
     "Pasabocas":FaIcon(FontAwesomeIcons.candyCane,color: Colors.blueGrey),
-    "Saludable":FaIcon(FontAwesomeIcons.seedling),
+    "Saludable":FaIcon(FontAwesomeIcons.seedling,color: Colors.blueGrey),
     "Aromáticas y espécias":FaIcon(FontAwesomeIcons.pepperHot,color: Colors.blueGrey),
     "Electrónica y electrodomésticos":FaIcon(FontAwesomeIcons.desktop,color: Colors.blueGrey),
     "Papelería":FaIcon(FontAwesomeIcons.paperclip,color: Colors.blueGrey),
@@ -77,7 +77,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
     "Ropa":FaIcon(FontAwesomeIcons.tshirt,color: Colors.blueGrey),
     "Salud y belleza":FaIcon(FontAwesomeIcons.airFreshener,color: Colors.blueGrey),
     "Libros y música":FaIcon(FontAwesomeIcons.bookOpen,color: Colors.blueGrey),
-    "default":FaIcon(FontAwesomeIcons.bookmark,color: Colors.blueGrey),
+    "default":FaIcon(FontAwesomeIcons.solidBookmark,color: Colors.blueGrey),
   };
 
   onItemChangedSelect(String value) {

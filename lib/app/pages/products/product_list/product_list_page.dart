@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:merkar/app/core/extensions/numberFormat.dart';
 import 'package:merkar/app/widgets/loading_widget.dart';
 import 'package:provider/provider.dart';
@@ -36,6 +37,37 @@ class _ProductsListPageState extends State<ProductsListPage>
   final _scaffoldKey = GlobalKey<ScaffoldState>(); // new line
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
   new GlobalKey<RefreshIndicatorState>();
+
+  Map<String, FaIcon> categoriesIcons={
+    "Verduras":FaIcon(FontAwesomeIcons.carrot,color: Colors.white,),
+    "Frutas":FaIcon(FontAwesomeIcons.appleAlt,color: Colors.white),
+    "Despensa": FaIcon(FontAwesomeIcons.doorClosed,color: Colors.white),
+    "Carnes": FaIcon(FontAwesomeIcons.drumstickBite,color: Colors.white),
+    "Lácteos y huevos":FaIcon(FontAwesomeIcons.egg,color: Colors.white),
+    "Otros":FaIcon(FontAwesomeIcons.solidBookmark,color: Colors.white),
+    "Panaderia":FaIcon(FontAwesomeIcons.breadSlice,color: Colors.white),
+    "Aseo personal":FaIcon(FontAwesomeIcons.toiletPaper,color: Colors.white),
+    "Aseo hogar":FaIcon(FontAwesomeIcons.soap,color: Colors.white),
+    "Galletas y dulces":FaIcon(FontAwesomeIcons.cookie,color: Colors.white),
+    "Bebidas":FaIcon(FontAwesomeIcons.tint,color: Colors.white),
+    "Licores":FaIcon(FontAwesomeIcons.glassMartiniAlt,color: Colors.white),
+    "Cerveza":FaIcon(FontAwesomeIcons.beer,color: Colors.white),
+    "Mascotas":FaIcon(FontAwesomeIcons.dog,color: Colors.white),
+    "Droguería":FaIcon(FontAwesomeIcons.medkit,color: Colors.white),
+    "Hogar":FaIcon(FontAwesomeIcons.houseDamage,color: Colors.white),
+    "Congelados":FaIcon(FontAwesomeIcons.solidSnowflake,color: Colors.white),
+    "Vinos":FaIcon(FontAwesomeIcons.wineBottle,color: Colors.white),
+    "Pasabocas":FaIcon(FontAwesomeIcons.candyCane,color: Colors.white),
+    "Saludable":FaIcon(FontAwesomeIcons.seedling,color: Colors.white),
+    "Aromáticas y espécias":FaIcon(FontAwesomeIcons.pepperHot,color: Colors.white),
+    "Electrónica y electrodomésticos":FaIcon(FontAwesomeIcons.desktop,color: Colors.white),
+    "Papelería":FaIcon(FontAwesomeIcons.paperclip,color: Colors.white),
+    "Pescados y mariscos":FaIcon(FontAwesomeIcons.fish,color: Colors.white),
+    "Ropa":FaIcon(FontAwesomeIcons.tshirt,color: Colors.white),
+    "Salud y belleza":FaIcon(FontAwesomeIcons.airFreshener,color: Colors.white),
+    "Libros y música":FaIcon(FontAwesomeIcons.bookOpen,color: Colors.white),
+    "default":FaIcon(FontAwesomeIcons.solidBookmark,color: Colors.white),
+  };
 
   @override
   void initState() {
@@ -216,12 +248,32 @@ class _ProductsListPageState extends State<ProductsListPage>
       var category = keys.elementAt(index)!;
       var products = productsMap[keys.elementAt(index)]!;
       widgetList..add(SliverAppBar(
+        pinned: false,
+        snap: true,
+        floating: true,
+        expandedHeight: 40.0,
         leading: Container(),
-        title: Text(category),
+        title: Row(
+          children: [
+            Padding(
+              padding:  const EdgeInsets.only(right: 0.0,left: 0.0,top: 0.0,bottom: 8.0),
+              child: SizedBox(
+              height: 20.0,
+              width: 20.0,
+                child:categoriesIcons['$category']!=null?
+                categoriesIcons['$category']:
+                categoriesIcons['default'],
+              ),
+            ),
+            SizedBox(
+              width:20.0
+            ),
+            Text(category),
+          ],
+        ),
         backgroundColor: Theme
             .of(context)
             .primaryColor,
-        pinned: true,
       ))..add(SliverFixedExtentList(
         itemExtent: 50.0,
         delegate:
