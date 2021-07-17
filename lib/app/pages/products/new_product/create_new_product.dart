@@ -40,17 +40,40 @@ class _CreateNewProductState extends State<CreateNewProduct> {
   ];
   List<FaIcon> iconsCategory=[
     FaIcon(FontAwesomeIcons.carrot), FaIcon(FontAwesomeIcons.appleAlt),
-    FaIcon(FontAwesomeIcons.gavel), FaIcon(FontAwesomeIcons.cloudMeatball),
-    FaIcon(FontAwesomeIcons.egg), FaIcon(FontAwesomeIcons.marker),
-    FaIcon(FontAwesomeIcons.breadSlice), FaIcon(FontAwesomeIcons.pumpSoap),
+    FaIcon(FontAwesomeIcons.doorClosed), FaIcon(FontAwesomeIcons.cloudMeatball),
+    FaIcon(FontAwesomeIcons.egg), FaIcon(FontAwesomeIcons.bookmark),
+    FaIcon(FontAwesomeIcons.breadSlice), FaIcon(FontAwesomeIcons.toiletPaper),
     FaIcon(FontAwesomeIcons.soap), FaIcon(FontAwesomeIcons.cookie),
-    FaIcon(FontAwesomeIcons.medkit), FaIcon(FontAwesomeIcons.glassMartiniAlt),
+    FaIcon(FontAwesomeIcons.prescriptionBottleAlt), FaIcon(FontAwesomeIcons.glassMartiniAlt),
     FaIcon(FontAwesomeIcons.beer), FaIcon(FontAwesomeIcons.dog),
-    FaIcon(FontAwesomeIcons.prescriptionBottleAlt), FaIcon(FontAwesomeIcons.houseDamage),
+    FaIcon(FontAwesomeIcons.medkit), FaIcon(FontAwesomeIcons.houseDamage),
     FaIcon(FontAwesomeIcons.snowplow), FaIcon(FontAwesomeIcons.wineBottle),
     FaIcon(FontAwesomeIcons.candyCane), FaIcon(FontAwesomeIcons.seedling),
     FaIcon(FontAwesomeIcons.pepperHot),
   ];
+  Map<String,FaIcon> categoriesIcons={
+    "Verduras":FaIcon(FontAwesomeIcons.carrot),
+    "Frutas":FaIcon(FontAwesomeIcons.appleAlt),
+    "Despensa": FaIcon(FontAwesomeIcons.doorClosed),
+    "Carnes": FaIcon(FontAwesomeIcons.cloudMeatball),
+    "Lácteos y huevos":FaIcon(FontAwesomeIcons.egg),
+    "Otros":FaIcon(FontAwesomeIcons.bookmark),
+    "Panaderia":FaIcon(FontAwesomeIcons.breadSlice),
+    "Aseo personal":FaIcon(FontAwesomeIcons.toiletPaper),
+    "Aseo hogar":FaIcon(FontAwesomeIcons.soap),
+    "Galletas y dulces":FaIcon(FontAwesomeIcons.cookie),
+    "Bebidas":FaIcon(FontAwesomeIcons.prescriptionBottleAlt),
+    "Licores":FaIcon(FontAwesomeIcons.glassMartiniAlt),
+    "Cerveza":FaIcon(FontAwesomeIcons.beer),
+    "Mascotas":FaIcon(FontAwesomeIcons.dog),
+    "Droguería":FaIcon(FontAwesomeIcons.medkit),
+    "Hogar":FaIcon(FontAwesomeIcons.houseDamage),
+    "Congelados":FaIcon(FontAwesomeIcons.snowplow),
+    "Vinos":FaIcon(FontAwesomeIcons.wineBottle),
+    "Pasabocas":FaIcon(FontAwesomeIcons.candyCane),
+    "Saludable":FaIcon(FontAwesomeIcons.seedling),
+    "Aromáticas y espécias":FaIcon(FontAwesomeIcons.pepperHot),
+  };
   List<String> defaultUnits=[
     "Unidad", "Libra","Kilogramo",
     "Paquete", "Atado", "Litro", "Ml",
@@ -75,9 +98,7 @@ class _CreateNewProductState extends State<CreateNewProduct> {
       ),
     );
   }
-
   Widget _fromCreateProduct() {
-    int index=0;
     return Form(
       key: keyNewProduct,
       child: Padding(
@@ -113,10 +134,9 @@ class _CreateNewProductState extends State<CreateNewProduct> {
                 return getCategorySuggestions(pattern);
               },
               itemBuilder: (context, suggestion) {
-                index++;
                 return ListTile(
                   title: Text(suggestion.toString()),
-                  trailing: iconsCategory[index-1],
+                  trailing: categoriesIcons['$suggestion'],
                 );
               },
               transitionBuilder: (context, suggestionsBox, controller) {
