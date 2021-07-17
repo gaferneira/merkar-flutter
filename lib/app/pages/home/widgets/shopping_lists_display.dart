@@ -83,9 +83,9 @@ Widget shoppingListsDisplay(BuildContext context,
                               width: 80.0,
                               height: 17.0,
                               child: Text(
-                                "Copiar",
+                                "Duplicar",
                               )
-                          ), value: 'copy'
+                          ), value: 'duplicate'
                       ),
                     ],
                     onSelected: (action_select) async {
@@ -142,7 +142,7 @@ Widget shoppingListsDisplay(BuildContext context,
                           onRemoveItem(index);
 
                           break;
-                        case 'copy':
+                        case 'duplicate':
                           onCopyShoppingList(index);
                           break;
                         case 'share':

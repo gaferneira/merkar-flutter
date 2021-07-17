@@ -5,7 +5,6 @@ import '../../core/resources/strings.dart';
 import '../../../data/entities/error/failures.dart';
 import '../../../data/entities/shopping_list.dart';
 import '../../../data/repositories/shopping_lists_repository.dart';
-import '../../../data/repositories/products_repository.dart';
 import '../shopping/shopping_list/shopping_list_page.dart';
 
 class HomePageViewModel extends ChangeNotifier {
@@ -18,7 +17,6 @@ class HomePageViewModel extends ChangeNotifier {
   List? totalItems;
   List? totalSelected;
   String? error;
-  List<ListProduct>? productList;
 
   void loadData() async {
 
@@ -32,15 +30,11 @@ class HomePageViewModel extends ChangeNotifier {
     });
   }
 
-  Future<void> loadProducts(ShoppingList shoppingList) async{
-    shoppingListsRepository.fetchProducts(shoppingList).listen((data) {
-      this.productList = data;
-      error = null;
-      notifyListeners();
-    }, onError: (e) {
-      error = e;
-      notifyListeners();
-    });
+  Future <List<ListProduct>?> loadProducts(ShoppingList shoppingList) {
+    print('Load Products:shopping list : ${shoppingList.name}');
+    return shoppingListsRepository.fetchProducts(shoppingList).first;
+   //print('Lenght : ${this.productList ?? this.productList!.length}');
+
   }
 
   void saveList(String? name, BuildContext context) async {
@@ -70,25 +64,39 @@ class HomePageViewModel extends ChangeNotifier {
   
   Future<void> shareShoppingList(int index) async {
     String content='Pedido: ${list![index].name}\n';
-    loadProducts(list![index]);
-    if(productList!=null && productList!.length>0)
-      for(int i=0;i<productList!.length;i++) {
-        content+='- ${productList![i].name} ${productList![i].quantity} ${productList![i].unit}(s)\n';
+    List<ListProduct>? productList = await loadProducts(list![index]);
+
+    if(productList !=null && productList.length>0){
+
+      print('Lista de productos to Share: ${productList}');
+      for(int i=0;i<productList.length;i++) {
+        content+='- ${productList[i].name} ${productList[i].quantity} ${productList[i].unit}(s)\n';
       }
+
+    }
     Share.share(content);
   }
 
   Future<void> copyShoppingList(int index) async {
+    copyList(index);
+    print('Lista a copiar productos: ${list![index].name}');
+    List<ListProduct>? productList = await loadProducts(list![index]);
+
+    if(productList!=null && productList.length>0) {
+      print('Lista de productos to Share: ${productList}');
+      for (int i = 0; i < productList.length; i++) {
+        print('Producto: ${productList[i].name}');
+        shoppingListsRepository.saveProduct(productList[i], list![index + 1]);
+      }
+    }
+    notifyListeners();
+  }
+
+  void copyList(int index) async{
     final result = await shoppingListsRepository.save(ShoppingList(name: '${list![index].name} copy',
         total_items: '${list![index].total_items}',total_selected: '${list![index].total_selected}'));
     print('new shopping list copy: ${result}');
-    print('${list![index+1].name}');
-    await loadProducts(list![index]);
-    print('Lista de productos: ${this.productList}');
-    if(productList!=null && productList!.length>0)
-      for(int i=0;i<productList!.length;i++) {
-        shoppingListsRepository.saveProduct(productList![i], list![index+1]);
-      }
+
   }
 
   String _mapFailureToMessage(Failure failure) {
