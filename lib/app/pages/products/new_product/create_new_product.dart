@@ -38,19 +38,7 @@ class _CreateNewProductState extends State<CreateNewProduct> {
     "Cerveza", "Mascotas", "Droguería", "Hogar", "Congelados",
     "Vinos", "Pasabocas", "Saludable","Aromáticas y espécias"
   ];
-  List<FaIcon> iconsCategory=[
-    FaIcon(FontAwesomeIcons.carrot), FaIcon(FontAwesomeIcons.appleAlt),
-    FaIcon(FontAwesomeIcons.doorClosed), FaIcon(FontAwesomeIcons.cloudMeatball),
-    FaIcon(FontAwesomeIcons.egg), FaIcon(FontAwesomeIcons.bookmark),
-    FaIcon(FontAwesomeIcons.breadSlice), FaIcon(FontAwesomeIcons.toiletPaper),
-    FaIcon(FontAwesomeIcons.soap), FaIcon(FontAwesomeIcons.cookie),
-    FaIcon(FontAwesomeIcons.prescriptionBottleAlt), FaIcon(FontAwesomeIcons.glassMartiniAlt),
-    FaIcon(FontAwesomeIcons.beer), FaIcon(FontAwesomeIcons.dog),
-    FaIcon(FontAwesomeIcons.medkit), FaIcon(FontAwesomeIcons.houseDamage),
-    FaIcon(FontAwesomeIcons.snowplow), FaIcon(FontAwesomeIcons.wineBottle),
-    FaIcon(FontAwesomeIcons.candyCane), FaIcon(FontAwesomeIcons.seedling),
-    FaIcon(FontAwesomeIcons.pepperHot),
-  ];
+
   Map<String,FaIcon> categoriesIcons={
     "Verduras":FaIcon(FontAwesomeIcons.carrot),
     "Frutas":FaIcon(FontAwesomeIcons.appleAlt),
