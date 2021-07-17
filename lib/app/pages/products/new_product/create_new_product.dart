@@ -1,5 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:merkar/app/core/extensions/numberFormat.dart';
 import '../../../core/resources/constants.dart';
 import '../../../core/resources/strings.dart';
@@ -37,6 +38,19 @@ class _CreateNewProductState extends State<CreateNewProduct> {
     "Cerveza", "Mascotas", "Droguería", "Hogar", "Congelados",
     "Vinos", "Pasabocas", "Saludable","Aromáticas y espécias"
   ];
+  List<FaIcon> iconsCategory=[
+    FaIcon(FontAwesomeIcons.carrot), FaIcon(FontAwesomeIcons.appleAlt),
+    FaIcon(FontAwesomeIcons.gavel), FaIcon(FontAwesomeIcons.cloudMeatball),
+    FaIcon(FontAwesomeIcons.egg), FaIcon(FontAwesomeIcons.marker),
+    FaIcon(FontAwesomeIcons.breadSlice), FaIcon(FontAwesomeIcons.pumpSoap),
+    FaIcon(FontAwesomeIcons.soap), FaIcon(FontAwesomeIcons.cookie),
+    FaIcon(FontAwesomeIcons.medkit), FaIcon(FontAwesomeIcons.glassMartiniAlt),
+    FaIcon(FontAwesomeIcons.beer), FaIcon(FontAwesomeIcons.dog),
+    FaIcon(FontAwesomeIcons.prescriptionBottleAlt), FaIcon(FontAwesomeIcons.houseDamage),
+    FaIcon(FontAwesomeIcons.snowplow), FaIcon(FontAwesomeIcons.wineBottle),
+    FaIcon(FontAwesomeIcons.candyCane), FaIcon(FontAwesomeIcons.seedling),
+    FaIcon(FontAwesomeIcons.pepperHot),
+  ];
   List<String> defaultUnits=[
     "Unidad", "Libra","Kilogramo",
     "Paquete", "Atado", "Litro", "Ml",
@@ -63,6 +77,7 @@ class _CreateNewProductState extends State<CreateNewProduct> {
   }
 
   Widget _fromCreateProduct() {
+    int index=0;
     return Form(
       key: keyNewProduct,
       child: Padding(
@@ -98,8 +113,10 @@ class _CreateNewProductState extends State<CreateNewProduct> {
                 return getCategorySuggestions(pattern);
               },
               itemBuilder: (context, suggestion) {
+                index++;
                 return ListTile(
                   title: Text(suggestion.toString()),
+                  trailing: iconsCategory[index-1],
                 );
               },
               transitionBuilder: (context, suggestionsBox, controller) {
@@ -118,6 +135,7 @@ class _CreateNewProductState extends State<CreateNewProduct> {
                 }
                 return Strings.error_required_field;
               },
+
             ),
             SizedBox(height: Constant.normalspace),
             TextFormField(
