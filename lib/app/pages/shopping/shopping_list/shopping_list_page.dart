@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:merkar/app/core/extensions/numberFormat.dart';
 import 'package:merkar/app/widgets/loading_widget.dart';
 import 'package:provider/provider.dart';
@@ -47,6 +48,37 @@ class _ShoppingListPageState extends State<ShoppingListPage>
   SingingCharacter _character = SingingCharacter.nothing;
   ShoppingList shoppingList = new ShoppingList();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  Map<String, FaIcon> categoriesIcons={
+    "Verduras":FaIcon(FontAwesomeIcons.carrot,color: Colors.blueGrey,),
+    "Frutas":FaIcon(FontAwesomeIcons.appleAlt,color: Colors.blueGrey),
+    "Despensa": FaIcon(FontAwesomeIcons.doorClosed,color: Colors.blueGrey),
+    "Carnes": FaIcon(FontAwesomeIcons.drumstickBite,color: Colors.blueGrey),
+    "Lácteos y huevos":FaIcon(FontAwesomeIcons.egg,color: Colors.blueGrey),
+    "Otros":FaIcon(FontAwesomeIcons.bookmark,color: Colors.blueGrey),
+    "Panaderia":FaIcon(FontAwesomeIcons.breadSlice,color: Colors.blueGrey),
+    "Aseo personal":FaIcon(FontAwesomeIcons.toiletPaper,color: Colors.blueGrey),
+    "Aseo hogar":FaIcon(FontAwesomeIcons.soap,color: Colors.blueGrey),
+    "Galletas y dulces":FaIcon(FontAwesomeIcons.cookie,color: Colors.blueGrey),
+    "Bebidas":FaIcon(FontAwesomeIcons.tint,color: Colors.blueGrey),
+    "Licores":FaIcon(FontAwesomeIcons.glassMartiniAlt,color: Colors.blueGrey),
+    "Cerveza":FaIcon(FontAwesomeIcons.beer,color: Colors.blueGrey),
+    "Mascotas":FaIcon(FontAwesomeIcons.dog,color: Colors.blueGrey),
+    "Droguería":FaIcon(FontAwesomeIcons.medkit,color: Colors.blueGrey),
+    "Hogar":FaIcon(FontAwesomeIcons.houseDamage,color: Colors.blueGrey),
+    "Congelados":FaIcon(FontAwesomeIcons.solidSnowflake,color: Colors.blueGrey),
+    "Vinos":FaIcon(FontAwesomeIcons.wineBottle,color: Colors.blueGrey),
+    "Pasabocas":FaIcon(FontAwesomeIcons.candyCane,color: Colors.blueGrey),
+    "Saludable":FaIcon(FontAwesomeIcons.seedling),
+    "Aromáticas y espécias":FaIcon(FontAwesomeIcons.pepperHot,color: Colors.blueGrey),
+    "Electrónica y electrodomésticos":FaIcon(FontAwesomeIcons.desktop,color: Colors.blueGrey),
+    "Papelería":FaIcon(FontAwesomeIcons.paperclip,color: Colors.blueGrey),
+    "Pescados y mariscos":FaIcon(FontAwesomeIcons.fish,color: Colors.blueGrey),
+    "Ropa":FaIcon(FontAwesomeIcons.tshirt,color: Colors.blueGrey),
+    "Salud y belleza":FaIcon(FontAwesomeIcons.airFreshener,color: Colors.blueGrey),
+    "Libros y música":FaIcon(FontAwesomeIcons.bookOpen,color: Colors.blueGrey),
+    "default":FaIcon(FontAwesomeIcons.bookmark,color: Colors.blueGrey),
+  };
 
   onItemChangedSelect(String value) {
     viewModel.selectedList = viewModel.filterselectedList!
@@ -287,19 +319,38 @@ class _ShoppingListPageState extends State<ShoppingListPage>
               decoration: AppStyles.checklistDecoration(
                   index.toDouble() / listProducts.length),
               child: CheckboxListTile(
-                title: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "${listProducts[index].name}",
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "${listProducts[index].name}",
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Text(
+                                  "${listProducts[index].quantity} ${listProducts[index].unit} a \$ ${numberFormat(listProducts[index].price)}"),
+                            ],
+                          ),
+
+                        ],
+                      ),
                     ),
-                    Row(
-                      children: <Widget>[
-                        Text(
-                            "${listProducts[index].quantity} ${listProducts[index].unit} a \$ ${numberFormat(listProducts[index].price)}"),
-                      ],
-                    )
+                    Padding(
+                      padding:  const EdgeInsets.only(left: 10.0,top: 0.0,bottom: 15.0),
+                      child: SizedBox(
+                          height: 8.0,
+                          width: 8.0,
+                          child: categoriesIcons['${listProducts[index].category!}']!=null?
+                          categoriesIcons['${listProducts[index].category!}']:
+                          categoriesIcons['default']
+                      ),
+                    ),
                   ],
                 ),
                 controlAffinity: ListTileControlAffinity.leading,
