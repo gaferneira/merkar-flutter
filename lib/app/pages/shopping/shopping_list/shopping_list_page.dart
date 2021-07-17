@@ -323,6 +323,17 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    Padding(
+                      padding:  const EdgeInsets.only(right: 0.0,left: 0.0,top: 0.0,bottom: 15.0),
+                      child: SizedBox(
+                          height: 20.0,
+                          width: 20.0,
+                          child: categoriesIcons['${listProducts[index].category!}']!=null?
+                          categoriesIcons['${listProducts[index].category!}']:
+                          categoriesIcons['default']
+                      ),
+                    ),
+                    SizedBox(width: 20.0,),
                     Expanded(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -341,16 +352,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                         ],
                       ),
                     ),
-                    Padding(
-                      padding:  const EdgeInsets.only(left: 10.0,top: 0.0,bottom: 15.0),
-                      child: SizedBox(
-                          height: 8.0,
-                          width: 8.0,
-                          child: categoriesIcons['${listProducts[index].category!}']!=null?
-                          categoriesIcons['${listProducts[index].category!}']:
-                          categoriesIcons['default']
-                      ),
-                    ),
+
                   ],
                 ),
                 controlAffinity: ListTileControlAffinity.leading,
@@ -409,20 +411,39 @@ class _ShoppingListPageState extends State<ShoppingListPage>
               decoration: AppStyles.checklistDecoration(
                   index.toDouble() / listProducts.length),
               child: CheckboxListTile(
-                title: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "${listProducts[index].name}",
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding:  const EdgeInsets.only(right: 0.0,left: 0.0,top: 0.0,bottom: 15.0),
+                      child: SizedBox(
+                          height: 20.0,
+                          width: 20.0,
+                          child: categoriesIcons['${listProducts[index].category!}']!=null?
+                          categoriesIcons['${listProducts[index].category!}']:
+                          categoriesIcons['default']
+                      ),
                     ),
-                    Row(
-                      children: <Widget>[
-                        Text(
-                            "${listProducts[index].quantity} ${listProducts[index].unit} = "
-                                "${numberFormat((listProducts[index].quantity*double.parse(listProducts[index].price)).toString())}"),
-                      ],
-                    )
+                    SizedBox(width: 20.0,),
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "${listProducts[index].name}",
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Text(
+                                  "${listProducts[index].quantity} ${listProducts[index].unit} = "
+                                      "${numberFormat((listProducts[index].quantity*double.parse(listProducts[index].price)).toString())}"),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
                   ],
                 ),
                 controlAffinity: ListTileControlAffinity.leading,
