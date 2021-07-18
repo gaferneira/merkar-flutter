@@ -7,7 +7,6 @@ import 'package:merkar/app/widgets/loading_widget.dart';
 import 'package:provider/provider.dart';
 import 'select_my_products_view_model.dart';
 import '../../../core/resources/app_styles.dart';
-import '../../../core/resources/constants.dart';
 import '../../../core/resources/strings.dart';
 import '../../../pages/products/new_product/create_new_product.dart';
 import '../../../../data/entities/product.dart';
@@ -95,7 +94,9 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
                                       .primaryColor),
                               contentPadding:
                               EdgeInsets.only(left: 10, right: 10),
-                              fillColor: Colors.white,
+                              fillColor: MediaQuery.of(context).platformBrightness!=Brightness.dark?
+                              Colors.white
+                                  :Colors.black12,
                               filled: true,
                               border: OutlineInputBorder(
                                 borderSide: BorderSide(

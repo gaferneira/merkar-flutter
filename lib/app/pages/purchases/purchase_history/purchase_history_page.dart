@@ -63,7 +63,9 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
                               .primaryColor),
                       contentPadding:
                       EdgeInsets.only(left: 10, right: 10),
-                      fillColor: Colors.white,
+                      fillColor: MediaQuery.of(context).platformBrightness!=Brightness.dark?
+                      Colors.white
+                          :Colors.black12,
                       filled: true,
                       border: OutlineInputBorder(
                         borderSide: BorderSide(

@@ -18,7 +18,7 @@ class CreateNewProductsViewModel extends ChangeNotifier {
             },
         (value) => {
               //success
-              Navigator.pop(context)
+              //Navigator.pop(context)
             });
   }
 }

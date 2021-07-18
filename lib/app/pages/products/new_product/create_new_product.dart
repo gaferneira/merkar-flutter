@@ -73,8 +73,8 @@ class _CreateNewProductState extends State<CreateNewProduct> {
   };
   List<String> defaultUnits=[
     "Unidad", "Libra","Kilogramo",
-    "Paquete", "Atado", "Litro", "Ml",
-    "Cubeta"
+    "Paquete", "Atado", "Litro", "ml",
+    "Cubeta","Six pac","Botella","Garrafa"
   ];
 
   @override
@@ -253,6 +253,7 @@ class _CreateNewProductState extends State<CreateNewProduct> {
           newProduct.path = product!.path;
         }
         viewModel.saveProduct(newProduct, context);
+        Navigator.pop(context);
       }
           }
         );
