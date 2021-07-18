@@ -47,7 +47,6 @@ class HomePageViewModel extends ChangeNotifier {
             arguments: value,
           )
         });
-
   }
 
   Future <void> updateNameList( List<String> value)async {
@@ -84,7 +83,8 @@ class HomePageViewModel extends ChangeNotifier {
 
   void copyList(int index) async{
     final result = await shoppingListsRepository.save(ShoppingList(name: '${list![index].name} copia',
-        total_items: '${list![index].total_items}',total_selected: '${list![index].total_selected}'));
+        total_items: '${list![index].total_items}',total_selected: '${list![index].total_selected}')
+    );
   }
 
   String _mapFailureToMessage(Failure failure) {
