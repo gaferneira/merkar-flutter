@@ -99,9 +99,13 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
 
   Widget purchaseHistoryDisplay(List<Purchase> list) {
     if(list.isEmpty){
-      return Center(child: Text(Strings.noCategoriesAvailable,
-        textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline6,),
-        widthFactor: 32.0,);
+      print("Lista de historial vacia");
+      return Padding(
+        padding: EdgeInsets.only(top:((MediaQuery.of(context).size.height/2)-50)),
+        child: Center(child: Text(Strings.noCategoriesAvailable,
+          textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline6,),
+          widthFactor: 32.0,),
+      );
     }
         return listProducts(list);
   }

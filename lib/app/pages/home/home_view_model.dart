@@ -83,7 +83,7 @@ class HomePageViewModel extends ChangeNotifier {
   }
 
   void copyList(int index) async{
-    final result = await shoppingListsRepository.save(ShoppingList(name: '${list![index].name} copy',
+    final result = await shoppingListsRepository.save(ShoppingList(name: '${list![index].name} copia',
         total_items: '${list![index].total_items}',total_selected: '${list![index].total_selected}'));
   }
 

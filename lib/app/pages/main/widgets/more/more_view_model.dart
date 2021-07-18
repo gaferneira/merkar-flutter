@@ -46,30 +46,31 @@ class MoreViewModel extends ChangeNotifier {
     //search image in a local or then in fire base storage
     final _currentUser = repository.getCurrentUser();
     final Directory systemTempDir = Directory.systemTemp;
-    if(image==null || !image!.existsSync()){
-      //try to open local file
-      try{
-        final File? tempFile = File('${systemTempDir.path}/${_currentUser!.uid}.jpg');
-        if(!tempFile!.existsSync()){
-          firebase_storage.Reference ref =firebase_storage.FirebaseStorage.instance
-              .ref('images/profiles/${_currentUser.uid}.jpg');
-          ref.getDownloadURL().then((respose){
-            ref.writeToFile(tempFile);
-            image=tempFile;
-          }, onError: (error){
-            print('Error al descargar el archivo: ${error.toString()}');
-            //  image= null;
-          });
-        }
-        if(tempFile!=null){
-          image=tempFile;
-        }else{
-          //  image=null;
-        }
-        notifyListeners();
-      }catch(error){
-        print('Error al Cargar el arhcivo: $error');
-      }
+    try{
+        if(image==null || !image!.existsSync()){
+          //try to open local file
+            final File? tempFile = File('${systemTempDir.path}/${_currentUser!.uid}.jpg');
+            if(!tempFile!.existsSync()){
+              firebase_storage.Reference ref =firebase_storage.FirebaseStorage.instance
+                  .ref('images/profiles/${_currentUser.uid}.jpg');
+              ref.getDownloadURL().then((respose){
+                ref.writeToFile(tempFile);
+                image=tempFile;
+              }, onError: (error){
+                print('Error al descargar el archivo: ${error.toString()}');
+                image= null;
+              });
+            }
+            if(tempFile!=null){
+              image=tempFile;
+            }else{
+              //  image=null;
+            }
+            notifyListeners();
+          }
+    }catch(error){
+      print('Error al Cargar el arhcivo: $error');
+      image=null;
     }
 
   }
