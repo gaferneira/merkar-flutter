@@ -11,14 +11,5 @@ class CreateNewProductsViewModel extends ChangeNotifier {
 
   void saveProduct(Product product, BuildContext context) async {
     final result = await productsRepository.save(product);
-    result.fold(
-        (failure) => {
-              //Error
-              print(failure)
-            },
-        (value) => {
-              //success
-              //Navigator.pop(context)
-            });
   }
 }

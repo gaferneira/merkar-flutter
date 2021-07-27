@@ -48,12 +48,10 @@ class ShoppingListViewModel extends ChangeNotifier {
         unselectedList!.add(product);
       }
     });
-   // unselectedList=unselectedList.toList()..sort();
     if(selectedList!.isNotEmpty){
         ennable=true;
       }
     else ennable=false;
-
     notifyListeners();
   }
 

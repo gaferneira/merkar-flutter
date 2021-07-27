@@ -139,8 +139,10 @@ Widget shoppingListsDisplay(BuildContext context,
                          );
                           break;
                         case 'delete':
-                          onRemoveItem(index);
-
+                          bool delete=await ConfirmDismissDialog(context, true);
+                          if(delete){
+                            onRemoveItem(index);
+                          }
                           break;
                         case 'duplicate':
                           onCopyShoppingList(index);

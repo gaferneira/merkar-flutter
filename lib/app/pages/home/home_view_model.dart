@@ -35,18 +35,34 @@ class HomePageViewModel extends ChangeNotifier {
   }
 
   void saveList(String? name, BuildContext context) async {
-    final result = await shoppingListsRepository.save(ShoppingList(name: name,
-    total_items: '0',total_selected: '0'));
+    print('Lenght 0 : ${list!.length}');
+    ShoppingList shoppingList=ShoppingList(name: name,
+        total_items: '0',total_selected: '0');
     Navigator.pop(context);
-    result.fold(
-            (failure) => {_mapFailureToMessage(failure)},
-            (value) => {
-          Navigator.pushNamed(
-            context,
-            ShoppingListPage.routeName,
-            arguments: value,
-          )
-        });
+    print('Antes del try:');
+    try{
+      final result = await shoppingListsRepository.save(shoppingList);
+      print('Luego de result');
+      result.fold(
+              (failure) => {_mapFailureToMessage(failure)},
+              (value) => {
+            Navigator.pushNamed(
+              context,
+              ShoppingListPage.routeName,
+              arguments: value,
+            )
+          });
+
+    }catch(e){
+      error=e.toString();
+      print('Error catch: $e');
+      Navigator.pushNamed(
+        context,
+        ShoppingListPage.routeName,
+        arguments: shoppingList,
+      );
+    }
+    print('Lenght F : ${list!.length}');
   }
 
   Future <void> updateNameList( List<String> value)async {
@@ -82,12 +98,13 @@ class HomePageViewModel extends ChangeNotifier {
   }
 
   void copyList(int index) async{
-    final result = await shoppingListsRepository.save(ShoppingList(name: '${list![index].name} copia',
+     await shoppingListsRepository.save(ShoppingList(name: '${list![index].name} copia',
         total_items: '${list![index].total_items}',total_selected: '${list![index].total_selected}')
     );
   }
 
   String _mapFailureToMessage(Failure failure) {
+    print('Do the consult get');
     switch (failure.runtimeType) {
       case ServerFailure:
         return Strings.SERVER_FAILURE_MESSAGE;
