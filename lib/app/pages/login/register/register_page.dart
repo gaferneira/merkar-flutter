@@ -61,13 +61,27 @@ class _RegisterPageState extends State<RegisterPage> {
               physics: AlwaysScrollableScrollPhysics(),
               padding: EdgeInsets.symmetric(
                 horizontal: 40.0,
-                vertical: 60.0,
+                vertical: 40.0,
               ),
               child: Column(
                 children: <Widget>[
-                  Text(
-                    Strings.label_register,
-                    style: Theme.of(context).textTheme.headline4,
+                  Row(
+                    children: [
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: IconButton(
+                          icon: Icon(Icons.arrow_back),
+                          onPressed: (){
+                            Navigator.of(context).pop();
+                          },),),
+                      Expanded(
+                        child: Text(
+                          Strings.label_register,
+                          style: Theme.of(context).textTheme.headline4,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(height: 30.0),
                   _buildNameTextField(context),
@@ -192,7 +206,8 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   suffixIcon: IconButton(
                     icon: Icon(
-                      Icons.remove_red_eye_sharp,
+                      _obscurePassword ? Icons.remove_red_eye_sharp:Icons.visibility_off,
+                      color: Colors.white54,
                     ),
                     onPressed: () {
                       setState(() {
@@ -247,7 +262,8 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   suffixIcon: IconButton(
                     icon: Icon(
-                      Icons.remove_red_eye_sharp,
+                      _obscureConfirmPassword ? Icons.remove_red_eye_sharp:Icons.visibility_off,
+                      color: Colors.white54,
                     ),
                     onPressed: () {
                       setState(() {

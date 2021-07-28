@@ -54,16 +54,31 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                             child: SingleChildScrollView(
                               physics: AlwaysScrollableScrollPhysics(),
                               padding: EdgeInsets.symmetric(
-                                horizontal: 40.0,
-                                vertical: 60.0,
+                                horizontal: 30.0,
+                                vertical: 40.0,
                               ),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  Text(
-                                    Strings.label_restore_password,
-                                    style:
-                                        Theme.of(context).textTheme.headline4,
+                                 
+                                  Row(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: IconButton(
+                                          icon: Icon(Icons.arrow_back),
+                                          onPressed: (){
+                                            Navigator.of(context).pop();
+                                          },),),
+                                      Expanded(
+                                        child: Text(
+                                          Strings.label_restore_password,
+                                          style:
+                                              Theme.of(context).textTheme.headline4,
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                   SizedBox(height: 30.0),
                                   _buildEmailTextField(context),
