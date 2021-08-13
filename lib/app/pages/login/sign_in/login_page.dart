@@ -278,7 +278,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               TextSpan(
                 text: Strings.login_action_sign_up,
-                style: Theme.of(context).textTheme.subtitle1,
+                style: Theme.of(context).textTheme.headline6,
               ),
             ],
           ),
