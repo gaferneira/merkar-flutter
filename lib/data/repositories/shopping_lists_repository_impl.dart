@@ -24,6 +24,7 @@ class ShoppingListsRepositoryImpl implements ShoppingListsRepository {
 
   @override
   Future<Either<Failure, ShoppingList>> save(ShoppingList item) async {
+    try{
     if (item.path != null) {
       await this.firestoreDataSource.db.doc(item.path!).set(item.toJson());
     } else {
@@ -35,7 +36,11 @@ class ShoppingListsRepositoryImpl implements ShoppingListsRepository {
         ..id = ref.id
         ..path = ref.path;
     }
-    return Right(item);
+    return Right(item);}
+    catch(e){
+      print("Error en firebase repository: "+e.toString());
+      return Right(item);
+    }
   }
 
   @override

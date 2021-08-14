@@ -41,6 +41,7 @@ class HomePageViewModel extends ChangeNotifier {
     Navigator.pop(context);
     print('Antes del try:');
     try{
+
       final result = await shoppingListsRepository.save(shoppingList);
       print('Luego de result');
       result.fold(

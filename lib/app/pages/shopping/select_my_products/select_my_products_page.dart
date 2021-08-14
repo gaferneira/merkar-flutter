@@ -196,6 +196,7 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
                       value: products[index].selected,
                     activeColor: Colors.cyan,
                     checkColor: Colors.green,),
+
                 ),
               ),
               background: Container(
