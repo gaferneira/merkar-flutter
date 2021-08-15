@@ -14,4 +14,5 @@ abstract class ShoppingListsRepository {
   Future<void> updateTotalItems(String total_items, ShoppingList list);
   Future<void> updateTotalSelected(String total_selected, ShoppingList list);
   Future<void> updateName(String name, ShoppingList list);
+  Future<void> updateQuantity(double quantity,String id,ShoppingList list);
 }

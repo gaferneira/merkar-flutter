@@ -78,9 +78,11 @@ class SelectMyProductsViewModel extends ChangeNotifier {
           selected: false);
       shoppingList.total_items= (int.parse(shoppingList.total_items!)+1).toString();
       shoppingListRepository.saveProduct(productList, shoppingList);
+      shoppingProducts!.add(productList);
     } else {
       shoppingList.total_items= (int.parse(shoppingList.total_items!)-1).toString();
       shoppingListRepository.removeProduct(product.id!, shoppingList);
+      ListProduct p= shoppingProducts!.where((element) => element.id==product.id!).first;
     }
     shoppingListRepository.updateTotalItems(shoppingList.total_items!, shoppingList);
     notifyListeners();
@@ -91,4 +93,15 @@ class SelectMyProductsViewModel extends ChangeNotifier {
     productsRepository.remove(product);
     notifyListeners();
   }
+   double getListProduct(String id){
+     ListProduct p=shoppingProducts!.where((element) => element.id==id).first;
+    if(p!=null){
+      return p.quantity;
+    }
+    return 1;
+   }
+   Future<void> updateQuantity( double quantity, String id) async{
+      shoppingListRepository.updateQuantity(quantity, id, shoppingList);
+      notifyListeners();
+   }
 }

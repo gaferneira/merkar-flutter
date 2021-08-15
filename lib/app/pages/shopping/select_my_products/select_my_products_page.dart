@@ -187,8 +187,20 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
                   decoration: AppStyles.checklistDecoration(
                       index.toDouble() / products.length),
                   child: CheckboxListTile(
-                      title: Text(
-                          "${products[index].name}: ${products[index].unit} x ${products[index].price}"),
+                      title: Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("${products[index].name}: "),
+                                Text("${products[index].unit} x ${products[index].price}"),
+                              ],
+                            ),
+                          ),
+                          products[index].selected?showChangeCuantity(products[index].id!):Text(""),
+                        ],
+                      ),
                       controlAffinity: ListTileControlAffinity.leading,
                       onChanged: (bool? value) {
                         viewModel.selectProduct(index, products[index],value!);
@@ -221,5 +233,44 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
 
   _createNewProduct(BuildContext context) {
     Navigator.of(context).pushNamed(CreateNewProduct.routeName);
+  }
+
+  Widget showChangeCuantity(String id) {
+    double quantity= viewModel.getListProduct(id);
+    return Align(
+      alignment: Alignment.topCenter,
+      child: Container(
+        height: 38.0,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          color: Colors.white54,
+          boxShadow: [
+            BoxShadow(color: Colors.blueGrey, spreadRadius: 1),
+          ],
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+          Align(alignment: Alignment.center,
+              child: IconButton(icon: Icon(Icons.remove),onPressed: (){
+                if(quantity==1){
+                  null;
+                }
+                else{
+                  quantity--;
+                 viewModel.updateQuantity(quantity,id);
+                }
+              },color: quantity==1?Colors.white:Colors.red,)),
+          Text("${quantity}"),
+          IconButton(icon: Icon(Icons.add),onPressed: (){
+            quantity++;
+            viewModel.updateQuantity(quantity,id);
+          },
+            color:Colors.green,
+          ),
+        ],),
+      ),
+    );
   }
 }
