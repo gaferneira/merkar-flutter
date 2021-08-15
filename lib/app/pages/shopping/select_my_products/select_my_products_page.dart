@@ -254,17 +254,17 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
           children: [
           Align(alignment: Alignment.center,
               child: IconButton(icon: Icon(Icons.remove),onPressed: (){
-                if(quantity==1){
+                if(quantity==0.5){
                   null;
                 }
                 else{
-                  quantity--;
+                  quantity=quantity-0.5;
                  viewModel.updateQuantity(quantity,id);
                 }
               },color: quantity==1?Colors.white:Colors.red,)),
           Text("${quantity}"),
           IconButton(icon: Icon(Icons.add),onPressed: (){
-            quantity++;
+            quantity=quantity+0.5;
             viewModel.updateQuantity(quantity,id);
           },
             color:Colors.green,
