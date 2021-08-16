@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../core/resources/strings.dart';
 
@@ -22,32 +23,39 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-
-      type: BottomNavigationBarType.fixed,
-      items: [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: Strings.route_home,
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.favorite),
-          label: Strings.route_products,
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.history),
-          label: Strings.route_purchase_history,
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.add),
-          label: Strings.route_more,
-        ),
-      ],
-      currentIndex: _selectedIndex,
-      onTap: (index) {
-        _selectedIndex = index;
-        onSelectTab(index);
-      },
+    return Container(
+      decoration: BoxDecoration(border: Border(top: BorderSide(width: 0.5))),
+      child: BottomNavigationBar(
+        elevation: 5.0,
+        //showSelectedLabels: true,
+        //showUnselectedLabels: false,
+        unselectedLabelStyle: TextStyle(fontSize: 11),
+        selectedLabelStyle: TextStyle(fontSize: 14),
+        type: BottomNavigationBarType.fixed,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: Strings.route_home,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: Strings.route_products,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.history),
+            label: Strings.route_purchase_history,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add),
+            label: Strings.route_more,
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        onTap: (index) {
+          _selectedIndex = index;
+          onSelectTab(index);
+        },
+      ),
     );
   }
 }
