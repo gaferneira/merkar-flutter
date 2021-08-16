@@ -92,6 +92,15 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
                                   color: Theme
                                       .of(context)
                                       .primaryColor),
+                              suffixIcon: _search_textController.text==null || _search_textController.text!="" ?
+                              IconButton(icon: Icon(Icons.close)
+                                ,onPressed: (){
+                                setState(() {
+                                  _search_textController.text="";
+                                  onItemChanged("");
+                                });
+                                },)
+                                  : null,
                               contentPadding:
                               EdgeInsets.only(left: 10, right: 10),
                               fillColor: MediaQuery.of(context).platformBrightness!=Brightness.dark?

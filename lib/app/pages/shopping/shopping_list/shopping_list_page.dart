@@ -80,7 +80,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
     "default":FaIcon(FontAwesomeIcons.solidBookmark,color: Colors.blueGrey),
   };
 
-  onItemChangedSelect(String value) {
+  onItemChanged(String value) {
     viewModel.selectedList = viewModel.filterselectedList!
         .where((shoppingList) =>
             shoppingList.name!.toLowerCase().contains(value.toLowerCase()))
@@ -114,6 +114,19 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                             child: TextFormField(
                               controller: _search_textController,
                               decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.search,
+                                    color: Theme
+                                        .of(context)
+                                        .primaryColor),
+                                suffixIcon: _search_textController.text==null || _search_textController.text!="" ?
+                                IconButton(icon: Icon(Icons.close)
+                                  ,onPressed: (){
+                                    setState(() {
+                                      _search_textController.text="";
+                                      onItemChanged("");
+                                    });
+                                  },)
+                                    : null,
                                 contentPadding:
                                 EdgeInsets.only(left: 10, right: 10),
                                 fillColor: MediaQuery.of(context).platformBrightness!=Brightness.dark?
@@ -129,7 +142,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                                 ),
                                 hintText: Strings.label_search,
                               ),
-                              onChanged: onItemChangedSelect,
+                              onChanged: onItemChanged,
                             ),
                           ),
                         ),

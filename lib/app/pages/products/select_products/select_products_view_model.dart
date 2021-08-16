@@ -24,7 +24,7 @@ class SelectProductsViewModel extends ChangeNotifier {
       defaultProducts = data;
       error = null;
       updateList();
-      filterDefaultProducts = defaultProducts;
+      //filterDefaultProducts = defaultProducts;
       notifyListeners();
     }, onError: (e) {
       error = e;
@@ -85,6 +85,7 @@ class SelectProductsViewModel extends ChangeNotifier {
     });
 
     defaultProducts = newList;
+    filterDefaultProducts=newList;
   }
 
   Future<void> selectProduct(Product product, bool selected) async {

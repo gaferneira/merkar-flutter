@@ -25,7 +25,7 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
   final _scaffKey = GlobalKey<ScaffoldState>();
   final keyFormPurchaseList = GlobalKey<FormState>();
   TextEditingController _text_searchController = TextEditingController();
-  onItemChangedSelect(String value) {
+  onItemChanged(String value) {
     viewModel.list = viewModel.filterList!
         .where((shopping_list) =>
             shopping_list.name!.toLowerCase().contains(value.toLowerCase()))
@@ -61,6 +61,15 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
                           color: Theme
                               .of(context)
                               .primaryColor),
+                      suffixIcon: _text_searchController.text==null || _text_searchController.text!="" ?
+                      IconButton(icon: Icon(Icons.close)
+                        ,onPressed: (){
+                          setState(() {
+                            _text_searchController.text="";
+                            onItemChanged("");
+                          });
+                        },)
+                          : null,
                       contentPadding:
                       EdgeInsets.only(left: 10, right: 10),
                       fillColor: MediaQuery.of(context).platformBrightness!=Brightness.dark?
@@ -76,7 +85,7 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
                       ),
                       hintText: Strings.label_search,
                     ),
-                    onChanged: onItemChangedSelect,
+                    onChanged: onItemChanged,
                   ),
                 ),
               ),

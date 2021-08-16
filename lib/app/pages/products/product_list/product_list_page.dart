@@ -128,6 +128,15 @@ class _ProductsListPageState extends State<ProductsListPage>
                                 color: Theme
                                     .of(context)
                                     .primaryColor),
+                            suffixIcon: _searchTextController.text==null || _searchTextController.text!="" ?
+                            IconButton(icon: Icon(Icons.close)
+                              ,onPressed: (){
+                                setState(() {
+                                  _searchTextController.text="";
+                                  viewModel.searchByText("");
+                                });
+                              },)
+                                : null,
                             contentPadding:
                             EdgeInsets.only(left: 10, right: 10),
                             fillColor: MediaQuery.of(context).platformBrightness!=Brightness.dark?
