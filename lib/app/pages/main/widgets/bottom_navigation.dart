@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:cupertino_icons/cupertino_icons.dart';
+import 'package:merkar/app/core/resources/appIcons.dart';
 import '../../../core/resources/strings.dart';
 
 class BottomNavigation extends StatefulWidget {
@@ -34,19 +36,20 @@ class _BottomNavigationState extends State<BottomNavigation> {
         type: BottomNavigationBarType.fixed,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            //icon: Icon(Icons.home),
+            icon: Icon(AppIcons.home),
             label: Strings.route_home,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
+            icon: Icon(AppIcons.favorites),
             label: Strings.route_products,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.history),
+            icon: Icon(AppIcons.history),
             label: Strings.route_purchase_history,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.add),
+            icon: Icon(AppIcons.add),
             label: Strings.route_more,
           ),
         ],
