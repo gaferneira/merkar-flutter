@@ -29,6 +29,11 @@ class AppTheme {
       color: Colors.white54,
     ),
     textTheme: defaultTextTheme,
+    checkboxTheme: CheckboxThemeData(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(7),
+      ),
+    ),
   );
 
   static final ThemeData darkTheme = ThemeData(
@@ -53,6 +58,11 @@ class AppTheme {
       color: Colors.white54,
     ),
     textTheme: defaultTextTheme,
+    checkboxTheme: CheckboxThemeData(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(7),
+      ),
+    ),
   );
 
   static final ThemeData loginTheme = ThemeData.from(

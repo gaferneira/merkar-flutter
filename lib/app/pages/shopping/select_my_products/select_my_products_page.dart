@@ -155,11 +155,16 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
       var products = productsMap[keys.elementAt(index)]!;
       widgetList
         ..add(SliverAppBar(
-          leading: Container(),
+          pinned: false,
+          snap: true,
+          floating: true,
+          expandedHeight: 40.0,
+          leading: null,
+          automaticallyImplyLeading: false,
           title: Row(
             children: [
               Padding(
-                padding:  const EdgeInsets.only(right: 0.0,left: 0.0,top: 0.0,bottom: 8.0),
+                padding:  const EdgeInsets.only(right: 0.0,left: 20.0,top: 0.0,bottom: 8.0),
                 child: SizedBox(
                   height: 20.0,
                   width: 20.0,
@@ -174,8 +179,7 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
               Text(category),
             ],
           ),
-          pinned: false,
-        ))
+         ))
         ..add(SliverFixedExtentList(
           itemExtent: 50.0,
           delegate:
@@ -187,7 +191,7 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
                   decoration: AppStyles.checklistDecoration(
                       index.toDouble() / products.length),
                   child: CheckboxListTile(
-                      title: Row(
+                     title: Row(
                         children: [
                           Expanded(
                             child: Column(
@@ -206,8 +210,9 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
                         viewModel.selectProduct(index, products[index],value!);
                       },
                       value: products[index].selected,
-                    activeColor: Colors.cyan,
-                    checkColor: Colors.green,),
+                  //  activeColor: Colors.cyan,
+                  //  checkColor: Colors.green,
+                  ),
 
                 ),
               ),

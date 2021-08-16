@@ -254,11 +254,10 @@ class _ProductsListPageState extends State<ProductsListPage>
         snap: true,
         floating: true,
         expandedHeight: 40.0,
-        leading: Container(),
         title: Row(
           children: [
             Padding(
-              padding:  const EdgeInsets.only(right: 0.0,left: 0.0,top: 0.0,bottom: 8.0),
+              padding:  const EdgeInsets.only(right: 0.0,left: 20.0,top: 0.0,bottom: 8.0),
               child: SizedBox(
               height: 20.0,
               width: 20.0,
@@ -288,7 +287,8 @@ class _ProductsListPageState extends State<ProductsListPage>
                 decoration: AppStyles.checklistDecoration(
                     index.toDouble() / products.length),
                 child: ListTile(
-                  title: Center(
+                  title: Padding(
+                    padding: const EdgeInsets.only(left: 20.0),
                     child: Text(
                       "${product.name}: ${product.unit} x ${numberFormat(product.price)}",
                     ),
