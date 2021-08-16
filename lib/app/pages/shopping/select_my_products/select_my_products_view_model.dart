@@ -93,7 +93,7 @@ class SelectMyProductsViewModel extends ChangeNotifier {
     productsRepository.remove(product);
     notifyListeners();
   }
-   double getListProduct(String id){
+   double getQuantityListProduct(String id){
      ListProduct p=shoppingProducts!.where((element) => element.id==id).first;
     if(p!=null){
       return p.quantity;

@@ -236,7 +236,7 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
   }
 
   Widget showChangeCuantity(String id) {
-    double quantity= viewModel.getListProduct(id);
+    double quantity= viewModel.getQuantityListProduct(id);
     return Align(
       alignment: Alignment.topCenter,
       child: Container(
@@ -261,7 +261,7 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
                   quantity=quantity-0.5;
                  viewModel.updateQuantity(quantity,id);
                 }
-              },color: quantity==1?Colors.white:Colors.red,)),
+              },color: quantity==0.5?Colors.white:Colors.red,)),
           Text("${quantity}"),
           IconButton(icon: Icon(Icons.add),onPressed: (){
             quantity=quantity+0.5;
