@@ -31,7 +31,7 @@ class AppTheme {
     textTheme: defaultTextTheme,
     checkboxTheme: CheckboxThemeData(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(7),
+        borderRadius: BorderRadius.circular(8),
       ),
     ),
   );
@@ -60,7 +60,7 @@ class AppTheme {
     textTheme: defaultTextTheme,
     checkboxTheme: CheckboxThemeData(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(7),
+        borderRadius: BorderRadius.circular(8),
       ),
     ),
   );

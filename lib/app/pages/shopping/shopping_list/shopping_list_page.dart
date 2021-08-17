@@ -105,12 +105,12 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                   appBar: AppBar(
                     actions: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.all(Constant.normalspace),
+                        padding: const EdgeInsets.only(left: 10.0, right: 0,top:3),
                         child: Form(
                           key: _keySearchFormUnsel,
                           child: SizedBox(
                             height: 36,
-                            width: 270,
+                            width: 250,
                             child: TextFormField(
                               controller: _search_textController,
                               decoration: InputDecoration(
@@ -147,57 +147,63 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                           ),
                         ),
                       ),
-                      SizedBox(
-                        width: 20.0,
-                        child: IconButton(icon: Icon(Icons.share), onPressed: () {
-                          viewModel.shareShoppingList();
-                        },
+                      Padding(
+                        padding: const EdgeInsets.only(right: 5.0,left: 5),
+                        child: SizedBox(
+                          width: 30.0,
+                          child: IconButton(icon: Icon(Icons.share), onPressed: () {
+                            viewModel.shareShoppingList();
+                          },
 
+                          ),
                         ),
                       ),
-                      PopupMenuButton(
-                          icon: Icon(Icons.more_vert), // add this line
-                          itemBuilder: (_) => <PopupMenuItem<String>>[
-                            PopupMenuItem<String>(
-                                child: Container(
-                                    width: 180.0,
-                                    height: 17.0,
-                                    child: Text(
-                                      "Reiniciar",
-                                    )
-                                ), value: 'reset'
-                            ),
-                            PopupMenuItem<String>(
-                                child: Container(
-                                    width: 180.0,
-                                    height: 17.0,
-                                    child: Text(
-                                      "Ordenar por Categoría",
-                                    )
-                                ), value: 'category'
-                            ),
-                            PopupMenuItem<String>(
-                                child: Container(
-                                    width: 180.0,
-                                    height: 17.0,
-                                    child: Text(
-                                      "Ordenar Alfabéticamente",
-                                    )
-                                ), value: 'name'
-                            ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 5.0),
+                        child: PopupMenuButton(
+                            icon: Icon(Icons.more_vert), // add this line
+                            itemBuilder: (_) => <PopupMenuItem<String>>[
+                              PopupMenuItem<String>(
+                                  child: Container(
+                                      width: 180.0,
+                                      height: 17.0,
+                                      child: Text(
+                                        "Reiniciar",
+                                      )
+                                  ), value: 'reset'
+                              ),
+                              PopupMenuItem<String>(
+                                  child: Container(
+                                      width: 180.0,
+                                      height: 19.0,
+                                      child: Text(
+                                        "Ordenar por Categoría",
+                                      )
+                                  ), value: 'category'
+                              ),
+                              PopupMenuItem<String>(
+                                  child: Container(
+                                      width: 180.0,
+                                      height: 17.0,
+                                      child: Text(
+                                        "Ordenar Alfabéticamente",
+                                      )
+                                  ), value: 'name'
+                              ),
 
-                          ],
-                          onSelected: (String action_select) async {
-                            switch (action_select) {
-                              case 'reset':
-                                _resetShoppingList(context);
-                                break;
-                              case 'name':
-                              case 'category':
-                                _sortListProductsBy(action_select);
-                                break;
+                            ],
+                            onSelected: (String action_select) async {
+                              switch (action_select) {
+                                case 'reset':
+                                  _resetShoppingList(context);
+                                  break;
+                                case 'name':
+                                case 'category':
+                                  _sortListProductsBy(action_select);
+                                  break;
+                              }
                             }
-                          }
+                        ),
                       ),
 
                     ],
