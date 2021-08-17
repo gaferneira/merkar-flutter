@@ -139,9 +139,10 @@ class ShoppingListsRepositoryImpl implements ShoppingListsRepository {
 
   @override
   Future<void> updateQuantity(double quantity,String id,ShoppingList list) async {
-    print("documento a editar: ${list.path!}/procuts/${id}");
     await firestoreDataSource.db.
-    doc(list.path!+"/products/${id}")
+    doc(list.path!)
+        .collection(COLLECTION_PRODUCTS)
+        .doc(id)
         .update({'quantity': quantity});
   }
 }

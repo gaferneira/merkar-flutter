@@ -100,6 +100,7 @@ class SelectMyProductsViewModel extends ChangeNotifier {
     }
     return 1;
    }
+
    Future<void> updateQuantity( double quantity, String id) async{
       shoppingListRepository.updateQuantity(quantity, id, shoppingList);
       notifyListeners();

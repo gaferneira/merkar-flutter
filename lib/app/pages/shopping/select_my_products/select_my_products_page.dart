@@ -195,7 +195,7 @@ class _SelectMyProductsPageState extends State<SelectMyProductsPage> {
           SliverChildBuilderDelegate((BuildContext context, int index) {
             return Dismissible(
               child: Padding(
-                padding: const EdgeInsets.all(1.0),
+                padding: const EdgeInsets.only(left: 5, right: 7, top: 1, bottom: 1),
                 child: Container(
                   decoration: AppStyles.checklistDecoration(
                       index.toDouble() / products.length),

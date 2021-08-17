@@ -62,6 +62,9 @@ class AppStyles {
   static BoxDecoration checklistDecoration(double opacity){
     return BoxDecoration(
       color: Colors.black.withOpacity(0.05 + opacity*0.4),
+      borderRadius: BorderRadius.all(
+          Radius.circular(15),
+      ),
     );
   }
 

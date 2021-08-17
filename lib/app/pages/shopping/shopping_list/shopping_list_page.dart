@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -278,11 +280,20 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                   bottomNavigationBar: Container(
                       height: Constant.bottomBarHeight,
                       width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(color: Theme.of(context).colorScheme.primaryVariant, spreadRadius: 3),
+                        ],
+                      ),
                       child: BottomNavigationBar(
                         fixedColor: Colors.white70,
                         unselectedItemColor: Colors.white70,
+                        elevation: 5,
                         backgroundColor: Theme.of(context).colorScheme.primaryVariant,
                         currentIndex: 1,
+                        type: BottomNavigationBarType.fixed,
                         // this will be set when a new tab is tapped
                         items: [
                           BottomNavigationBarItem(
@@ -335,7 +346,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
       itemBuilder: (context, index) {
         return Dismissible(
           child: Padding(
-            padding: const EdgeInsets.all(2.0),
+            padding: const EdgeInsets.only(left: 5, right: 7, top: 1, bottom: 1),
             child: Container(
               decoration: AppStyles.checklistDecoration(
                   index.toDouble() / listProducts.length),
@@ -369,7 +380,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                                   "${listProducts[index].quantity} ${listProducts[index].unit} a \$ ${numberFormat(listProducts[index].price)}"),
                             ],
                           ),
-
+                          showChangeCuantity(listProducts[index].quantity,listProducts[index].id!),
                         ],
                       ),
                     ),
@@ -388,8 +399,6 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                   },
                 ),
                 value: listProducts[index].selected,
-                activeColor: Colors.cyan,
-                checkColor: Colors.green,
               ),
             ),
           ),
@@ -427,7 +436,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
       itemBuilder: (context, index) {
         return Dismissible(
           child: Padding(
-            padding: const EdgeInsets.all(1.0),
+            padding: const EdgeInsets.only(left: 5, right: 7, top: 1, bottom: 1),
             child: Container(
               decoration: AppStyles.checklistDecoration(
                   index.toDouble() / listProducts.length),
@@ -459,9 +468,10 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                             children: <Widget>[
                               Text(
                                   "${listProducts[index].quantity} ${listProducts[index].unit} = "
-                                      "${numberFormat((listProducts[index].quantity*double.parse(listProducts[index].price)).toString())}"),
+                                      "\$ ${numberFormat((listProducts[index].quantity*double.parse(listProducts[index].price)).toString())}"),
                             ],
-                          )
+                          ),
+                          showChangeCuantity(listProducts[index].quantity,listProducts[index].id!),
                         ],
                       ),
                     ),
@@ -692,5 +702,43 @@ class _ShoppingListPageState extends State<ShoppingListPage>
         break;
     }
     viewModel.notifyListeners();
+  }
+  Widget showChangeCuantity(double quantity, String id) {
+    return Align(
+      alignment: Alignment.topLeft,
+      child: Container(
+        height: 38.0,
+        width: 120,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          color: Colors.white54,
+          boxShadow: [
+            BoxShadow(color: Colors.blueGrey, spreadRadius: 1),
+          ],
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Align(alignment: Alignment.center,
+                child: IconButton(icon: Icon(Icons.remove),onPressed: (){
+                  if(quantity==0.5){
+                    null;
+                  }
+                  else{
+                    quantity=quantity-0.5;
+                    viewModel.updateQuantity(quantity,id);
+                  }
+                },color: quantity==0.5?Colors.white:Colors.red,)),
+            Text("${quantity}"),
+            IconButton(icon: Icon(Icons.add),onPressed: (){
+              quantity=quantity+0.5;
+              viewModel.updateQuantity(quantity,id);
+            },
+              color:Colors.green,
+            ),
+          ],),
+      ),
+    );
   }
 }

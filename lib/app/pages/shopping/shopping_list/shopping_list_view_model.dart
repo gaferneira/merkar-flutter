@@ -148,4 +148,9 @@ class ShoppingListViewModel extends ChangeNotifier {
     Share.share(content);
   }
 
+  Future<void> updateQuantity( double quantity, String id) async{
+    repository.updateQuantity(quantity, id, shoppingList);
+    notifyListeners();
+  }
+
 }

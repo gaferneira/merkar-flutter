@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cupertino_icons/cupertino_icons.dart';
@@ -26,11 +28,11 @@ class _BottomNavigationState extends State<BottomNavigation> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(border: Border(top: BorderSide(width: 0.5))),
+      decoration: BoxDecoration(
+          border: Border(top: BorderSide(width: 0.5)),
+      ),
       child: BottomNavigationBar(
         elevation: 5.0,
-        //showSelectedLabels: true,
-        //showUnselectedLabels: false,
         unselectedLabelStyle: TextStyle(fontSize: 11),
         selectedLabelStyle: TextStyle(fontSize: 14),
         type: BottomNavigationBarType.fixed,
