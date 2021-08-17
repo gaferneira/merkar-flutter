@@ -17,7 +17,7 @@ class PurchaseHistoryShowInfoViewModel extends ChangeNotifier {
       error = null;
       notifyListeners();
     }, onError: (e) {
-      error = e;
+      error = e.toString();
       notifyListeners();
     });
   }

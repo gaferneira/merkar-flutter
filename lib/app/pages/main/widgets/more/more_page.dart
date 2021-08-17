@@ -261,21 +261,23 @@ class MorePageState extends State<MorePage> {
 
   Future<void> showPhotoViewDialog(BuildContext context){
     return showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (context){
           return AlertDialog(
+                insetPadding: EdgeInsets.zero,
+                contentPadding: EdgeInsets.zero,
                 shape: AppStyles.borderRadiusDialog,
                 content: SingleChildScrollView(
                 child:Container(
-                  width: MediaQuery.of(context).size.width-10.0,
-                  height: MediaQuery.of(context).size.height-10.0,
+                  width: MediaQuery.of(context).size.width-3.0,
+                  height: MediaQuery.of(context).size.height-3.0,
                   child: PhotoView(
-                  imageProvider: FileImage(_image!),
+                  imageProvider: _image!= null? FileImage(_image!):Image.asset('assets/images/defaultprofile.png').image,
                 ),
                 ),
             ),
           );
         });
-
   }
 }
