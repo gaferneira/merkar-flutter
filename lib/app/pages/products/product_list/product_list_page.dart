@@ -10,7 +10,7 @@ import '../../../core/resources/app_styles.dart';
 import '../../../core/resources/strings.dart';
 import '../../../pages/products/new_product/create_new_product.dart';
 import '../../../pages/products/select_products/select_products_page.dart';
-import '../../../pages/products/widgets/fab_menu.dart';
+import '../../../pages/products/models/fab_menu.dart';
 import '../../../widgets/confirmDismissDialog.dart';
 import '../../../../data/entities/product.dart';
 import '../../../../injection_container.dart';
@@ -324,7 +324,7 @@ class _ProductsListPageState extends State<ProductsListPage>
             onDismissed: (direction) {
               viewModel.removeProduct(product);
               _searchTextController.text="";
-              Scaffold.of(context)
+              ScaffoldMessenger.of(context)
                   .showSnackBar(SnackBar(content: Text(Strings.deleted)));
             },
             confirmDismiss: (DismissDirection) =>

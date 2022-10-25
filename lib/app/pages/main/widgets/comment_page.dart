@@ -37,7 +37,7 @@ Future<void> CommentePage(BuildContext context) {
                                 ),
                                 SizedBox(height: 20),
                                 Text(Strings.label_body_comments,
-                                style: Theme.of(context).textTheme.body1,),
+                                style: Theme.of(context).textTheme.bodyText1,),
                                 SizedBox(height: Constant.normalspacecontainer,),
                                 TextFormField(
                                   autofocus: true,

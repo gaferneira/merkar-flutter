@@ -85,7 +85,7 @@ class LoginRepositoryImpl implements LoginRepository {
 
   @override
   Future<UserData> getUserData() async {
-    final ref = await firestoreDataSource.getDataDocument().get();
+    dynamic ref = await firestoreDataSource.getDataDocument().get();
     return UserData.fromJson(ref.data()!);
   }
 

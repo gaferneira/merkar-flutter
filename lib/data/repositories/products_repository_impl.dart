@@ -26,7 +26,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
         .orderBy("name")
         .snapshots()
         .map((querySnapshot) => querySnapshot.docs
-            .map((documentSnapshot) => Product.fromJson(documentSnapshot.data())
+            .map((dynamic documentSnapshot) => Product.fromJson(documentSnapshot.data())
               ..id = documentSnapshot.id
               ..path = documentSnapshot.reference.path)
             .toList());

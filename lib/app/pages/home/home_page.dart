@@ -104,7 +104,7 @@ class _HomePageState extends State<HomePage> {
 
   void _onRemoveItem(int index) {
     viewModel.removeList(index);
-    Scaffold.of(context)
+    ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text(Strings.deleted)));
   }
 

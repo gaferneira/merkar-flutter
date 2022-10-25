@@ -201,7 +201,7 @@ class _SelectProductsPageState extends State<SelectProductsPage> {
               onDismissed: (direction) {
                 viewModel.removeProduct(products[index]);
                 _searchTextController.text="";
-                Scaffold.of(context)
+                ScaffoldMessenger.of(context)
                     .showSnackBar(SnackBar(content: Text(Strings.deleted)));
               },
               confirmDismiss: (DismissDirection) =>

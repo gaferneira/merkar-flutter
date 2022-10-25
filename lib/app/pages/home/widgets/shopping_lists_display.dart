@@ -170,7 +170,7 @@ Widget shoppingListsDisplay(BuildContext context,
           key: Key(list[index].id!),
           onDismissed: (direction)  {
             onRemoveItem(index);
-            Scaffold.of(context)
+            ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(Strings.deleted)));
           },
             confirmDismiss: (DismissDirection)=>ConfirmDismissDialog(context, DismissDirection),

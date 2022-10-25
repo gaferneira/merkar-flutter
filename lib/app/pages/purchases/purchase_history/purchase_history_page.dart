@@ -165,7 +165,7 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
           key: Key(list[index].id!),
           onDismissed: (direction)  {
             onRemoveItem(list[index]);
-            Scaffold.of(context)
+            ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(Strings.deleted)));
 
           },

@@ -298,21 +298,17 @@ class _ShoppingListPageState extends State<ShoppingListPage>
                         items: [
                           BottomNavigationBarItem(
                             icon: new Icon(Icons.list_alt),
-                            title: new Text('\$ '+numberFormat((double.parse(viewModel.totalPrice())-double.parse(viewModel.totalShopping())).toString()),
-                              style: AppStyles.bottonbarTextStyle,
-                            ),
+                            label: '\$ '+numberFormat((double.parse(viewModel.totalPrice())-double.parse(viewModel.totalShopping())).toString()),
+
                           ),
                           BottomNavigationBarItem(
                             icon: new Icon(Icons.shopping_cart),
-                            title: new Text('\$ ${numberFormat(viewModel.totalShopping())}',
-                              style: AppStyles.bottonbarTextStyle,
-                            ),
+                            label:'\$ ${numberFormat(viewModel.totalShopping())}',
+
                           ),
                           BottomNavigationBarItem(
                             icon: new Icon(Icons.stacked_bar_chart),
-                            title: Text('\$ ${numberFormat(viewModel.totalPrice())}',
-                              style: AppStyles.bottonbarTextStyle,
-                            ),
+                            label:'\$ ${numberFormat(viewModel.totalPrice())}',
                             backgroundColor: Colors.white,
                           ),
                         ],
@@ -411,7 +407,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
             viewModel.removeProduct(listProducts[index].id!, shoppingList);
             listProducts.removeAt(index);
             _search_textController.text="";
-            Scaffold.of(context)
+            ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(Strings.deleted)));
             viewModel.notifyListeners();
           },
@@ -501,7 +497,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
           key: Key(listProducts[index].id!),
           background: Container(color: Colors.red, child: Icon(Icons.cancel)),
           onDismissed: (direction) {
-            Scaffold.of(context)
+            ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(Strings.deleted)));
             viewModel.removeProduct(listProducts[index].id!, shoppingList);
             listProducts.removeAt(index);
@@ -687,7 +683,8 @@ class _ShoppingListPageState extends State<ShoppingListPage>
   }
   void _resetShoppingList(BuildContext context){
     viewModel.resetShoppingList();
-    _scaffoldKey.currentState!.showSnackBar(SnackBar(content: Text(Strings.reseted)));
+    //_scaffoldKey.currentState!.showSnackBar(SnackBar(content: Text(Strings.reseted)));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(Strings.reseted)));
   }
 
   void _sortListProductsBy(String option){
