@@ -20,6 +20,7 @@ import 'app/pages/purchases/purchase_history/purchase_history_page.dart';
 import 'app/pages/purchases/purchase_history_show_info/purchase_history_show_info_page.dart';
 import 'app/pages/shopping/select_my_products/select_my_products_page.dart';
 import 'app/pages/shopping/shopping_list/shopping_list_page.dart';
+import 'firebase_options.dart';
 import 'injection_container.dart' as di;
 import 'injection_container.dart';
 
@@ -27,9 +28,11 @@ const bool USE_FIRESTORE_EMULATOR = false;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform
+  );
   if (USE_FIRESTORE_EMULATOR) {
-    FirebaseFirestore.instance.settings = Settings(
+    FirebaseFirestore.instance.settings = const Settings(
         host: 'localhost:8080', sslEnabled: false, persistenceEnabled: true,
     );
   }
