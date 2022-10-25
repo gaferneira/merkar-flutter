@@ -705,7 +705,7 @@ class _ShoppingListPageState extends State<ShoppingListPage>
       alignment: Alignment.topLeft,
       child: Container(
         height: 38.0,
-        width: 120,
+        width: 150,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
           color: Colors.white54,
