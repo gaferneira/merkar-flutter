@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>217116638618-r8i2f4qjo6068o10pbnre2tdqt8lciaq.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.217116638618-r8i2f4qjo6068o10pbnre2tdqt8lciaq</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>217116638618-p3frqdckurr6uaj3godfv28q0n839oa4.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyA-m4e_9G2mBPEBMP_QwnYvid9J0ht7G3Y</string>
+	<key>GCM_SENDER_ID</key>
+	<string>217116638618</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.merkar.app</string>
+	<key>PROJECT_ID</key>
+	<string>merkar-app</string>
+	<key>STORAGE_BUCKET</key>
+	<string>merkar-app.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:217116638618:ios:12f122c1acf1342ebd8e23</string>
+	<key>DATABASE_URL</key>
+	<string>https://merkar-app.firebaseio.com</string>
+</dict>
+</plist>
