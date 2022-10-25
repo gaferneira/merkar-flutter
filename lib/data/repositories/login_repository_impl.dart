@@ -86,7 +86,7 @@ class LoginRepositoryImpl implements LoginRepository {
   @override
   Future<UserData> getUserData() async {
     final ref = await firestoreDataSource.getDataDocument().get();
-    return UserData.fromJson(ref.data()!);
+    return UserData.fromJson(ref.data()! as Map<String, dynamic>);
   }
 
   Future<String?> signInWithGoogle() async {
