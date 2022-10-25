@@ -37,7 +37,6 @@ class SelectProductsViewModel extends ChangeNotifier {
       error = null;
       updateList();
       notifyListeners();
-
     }, onError: (e) {
       error = e;
       notifyListeners();
@@ -48,7 +47,6 @@ class SelectProductsViewModel extends ChangeNotifier {
 
   void updateList() {
     if (userProducts != null && defaultProducts != null) {
-
       if (firstLoadTime) {
         firstLoadTime = false;
         removeInitialUserProducts();
@@ -91,7 +89,10 @@ class SelectProductsViewModel extends ChangeNotifier {
   Future<void> selectProduct(Product product, bool selected) async {
     if (selected) {
       var newProduct = Product(
-          category: product.category, name: product.name, price: product.price,unit: product.unit);
+          category: product.category,
+          name: product.name,
+          price: product.price,
+          unit: product.unit);
       productsRepository.save(newProduct);
       product.selected = true;
     } else {
@@ -109,7 +110,7 @@ class SelectProductsViewModel extends ChangeNotifier {
   void searchByText(String value) {
     defaultProducts = filterDefaultProducts!
         .where((product) =>
-        product.name!.toLowerCase().contains(value.toLowerCase()))
+            product.name!.toLowerCase().contains(value.toLowerCase()))
         .toList();
     notifyListeners();
   }

@@ -20,7 +20,7 @@ class CreateNewProduct extends StatefulWidget {
 class _CreateNewProductState extends State<CreateNewProduct> {
   final keyNewProduct = GlobalKey<FormState>();
   final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
-  GlobalKey<ScaffoldMessengerState>();
+      GlobalKey<ScaffoldMessengerState>();
   CreateNewProductsViewModel viewModel =
       serviceLocator<CreateNewProductsViewModel>();
   final TextEditingController _typeAheadCategoryController = TextEditingController();
