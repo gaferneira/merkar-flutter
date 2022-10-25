@@ -138,11 +138,12 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                         (viewModel.selectedList == null)
                             ? Text('Loading...')
                             : _showSelectProductsList(viewModel.selectedList),
-                        RaisedButton(
+                        ElevatedButton(
                             child: Text(Strings.label_finish),
-                            color: AppColors.lightColor,
-                            textColor: AppColors.textColorButtomLight,
-                            shape: AppStyles.borderRadius,
+                            style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.lightColor,
+                            foregroundColor: AppColors.textColorButtomLight,
+                            shape: AppStyles.borderRadius),
                             onPressed: onPressed
                             //() {
                             //_showFinishDialog(shoppingList);
@@ -173,13 +174,12 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                         items: [
                           BottomNavigationBarItem(
                             icon: new Icon(Icons.insert_chart),
-                            title: Text('Total: \$ ${viewModel.totalPrice()}'),
+                            label: 'Total: \$ ${viewModel.totalPrice()}',
                             backgroundColor: Colors.white,
                           ),
                           BottomNavigationBarItem(
                             icon: new Icon(Icons.shopping_cart),
-                            title: new Text(
-                                'Carrito (\$ ${viewModel.totalShopping()})'),
+                            label: 'Carrito (\$ ${viewModel.totalShopping()})',
                           ),
                         ],
                       )),
@@ -246,7 +246,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
           onDismissed: (direction) {
             viewModel.removeProduct(listProducts[index].id!, shoppingList);
             listProducts.removeAt(index);
-            Scaffold.of(context)
+            ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text("$index Eliminado")));
             viewModel.notifyListeners();
           },
@@ -314,7 +314,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
           onDismissed: (direction) {
             viewModel.removeProduct(listProducts[index].id!, shoppingList);
             listProducts.removeAt(index);
-            Scaffold.of(context)
+            ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text("$index Eliminado")));
           },
         );
@@ -371,7 +371,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                   Padding(
                     padding: const EdgeInsets.all(Constant.normalspace),
                     child: Center(
-                      child: RaisedButton(
+                      child: ElevatedButton (
                           child: Text(Strings.label_save),
                           onPressed: () {
                             _saveEditProduct(product);
@@ -536,7 +536,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                       Padding(
                         padding: const EdgeInsets.all(Constant.normalspace),
                         child: Center(
-                          child: RaisedButton(
+                          child: ElevatedButton (
                               child: Text(Strings.label_finish),
                               onPressed: () {
                                 _actionOnSaveList(shoppingList);

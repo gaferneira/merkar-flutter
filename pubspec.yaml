@@ -19,16 +19,16 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  firebase_core: ^1.0.1
-  firebase_auth: ^1.0.1
-  google_sign_in: ^5.0.2
-  cloud_firestore: ^1.0.1
-  in_app_review: ^2.0.1
-  flutter_email_sender: ^5.0.0
+  firebase_core: ^1.24.0
+  firebase_auth: ^1.4.1
+  google_sign_in: ^5.4.2
+  cloud_firestore: ^1.0.7
+  in_app_review: ^2.0.4
+  flutter_email_sender: ^5.1.0
   url_launcher: ^6.0.2
   collection: ^1.15.0
   # Service locator
-  get_it: ^6.0.0
+  get_it: ^6.1.1
   provider: ^5.0.0
   # Value equality
   equatable: ^2.0.0
@@ -37,8 +37,9 @@ dependencies:
   # Remote API
   data_connection_checker:
     git:
-      url: git://github.com/uSlashVlad/data_connection_checker.git
-  http: ^0.13.0
+      url: https://github.com/chornthorn/data_connection_checker.git
+      ref: master
+  http: ^0.13.5
   # Local cache
   shared_preferences: ^2.0.4
 
