@@ -105,7 +105,6 @@ class HomePageViewModel extends ChangeNotifier {
   }
 
   String _mapFailureToMessage(Failure failure) {
-    print('Do the consult get');
     switch (failure.runtimeType) {
       case ServerFailure:
         return Strings.SERVER_FAILURE_MESSAGE;

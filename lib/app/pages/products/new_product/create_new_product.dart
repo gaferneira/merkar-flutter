@@ -1,7 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:merkar/app/core/extensions/numberFormat.dart';
+import 'package:merkar/app/core/extensions/number_format.dart';
 import '../../../core/resources/constants.dart';
 import '../../../core/resources/strings.dart';
 import '../../../widgets/primary_button.dart';

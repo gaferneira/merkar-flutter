@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'purchase_history_view_model.dart';
 import '../purchase_history_show_info/purchase_history_show_info_page.dart';
 import '../../../core/extensions/extended_string.dart';
-import '../../../core/extensions/numberFormat.dart';
+import '../../../core/extensions/number_format.dart';
 import '../../../core/resources/app_styles.dart';
 import '../../../core/resources/constants.dart';
 import '../../../core/resources/strings.dart';

@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:merkar/app/widgets/loading_widget.dart';
 import 'package:provider/provider.dart';
 import 'purchase_history_show_info_view_model.dart';
-import '../../../core/extensions/numberFormat.dart';
+import '../../../core/extensions/number_format.dart';
 import '../../../core/resources/app_colors.dart';
 import '../../../core/resources/constants.dart';
 import '../../../core/resources/strings.dart';

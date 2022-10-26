@@ -2,7 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:merkar/app/core/extensions/numberFormat.dart';
+import 'package:merkar/app/core/extensions/number_format.dart';
 import 'package:merkar/app/widgets/confirmDismissDialog.dart';
 import 'package:merkar/app/widgets/loading_widget.dart';
 import '../../../core/resources/app_styles.dart';
