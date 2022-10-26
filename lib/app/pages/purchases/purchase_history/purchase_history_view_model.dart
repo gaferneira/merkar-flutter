@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:merkar/data/entities/purchase.dart';
-import 'package:merkar/data/repositories/purchases_repository.dart';
+import '../../../../data/entities/purchase.dart';
+import '../../../../data/repositories/purchases_repository.dart';
 
 class PurchaseHistoryViewModel extends ChangeNotifier {
   final PurchasesRepository purchaseHistoryRepository;

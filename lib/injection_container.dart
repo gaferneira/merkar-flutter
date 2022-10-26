@@ -1,6 +1,8 @@
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
+import 'package:merkar/app/pages/main/widgets/more/more_view_model.dart';
+import 'package:merkar/app/pages/purchases/statistics/statistics_view_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app/pages/products/product_list/product_list_view_model.dart';
@@ -55,6 +57,10 @@ void createViewModels() {
         repository: serviceLocator(),
       ));
 
+  serviceLocator.registerFactory(() => MoreViewModel(
+    repository: serviceLocator(),
+  ));
+
   serviceLocator.registerFactory(() => LoginViewModel(
         repository: serviceLocator(),
       ));
@@ -69,7 +75,6 @@ void createViewModels() {
 
   serviceLocator.registerFactory(() => HomePageViewModel(
         shoppingListsRepository: serviceLocator(),
-        loginRepository: serviceLocator(),
       ));
 
   serviceLocator.registerFactory(() => ShoppingListViewModel(
@@ -93,6 +98,9 @@ void createViewModels() {
       PurchaseHistoryViewModel(purchaseHistoryRepository: serviceLocator()));
 
   serviceLocator.registerFactory(() => PurchaseHistoryShowInfoViewModel(
+      purchaseHistoryRepository: serviceLocator()));
+
+  serviceLocator.registerFactory(() => StatisticsViewModel(
       purchaseHistoryRepository: serviceLocator()));
 }
 

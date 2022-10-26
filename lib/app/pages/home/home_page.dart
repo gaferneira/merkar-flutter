@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:merkar/app/pages/home/widgets/shopping_lists_display.dart';
+import 'widgets/shopping_lists_display.dart';
 import 'package:provider/provider.dart';
 
 import '../../../app/widgets/widgets.dart';
@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
               new SliverAppBar(
                 iconTheme: IconThemeData(color: Colors.white),
                 expandedHeight: 256.0,
-                pinned: true,
+                pinned: false,
                 flexibleSpace: new FlexibleSpaceBar(
                   title: Row(
                     children: [
@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> {
               )),
               (viewModel.list == null)
                   ? SliverFillRemaining(child: Center(child: LoadingWidget()))
-                  : shoppingListsDisplay(context, viewModel.list!, _onRemoveItem),
+                  : shoppingListsDisplay(context, viewModel.list!,_onRemoveItem, _onUpdateName, _onCopyShoppingList,_onShareShoppingList),
             ],
           ),
         ),
@@ -91,8 +91,28 @@ class _HomePageState extends State<HomePage> {
     viewModel.saveList(value, context);
   }
 
+  void _onUpdateName(List<String> value) {
+    if (viewModel.error != null) {
+      scaffoldMessengerKey.currentState?.showSnackBar(SnackBar(
+          content: Text(viewModel.error!),
+          duration: const Duration(seconds: 1)));
+      viewModel.error = null;
+    } else
+      viewModel.updateNameList(value).then((value) => null);
+  }
+
+
   void _onRemoveItem(int index) {
     viewModel.removeList(index);
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(Strings.deleted)));
   }
-  
+
+  void _onCopyShoppingList(int index){
+    viewModel.copyShoppingList(index);
+  }
+
+  void _onShareShoppingList(int index){
+    viewModel.shareShoppingList(index);
+  }
 }

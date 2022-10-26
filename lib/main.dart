@@ -6,6 +6,7 @@ import 'package:merkar/app/pages/login/reset_password/reset_password_page.dart';
 import 'package:merkar/app/pages/login/widgets/background_login.dart';
 import 'package:merkar/app/pages/main/main_page.dart';
 import 'package:merkar/app/pages/products/select_products/select_products_page.dart';
+import 'package:merkar/app/pages/purchases/statistics/statistics_page.dart';
 import 'package:provider/provider.dart';
 
 import 'app/pages/products/product_list/product_list_page.dart';
@@ -32,7 +33,8 @@ void main() async {
   );
   if (USE_FIRESTORE_EMULATOR) {
     FirebaseFirestore.instance.settings = const Settings(
-        host: 'localhost:8080', sslEnabled: false, persistenceEnabled: true);
+        host: 'localhost:8080', sslEnabled: false, persistenceEnabled: true,
+    );
   }
   await di.init();
   runApp(MyApp());
@@ -63,6 +65,7 @@ class MyApp extends StatelessWidget {
         HomePage.routeName: (context) => HomePage(),
         ProductsListPage.routeName: (context) => ProductsListPage(),
         SelectProductsPage.routeName: (context) => SelectProductsPage(),
+        StatisticsPage.routeName:(context)=>StatisticsPage(),
       },
     );
   }

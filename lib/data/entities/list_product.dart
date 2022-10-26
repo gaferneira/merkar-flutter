@@ -5,7 +5,7 @@ class ListProduct {
   final String? category;
   final String? unit;
   String price = '0';
-  int quantity = 1;
+  double quantity = 1.0;
   String total = '0';
   bool? selected;
 

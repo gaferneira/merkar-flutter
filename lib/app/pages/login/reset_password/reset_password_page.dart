@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:merkar/app/core/resources/app_styles.dart';
-import 'package:merkar/app/core/resources/app_theme.dart';
-import 'package:merkar/app/core/resources/strings.dart';
-import 'package:merkar/app/pages/login/reset_password/reset_password_view_model.dart';
-import 'package:merkar/app/pages/login/widgets/background_login.dart';
-import 'package:merkar/app/pages/login/widgets/login_button.dart';
-import 'package:merkar/injection_container.dart';
 import 'package:provider/provider.dart';
+import '../../../core/resources/app_styles.dart';
+import '../../../core/resources/app_theme.dart';
+import '../../../core/resources/strings.dart';
+import '../../../pages/login/reset_password/reset_password_view_model.dart';
+import '../../../pages/login/widgets/background_login.dart';
+import '../../../pages/login/widgets/login_button.dart';
+import '../../../../injection_container.dart';
 
 class ResetPasswordPage extends StatefulWidget {
   static const routeName = "/resetpassword";
@@ -54,16 +54,31 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                             child: SingleChildScrollView(
                               physics: AlwaysScrollableScrollPhysics(),
                               padding: EdgeInsets.symmetric(
-                                horizontal: 40.0,
-                                vertical: 60.0,
+                                horizontal: 30.0,
+                                vertical: 40.0,
                               ),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  Text(
-                                    Strings.label_restore_password,
-                                    style:
-                                        Theme.of(context).textTheme.headline4,
+                                 
+                                  Row(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: IconButton(
+                                          icon: Icon(Icons.arrow_back),
+                                          onPressed: (){
+                                            Navigator.of(context).pop();
+                                          },),),
+                                      Expanded(
+                                        child: Text(
+                                          Strings.label_restore_password,
+                                          style:
+                                              Theme.of(context).textTheme.headline4,
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                   SizedBox(height: 30.0),
                                   _buildEmailTextField(context),

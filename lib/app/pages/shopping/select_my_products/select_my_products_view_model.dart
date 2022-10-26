@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:merkar/data/entities/list_product.dart';
-import 'package:merkar/data/entities/product.dart';
-import 'package:merkar/data/entities/shopping_list.dart';
-import 'package:merkar/data/repositories/products_repository.dart';
-import 'package:merkar/data/repositories/shopping_lists_repository.dart';
+import '../../../../data/entities/list_product.dart';
+import '../../../../data/entities/product.dart';
+import '../../../../data/entities/shopping_list.dart';
+import '../../../../data/repositories/products_repository.dart';
+import '../../../../data/repositories/shopping_lists_repository.dart';
 
 class SelectMyProductsViewModel extends ChangeNotifier {
   final ShoppingListsRepository shoppingListRepository;
@@ -15,7 +15,7 @@ class SelectMyProductsViewModel extends ChangeNotifier {
   late ShoppingList shoppingList;
 
   List<Product>? userProducts;
-  List<Product>? filteruserProducts;
+  List<Product>? filterUserProducts;
   List<ListProduct>? shoppingProducts;
 
   String? error;
@@ -28,7 +28,7 @@ class SelectMyProductsViewModel extends ChangeNotifier {
       userProducts = data;
       error = null;
       updateList();
-      filteruserProducts = userProducts;
+      filterUserProducts = userProducts;
     }, onError: (e) {
       error = e;
       notifyListeners();
@@ -63,8 +63,9 @@ class SelectMyProductsViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> selectProduct(int index, bool selected) async {
-    var product = userProducts![index];
+  Future<void> selectProduct(int index, Product product,bool selected) async {
+    //var product = userProducts![index];
+    userProducts![index].selected=selected;
     if (selected) {
       var productList = ListProduct(
           id: product.id,
@@ -73,10 +74,35 @@ class SelectMyProductsViewModel extends ChangeNotifier {
           price: product.price,
           quantity: 1,
           total: product.price,
+          unit: product.unit,
           selected: false);
+      shoppingList.total_items= (int.parse(shoppingList.total_items!)+1).toString();
       shoppingListRepository.saveProduct(productList, shoppingList);
+      shoppingProducts!.add(productList);
     } else {
+      shoppingList.total_items= (int.parse(shoppingList.total_items!)-1).toString();
       shoppingListRepository.removeProduct(product.id!, shoppingList);
+      ListProduct p= shoppingProducts!.where((element) => element.id==product.id!).first;
     }
+    shoppingListRepository.updateTotalItems(shoppingList.total_items!, shoppingList);
+    notifyListeners();
   }
+
+  Future<void> removeProduct(Product product) async {
+    userProducts?.remove(product);
+    productsRepository.remove(product);
+    notifyListeners();
+  }
+   double getQuantityListProduct(String id){
+     ListProduct p=shoppingProducts!.where((element) => element.id==id).first;
+    if(p!=null){
+      return p.quantity;
+    }
+    return 1;
+   }
+
+   Future<void> updateQuantity( double quantity, String id) async{
+      shoppingListRepository.updateQuantity(quantity, id, shoppingList);
+      notifyListeners();
+   }
 }

@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:in_app_review/in_app_review.dart';
-import 'package:merkar/app/core/resources/app_colors.dart';
-import 'package:merkar/app/core/resources/strings.dart';
-import 'package:merkar/app/pages/products/product_list/product_list_page.dart';
-import 'package:merkar/app/pages/login/sign_in/login_view_model.dart';
-import 'package:merkar/app/pages/main/widgets/about_us_page.dart';
-import 'package:merkar/app/pages/main/widgets/comment_page.dart';
-import 'package:merkar/injection_container.dart';
-
 import '../../purchases/purchase_history/purchase_history_page.dart';
-
+import '../../../core/resources/app_colors.dart';
+import '../../../core/resources/strings.dart';
+import '../../../pages/products/product_list/product_list_page.dart';
+import '../../../pages/login/sign_in/login_view_model.dart';
+import '../../../pages/main/widgets/about_us_page.dart';
+import '../../../pages/main/widgets/comment_page.dart';
+import '../../../../injection_container.dart';
 enum DrawerOptions {
   route_new_list,
   route_purchase_history,

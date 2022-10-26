@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:merkar/data/entities/product.dart';
-import 'package:merkar/data/repositories/products_repository.dart';
+import '../../../../data/entities/product.dart';
+import '../../../../data/repositories/products_repository.dart';
 
 class ProductsListViewModel extends ChangeNotifier {
   final ProductsRepository repository;
@@ -34,7 +34,7 @@ class ProductsListViewModel extends ChangeNotifier {
   searchByText(String value) {
     userProducts = filterUserProducts
         .where((product) =>
-            product.name!.toLowerCase().contains(value.toLowerCase()))
+        product.name!.toLowerCase().contains(value.toLowerCase()))
         .toList();
     notifyListeners();
   }

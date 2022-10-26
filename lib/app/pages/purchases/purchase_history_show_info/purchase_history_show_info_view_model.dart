@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-
-import 'package:merkar/data/entities/list_product.dart';
-import 'package:merkar/data/entities/purchase.dart';
-import 'package:merkar/data/repositories/purchases_repository.dart';
+import '../../../../data/entities/list_product.dart';
+import '../../../../data/entities/purchase.dart';
+import '../../../../data/repositories/purchases_repository.dart';
 
 class PurchaseHistoryShowInfoViewModel extends ChangeNotifier {
   final PurchasesRepository purchaseHistoryRepository;
@@ -18,7 +17,7 @@ class PurchaseHistoryShowInfoViewModel extends ChangeNotifier {
       error = null;
       notifyListeners();
     }, onError: (e) {
-      error = e;
+      error = e.toString();
       notifyListeners();
     });
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:merkar/data/repositories/login_repository.dart';
+import 'package:merkar/app/core/resources/strings.dart';
+import '../../../../data/repositories/login_repository.dart';
 
 class LoginViewModel with ChangeNotifier {
   final LoginRepository repository;
@@ -19,7 +20,7 @@ class LoginViewModel with ChangeNotifier {
       response.fold(
           (l) => {error = l},
           (r) => {
-                if (!r) {error = "No user found"} else {error = null}
+                if (!r) {error = Strings.no_user_found} else {error = null}
               });
       notifyListeners();
     } catch (e) {
